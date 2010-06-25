@@ -3,7 +3,28 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySquare", "MySquare\MySquare.csproj", "{FD4AA98B-154D-480A-901A-0B9154C8CFE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySquare.Test", "MySquare.Test\MySquare.Test.csproj", "{D01F0755-91EF-4DC5-8612-C0698AFB121A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{05FA69D7-6B40-4F57-8B8F-6643525B37F8}"
+	ProjectSection(SolutionItems) = preProject
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		MySquare.vsmdi = MySquare.vsmdi
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{2A7C32F4-5D22-4DFC-9665-D60C07D0758B}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\venues.xml = Resources\venues.xml
+		Resources\venues.xsd = Resources\venues.xsd
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = MySquare.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -15,8 +36,15 @@ Global
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2A7C32F4-5D22-4DFC-9665-D60C07D0758B} = {05FA69D7-6B40-4F57-8B8F-6643525B37F8}
 	EndGlobalSection
 EndGlobal

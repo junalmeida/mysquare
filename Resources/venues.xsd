@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="venues">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="group" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="venue">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="id" type="xs:unsignedInt" />
+                    <xs:element name="name" type="xs:string" />
+                    <xs:element minOccurs="0" name="primarycategory">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="id" type="xs:unsignedInt" />
+                          <xs:element name="fullpathname" type="xs:string" />
+                          <xs:element name="nodename" type="xs:string" />
+                          <xs:element name="iconurl" type="xs:string" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="address" type="xs:string" />
+                    <xs:element minOccurs="0" name="crossstreet" type="xs:string" />
+                    <xs:element name="city" type="xs:string" />
+                    <xs:element name="state" type="xs:string" />
+                    <xs:element minOccurs="0" name="zip" type="xs:string" />
+                    <xs:element name="geolat" type="xs:decimal" />
+                    <xs:element name="geolong" type="xs:decimal" />
+                    <xs:element name="stats">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="herenow" type="xs:unsignedByte" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="twitter" type="xs:string" />
+                    <xs:element minOccurs="0" name="phone" type="xs:unsignedLong" />
+                    <xs:element name="distance" type="xs:unsignedShort" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="type" type="xs:string" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
