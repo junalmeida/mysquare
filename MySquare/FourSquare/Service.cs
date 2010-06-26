@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using System.Net;
 using System.IO;
-using System.Xml.Serialization;
-using System.Xml;
+using System.Net;
+using System.Text;
 
 namespace MySquare.FourSquare
 {
@@ -103,7 +100,7 @@ namespace MySquare.FourSquare
                 }
                 catch (Exception ex)
                 {
-                    OnError(new EventArgs());
+                    OnError(new ErrorEventArgs(ex));
                     return;
                 }
                 finally
@@ -129,7 +126,7 @@ namespace MySquare.FourSquare
 
                 }
                 else
-                    OnError(new EventArgs());
+                    OnError(new ErrorEventArgs(new Exception("Invalid response.")));
 
             }
         }
@@ -149,8 +146,8 @@ namespace MySquare.FourSquare
 
         #region Events
 
-        internal event EventHandler Error;
-        private void OnError(EventArgs e)
+        internal event ErrorEventHandler Error;
+        private void OnError(ErrorEventArgs e)
         {
             if (Error != null)
                 Error(this, e);
@@ -177,6 +174,22 @@ namespace MySquare.FourSquare
         }
 
         internal Venue[] Venues
+        {
+            get;
+            private set;
+        }
+    }
+
+
+    delegate void ErrorEventHandler(object serder, ErrorEventArgs e);
+    class ErrorEventArgs : EventArgs
+    {
+        internal ErrorEventArgs(Exception ex)
+        {
+            this.Exception = ex;
+        }
+
+        internal Exception Exception
         {
             get;
             private set;
