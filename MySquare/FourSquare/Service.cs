@@ -86,7 +86,7 @@ namespace MySquare.FourSquare
                                 switch (service)
                                 {
                                     case ServiceResource.SearchNearby:
-                                        type = typeof(Venues);
+                                        type = typeof(VenuesGroupList);
                                         break;
                                     default:
                                         throw new NotImplementedException();
@@ -117,7 +117,7 @@ namespace MySquare.FourSquare
                     switch (service)
                     {
                         case ServiceResource.SearchNearby:
-                            Venues venues = (Venues)result;
+                            VenuesGroupList venues = (VenuesGroupList)result;
                             Venue[] venueList = new Venue[] { };
                             if (venues.Groups.Length > 0)
                                 venueList = venues.Groups[0].Venues;
