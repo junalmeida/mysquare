@@ -15,6 +15,11 @@ namespace MySquare.UI.Places
         {
             InitializeComponent();
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
+            Color bgColor = Tenor.Mobile.Drawing.Strings.ToColor("#C5CCD4");
+            checkIn1.BackColor = bgColor;
+            venueInfo1.BackColor = bgColor;
+            venueMap1.BackColor = bgColor;
+            venueTips1.BackColor = bgColor;  
 
             tabStrip1.Tabs.Add("Check In");
             tabStrip1.Tabs.Add("Info");
