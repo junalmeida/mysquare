@@ -8,11 +8,13 @@ using System.Windows.Forms;
 using MySquare.Properties;
 using MySquare.FourSquare;
 using System.Threading;
+using Tenor.Mobile.Location;
 
 namespace MySquare.UI.Places
 {
     public partial class List : UserControl
     {
+        WorldPosition position;
         public List()
         {
             InitializeComponent();
@@ -20,7 +22,7 @@ namespace MySquare.UI.Places
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(lblError);
 
-            Program.Position.LocationChanged += new EventHandler(Position_LocationChanged);
+
             Program.Service.SearchArrives += new MySquare.FourSquare.SearchEventHandler(Service_SearchArrives);
             Program.Service.Error += new ErrorEventHandler(Service_Error);
         }
@@ -35,24 +37,37 @@ namespace MySquare.UI.Places
         }
 
 
-
         internal void Refresh()
         {
             Application.DoEvents();
             ShowLoading();
-            Program.Position.PollCell();
+
+            position = new WorldPosition(false, false);
+            position.LocationChanged += new EventHandler(position_LocationChanged);
+            position.Error += new EventHandler(position_Error);
+
+            position.PollCell();
         }
 
-        void Position_LocationChanged(object sender, EventArgs e)
+        void position_Error(object sender, EventArgs e)
         {
-            if (Program.Position.Latitude.HasValue && Program.Position.Longitude.HasValue)
+            this.Invoke(new System.Threading.ThreadStart(delegate()
             {
-                Program.Service.SearchNearby(null, Program.Position.Latitude.Value, Program.Position.Longitude.Value);
+                ShowError("Could not get position.");
+            }));
+        }
+
+        void position_LocationChanged(object sender, EventArgs e)
+        {
+            if (position.Latitude.HasValue && position.Longitude.HasValue)
+            {
+                Program.Service.SearchNearby(null, position.Latitude.Value, position.Longitude.Value);
             }
             else
             {
                 ShowError("Cannot check your location, try again.");
             }
+            position = null;
         }
 
 

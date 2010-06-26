@@ -17,13 +17,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{
 		Resources\venues.xsd = Resources\venues.xsd
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{FEE3DF99-755C-4A85-9BB7-B7C1339B080A}"
+	ProjectSection(SolutionItems) = preProject
+		Newtonsoft.Json.Compact.dll = Newtonsoft.Json.Compact.dll
+		Newtonsoft.Json.Compact.pdb = Newtonsoft.Json.Compact.pdb
+		Newtonsoft.Json.Compact.xml = Newtonsoft.Json.Compact.xml
+		Tenor.Mobile.dll = Tenor.Mobile.dll
+		Tenor.Mobile.pdb = Tenor.Mobile.pdb
+		Tenor.Mobile.PocketPC.asmmeta.dll = Tenor.Mobile.PocketPC.asmmeta.dll
+		Tenor.Mobile.XML = Tenor.Mobile.XML
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
 		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = MySquare.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,5 +54,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2A7C32F4-5D22-4DFC-9665-D60C07D0758B} = {05FA69D7-6B40-4F57-8B8F-6643525B37F8}
+		{FEE3DF99-755C-4A85-9BB7-B7C1339B080A} = {05FA69D7-6B40-4F57-8B8F-6643525B37F8}
 	EndGlobalSection
 EndGlobal

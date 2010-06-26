@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using MySquare.FourSquare;
+using Tenor.Mobile.Location;
 
 namespace MySquare
 {
@@ -11,10 +12,10 @@ namespace MySquare
         static Program()
         {
             Service = new Service();
-            Position = new Tenor.Mobile.Location.WorldPosition(false, false);
+            //Position = new WorldPosition(false, false);
         }
         internal static Service Service { get; private set; }
-        internal static Tenor.Mobile.Location.WorldPosition Position { get; private set; }
+        internal static WorldPosition Position { get; private set; }
 
         /// <summary>
         /// The main entry point for the application.
