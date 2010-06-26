@@ -18,6 +18,7 @@
     <NativePlatformName>Windows Mobile 6 Professional SDK</NativePlatformName>
     <FormFactorID>
     </FormFactorID>
+    <DeployDirPrefix>%25CSIDL_PROGRAM_FILES%25</DeployDirPrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,7 +54,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -114,6 +114,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pin_map_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PinMap.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ajax-loader.gif" />
