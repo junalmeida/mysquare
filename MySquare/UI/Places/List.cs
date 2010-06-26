@@ -180,5 +180,11 @@ namespace MySquare.UI.Places
         }
 
 
+
+        internal void Activate()
+        {
+            Dock = DockStyle.Fill;
+            Visible = true;
+        }
     }
 }

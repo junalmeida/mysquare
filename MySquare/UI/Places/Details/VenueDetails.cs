@@ -32,14 +32,28 @@ namespace MySquare.UI.Places
                 address.Add(venue.State);
             lblAddress.Text = string.Join(", ", address.ToArray());
 
-            txtShout.Text = string.Empty;
-            chkFacebook.Checked = false;
-            chkTellFriends.Checked = true;
-            chkTwitter.Checked = false;
+            ChangeView(0);
+        }
+
+        private void ChangeView(int i)
+        {
+            switch (i)
+            {
+                case 0:
+                    checkIn1.Activate();
+                    break;
+            }
         }
 
         internal void CheckIn()
         {
+            checkIn1.DoCheckIn();
+        }
+
+        internal void Activate()
+        {
+            Dock = DockStyle.Fill;
+            Visible = true;
         }
     }
 }

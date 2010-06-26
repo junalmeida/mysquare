@@ -65,16 +65,15 @@ namespace MySquare.UI.Places
             switch (index)
             {
                 case 0:
-                    this.leftSoft.Text = "&Refresh";
-                    this.rightSoft.Text = "&Menu";
-                    this.rightSoft.MenuItems.Clear();
-                    this.rightSoft.MenuItems.Add(new MenuItem()
+                    leftSoft.Text = "&Refresh";
+                    rightSoft.Text = "&Menu";
+                    rightSoft.MenuItems.Clear();
+                    rightSoft.MenuItems.Add(new MenuItem()
                     {
                         Text = "&Create Venue"
                     });
 
-                    list1.Dock = DockStyle.Fill;
-                    list1.Visible = true;
+                    list1.Activate();
                     venueDetails1.Visible = false;
                     break;
                 case 1:
@@ -83,8 +82,7 @@ namespace MySquare.UI.Places
                     this.rightSoft.Text = "&Check-in";
                     this.rightSoft.MenuItems.Clear();
 
-                    venueDetails1.Dock = DockStyle.Fill;
-                    venueDetails1.Visible = true;
+                    venueDetails1.Activate();
                     list1.Visible = false;
                     break;
             }
