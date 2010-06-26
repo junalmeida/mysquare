@@ -9,7 +9,7 @@ using MySquare.FourSquare;
 
 namespace MySquare.UI.Places
 {
-    public partial class VenueDetails : UserControl
+    public partial class VenueDetails : UserControl, IPanel
     {
         public VenueDetails()
         {
@@ -26,6 +26,40 @@ namespace MySquare.UI.Places
             tabStrip1.Tabs.Add("Map");
             tabStrip1.Tabs.Add("Tips");
         }
+        MenuItem leftSoft; MenuItem rightSoft;
+        public void ActivateControl(MenuItem leftSoft, MenuItem rightSoft)
+        {
+            if (this.leftSoft != leftSoft)
+            {
+                this.leftSoft = leftSoft;
+                this.leftSoft.Click += new EventHandler(leftSoft_Click);
+            }
+
+            if (this.rightSoft != rightSoft)
+            {
+                this.rightSoft = rightSoft;
+                this.rightSoft.Click += new EventHandler(rightSoft_Click);
+            }
+
+            leftSoft.Text = "&Back";
+            rightSoft.Text = "&Check in";
+
+            BringToFront();
+            Dock = DockStyle.Fill;
+            Visible = true;
+        }
+
+        void rightSoft_Click(object sender, EventArgs e)
+        {
+            if (Visible)
+                checkIn1.DoCheckIn();
+        }
+
+        void leftSoft_Click(object sender, EventArgs e)
+        {
+        }
+
+
 
         Venue venue;
         internal void OpenVenue(Venue venue)
@@ -42,19 +76,11 @@ namespace MySquare.UI.Places
                 address.Add(venue.State);
             lblAddress.Text = string.Join(", ", address.ToArray());
 
+            tabStrip1.SelectedIndex = 0;
             ChangeView(0);
         }
 
-        internal void CheckIn()
-        {
-            checkIn1.DoCheckIn();
-        }
-
-        internal void Activate()
-        {
-            Dock = DockStyle.Fill;
-            Visible = true;
-        }
+ 
 
         private void tabStrip1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -70,24 +96,28 @@ namespace MySquare.UI.Places
                     venueMap1.Visible = false;
                     venueTips1.Visible = false;
                     checkIn1.Activate();
+                    rightSoft.Enabled = true;
                     break;
                 case 1:
                     checkIn1.Visible = false;
                     venueMap1.Visible = false;
                     venueTips1.Visible = false;
                     venueInfo1.Activate();
+                    rightSoft.Enabled = false;
                     break;
                 case 2:
                     venueInfo1.Visible = false;
                     checkIn1.Visible = false;
                     venueTips1.Visible = false;
                     venueMap1.Activate();
+                    rightSoft.Enabled = false;
                     break;
                 case 3:
                     venueInfo1.Visible = false;
                     venueMap1.Visible = false;
                     checkIn1.Visible = false;
                     venueTips1.Activate();
+                    rightSoft.Enabled = false;
                     break;
             }
         }

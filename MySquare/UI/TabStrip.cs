@@ -22,7 +22,7 @@ namespace MySquare.UI
         { get; private set; }
 
         public int SelectedIndex
-        { get; private set; }
+        { get; set; }
 
         public event EventHandler SelectedIndexChanged;
         private void OnSelectedIndexChanged(EventArgs e)

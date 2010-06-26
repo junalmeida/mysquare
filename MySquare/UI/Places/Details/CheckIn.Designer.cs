@@ -37,7 +37,7 @@
             // chkFacebook
             // 
             this.chkFacebook.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkFacebook.ForeColor = System.Drawing.Color.White;
+            this.chkFacebook.ForeColor = System.Drawing.Color.Black;
             this.chkFacebook.Location = new System.Drawing.Point(134, 92);
             this.chkFacebook.Name = "chkFacebook";
             this.chkFacebook.Size = new System.Drawing.Size(124, 20);
@@ -46,7 +46,7 @@
             // 
             // chkTwitter
             // 
-            this.chkTwitter.ForeColor = System.Drawing.Color.White;
+            this.chkTwitter.ForeColor = System.Drawing.Color.Black;
             this.chkTwitter.Location = new System.Drawing.Point(3, 92);
             this.chkTwitter.Name = "chkTwitter";
             this.chkTwitter.Size = new System.Drawing.Size(118, 20);
@@ -57,7 +57,7 @@
             // 
             this.chkTellFriends.Checked = true;
             this.chkTellFriends.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkTellFriends.ForeColor = System.Drawing.Color.White;
+            this.chkTellFriends.ForeColor = System.Drawing.Color.Black;
             this.chkTellFriends.Location = new System.Drawing.Point(3, 66);
             this.chkTellFriends.Name = "chkTellFriends";
             this.chkTellFriends.Size = new System.Drawing.Size(141, 20);

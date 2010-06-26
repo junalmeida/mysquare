@@ -3,11 +3,43 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using Microsoft.Win32;
 
 namespace MySquare.FourSquare
 {
     class Service
     {
+        #region Settings
+        private RegistryKey key;
+        public string Login
+        {
+            get
+            {
+                return (string)key.GetValue("login", null);
+            }
+            set
+            {
+                key.SetValue("login", value);
+            }
+        }
+
+        public string Password
+        {
+            get
+            {
+                return (string)key.GetValue("password", null);
+            }
+            set
+            {
+                key.SetValue("password", value);
+            }
+        }
+
+
+
+        #endregion
+
+
         enum ServiceResource
         {
             SearchNearby
@@ -15,14 +47,15 @@ namespace MySquare.FourSquare
 
         internal Service()
         {
+            string keyPath = "Software\\RisingMobility\\MySquare";
+            key = Registry.LocalMachine.CreateSubKey(keyPath);
+
             var asName = typeof(Service).Assembly.GetName();
             userAgent = string.Format("{0}/{1}", asName.Name, asName.Version);
         }
 
         private System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.GetCultureInfo("en-us");
         private string userAgent;
-        private string userName;
-        private string passWord;
         int limit = 20;
 
         HttpWebRequest request = null;
@@ -63,8 +96,8 @@ namespace MySquare.FourSquare
             request.Timeout = 15000;
             request.UserAgent = userAgent;
             request.Method = "GET";
-            if (!string.IsNullOrEmpty(userName))
-                request.Headers.Add(string.Format("{0}:{1}", userName, passWord));
+            if (!string.IsNullOrEmpty(Login))
+                request.Credentials = new NetworkCredential(Login, Password);
 
             request.BeginGetResponse(new AsyncCallback(ParseResponse), service);
         }

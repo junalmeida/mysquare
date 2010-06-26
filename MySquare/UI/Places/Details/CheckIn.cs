@@ -29,6 +29,7 @@ namespace MySquare.UI.Places.Details
 
         internal void DoCheckIn()
         {
+            MessageBox.Show("Test");
         }
     }
 }

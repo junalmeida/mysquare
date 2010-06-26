@@ -28,21 +28,23 @@ namespace MySquare.UI
             switch (header.Tabs[header.SelectedIndex].Text)
             {
                 case "Places":
-                    places1.BringToFront();
-                    places1.Dock = DockStyle.Fill;
-                    places1.Visible = true;
-
+                    settings1.Visible = false;
+                    ResetMenus();
                     ((IPanel)places1).ActivateControl(mnuLeft, mnuRight);
                     break;
                 case "Settings":
-                    settings1.BringToFront();
-                    settings1.Dock = DockStyle.Fill;
-                    settings1.Visible = true;
-
+                    places1.Visible = false;
+                    ResetMenus();
                     ((IPanel)settings1).ActivateControl(mnuLeft, mnuRight);
                     break;
             }
 
+        }
+
+        private void ResetMenus()
+        {
+            mnuLeft.MenuItems.Clear();
+            mnuRight.MenuItems.Clear();
         }
     }
 }

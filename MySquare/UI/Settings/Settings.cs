@@ -19,7 +19,6 @@ namespace MySquare.UI.Settings
 
         #region IPanel Members
 
-        #region IPanel Members
 
         MenuItem leftSoft, rightSoft;
         public void ActivateControl(MenuItem leftSoft, MenuItem rightSoft)
@@ -35,20 +34,50 @@ namespace MySquare.UI.Settings
                 this.rightSoft = rightSoft;
                 this.rightSoft.Click += new EventHandler(rightSoft_Click);
             }
+
+            BringToFront();
+            Dock = DockStyle.Fill;
+            Visible = true;
+
+            leftSoft.Text = "&Save";
+            rightSoft.Text = "&Exit";
+
+            Load();
         }
 
 
         void leftSoft_Click(object sender, EventArgs e)
         {
+            if (Visible)
+                Save();
         }
-
 
         void rightSoft_Click(object sender, EventArgs e)
         {
+            if (Visible)
+                Exit();
         }
-        #endregion
-
 
         #endregion
+
+        private void Load()
+        {
+            txtEmail.Text = Program.Service.Login;
+            txtPassword.Text = string.Empty;
+        }
+
+        private void Save()
+        {
+            Program.Service.Login = txtEmail.Text;
+            if (!string.IsNullOrEmpty(txtPassword.Text))
+                Program.Service.Password = txtPassword.Text;
+
+            MessageBox.Show("Settings saved.", "MySquare");
+        }
+
+        private void Exit()
+        {
+            Application.Exit();
+        }
     }
 }

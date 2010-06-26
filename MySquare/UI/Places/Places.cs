@@ -34,6 +34,10 @@ namespace MySquare.UI.Places
                 this.rightSoft = rightSoft;
                 this.rightSoft.Click += new EventHandler(rightSoft_Click);
             }
+            BringToFront();
+            Dock = DockStyle.Fill;
+            Visible = true;
+
             ChangeView(0);
             if (firstTime)
             {
@@ -55,15 +59,13 @@ namespace MySquare.UI.Places
 
         void rightSoft_Click(object sender, EventArgs e)
         {
-            if (this.Visible && venueDetails1.Visible)
-                venueDetails1.CheckIn();
         }
         #endregion
 
         private void list1_ItemSelected(object sender, EventArgs e)
         {
-            venueDetails1.OpenVenue(list1.SelectedVenue);
             ChangeView(1);
+            venueDetails1.OpenVenue(list1.SelectedVenue);
         }
 
         private void ChangeView(int index)
@@ -71,9 +73,9 @@ namespace MySquare.UI.Places
             switch (index)
             {
                 case 0:
+                    ResetMenus();
                     leftSoft.Text = "&Refresh";
                     rightSoft.Text = "&Menu";
-                    rightSoft.MenuItems.Clear();
                     rightSoft.MenuItems.Add(new MenuItem()
                     {
                         Text = "&Create Venue"
@@ -84,14 +86,17 @@ namespace MySquare.UI.Places
                     break;
                 case 1:
 
-                    this.leftSoft.Text = "&Back";
-                    this.rightSoft.Text = "&Check-in";
-                    this.rightSoft.MenuItems.Clear();
-
-                    venueDetails1.Activate();
+                    ResetMenus();
+                    venueDetails1.ActivateControl(leftSoft, rightSoft);
                     list1.Visible = false;
                     break;
             }
+        }
+
+        private void ResetMenus()
+        {
+            leftSoft.MenuItems.Clear();
+            rightSoft.MenuItems.Clear();
         }
     }
 }
