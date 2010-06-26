@@ -36,7 +36,7 @@ namespace MySquare.FourSquare
             switch (service)
             {
                 case ServiceResource.SearchNearby:
-                    url = "http://api.foursquare.com/v1/venues";
+                    url = "http://api.foursquare.com/v1/venues.json";
                     break;
                 default:
                     throw new NotImplementedException();
@@ -86,15 +86,15 @@ namespace MySquare.FourSquare
                                 switch (service)
                                 {
                                     case ServiceResource.SearchNearby:
-                                        type = typeof(venues);
+                                        type = typeof(Venues);
                                         break;
                                     default:
                                         throw new NotImplementedException();
                                 }
 
-                                XmlSerializer serializer = new XmlSerializer(type);
-                                XmlReader reader = XmlReader.Create(stream);
-                                result = serializer.Deserialize(reader);
+                                Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+                                Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
+                                result = serializer.Deserialize(reader, type);
 
                             }
 
@@ -117,7 +117,11 @@ namespace MySquare.FourSquare
                     switch (service)
                     {
                         case ServiceResource.SearchNearby:
-                            OnSearchArrives(new SearchEventArgs((venues)result));
+                            Venues venues = (Venues)result;
+                            Venue[] venueList = new Venue[] { };
+                            if (venues.Groups.Length > 0)
+                                venueList = venues.Groups[0].Venues;
+                            OnSearchArrives(new SearchEventArgs(venueList));
                             break;
                         default:
                             throw new NotImplementedException();
@@ -167,12 +171,12 @@ namespace MySquare.FourSquare
     delegate void SearchEventHandler(object serder, SearchEventArgs e);
     class SearchEventArgs : EventArgs 
     {
-        internal SearchEventArgs(venues venues)
+        internal SearchEventArgs(Venue[] venues)
         {
             this.Venues = venues;
         }
 
-        internal venues Venues
+        internal Venue[] Venues
         {
             get;
             private set;

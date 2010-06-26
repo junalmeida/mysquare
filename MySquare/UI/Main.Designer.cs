@@ -1,4 +1,4 @@
-﻿namespace MySquare
+﻿namespace MySquare.UI
 {
     partial class Main
     {
@@ -30,7 +30,16 @@
         private void InitializeComponent()
         {
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
+            this.header = new Tenor.Mobile.UI.HeaderStrip();
             this.SuspendLayout();
+            // 
+            // header
+            // 
+            this.header.Dock = System.Windows.Forms.DockStyle.Top;
+            this.header.Location = new System.Drawing.Point(0, 0);
+            this.header.Name = "header";
+            this.header.Size = new System.Drawing.Size(240, 49);
+            this.header.TabIndex = 0;
             // 
             // Main
             // 
@@ -38,6 +47,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 268);
+            this.Controls.Add(this.header);
             this.Menu = this.mainMenu1;
             this.Name = "Main";
             this.Text = "MySquare";
@@ -46,6 +56,8 @@
         }
 
         #endregion
+
+        private Tenor.Mobile.UI.HeaderStrip header;
     }
 }
 

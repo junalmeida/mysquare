@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MySquare
+namespace MySquare.UI
 {
     public partial class Main : Form
     {

@@ -1,3 +1,372 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<venues><group type="Nearby"><venue><id>1892981</id><name>Linha Vermelha</name><primarycategory><id>79271</id><fullpathname>Travel:Highway / Traffic</fullpathname><nodename>Highway / Traffic</nodename><iconurl>http://foursquare.com/img/categories/travel/highway.png</iconurl></primarycategory><address></address><city></city><state></state><geolat>-22.873805</geolat><geolong>-43.232289</geolong><stats><herenow>0</herenow></stats><distance>1036</distance></venue><venue><id>3457815</id><name>Vasco - São Januário</name><address>Rua General Almério de Moura 131</address><crossstreet>Bairro Vasco da Gama</crossstreet><city>Rio de Janeiro</city><state>RJ</state><zip>20921060</zip><geolat>-22.8906788</geolat><geolong>-43.2291111</geolong><stats><herenow>0</herenow></stats><phone>552121767373</phone><distance>1524</distance></venue><venue><id>3047266</id><name>Couve Flor</name><primarycategory><id>79045</id><fullpathname>Food:Brazilian</fullpathname><nodename>Brazilian</nodename><iconurl>http://foursquare.com/img/categories/food/brazillian.png</iconurl></primarycategory><address></address><city></city><state></state><geolat>-22.8647227</geolat><geolong>-43.2186929</geolong><stats><herenow>0</herenow></stats><distance>1559</distance></venue><venue><id>3611613</id><name>Verde Romocoes e Ltda</name><primarycategory><id>79134</id><fullpathname>Home / Work / Other:Medical</fullpathname><nodename>Medical</nodename><iconurl>http://foursquare.com/img/categories/building/medical.png</iconurl></primarycategory><address>Bela, 1861</address><city>Rio de Janeiro</city><state>RJ</state><geolat>-22.8850817</geolat><geolong>-43.2273832</geolong><stats><herenow>0</herenow></stats><distance>885</distance></venue><venue><id>3225481</id><name>COPPE/UFRJ</name><primarycategory><id>79009</id><fullpathname>College &amp; Education:Academic Building:Technology</fullpathname><nodename>Technology</nodename><iconurl>http://foursquare.com/img/categories/education/default.png</iconurl></primarycategory><address></address><city>Rio de Janeiro</city><state>Rio de Janeiro</state><geolat>-22.862691407885904</geolat><geolong>-43.227810859680176</geolong><stats><herenow>0</herenow></stats><distance>1773</distance></venue><venue><id>3186499</id><name>Editora Record</name><primarycategory><id>79115</id><fullpathname>Home / Work / Other:Corporate / Office</fullpathname><nodename>Corporate / Office</nodename><iconurl>http://foursquare.com/img/categories/building/default.png</iconurl></primarycategory><address>R. Argentina, 171 - São Cristóvão</address><city>Rio de Janeiro</city><state>Rio de Janeiro</state><zip>20921-380</zip><geolat>-22.8921447</geolat><geolong>-43.224219</geolong><stats><herenow>0</herenow></stats><distance>1569</distance></venue><venue><id>4582520</id><name>Vasco Boutique</name><address>Rua General Almerio De Moura 131</address><crossstreet>Bairro Vasco da Gama</crossstreet><city>Rio de Janeiro</city><state>RJ</state><zip>20921060</zip><geolat>-22.8906788</geolat><geolong>-43.2291111</geolong><stats><herenow>0</herenow></stats><phone>02121767373</phone><distance>1524</distance></venue><venue><id>3377856</id><name>Crematório Santa Casa</name><primarycategory><id>79183</id><fullpathname>Parks &amp; Outdoors:Cemetery</fullpathname><nodename>Cemetery</nodename><iconurl>http://foursquare.com/img/categories/parks_outdoors/cemetery.png</iconurl></primarycategory><address>R.Carlos Seidl s/n</address><city>Rio de Janeiro</city><state>RJ</state><geolat>-22.8766502</geolat><geolong>-43.2189508</geolong><stats><herenow>0</herenow></stats><distance>473</distance></venue><venue><id>279514</id><name>Estadio Sao Januario</name><primarycategory><id>78989</id><fullpathname>Arts &amp; Entertainment:Stadium</fullpathname><nodename>Stadium</nodename><iconurl>http://foursquare.com/img/categories/arts_entertainment/stadium.png</iconurl></primarycategory><address>Rua General Almério de Moura 131</address><city>Rio de Janeiro</city><state>Brazil</state><zip>20921-060</zip><geolat>-22.8915202</geolat><geolong>-43.228941</geolong><stats><herenow>0</herenow></stats><distance>1604</distance></venue><venue><id>3379347</id><name>Crematório do Cemitério do Caju</name><primarycategory><id>79183</id><fullpathname>Parks &amp; Outdoors:Cemetery</fullpathname><nodename>Cemetery</nodename><iconurl>http://foursquare.com/img/categories/parks_outdoors/cemetery.png</iconurl></primarycategory><address>Rua Carlos Seidl, s/n</address><city>Rio de Janeiro</city><state>Rio de Janeiro</state><geolat>-22.8766502</geolat><geolong>-43.2189508</geolong><stats><herenow>0</herenow></stats><distance>473</distance></venue><venue><id>3709007</id><name>Biblioteca Pedro Calmon</name><primarycategory><id>79020</id><fullpathname>College &amp; Education:Library</fullpathname><nodename>Library</nodename><iconurl>http://foursquare.com/img/categories/education/default.png</iconurl></primarycategory><address>UFRJ</address><city>Rio de Janeiro</city><state>RJ</state><geolat>-22.8625</geolat><geolong>-43.2238889</geolong><stats><herenow>0</herenow></stats><distance>1734</distance></venue><venue><id>1754198</id><name>Observatório Nacional - MCT</name><primarycategory><id>79005</id><fullpathname>College &amp; Education:Academic Building:Science</fullpathname><nodename>Science</nodename><iconurl>http://foursquare.com/img/categories/education/default.png</iconurl></primarycategory><address>Rua General José Cristino, 77 - São Cristóvão</address><city>Rio de Janeiro</city><state>Rio de Janeiro</state><zip>20921-400</zip><geolat>-22.8947678</geolat><geolong>-43.2255026</geolong><stats><herenow>0</herenow></stats><phone>2135049100</phone><distance>1872</distance></venue><venue><id>5128925</id><name>Fazendola</name><address></address><city></city><state></state><geolat>-22.880038</geolat><geolong>-43.239588</geolong><stats><herenow>0</herenow></stats><distance>1684</distance></venue><venue><id>2016722</id><name>Centro de Tecnologia</name><primarycategory><id>79037</id><fullpathname>College &amp; Education:University</fullpathname><nodename>University</nodename><iconurl>http://foursquare.com/img/categories/education/default.png</iconurl></primarycategory><address>Ilha do Fundão</address><city>Rio de Janeiro</city><state>Brasil</state><geolat>-22.86041761723816</geolat><geolong>-43.230074644088745</geolong><stats><herenow>0</herenow></stats><twitter>benecsa</twitter><distance>2084</distance></venue><venue><id>4757040</id><name>Faculdade de Letras</name><address>Av. Brigadeiro Trompowsky, 446 - UFRJ</address><city>Rio de Janeiro</city><state>RJ</state><geolat>-22.8625</geolat><geolong>-43.2238889</geolong><stats><herenow>0</herenow></stats><distance>1734</distance></venue><venue><id>3957689</id><name>MAST</name><primarycategory><id>78978</id><fullpathname>Arts &amp; Entertainment:Museum:Science</fullpathname><nodename>Science</nodename><iconurl>http://foursquare.com/img/categories/arts_entertainment/museum_science.png</iconurl></primarycategory><address>rua jose cristino, sao cristovao</address><city>rio de janeiro</city><state>rio de janeiro</state><geolat>-22.8947942</geolat><geolong>-43.225607</geolong><stats><herenow>0</herenow></stats><distance>1876</distance></venue><venue><id>3750526</id><name>Mexdelicia</name><primarycategory><id>79076</id><fullpathname>Food:Mexican</fullpathname><nodename>Mexican</nodename><iconurl>http://foursquare.com/img/categories/food/default.png</iconurl></primarycategory><address>Downtown bloco 21</address><city>Rio de Janeiro</city><state>RJ</state><geolat>-22.8625</geolat><geolong>-43.2238889</geolong><stats><herenow>0</herenow></stats><distance>1734</distance></venue><venue><id>1792574</id><name>Feira de São Cristóvão</name><primarycategory><id>79045</id><fullpathname>Food:Brazilian</fullpathname><nodename>Brazilian</nodename><iconurl>http://foursquare.com/img/categories/food/brazillian.png</iconurl></primarycategory><address></address><city>Rio de Janeiro</city><state>rj</state><geolat>-22.89755489</geolat><geolong>-43.22081741</geolong><stats><herenow>0</herenow></stats><distance>2183</distance></venue><venue><id>4541961</id><name>AC Album &amp; Scrap</name><primarycategory><id>96357</id><fullpathname>Shops:Arts &amp; Crafts</fullpathname><nodename>Arts &amp; Crafts</nodename><iconurl>http://foursquare.com/img/categories/shops/artstore.png</iconurl></primarycategory><address>Downtown bl 9 loja 106</address><city>Rio de Janeiro</city><state>RJ</state><geolat>-22.8625</geolat><geolong>-43.2238889</geolong><stats><herenow>0</herenow></stats><distance>1734</distance></venue><venue><id>2623628</id><name>Coppead</name><primarycategory><id>79036</id><fullpathname>College &amp; Education:Trade / Tech School</fullpathname><nodename>Trade / Tech School</nodename><iconurl>http://foursquare.com/img/categories/education/default.png</iconurl></primarycategory><address></address><city></city><state></state><geolat>-22.860068</geolat><geolong>-43.218595</geolong><stats><herenow>0</herenow></stats><distance>2061</distance></venue></group></venues>  
-  
+<venues>
+  <group type="Nearby">
+    <venue>
+      <id>1892981</id>
+      <name>Linha Vermelha</name>
+      <primarycategory>
+        <id>79271</id>
+        <fullpathname>Travel:Highway / Traffic</fullpathname>
+        <nodename>Highway / Traffic</nodename>
+        <iconurl>http://foursquare.com/img/categories/travel/highway.png</iconurl>
+      </primarycategory>
+      <address></address>
+      <city></city>
+      <state></state>
+      <geolat>-22.873805</geolat>
+      <geolong>-43.232289</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>1036</distance>
+    </venue>
+    <venue>
+      <id>3457815</id>
+      <name>Vasco - São Januário</name>
+      <address>Rua General Almério de Moura 131</address>
+      <crossstreet>Bairro Vasco da Gama</crossstreet>
+      <city>Rio de Janeiro</city>
+      <state>RJ</state>
+      <zip>20921060</zip>
+      <geolat>-22.8906788</geolat>
+      <geolong>-43.2291111</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <phone>552121767373</phone>
+      <distance>1524</distance>
+    </venue>
+    <venue>
+      <id>3047266</id>
+      <name>Couve Flor</name>
+      <primarycategory>
+        <id>79045</id>
+        <fullpathname>Food:Brazilian</fullpathname>
+        <nodename>Brazilian</nodename>
+        <iconurl>http://foursquare.com/img/categories/food/brazillian.png</iconurl>
+      </primarycategory>
+      <address></address>
+      <city></city>
+      <state></state>
+      <geolat>-22.8647227</geolat>
+      <geolong>-43.2186929</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>1559</distance>
+    </venue>
+    <venue>
+      <id>3611613</id>
+      <name>Verde Romocoes e Ltda</name>
+      <primarycategory>
+        <id>79134</id>
+        <fullpathname>Home / Work / Other:Medical</fullpathname>
+        <nodename>Medical</nodename>
+        <iconurl>http://foursquare.com/img/categories/building/medical.png</iconurl>
+      </primarycategory>
+      <address>Bela, 1861</address>
+      <city>Rio de Janeiro</city>
+      <state>RJ</state>
+      <geolat>-22.8850817</geolat>
+      <geolong>-43.2273832</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>885</distance>
+    </venue>
+    <venue>
+      <id>3225481</id>
+      <name>COPPE/UFRJ</name>
+      <primarycategory>
+        <id>79009</id>
+        <fullpathname>College &amp; Education:Academic Building:Technology</fullpathname>
+        <nodename>Technology</nodename>
+        <iconurl>http://foursquare.com/img/categories/education/default.png</iconurl>
+      </primarycategory>
+      <address></address>
+      <city>Rio de Janeiro</city>
+      <state>Rio de Janeiro</state>
+      <geolat>-22.862691407885904</geolat>
+      <geolong>-43.227810859680176</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>1773</distance>
+    </venue>
+    <venue>
+      <id>3186499</id>
+      <name>Editora Record</name>
+      <primarycategory>
+        <id>79115</id>
+        <fullpathname>Home / Work / Other:Corporate / Office</fullpathname>
+        <nodename>Corporate / Office</nodename>
+        <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
+      </primarycategory>
+      <address>R. Argentina, 171 - São Cristóvão</address>
+      <city>Rio de Janeiro</city>
+      <state>Rio de Janeiro</state>
+      <zip>20921-380</zip>
+      <geolat>-22.8921447</geolat>
+      <geolong>-43.224219</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>1569</distance>
+    </venue>
+    <venue>
+      <id>4582520</id>
+      <name>Vasco Boutique</name>
+      <address>Rua General Almerio De Moura 131</address>
+      <crossstreet>Bairro Vasco da Gama</crossstreet>
+      <city>Rio de Janeiro</city>
+      <state>RJ</state>
+      <zip>20921060</zip>
+      <geolat>-22.8906788</geolat>
+      <geolong>-43.2291111</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <phone>02121767373</phone>
+      <distance>1524</distance>
+    </venue>
+    <venue>
+      <id>3377856</id>
+      <name>Crematório Santa Casa</name>
+      <primarycategory>
+        <id>79183</id>
+        <fullpathname>Parks &amp; Outdoors:Cemetery</fullpathname>
+        <nodename>Cemetery</nodename>
+        <iconurl>http://foursquare.com/img/categories/parks_outdoors/cemetery.png</iconurl>
+      </primarycategory>
+      <address>R.Carlos Seidl s/n</address>
+      <city>Rio de Janeiro</city>
+      <state>RJ</state>
+      <geolat>-22.8766502</geolat>
+      <geolong>-43.2189508</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>473</distance>
+    </venue>
+    <venue>
+      <id>279514</id>
+      <name>Estadio Sao Januario</name>
+      <primarycategory>
+        <id>78989</id>
+        <fullpathname>Arts &amp; Entertainment:Stadium</fullpathname>
+        <nodename>Stadium</nodename>
+        <iconurl>http://foursquare.com/img/categories/arts_entertainment/stadium.png</iconurl>
+      </primarycategory>
+      <address>Rua General Almério de Moura 131</address>
+      <city>Rio de Janeiro</city>
+      <state>Brazil</state>
+      <zip>20921-060</zip>
+      <geolat>-22.8915202</geolat>
+      <geolong>-43.228941</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>1604</distance>
+    </venue>
+    <venue>
+      <id>3379347</id>
+      <name>Crematório do Cemitério do Caju</name>
+      <primarycategory>
+        <id>79183</id>
+        <fullpathname>Parks &amp; Outdoors:Cemetery</fullpathname>
+        <nodename>Cemetery</nodename>
+        <iconurl>http://foursquare.com/img/categories/parks_outdoors/cemetery.png</iconurl>
+      </primarycategory>
+      <address>Rua Carlos Seidl, s/n</address>
+      <city>Rio de Janeiro</city>
+      <state>Rio de Janeiro</state>
+      <geolat>-22.8766502</geolat>
+      <geolong>-43.2189508</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>473</distance>
+    </venue>
+    <venue>
+      <id>3709007</id>
+      <name>Biblioteca Pedro Calmon</name>
+      <primarycategory>
+        <id>79020</id>
+        <fullpathname>College &amp; Education:Library</fullpathname>
+        <nodename>Library</nodename>
+        <iconurl>http://foursquare.com/img/categories/education/default.png</iconurl>
+      </primarycategory>
+      <address>UFRJ</address>
+      <city>Rio de Janeiro</city>
+      <state>RJ</state>
+      <geolat>-22.8625</geolat>
+      <geolong>-43.2238889</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>1734</distance>
+    </venue>
+    <venue>
+      <id>1754198</id>
+      <name>Observatório Nacional - MCT</name>
+      <primarycategory>
+        <id>79005</id>
+        <fullpathname>College &amp; Education:Academic Building:Science</fullpathname>
+        <nodename>Science</nodename>
+        <iconurl>http://foursquare.com/img/categories/education/default.png</iconurl>
+      </primarycategory>
+      <address>Rua General José Cristino, 77 - São Cristóvão</address>
+      <city>Rio de Janeiro</city>
+      <state>Rio de Janeiro</state>
+      <zip>20921-400</zip>
+      <geolat>-22.8947678</geolat>
+      <geolong>-43.2255026</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <phone>2135049100</phone>
+      <distance>1872</distance>
+    </venue>
+    <venue>
+      <id>5128925</id>
+      <name>Fazendola</name>
+      <address></address>
+      <city></city>
+      <state></state>
+      <geolat>-22.880038</geolat>
+      <geolong>-43.239588</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>1684</distance>
+    </venue>
+    <venue>
+      <id>2016722</id>
+      <name>Centro de Tecnologia</name>
+      <primarycategory>
+        <id>79037</id>
+        <fullpathname>College &amp; Education:University</fullpathname>
+        <nodename>University</nodename>
+        <iconurl>http://foursquare.com/img/categories/education/default.png</iconurl>
+      </primarycategory>
+      <address>Ilha do Fundão</address>
+      <city>Rio de Janeiro</city>
+      <state>Brasil</state>
+      <geolat>-22.86041761723816</geolat>
+      <geolong>-43.230074644088745</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <twitter>benecsa</twitter>
+      <distance>2084</distance>
+    </venue>
+    <venue>
+      <id>4757040</id>
+      <name>Faculdade de Letras</name>
+      <address>Av. Brigadeiro Trompowsky, 446 - UFRJ</address>
+      <city>Rio de Janeiro</city>
+      <state>RJ</state>
+      <geolat>-22.8625</geolat>
+      <geolong>-43.2238889</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>1734</distance>
+    </venue>
+    <venue>
+      <id>3957689</id>
+      <name>MAST</name>
+      <primarycategory>
+        <id>78978</id>
+        <fullpathname>Arts &amp; Entertainment:Museum:Science</fullpathname>
+        <nodename>Science</nodename>
+        <iconurl>http://foursquare.com/img/categories/arts_entertainment/museum_science.png</iconurl>
+      </primarycategory>
+      <address>rua jose cristino, sao cristovao</address>
+      <city>rio de janeiro</city>
+      <state>rio de janeiro</state>
+      <geolat>-22.8947942</geolat>
+      <geolong>-43.225607</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>1876</distance>
+    </venue>
+    <venue>
+      <id>3750526</id>
+      <name>Mexdelicia</name>
+      <primarycategory>
+        <id>79076</id>
+        <fullpathname>Food:Mexican</fullpathname>
+        <nodename>Mexican</nodename>
+        <iconurl>http://foursquare.com/img/categories/food/default.png</iconurl>
+      </primarycategory>
+      <address>Downtown bloco 21</address>
+      <city>Rio de Janeiro</city>
+      <state>RJ</state>
+      <geolat>-22.8625</geolat>
+      <geolong>-43.2238889</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>1734</distance>
+    </venue>
+    <venue>
+      <id>1792574</id>
+      <name>Feira de São Cristóvão</name>
+      <primarycategory>
+        <id>79045</id>
+        <fullpathname>Food:Brazilian</fullpathname>
+        <nodename>Brazilian</nodename>
+        <iconurl>http://foursquare.com/img/categories/food/brazillian.png</iconurl>
+      </primarycategory>
+      <address></address>
+      <city>Rio de Janeiro</city>
+      <state>rj</state>
+      <geolat>-22.89755489</geolat>
+      <geolong>-43.22081741</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>2183</distance>
+    </venue>
+    <venue>
+      <id>4541961</id>
+      <name>AC Album &amp; Scrap</name>
+      <primarycategory>
+        <id>96357</id>
+        <fullpathname>Shops:Arts &amp; Crafts</fullpathname>
+        <nodename>Arts &amp; Crafts</nodename>
+        <iconurl>http://foursquare.com/img/categories/shops/artstore.png</iconurl>
+      </primarycategory>
+      <address>Downtown bl 9 loja 106</address>
+      <city>Rio de Janeiro</city>
+      <state>RJ</state>
+      <geolat>-22.8625</geolat>
+      <geolong>-43.2238889</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>1734</distance>
+    </venue>
+    <venue>
+      <id>2623628</id>
+      <name>Coppead</name>
+      <primarycategory>
+        <id>79036</id>
+        <fullpathname>College &amp; Education:Trade / Tech School</fullpathname>
+        <nodename>Trade / Tech School</nodename>
+        <iconurl>http://foursquare.com/img/categories/education/default.png</iconurl>
+      </primarycategory>
+      <address></address>
+      <city></city>
+      <state></state>
+      <geolat>-22.860068</geolat>
+      <geolong>-43.218595</geolong>
+      <stats>
+        <herenow>0</herenow>
+      </stats>
+      <distance>2061</distance>
+    </venue>
+  </group>
+</venues>
