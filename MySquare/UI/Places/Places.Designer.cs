@@ -29,20 +29,31 @@
         private void InitializeComponent()
         {
             this.list1 = new MySquare.UI.Places.List();
+            this.venueDetails1 = new MySquare.UI.Places.VenueDetails();
             this.SuspendLayout();
             // 
             // list1
             // 
-            this.list1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.list1.Location = new System.Drawing.Point(0, 0);
             this.list1.Name = "list1";
-            this.list1.Size = new System.Drawing.Size(204, 207);
+            this.list1.Size = new System.Drawing.Size(135, 137);
             this.list1.TabIndex = 0;
+            this.list1.Visible = false;
+            this.list1.ItemSelected += new System.EventHandler(this.list1_ItemSelected);
+            // 
+            // venueDetails1
+            // 
+            this.venueDetails1.Location = new System.Drawing.Point(41, 54);
+            this.venueDetails1.Name = "venueDetails1";
+            this.venueDetails1.Size = new System.Drawing.Size(150, 150);
+            this.venueDetails1.TabIndex = 1;
+            this.venueDetails1.Visible = false;
             // 
             // Places
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.venueDetails1);
             this.Controls.Add(this.list1);
             this.Name = "Places";
             this.Size = new System.Drawing.Size(204, 207);
@@ -53,5 +64,6 @@
         #endregion
 
         private List list1;
+        private VenueDetails venueDetails1;
     }
 }

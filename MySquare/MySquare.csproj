@@ -54,7 +54,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -101,6 +100,10 @@
       <DependentUpon>Places.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Places\VenueDetails.resx">
+      <DependentUpon>VenueDetails.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -118,6 +121,12 @@
     </Compile>
     <Compile Include="UI\Places\Places.Designer.cs">
       <DependentUpon>Places.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Places\VenueDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Places\VenueDetails.Designer.cs">
+      <DependentUpon>VenueDetails.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
