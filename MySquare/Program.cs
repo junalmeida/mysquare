@@ -11,8 +11,10 @@ namespace MySquare
         static Program()
         {
             Service = new Service();
+            Position = new Tenor.Mobile.Location.WorldPosition(false, false);
         }
         internal static Service Service { get; private set; }
+        internal static Tenor.Mobile.Location.WorldPosition Position { get; private set; }
 
         /// <summary>
         /// The main entry point for the application.
