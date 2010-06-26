@@ -42,7 +42,8 @@ namespace MySquare.FourSquare
 
         enum ServiceResource
         {
-            SearchNearby
+            SearchNearby,
+            CheckIn
         }
 
         internal Service()
@@ -58,18 +59,36 @@ namespace MySquare.FourSquare
         private string userAgent;
         int limit = 20;
 
+
+
         HttpWebRequest request = null;
+        internal void Abort()
+        {
+            if (request != null)
+            {
+                Tenor.Mobile.Network.WebRequest.Abort(request);
+                request = null;
+                OnError(new ErrorEventArgs(new Exception("The request was cancelled.")));
+            }
+        }
+
         private void Post(ServiceResource service, Dictionary<string, string> parameters)
         {
             if (request != null)
                 return;
 
             string url = null;
+            bool post = false;
+            bool auth = false;
 
             switch (service)
             {
                 case ServiceResource.SearchNearby:
                     url = "http://api.foursquare.com/v1/venues.json";
+                    break;
+                case ServiceResource.CheckIn:
+                    url = "http://api.foursquare.com/v1/checkin.json";
+                    post = true; auth = true;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -89,14 +108,35 @@ namespace MySquare.FourSquare
                 }
             }
 
-            if (queryString.Length > 0)
-                url += "?" + queryString.Remove(0, 1).ToString();
 
-            request = (HttpWebRequest)WebRequest.Create(url);
+            if (post)
+            {
+                request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "POST";
+
+                MemoryStream memData = new MemoryStream();
+                using (StreamWriter writer = new StreamWriter(memData))
+                {
+                    writer.Write(queryString.Remove(0, 1).ToString());
+                    writer.Close();
+                }
+
+                request.ContentLength = memData.Length;
+                Stream postData = request.GetRequestStream();
+                memData.WriteTo(postData);
+                memData.Close();
+                postData.Close();
+            }
+            else
+            {
+                if (queryString.Length > 0)
+                    url += "?" + queryString.Remove(0, 1).ToString();
+                request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "GET";
+            }
             request.Timeout = 15000;
             request.UserAgent = userAgent;
-            request.Method = "GET";
-            if (!string.IsNullOrEmpty(Login))
+            if (auth && !string.IsNullOrEmpty(Login))
                 request.Credentials = new NetworkCredential(Login, Password);
 
             request.BeginGetResponse(new AsyncCallback(ParseResponse), service);
@@ -121,6 +161,9 @@ namespace MySquare.FourSquare
                                 {
                                     case ServiceResource.SearchNearby:
                                         type = typeof(VenuesGroupList);
+                                        break;
+                                    case ServiceResource.CheckIn:
+                                        type = typeof(CheckIn);
                                         break;
                                     default:
                                         throw new NotImplementedException();
@@ -157,6 +200,9 @@ namespace MySquare.FourSquare
                                 venueList = venues.Groups[0].Venues;
                             OnSearchArrives(new SearchEventArgs(venueList));
                             break;
+                        case ServiceResource.CheckIn:
+                            OnCheckInResult(new CheckInEventArgs((CheckIn)result));
+                            break;
                         default:
                             throw new NotImplementedException();
                     }
@@ -181,7 +227,32 @@ namespace MySquare.FourSquare
             Post(ServiceResource.SearchNearby, parameters);
         }
 
+        internal void CheckIn(Venue venue, string shout, bool tellFriends, bool? facebook, bool? twitter)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("vid", venue.Id.ToString());
+            if (!string.IsNullOrEmpty(shout))
+                parameters.Add("shout", shout);
+            parameters.Add("private", Convert.ToInt32((!tellFriends)).ToString());
+            if (twitter.HasValue)
+                parameters.Add("twitter", Convert.ToInt32(twitter.Value).ToString());
+            if (facebook.HasValue)
+                parameters.Add("facebook", Convert.ToInt32(facebook.Value).ToString());
+
+
+            Post(ServiceResource.CheckIn, parameters);
+        }
+
+
         #region Events
+
+        internal event CheckInEventHandler CheckInResult;
+        private void OnCheckInResult(CheckInEventArgs e)
+        {
+            if (CheckInResult != null)
+                CheckInResult(this, e);
+        }
+
 
         internal event ErrorEventHandler Error;
         private void OnError(ErrorEventArgs e)
@@ -200,6 +271,20 @@ namespace MySquare.FourSquare
 
         #endregion
 
+    }
+    delegate void CheckInEventHandler(object serder, CheckInEventArgs e);
+    class CheckInEventArgs : EventArgs
+    {
+        internal CheckInEventArgs(CheckIn checkIn)
+        {
+            this.CheckIn = checkIn;
+        }
+
+        internal CheckIn CheckIn
+        {
+            get;
+            private set;
+        }
     }
 
     delegate void SearchEventHandler(object serder, SearchEventArgs e);

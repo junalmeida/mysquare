@@ -36,7 +36,10 @@
             // 
             // chkFacebook
             // 
+            this.chkFacebook.ThreeState = true;
             this.chkFacebook.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkFacebook.Checked = true;
+            this.chkFacebook.CheckState = System.Windows.Forms.CheckState.Indeterminate;
             this.chkFacebook.ForeColor = System.Drawing.Color.Black;
             this.chkFacebook.Location = new System.Drawing.Point(134, 92);
             this.chkFacebook.Name = "chkFacebook";
@@ -46,6 +49,9 @@
             // 
             // chkTwitter
             // 
+            this.chkTwitter.ThreeState = true;
+            this.chkTwitter.Checked = true;
+            this.chkTwitter.CheckState = System.Windows.Forms.CheckState.Indeterminate;
             this.chkTwitter.ForeColor = System.Drawing.Color.Black;
             this.chkTwitter.Location = new System.Drawing.Point(3, 92);
             this.chkTwitter.Name = "chkTwitter";
@@ -75,6 +81,7 @@
             this.txtShout.Name = "txtShout";
             this.txtShout.Size = new System.Drawing.Size(255, 58);
             this.txtShout.TabIndex = 8;
+            this.txtShout.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtShout_KeyDown);
             // 
             // CheckIn
             // 

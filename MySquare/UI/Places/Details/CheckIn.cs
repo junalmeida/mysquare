@@ -15,14 +15,20 @@ namespace MySquare.UI.Places.Details
         {
             InitializeComponent();
             Program.Service.Error += new MySquare.FourSquare.ErrorEventHandler(Service_Error);
+            Program.Service.CheckInResult += new MySquare.FourSquare.CheckInEventHandler(Service_CheckInResult);
+        }
+
+        AutoResetEvent wait = new AutoResetEvent(false);
+        MySquare.FourSquare.CheckIn result = null;
+        void Service_CheckInResult(object serder, MySquare.FourSquare.CheckInEventArgs e)
+        {
+            result = e.CheckIn;
+            wait.Set();
         }
 
         void Service_Error(object serder, MySquare.FourSquare.ErrorEventArgs e)
         {
-            this.Invoke(new ThreadStart(delegate()
-            {
-                EnableInterface();
-            }));
+            wait.Set();
         }
 
         MenuItem leftSoft; MenuItem rightSoft;
@@ -36,10 +42,17 @@ namespace MySquare.UI.Places.Details
             Visible = true;
 
             txtShout.Text = string.Empty;
-            chkFacebook.Checked = false;
+
             chkTellFriends.Checked = true;
-            chkTwitter.Checked = false;
+            chkFacebook.CheckState = CheckState.Indeterminate;
+            chkTwitter.CheckState = CheckState.Indeterminate;
+
+            EnableInterface();
+
         }
+
+        internal MySquare.FourSquare.Venue Venue
+        { get; set; }
 
         internal void DoCheckIn()
         {
@@ -52,8 +65,22 @@ namespace MySquare.UI.Places.Details
             Cursor.Current = Cursors.WaitCursor;
             Cursor.Show();
 
-        }
+            bool? twitter = null;
+            bool? facebook = null;
+            if (chkTwitter.CheckState != CheckState.Indeterminate)
+                twitter = chkTwitter.CheckState == CheckState.Checked;
+            if (chkFacebook.CheckState != CheckState.Indeterminate)
+                facebook = chkFacebook.CheckState == CheckState.Checked;
 
+            result = null;
+            wait.Reset();
+            Program.Service.CheckIn(Venue, txtShout.Text, chkTellFriends.Checked, facebook, twitter);
+            if (wait.WaitOne() && result != null)
+                MessageBox.Show(result.Message);
+            else
+                MessageBox.Show("Cannot check in. Try again later.");
+
+        }
 
         private void EnableInterface()
         {
@@ -66,6 +93,12 @@ namespace MySquare.UI.Places.Details
             Cursor.Current = Cursors.Default;
             Cursor.Show();
 
+        }
+
+        private void txtShout_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                e.Handled = true;
         }
     }
 }
