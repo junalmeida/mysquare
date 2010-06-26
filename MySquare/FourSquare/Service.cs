@@ -28,6 +28,9 @@ namespace MySquare.FourSquare
         HttpWebRequest request = null;
         private void Post(ServiceResource service, Dictionary<string, string> parameters)
         {
+            if (request != null)
+                return;
+
             string url = null;
 
             switch (service)
@@ -57,6 +60,7 @@ namespace MySquare.FourSquare
                 url += "?" + queryString.Remove(0, 1).ToString();
 
             request = (HttpWebRequest)WebRequest.Create(url);
+            request.Timeout = 15000;
             request.UserAgent = userAgent;
             request.Method = "GET";
             if (!string.IsNullOrEmpty(userName))

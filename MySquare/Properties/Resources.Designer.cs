@@ -57,6 +57,13 @@ namespace MySquare.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Loader {
+            get {
+                object obj = ResourceManager.GetObject("Loader", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap PinMap {
             get {
                 object obj = ResourceManager.GetObject("PinMap", resourceCulture);
