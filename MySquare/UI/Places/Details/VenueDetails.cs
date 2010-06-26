@@ -15,6 +15,11 @@ namespace MySquare.UI.Places
         {
             InitializeComponent();
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
+
+            tabStrip1.Tabs.Add("Check In");
+            tabStrip1.Tabs.Add("Info");
+            tabStrip1.Tabs.Add("Map");
+            tabStrip1.Tabs.Add("Tips");
         }
 
         Venue venue;
@@ -35,16 +40,6 @@ namespace MySquare.UI.Places
             ChangeView(0);
         }
 
-        private void ChangeView(int i)
-        {
-            switch (i)
-            {
-                case 0:
-                    checkIn1.Activate();
-                    break;
-            }
-        }
-
         internal void CheckIn()
         {
             checkIn1.DoCheckIn();
@@ -55,5 +50,42 @@ namespace MySquare.UI.Places
             Dock = DockStyle.Fill;
             Visible = true;
         }
+
+        private void tabStrip1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ChangeView(tabStrip1.SelectedIndex);
+        }
+
+        private void ChangeView(int i)
+        {
+            switch (i)
+            {
+                case 0:
+                    venueInfo1.Visible = false;
+                    venueMap1.Visible = false;
+                    venueTips1.Visible = false;
+                    checkIn1.Activate();
+                    break;
+                case 1:
+                    checkIn1.Visible = false;
+                    venueMap1.Visible = false;
+                    venueTips1.Visible = false;
+                    venueInfo1.Activate();
+                    break;
+                case 2:
+                    venueInfo1.Visible = false;
+                    checkIn1.Visible = false;
+                    venueTips1.Visible = false;
+                    venueMap1.Activate();
+                    break;
+                case 3:
+                    venueInfo1.Visible = false;
+                    venueMap1.Visible = false;
+                    checkIn1.Visible = false;
+                    venueTips1.Activate();
+                    break;
+            }
+        }
+
     }
 }

@@ -20,6 +20,7 @@ namespace MySquare.UI.Places
         #region IPanel Members
 
         MenuItem leftSoft, rightSoft;
+        bool firstTime = true;
         public void ActivateControl(MenuItem leftSoft, MenuItem rightSoft)
         {
             if (this.leftSoft != leftSoft)
@@ -34,7 +35,12 @@ namespace MySquare.UI.Places
                 this.rightSoft.Click += new EventHandler(rightSoft_Click);
             }
             ChangeView(0);
-            list1.Refresh();
+            if (firstTime)
+            {
+                list1.Refresh();
+                firstTime = false;
+            }
+            
         }
 
 

@@ -3,14 +3,15 @@ using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
 namespace MySquare.UI.Places.Details
 {
-    public partial class CheckIn : UserControl
+    public partial class VenueTips : UserControl
     {
-        public CheckIn()
+        public VenueTips()
         {
             InitializeComponent();
         }
@@ -20,15 +21,6 @@ namespace MySquare.UI.Places.Details
             Dock = DockStyle.Fill;
             BringToFront();
             Visible = true;
-
-            txtShout.Text = string.Empty;
-            chkFacebook.Checked = false;
-            chkTellFriends.Checked = true;
-            chkTwitter.Checked = false;
-        }
-
-        internal void DoCheckIn()
-        {
         }
     }
 }

@@ -38,7 +38,7 @@
             // 
             this.chkFacebook.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkFacebook.ForeColor = System.Drawing.Color.White;
-            this.chkFacebook.Location = new System.Drawing.Point(134, 118);
+            this.chkFacebook.Location = new System.Drawing.Point(134, 92);
             this.chkFacebook.Name = "chkFacebook";
             this.chkFacebook.Size = new System.Drawing.Size(124, 20);
             this.chkFacebook.TabIndex = 10;
@@ -47,7 +47,7 @@
             // chkTwitter
             // 
             this.chkTwitter.ForeColor = System.Drawing.Color.White;
-            this.chkTwitter.Location = new System.Drawing.Point(3, 118);
+            this.chkTwitter.Location = new System.Drawing.Point(3, 92);
             this.chkTwitter.Name = "chkTwitter";
             this.chkTwitter.Size = new System.Drawing.Size(118, 20);
             this.chkTwitter.TabIndex = 11;
@@ -58,7 +58,7 @@
             this.chkTellFriends.Checked = true;
             this.chkTellFriends.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkTellFriends.ForeColor = System.Drawing.Color.White;
-            this.chkTellFriends.Location = new System.Drawing.Point(3, 92);
+            this.chkTellFriends.Location = new System.Drawing.Point(3, 66);
             this.chkTellFriends.Name = "chkTellFriends";
             this.chkTellFriends.Size = new System.Drawing.Size(141, 20);
             this.chkTellFriends.TabIndex = 9;
@@ -72,13 +72,14 @@
             this.txtShout.Location = new System.Drawing.Point(3, 3);
             this.txtShout.Multiline = true;
             this.txtShout.Name = "txtShout";
-            this.txtShout.Size = new System.Drawing.Size(255, 75);
+            this.txtShout.Size = new System.Drawing.Size(255, 58);
             this.txtShout.TabIndex = 8;
             // 
             // CheckIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
             this.Controls.Add(this.chkFacebook);
             this.Controls.Add(this.chkTwitter);
             this.Controls.Add(this.chkTellFriends);
