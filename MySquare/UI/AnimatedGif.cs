@@ -54,7 +54,6 @@ namespace MySquare.UI
             }
         }
 
-        int frameWidth;
         int currentFrame = 0;
         int loopCounter = 0;
         private void DrawFrame()

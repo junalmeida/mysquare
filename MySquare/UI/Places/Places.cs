@@ -41,7 +41,7 @@ namespace MySquare.UI.Places
             ChangeView(0);
             if (firstTime)
             {
-                list1.Refresh();
+                list1.RefreshList();
                 firstTime = false;
             }
             
@@ -51,7 +51,7 @@ namespace MySquare.UI.Places
         void leftSoft_Click(object sender, EventArgs e)
         {
             if (this.Visible && list1.Visible)
-                list1.Refresh();
+                list1.RefreshList();
             else if (this.Visible && venueDetails1.Visible)
                 ChangeView(0);
         }

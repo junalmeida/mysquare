@@ -95,7 +95,7 @@ namespace MySquare.UI.Places
                     venueInfo1.Visible = false;
                     venueMap1.Visible = false;
                     venueTips1.Visible = false;
-                    checkIn1.Activate();
+                    checkIn1.ActivateControl(leftSoft, rightSoft);
                     rightSoft.Enabled = true;
                     break;
                 case 1:

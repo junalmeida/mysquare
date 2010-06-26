@@ -70,6 +70,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtShout.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtShout.Location = new System.Drawing.Point(3, 3);
+            this.txtShout.MaxLength = 140;
             this.txtShout.Multiline = true;
             this.txtShout.Name = "txtShout";
             this.txtShout.Size = new System.Drawing.Size(255, 58);

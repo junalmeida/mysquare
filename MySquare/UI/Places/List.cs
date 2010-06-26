@@ -37,7 +37,7 @@ namespace MySquare.UI.Places
         }
 
 
-        internal void Refresh()
+        internal void RefreshList()
         {
             Application.DoEvents();
             ShowLoading();
