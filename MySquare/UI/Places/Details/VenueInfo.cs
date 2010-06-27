@@ -21,5 +21,14 @@ namespace MySquare.UI.Places.Details
             BringToFront();
             Visible = true;
         }
+
+        private void lblPhone_Click(object sender, EventArgs e)
+        {
+            if (Environment.OSVersion.Platform == PlatformID.WinCE)
+            {
+                Microsoft.WindowsMobile.Telephony.Phone p = new Microsoft.WindowsMobile.Telephony.Phone();
+                p.Talk(lblPhone.Text);
+            }
+        }
     }
 }

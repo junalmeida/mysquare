@@ -11,10 +11,11 @@ namespace MySquare.Controller
 {
     class PlacesController : BaseController
     {
-        UI.Places.Places view;
+        UI.Places.Places View;
         public PlacesController(UI.Places.Places view)
         {
-            this.view = view;
+            this.View = view;
+            base.view = view;
             this.Service.SearchArrives += new MySquare.FourSquare.SearchEventHandler(Service_SearchArrives);
         }
 
@@ -22,18 +23,19 @@ namespace MySquare.Controller
         protected override void Activate()
         {
 
-            UI.Main form = view.Parent as UI.Main;
+            UI.Main form = View.Parent as UI.Main;
+
             form.settings1.Visible = false;
-            view.BringToFront();
-            view.Dock = System.Windows.Forms.DockStyle.Fill;
-            view.Visible = true;
+            View.BringToFront();
+            View.Dock = System.Windows.Forms.DockStyle.Fill;
+            View.Visible = true;
 
             LeftSoftButtonEnabled = true;
             LeftSoftButtonText = "&Refresh";
             RightSoftButtonEnabled = true;
             RightSoftButtonText = "&Create";
 
-            if (view.list1.listBox.Count == 0)
+            if (View.list1.listBox.Count == 0)
                 Search();
             else
                 ShowList();
@@ -51,7 +53,7 @@ namespace MySquare.Controller
 
         private void CreateVenue()
         {
-            throw new NotImplementedException();
+            MessageBox.Show("Not yet implemented.");
         }
 
         WorldPosition position;
@@ -60,7 +62,7 @@ namespace MySquare.Controller
 
             Cursor.Current = Cursors.WaitCursor;
             Cursor.Show();
-            view.list1.Visible = false;
+            View.list1.Visible = false;
 #if DEBUG
             if (Environment.OSVersion.Platform == PlatformID.WinCE)
             {
@@ -90,20 +92,16 @@ namespace MySquare.Controller
         void position_LocationChanged(object sender, EventArgs e)
         {
             if (position.Latitude.HasValue && position.Longitude.HasValue)
-            {
                 Service.SearchNearby(null, position.Latitude.Value, position.Longitude.Value);
-            }
             else
-            {
                 ShowError("Could not get your location, try again later.");
-            }
             position = null;
         }
 
         void Service_SearchArrives(object serder, MySquare.FourSquare.SearchEventArgs e)
         {
-            if (view.InvokeRequired)
-                view.Invoke(new ThreadStart(delegate()
+            if (View.InvokeRequired)
+                View.Invoke(new ThreadStart(delegate()
                 {
                     LoadVenues(e.Venues);
                 }));
@@ -114,20 +112,24 @@ namespace MySquare.Controller
 
         void LoadVenues(Venue[] venues)
         {
-            view.list1.listBox.Clear();
+            View.list1.imageList = new Dictionary<string, System.Drawing.Image>();
+
+            View.list1.listBox.Clear();
             foreach (Venue venue in venues)
             {
-                view.list1.listBox.AddItem(venue.Name, venue);
+                if (venue.PrimaryCategory != null)
+                    DownloadImageToDictionary(venue.PrimaryCategory.IconUrl, View.list1.imageList);
+                View.list1.listBox.AddItem(venue.Name, venue);
             }
             ShowList();
         }
 
         private void ShowList()
         {
-            view.venueDetails1.Visible = false;
-            view.list1.BringToFront();
-            view.list1.Dock = DockStyle.Fill;
-            view.list1.Visible = true;
+            View.venueDetails1.Visible = false;
+            View.list1.BringToFront();
+            View.list1.Dock = DockStyle.Fill;
+            View.list1.Visible = true;
             Cursor.Current = Cursors.Default;
             Cursor.Show();
         }

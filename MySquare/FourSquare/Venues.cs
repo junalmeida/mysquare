@@ -6,12 +6,20 @@ using Newtonsoft.Json;
 
 namespace MySquare.FourSquare
 {
-    class VenuesGroupResponse
+    class SearchResponse
     {
         [JsonProperty("groups")]
         public Group[] Groups
         { get; set; }
     }
+
+    class VenueResponse
+    {
+        [JsonProperty("venue")]
+        public Venue Venue
+        { get; set; }
+    }
+
 
     class Group
     {
@@ -27,6 +35,8 @@ namespace MySquare.FourSquare
 
     class Venue
     {
+        internal bool fullData;
+
         [JsonProperty("id")]
         public int Id
         { get; set; }
@@ -36,7 +46,7 @@ namespace MySquare.FourSquare
         { get; set; }
 
         [JsonProperty("primarycategory")]
-        public PrimaryCategory PrimaryCategory
+        public Category PrimaryCategory
         { get; set; }
 
         [JsonProperty("address")]
@@ -84,7 +94,18 @@ namespace MySquare.FourSquare
         [JsonProperty("distance")]
         public int Distance
         { get; set; }
-       
+
+        [JsonProperty("tips")]
+        public Tip[] Tips
+        { get; set; }
+
+        [JsonProperty("categories")]
+        public Category[] Categories
+        { get; set; }
+
+        [JsonProperty("specials")]
+        public Special[] Specials
+        { get; set; }
 
         public override string ToString()
         {
@@ -92,7 +113,7 @@ namespace MySquare.FourSquare
         }
 
     }
-    class PrimaryCategory
+    class Category
     {
 
         [JsonProperty("id")]

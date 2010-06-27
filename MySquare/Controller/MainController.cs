@@ -17,6 +17,7 @@ namespace MySquare.Controller
             : base()
         {
             this.form = form;
+            this.view = form;
             this.form.mnuLeft.Click += new EventHandler(mnuLeft_Click);
             this.form.mnuRight.Click += new EventHandler(mnuRight_Click);
             Service.Error += new ErrorEventHandler(Service_Error);

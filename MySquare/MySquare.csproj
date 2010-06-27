@@ -47,6 +47,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsCE.Forms" />
+    <Reference Include="Microsoft.WindowsMobile.Telephony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json.Compact, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -72,6 +73,7 @@
     <Compile Include="FourSquare\CheckIn.cs" />
     <Compile Include="FourSquare\Mayor.cs" />
     <Compile Include="FourSquare\Service.cs" />
+    <Compile Include="FourSquare\Tip.cs" />
     <Compile Include="FourSquare\User.cs" />
     <Compile Include="FourSquare\Venues.cs" />
     <Compile Include="UI\AnimatedGif.cs">

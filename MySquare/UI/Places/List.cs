@@ -19,7 +19,6 @@ namespace MySquare.UI.Places
             InitializeComponent();
 
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
-
         }
 
         Brush brush = new SolidBrush(Tenor.Mobile.UI.Skin.Current.TextForeColor);
@@ -41,6 +40,8 @@ namespace MySquare.UI.Places
             itemPadding = 3 * factor.Height;
             base.ScaleControl(factor, specified);
         }
+
+        internal Dictionary<string, Image> imageList;
 
         float itemPadding;
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
@@ -69,6 +70,24 @@ namespace MySquare.UI.Places
                 secondFont = new Font(Font.Name, Font.Size - 1, Font.Style);
             e.Graphics.DrawString(secondText, secondFont, secondBrush, rect, format);
 
+            if (
+                venue.PrimaryCategory != null &&
+                imageList.ContainsKey(venue.PrimaryCategory.IconUrl)
+                )
+            {
+                Image image = imageList[venue.PrimaryCategory.IconUrl];
+
+                e.Graphics.DrawImage(
+                    image,
+                    new Rectangle(
+                        e.Bounds.X + Convert.ToInt32(itemPadding),
+                        e.Bounds.Y + Convert.ToInt32(itemPadding),
+                        e.Bounds.Height - Convert.ToInt32(itemPadding * 2),
+                        e.Bounds.Height - Convert.ToInt32(itemPadding * 2)),
+                    new Rectangle(0, 0, image.Width, image.Height),
+                    GraphicsUnit.Pixel);
+
+            }
         }
 
 
@@ -92,6 +111,5 @@ namespace MySquare.UI.Places
                     return null;
             }
         }
-
     }
 }

@@ -8,19 +8,20 @@ namespace MySquare.Controller
 {
     class SettingsController : BaseController
     {
-        UI.Settings.Settings view;
+        UI.Settings.Settings View;
         public SettingsController(UI.Settings.Settings view)
         {
-            this.view = view;
+            this.View = view;
+            base.view = view;
         }
 
         protected override void Activate()
         {
-            UI.Main form = view.Parent as UI.Main;
+            UI.Main form = View.Parent as UI.Main;
             form.places1.Visible = false;
-            view.Dock = DockStyle.Fill;
-            view.BringToFront();
-            view.Visible = true;
+            View.Dock = DockStyle.Fill;
+            View.BringToFront();
+            View.Visible = true;
 
             LeftSoftButtonEnabled = true;
             LeftSoftButtonText = "&Save";
@@ -32,8 +33,8 @@ namespace MySquare.Controller
 
         private void Load()
         {
-            view.txtEmail.Text = Service.Login;
-            view.txtPassword.Text = string.Empty;
+            View.txtEmail.Text = Service.Login;
+            View.txtPassword.Text = string.Empty;
         }
 
         protected override void OnLeftSoftButtonClick()
@@ -48,9 +49,9 @@ namespace MySquare.Controller
 
         private void Save()
         {
-            Service.Login = view.txtEmail.Text;
-            if (!string.IsNullOrEmpty(view.txtPassword.Text))
-                Service.Password = view.txtPassword.Text;
+            Service.Login = View.txtEmail.Text;
+            if (!string.IsNullOrEmpty(View.txtPassword.Text))
+                Service.Password = View.txtPassword.Text;
 
             MessageBox.Show("Settings saved.", "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
         }

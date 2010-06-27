@@ -43,7 +43,8 @@ namespace MySquare.FourSquare
         enum ServiceResource
         {
             SearchNearby,
-            CheckIn
+            CheckIn,
+            Venue
         }
 
         internal Service()
@@ -93,6 +94,10 @@ namespace MySquare.FourSquare
                 case ServiceResource.CheckIn:
                     url = "http://api.foursquare.com/v1/checkin.json";
                     post = true; auth = true;
+                    break;
+                case ServiceResource.Venue:
+                    url = "http://api.foursquare.com/v1/venue.json";
+                    auth = true;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -175,10 +180,13 @@ namespace MySquare.FourSquare
                                 switch (service)
                                 {
                                     case ServiceResource.SearchNearby:
-                                        type = typeof(VenuesGroupResponse);
+                                        type = typeof(SearchResponse);
                                         break;
                                     case ServiceResource.CheckIn:
                                         type = typeof(CheckInResponse);
+                                        break;
+                                    case ServiceResource.Venue:
+                                        type = typeof(VenueResponse);
                                         break;
                                     default:
                                         throw new NotImplementedException();
@@ -195,7 +203,7 @@ namespace MySquare.FourSquare
                 }
                 catch (Exception ex)
                 {
-                    if (ex is WebException && ex.Message.Contains("401"))
+                    if (ex is WebException && ((WebException)ex).Status == WebExceptionStatus.ProtocolError)
                         OnError(new ErrorEventArgs(new UnauthorizedAccessException()));
                     else
                         OnError(new ErrorEventArgs(ex));
@@ -212,7 +220,7 @@ namespace MySquare.FourSquare
                     switch (service)
                     {
                         case ServiceResource.SearchNearby:
-                            VenuesGroupResponse venues = (VenuesGroupResponse)result;
+                            SearchResponse venues = (SearchResponse)result;
                             Venue[] venueList = new Venue[] { };
                             if (venues.Groups.Length > 0)
                                 venueList = venues.Groups[0].Venues;
@@ -220,6 +228,9 @@ namespace MySquare.FourSquare
                             break;
                         case ServiceResource.CheckIn:
                             OnCheckInResult(new CheckInEventArgs(((CheckInResponse)result).CheckIn));
+                            break;
+                        case ServiceResource.Venue:
+                            OnVenueResult(new VenueEventArgs(((VenueResponse)result).Venue));
                             break;
                         default:
                             throw new NotImplementedException();
@@ -232,6 +243,7 @@ namespace MySquare.FourSquare
             }
         }
 
+    
 
         internal void SearchNearby(string search, double lat, double lgn)
         {
@@ -261,8 +273,78 @@ namespace MySquare.FourSquare
             Post(ServiceResource.CheckIn, parameters);
         }
 
+        internal void GetVenue(int vid)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("vid", vid.ToString());
+
+            Post(ServiceResource.Venue, parameters);
+        }
+
+
+        #region Image Service
+        internal void DownloadImage(string url)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.BeginGetResponse(new AsyncCallback(ParseImageResponse), new object[] { request, url });
+        }
+
+        private void ParseImageResponse(IAsyncResult r)
+        {
+
+            object[] items = (object[])r.AsyncState;
+
+            HttpWebRequest request = (HttpWebRequest)items[0];
+            string url = (string)items[1];
+
+            System.Drawing.Image result = null;
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(r))
+                {
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        using (Stream stream = response.GetResponseStream())
+                        {
+                            result = new System.Drawing.Bitmap(stream);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                request = null;
+            }
+
+            if (result != null)
+                OnImageResult(new ImageEventArgs(url, result));
+        }
+
+        #endregion
 
         #region Events
+        internal event ImageResultEventHandler ImageResult;
+        private void OnImageResult(ImageEventArgs e)
+        {
+            if (ImageResult != null)
+            {
+                ImageResult(this, e);
+            }
+        }
+
+        internal event VenueEventHandler VenueResult;
+        private void OnVenueResult(VenueEventArgs e)
+        {
+            if (VenueResult != null)
+            {
+                e.Venue.fullData = true;
+                VenueResult(this, e);
+            }
+        }
+
 
         internal event CheckInEventHandler CheckInResult;
         private void OnCheckInResult(CheckInEventArgs e)
@@ -289,7 +371,43 @@ namespace MySquare.FourSquare
 
         #endregion
 
+
     }
+
+    delegate void ImageResultEventHandler(object serder, ImageEventArgs e);
+    class ImageEventArgs : EventArgs
+    {
+        internal ImageEventArgs(string url, System.Drawing.Image image)
+        {
+            this.Url = url;
+            this.Image = image;
+        }
+        internal string Url
+        { get; private set; }
+
+        internal System.Drawing.Image Image
+        {
+            get;
+            private set;
+        }
+    }
+
+    delegate void VenueEventHandler(object serder, VenueEventArgs e);
+    class VenueEventArgs : EventArgs
+    {
+        internal VenueEventArgs(Venue venue)
+        {
+            this.Venue = venue;
+        }
+
+        internal Venue Venue
+        {
+            get;
+            private set;
+        }
+    }
+
+
     delegate void CheckInEventHandler(object serder, CheckInEventArgs e);
     class CheckInEventArgs : EventArgs
     {

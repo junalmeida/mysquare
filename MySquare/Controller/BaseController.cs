@@ -4,11 +4,16 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using MySquare.FourSquare;
+using System.Windows.Forms;
+using System.Collections;
 
 namespace MySquare.Controller
 {
     abstract class BaseController : IDisposable
     {
+
+        protected MySquare.UI.IView view;
+
         static IList<BaseController> Controllers = new List<BaseController>();
         static int CurrentController = 0;
         
@@ -25,7 +30,9 @@ namespace MySquare.Controller
                 Service = Controllers[0].Service;
                 WaitThread = Controllers[0].WaitThread;
             }
+            Service.ImageResult += new ImageResultEventHandler(Service_ImageResult);
         }
+
 
         protected Service Service { get; private set; }
         protected AutoResetEvent WaitThread { get; private set; }
@@ -156,5 +163,107 @@ namespace MySquare.Controller
             MainController.ShowError(text);
         }
 
+
+        static string appPath;
+        private static string GetCachePath(string url)
+        {
+            if (string.IsNullOrEmpty(appPath))
+            {
+                appPath = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
+                if (appPath.StartsWith("file://"))
+                    appPath = appPath.Substring(8).Replace(System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar);
+                appPath = System.IO.Path.GetDirectoryName(appPath);
+
+            }
+            string path = System.IO.Path.Combine(appPath, "cache");
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+
+            string filePath = url.Substring(url.IndexOf(".com/") + 5).Replace("/", "_");
+            filePath = System.IO.Path.Combine(path, filePath);
+            return filePath;
+        }
+
+        private static System.Drawing.Image GetFromCache(string url)
+        {
+            string path = GetCachePath(url);
+            if (System.IO.File.Exists(path))
+                return new System.Drawing.Bitmap(path);
+            else
+                return null;
+        }
+
+        Dictionary<string, PictureBox> downloadsToPicBox = new Dictionary<string, PictureBox>();
+        public void DownloadImageToPictureBox(string url, PictureBox box)
+        {
+            if (downloadsToPicBox.ContainsKey(url))
+                downloadsToPicBox.Remove(url);
+
+            System.Drawing.Image cache = GetFromCache(url);
+            if (cache != null)
+                box.Image = cache;
+            else
+            {
+                downloadsToPicBox.Add(url, box);
+                Service.DownloadImage(url);
+            }
+        }
+
+        Dictionary<string, Dictionary<string, System.Drawing.Image>> downloadsToList = new Dictionary<string, Dictionary<string, System.Drawing.Image>>();
+        public void DownloadImageToDictionary(string url, Dictionary<string, System.Drawing.Image> list)
+        {
+            if (downloadsToList.ContainsKey(url))
+                downloadsToList.Remove(url);
+
+            System.Drawing.Image cache = GetFromCache(url);
+            if (cache != null)
+                list[url] = cache;
+            else
+            {
+                downloadsToList.Add(url, list);
+                Service.DownloadImage(url);
+            }
+        }
+
+        void Service_ImageResult(object serder, ImageEventArgs e)
+        {
+            SaveToCache(e.Url, e.Image);
+            if (downloadsToPicBox.ContainsKey(e.Url))
+            {
+                PictureBox box = downloadsToPicBox[e.Url];
+                if (box.InvokeRequired)
+                    box.Invoke(new ThreadStart(delegate()
+                    {
+                        box.Image = e.Image;
+                    }));
+                else
+                    box.Image = e.Image;
+                downloadsToPicBox.Remove(e.Url);
+            }
+            else if (downloadsToList.ContainsKey(e.Url))
+            {
+                Dictionary<string, System.Drawing.Image> list = downloadsToList[e.Url];
+                list[e.Url] = e.Image;
+                downloadsToList.Remove(e.Url);
+                if (view != null)
+                {
+                    UI.Places.Places places = view as UI.Places.Places;
+                    if (places != null)
+                        places.list1.listBox.Invalidate();
+                }
+            }
+        }
+
+        private static void SaveToCache(string url, System.Drawing.Image image)
+        {
+            try
+            {
+                string path = GetCachePath(url);
+                image.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
+            }
+            catch
+            {
+            }
+        }
     }
 }

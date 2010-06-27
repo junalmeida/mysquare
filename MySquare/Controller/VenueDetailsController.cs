@@ -4,42 +4,47 @@ using System.Collections.Generic;
 using System.Text;
 using MySquare.FourSquare;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace MySquare.Controller
 {
     class VenueDetailsController : BaseController
     {
-        UI.Places.VenueDetails view;
+        UI.Places.VenueDetails View;
         public VenueDetailsController(UI.Places.VenueDetails view)
         {
-            this.view = view;
-            this.view.TabChanged += new EventHandler(venueDetails_TabChanged);
+            this.View = view;
+            base.view = view;
+            this.View.TabChanged += new EventHandler(venueDetails_TabChanged);
             Service.CheckInResult+=new CheckInEventHandler(Service_CheckInResult);
+            Service.VenueResult += new VenueEventHandler(Service_VenueResult);
         }
+
+
 
         void venueDetails_TabChanged(object sender, EventArgs e)
         {
-            OpenSection((VenueSection)view.tabStrip1.SelectedIndex);
+            OpenSection((VenueSection)View.tabStrip1.SelectedIndex);
         }
 
         protected override void Activate()
         {
-            UI.Places.Places places = view.Parent as UI.Places.Places;
+            UI.Places.Places places = View.Parent as UI.Places.Places;
 
             places.list1.Visible = false;
 
-            view.Dock = System.Windows.Forms.DockStyle.Fill;
-            view.BringToFront();
-            view.Visible = true;
+            View.Dock = System.Windows.Forms.DockStyle.Fill;
+            View.BringToFront();
+            View.Visible = true;
 
-            view.checkIn1.txtShout.Enabled = true;
-            view.checkIn1.chkTellFriends.Enabled = true;
+            View.checkIn1.txtShout.Enabled = true;
+            View.checkIn1.chkTellFriends.Enabled = true;
 
-            view.checkIn1.txtShout.Text = string.Empty;
-            view.checkIn1.chkTellFriends.Checked = true;
+            View.checkIn1.txtShout.Text = string.Empty;
+            View.checkIn1.chkTellFriends.Checked = true;
 
 
-            view.tabStrip1.SelectedIndex = 0;
+            View.tabStrip1.SelectedIndex = 0;
 
             OpenSection(VenueSection.CheckIn);
         }
@@ -48,7 +53,7 @@ namespace MySquare.Controller
         {
             this.Venue = venue;
 
-            view.lblVenueName.Text = venue.Name;
+            View.lblVenueName.Text = venue.Name;
             List<string> address = new List<string>();
             if (!string.IsNullOrEmpty(venue.Address))
                 address.Add(venue.Address);
@@ -56,12 +61,11 @@ namespace MySquare.Controller
                 address.Add(venue.City);
             if (!string.IsNullOrEmpty(venue.State))
                 address.Add(venue.State);
-            view.lblAddress.Text = string.Join(", ", address.ToArray());
+            View.lblAddress.Text = string.Join(", ", address.ToArray());
 
-            view.tabStrip1.SelectedIndex = 0;
+            View.tabStrip1.SelectedIndex = 0;
             OpenSection(VenueSection.CheckIn);
         }
-
 
         enum VenueSection
         {
@@ -80,41 +84,44 @@ namespace MySquare.Controller
             switch (section)
             {
                 case VenueSection.CheckIn:
-                    view.venueInfo1.Visible = false;
-                    view.venueMap1.Visible = false;
-                    view.venueTips1.Visible = false;
+                    View.venueInfo1.Visible = false;
+                    View.venueMap1.Visible = false;
+                    View.venueTips1.Visible = false;
 
-                    view.checkIn1.Activate();
+                    View.checkIn1.Activate();
 
 
                     LeftSoftButtonEnabled = true;
                     break;
                 case VenueSection.Info:
-                    view.checkIn1.Visible = false;
-                    view.venueMap1.Visible = false;
-                    view.venueTips1.Visible = false;
-                    view.venueInfo1.Activate();
+                    View.checkIn1.Visible = false;
+                    View.venueMap1.Visible = false;
+                    View.venueTips1.Visible = false;
+                    View.venueInfo1.Activate();
+
+                    LoadExtraInfo();
 
                     LeftSoftButtonEnabled = false;
                     break;
                 case VenueSection.Map:
-                    view.venueInfo1.Visible = false;
-                    view.checkIn1.Visible = false;
-                    view.venueTips1.Visible = false;
-                    view.venueMap1.Activate();
+                    View.venueInfo1.Visible = false;
+                    View.checkIn1.Visible = false;
+                    View.venueTips1.Visible = false;
+                    View.venueMap1.Activate();
 
                     LeftSoftButtonEnabled = false;
                     break;
                 case VenueSection.Tips:
-                    view.venueInfo1.Visible = false;
-                    view.venueMap1.Visible = false;
-                    view.checkIn1.Visible = false;
-                    view.venueTips1.Activate();
+                    View.venueInfo1.Visible = false;
+                    View.venueMap1.Visible = false;
+                    View.checkIn1.Visible = false;
+                    View.venueTips1.Activate();
 
                     LeftSoftButtonEnabled = false;
                     break;
             }
         }
+
 
         protected override void OnLeftSoftButtonClick()
         {
@@ -123,7 +130,7 @@ namespace MySquare.Controller
 
         protected override void OnRightSoftButtonClick()
         {
-            BaseController.OpenController(view.Parent as MySquare.UI.IView);
+            BaseController.OpenController(View.Parent as MySquare.UI.IView);
         }
 
         internal MySquare.FourSquare.Venue Venue
@@ -139,25 +146,25 @@ namespace MySquare.Controller
 
         internal void DoCheckIn()
         {
-            view.checkIn1.txtShout.Enabled = false;
-            view.checkIn1.chkFacebook.Enabled = false;
-            view.checkIn1.chkTwitter.Enabled = false;
-            view.checkIn1.chkTellFriends.Enabled = false;
+            View.checkIn1.txtShout.Enabled = false;
+            View.checkIn1.chkFacebook.Enabled = false;
+            View.checkIn1.chkTwitter.Enabled = false;
+            View.checkIn1.chkTellFriends.Enabled = false;
             Cursor.Current = Cursors.WaitCursor;
             Cursor.Show();
 
             bool? twitter = null;
             bool? facebook = null;
-            if (view.checkIn1.chkTwitter.CheckState != CheckState.Indeterminate)
-                twitter = view.checkIn1.chkTwitter.CheckState == CheckState.Checked;
-            if (view.checkIn1.chkFacebook.CheckState != CheckState.Indeterminate)
-                facebook = view.checkIn1.chkFacebook.CheckState == CheckState.Checked;
+            if (View.checkIn1.chkTwitter.CheckState != CheckState.Indeterminate)
+                twitter = View.checkIn1.chkTwitter.CheckState == CheckState.Checked;
+            if (View.checkIn1.chkFacebook.CheckState != CheckState.Indeterminate)
+                facebook = View.checkIn1.chkFacebook.CheckState == CheckState.Checked;
 
             result = null;
             WaitThread.Reset();
             Service.CheckIn(Venue,
-                view.checkIn1.txtShout.Text,
-                view.checkIn1.chkTellFriends.Checked, 
+                View.checkIn1.txtShout.Text,
+                View.checkIn1.chkTellFriends.Checked, 
                 facebook, twitter);
             WaitThread.WaitOne();
 
@@ -168,6 +175,56 @@ namespace MySquare.Controller
         }
         #endregion
 
+
+        #region ExtraInfo
+
+        private void LoadExtraInfo()
+        {
+            if (View.InvokeRequired)
+                View.Invoke(new ThreadStart(this.LoadExtraInfo));
+            else
+            {
+
+                if (!Venue.fullData)
+                {
+                    Service.GetVenue(Venue.Id);
+                }
+
+
+                if (Venue.PrimaryCategory != null)
+                    View.venueInfo1.lblCategory.Text = Venue.PrimaryCategory.FullName.Replace(":", " > ");
+                else
+                    View.venueInfo1.lblCategory.Text = null;
+
+                View.venueInfo1.lblPhone.Text = Venue.Phone;
+
+                if (Venue.Status != null && Venue.Status.Mayor != null)
+                    View.venueInfo1.lblMayor.Text =
+                        string.Concat(Venue.Status.Mayor.User.FirstName, " ", Venue.Status.Mayor.User.LastName);
+                else
+                    View.venueInfo1.lblMayor.Text = null;
+
+                if (Venue.Status != null && (Venue.Status.HereNow > 0 || Venue.Status.CheckIns > 0))
+                    View.venueInfo1.lblStats.Text =
+                        string.Concat(Venue.Status.HereNow, " friends here, ", Venue.Status.CheckIns, " check-ins.");
+                else
+                    View.venueInfo1.lblStats.Text = null;
+
+                View.venueInfo1.imgCategory.Image = null;
+                if (Venue.PrimaryCategory != null && !string.IsNullOrEmpty(Venue.PrimaryCategory.IconUrl))
+                    DownloadImageToPictureBox(Venue.PrimaryCategory.IconUrl, View.venueInfo1.imgCategory);
+
+                View.venueInfo1.imgMayor.Image = null;
+                if (Venue.Status != null && Venue.Status.Mayor != null && !string.IsNullOrEmpty(Venue.Status.Mayor.User.ImageUrl))
+                    DownloadImageToPictureBox(Venue.Status.Mayor.User.ImageUrl, View.venueInfo1.imgMayor);
+            }
+        }
+        void Service_VenueResult(object serder, VenueEventArgs e)
+        {
+            Venue = e.Venue;
+            LoadExtraInfo();
+        }
+        #endregion
 
     }
 }

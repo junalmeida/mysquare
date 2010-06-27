@@ -29,21 +29,130 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
+            this.lblCategory = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblMayor = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblPhone = new System.Windows.Forms.LinkLabel();
+            this.imgMayor = new System.Windows.Forms.PictureBox();
+            this.imgCategory = new System.Windows.Forms.PictureBox();
+            this.lblStats = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(3, 4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 20);
-            this.label1.Text = "info";
+            this.label1.Size = new System.Drawing.Size(191, 15);
+            this.label1.Text = "Category:";
+            // 
+            // lblCategory
+            // 
+            this.lblCategory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCategory.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            this.lblCategory.Location = new System.Drawing.Point(3, 22);
+            this.lblCategory.Name = "lblCategory";
+            this.lblCategory.Size = new System.Drawing.Size(191, 15);
+            this.lblCategory.Text = "Category";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.label3.Location = new System.Drawing.Point(3, 46);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(233, 15);
+            this.label3.Text = "Phone:";
+            // 
+            // lblMayor
+            // 
+            this.lblMayor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblMayor.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            this.lblMayor.Location = new System.Drawing.Point(3, 102);
+            this.lblMayor.Name = "lblMayor";
+            this.lblMayor.Size = new System.Drawing.Size(191, 15);
+            this.lblMayor.Text = "Category";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.label4.Location = new System.Drawing.Point(3, 84);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(191, 15);
+            this.label4.Text = "Mayor:";
+            // 
+            // lblPhone
+            // 
+            this.lblPhone.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Underline);
+            this.lblPhone.Location = new System.Drawing.Point(3, 64);
+            this.lblPhone.Name = "lblPhone";
+            this.lblPhone.Size = new System.Drawing.Size(233, 20);
+            this.lblPhone.TabIndex = 11;
+            this.lblPhone.Text = "phone";
+            this.lblPhone.Click += new System.EventHandler(this.lblPhone_Click);
+            // 
+            // imgMayor
+            // 
+            this.imgMayor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.imgMayor.Location = new System.Drawing.Point(200, 84);
+            this.imgMayor.Name = "imgMayor";
+            this.imgMayor.Size = new System.Drawing.Size(33, 33);
+            this.imgMayor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            // 
+            // imgCategory
+            // 
+            this.imgCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.imgCategory.Location = new System.Drawing.Point(199, 4);
+            this.imgCategory.Name = "imgCategory";
+            this.imgCategory.Size = new System.Drawing.Size(33, 33);
+            this.imgCategory.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            // 
+            // lblStats
+            // 
+            this.lblStats.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblStats.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            this.lblStats.Location = new System.Drawing.Point(3, 139);
+            this.lblStats.Name = "lblStats";
+            this.lblStats.Size = new System.Drawing.Size(191, 15);
+            this.lblStats.Text = "Category";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.label5.Location = new System.Drawing.Point(3, 121);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(191, 15);
+            this.label5.Text = "Stats:";
             // 
             // VenueInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScroll = true;
+            this.Controls.Add(this.lblStats);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.imgCategory);
+            this.Controls.Add(this.imgMayor);
+            this.Controls.Add(this.lblPhone);
+            this.Controls.Add(this.lblMayor);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblCategory);
             this.Controls.Add(this.label1);
             this.Name = "VenueInfo";
+            this.Size = new System.Drawing.Size(240, 276);
             this.ResumeLayout(false);
 
         }
@@ -51,5 +160,14 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
+        internal System.Windows.Forms.Label lblCategory;
+        private System.Windows.Forms.Label label3;
+        internal System.Windows.Forms.Label lblMayor;
+        private System.Windows.Forms.Label label4;
+        internal System.Windows.Forms.LinkLabel lblPhone;
+        internal System.Windows.Forms.PictureBox imgMayor;
+        internal System.Windows.Forms.PictureBox imgCategory;
+        internal System.Windows.Forms.Label lblStats;
+        private System.Windows.Forms.Label label5;
     }
 }
