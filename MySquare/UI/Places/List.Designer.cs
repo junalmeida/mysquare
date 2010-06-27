@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.listBox = new Tenor.Mobile.UI.KListControl();
-            this.lblError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBox
@@ -48,21 +47,10 @@
             this.listBox.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.listBox_DrawItem);
             this.listBox.SelectedItemClicked += new System.EventHandler(this.listBox_SelectedItemClicked);
             // 
-            // lblError
-            // 
-            this.lblError.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblError.Location = new System.Drawing.Point(21, 112);
-            this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(256, 20);
-            this.lblError.Text = "Cannot list nearby venues.";
-            this.lblError.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.lblError.Visible = false;
-            // 
             // List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.Controls.Add(this.lblError);
             this.Controls.Add(this.listBox);
             this.Name = "List";
             this.Size = new System.Drawing.Size(299, 244);
@@ -73,6 +61,5 @@
         #endregion
 
         private Tenor.Mobile.UI.KListControl listBox;
-        private System.Windows.Forms.Label lblError;
     }
 }

@@ -14,21 +14,14 @@ namespace MySquare.UI.Places.Details
         public CheckIn()
         {
             InitializeComponent();
-            Program.Service.Error += new MySquare.FourSquare.ErrorEventHandler(Service_Error);
             Program.Service.CheckInResult += new MySquare.FourSquare.CheckInEventHandler(Service_CheckInResult);
         }
 
-        AutoResetEvent wait = new AutoResetEvent(false);
         MySquare.FourSquare.CheckIn result = null;
         void Service_CheckInResult(object serder, MySquare.FourSquare.CheckInEventArgs e)
         {
             result = e.CheckIn;
-            wait.Set();
-        }
-
-        void Service_Error(object serder, MySquare.FourSquare.ErrorEventArgs e)
-        {
-            wait.Set();
+            Program.WaitThread.Set();
         }
 
         MenuItem leftSoft; MenuItem rightSoft;
@@ -73,13 +66,12 @@ namespace MySquare.UI.Places.Details
                 facebook = chkFacebook.CheckState == CheckState.Checked;
 
             result = null;
-            wait.Reset();
+            Program.WaitThread.Reset();
             Program.Service.CheckIn(Venue, txtShout.Text, chkTellFriends.Checked, facebook, twitter);
-            if (wait.WaitOne() && result != null)
+            Program.WaitThread.WaitOne();
+            if (result != null)
                 MessageBox.Show(result.Message);
-            else
-                MessageBox.Show("Cannot check in. Try again later.");
-
+            EnableInterface();
         }
 
         private void EnableInterface()

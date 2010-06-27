@@ -52,13 +52,13 @@ namespace MySquare.UI.Places
         {
             if (this.Visible && list1.Visible)
                 list1.RefreshList();
-            else if (this.Visible && venueDetails1.Visible)
-                ChangeView(0);
         }
 
 
         void rightSoft_Click(object sender, EventArgs e)
         {
+            if (this.Visible && venueDetails1.Visible)
+                ChangeView(0);
         }
         #endregion
 
@@ -75,11 +75,9 @@ namespace MySquare.UI.Places
                 case 0:
                     ResetMenus();
                     leftSoft.Text = "&Refresh";
-                    rightSoft.Text = "&Menu";
-                    rightSoft.MenuItems.Add(new MenuItem()
-                    {
-                        Text = "&Create Venue"
-                    });
+                    leftSoft.Enabled = true;
+                    rightSoft.Text = "&Create";
+                    rightSoft.Enabled = true;
 
                     list1.Activate();
                     venueDetails1.Visible = false;

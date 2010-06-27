@@ -20,22 +20,10 @@ namespace MySquare.UI.Places
             InitializeComponent();
 
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
-            Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(lblError);
 
 
             Program.Service.SearchArrives += new MySquare.FourSquare.SearchEventHandler(Service_SearchArrives);
-            Program.Service.Error += new ErrorEventHandler(Service_Error);
         }
-
-
-        void Service_Error(object serder, ErrorEventArgs e)
-        {
-            this.Invoke(new System.Threading.ThreadStart(delegate()
-            {
-                ShowError("Cannot connect to foursquare.");
-            }));
-        }
-
 
         internal void RefreshList()
         {
@@ -53,7 +41,7 @@ namespace MySquare.UI.Places
         {
             this.Invoke(new System.Threading.ThreadStart(delegate()
             {
-                ShowError("Could not get position.");
+                Program.ShowError("Could not get your location, try again later.");
             }));
         }
 
@@ -65,7 +53,7 @@ namespace MySquare.UI.Places
             }
             else
             {
-                ShowError("Cannot check your location, try again.");
+                Program.ShowError("Could not get your location, try again later.");
             }
             position = null;
         }
@@ -87,24 +75,14 @@ namespace MySquare.UI.Places
         private void ShowLoading()
         {
             listBox.Visible = false;
-            lblError.Visible = false;
             Cursor.Current = Cursors.WaitCursor;
             Cursor.Show();
         }
 
-        private void ShowError(string text)
-        {
-            listBox.Visible = false;
-            lblError.Text = text;
-            lblError.Visible = true;
-            Cursor.Current = Cursors.Default;
-            Cursor.Show();
-        }
 
         private void ShowList()
         {
             listBox.Visible = true;
-            lblError.Visible = false;
             Cursor.Current = Cursors.Default;
             Cursor.Show();
         }

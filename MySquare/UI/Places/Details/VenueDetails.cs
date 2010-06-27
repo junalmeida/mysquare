@@ -41,8 +41,10 @@ namespace MySquare.UI.Places
                 this.rightSoft.Click += new EventHandler(rightSoft_Click);
             }
 
-            leftSoft.Text = "&Back";
-            rightSoft.Text = "&Check in";
+            leftSoft.Text = "&Check in";
+            leftSoft.Enabled = true;
+            rightSoft.Text = "&Back";
+            rightSoft.Enabled = true;
 
             BringToFront();
             Dock = DockStyle.Fill;
@@ -51,12 +53,12 @@ namespace MySquare.UI.Places
 
         void rightSoft_Click(object sender, EventArgs e)
         {
-            if (Visible)
-                checkIn1.DoCheckIn();
         }
 
         void leftSoft_Click(object sender, EventArgs e)
         {
+            if (Visible)
+                checkIn1.DoCheckIn();
         }
 
 

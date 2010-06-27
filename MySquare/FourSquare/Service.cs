@@ -118,14 +118,14 @@ namespace MySquare.FourSquare
                 using (StreamWriter writer = new StreamWriter(memData))
                 {
                     writer.Write(queryString.Remove(0, 1).ToString());
-                    writer.Close();
-                }
+                    writer.Flush();
+                    request.ContentLength = memData.Length;
 
-                request.ContentLength = memData.Length;
-                Stream postData = request.GetRequestStream();
-                memData.WriteTo(postData);
-                memData.Close();
-                postData.Close();
+                    Stream postData = request.GetRequestStream();
+                    memData.Seek(0, SeekOrigin.Begin);
+                    memData.WriteTo(postData);
+                    postData.Close();
+                }
             }
             else
             {
@@ -137,7 +137,11 @@ namespace MySquare.FourSquare
             request.Timeout = 15000;
             request.UserAgent = userAgent;
             if (auth && !string.IsNullOrEmpty(Login))
+            {
+                request.AllowAutoRedirect = true;
+                request.AllowWriteStreamBuffering = true;
                 request.Credentials = new NetworkCredential(Login, Password);
+            }
 
             request.BeginGetResponse(new AsyncCallback(ParseResponse), service);
         }
@@ -180,7 +184,10 @@ namespace MySquare.FourSquare
                 }
                 catch (Exception ex)
                 {
-                    OnError(new ErrorEventArgs(ex));
+                    if (ex is WebException && ex.Message.Contains("401"))
+                        OnError(new ErrorEventArgs(new UnauthorizedAccessException()));
+                    else
+                        OnError(new ErrorEventArgs(ex));
                     return;
                 }
                 finally

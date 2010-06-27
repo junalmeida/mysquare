@@ -19,12 +19,49 @@ namespace MySquare.UI
             header.Tabs.Add(new Tenor.Mobile.UI.HeaderTab("Places", Resources.PinMap));
 
             header.Tabs.Add(new Tenor.Mobile.UI.HeaderTab("Settings", Resources.Settings));
+
+            Program.Service.Error += new MySquare.FourSquare.ErrorEventHandler(Service_Error);
+
             header_SelectedTabChanged(null, null);
+        }
+
+        void Service_Error(object serder, MySquare.FourSquare.ErrorEventArgs e)
+        {
+            Program.WaitThread.Set();
+            this.Invoke(new System.Threading.ThreadStart(delegate()
+            {
+                string text = null;
+
+                if (e.Exception is UnauthorizedAccessException)
+                    text = "Invalid credentials, change your settings and try again.";
+                else
+                    text = "Cannot connect to foursquare, try again.";
+
+                ShowError(text);
+            }));
+        }
+
+
+        internal void ShowError(string text)
+        {
+            settings1.Visible = false;
+            places1.Visible = false;
+
+            lblError.Text = text;
+            lblError.Visible = true;
+
+            ResetMenus();
+            mnuRight.Text = "&Back";
+            mnuLeft.Text = "&Refresh";
+            mnuLeft.Enabled = false;
+
+            Cursor.Current = Cursors.Default;
+            Cursor.Show();
         }
 
         private void header_SelectedTabChanged(object sender, EventArgs e)
         {
-
+            lblError.Visible = false;
             switch (header.Tabs[header.SelectedIndex].Text)
             {
                 case "Places":
@@ -45,6 +82,12 @@ namespace MySquare.UI
         {
             mnuLeft.MenuItems.Clear();
             mnuRight.MenuItems.Clear();
+        }
+
+        private void mnuRight_Click(object sender, EventArgs e)
+        {
+            if (lblError.Visible)
+                header_SelectedTabChanged(null, null);
         }
     }
 }

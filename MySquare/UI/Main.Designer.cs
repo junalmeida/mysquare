@@ -33,8 +33,9 @@
             this.mnuLeft = new System.Windows.Forms.MenuItem();
             this.mnuRight = new System.Windows.Forms.MenuItem();
             this.header = new Tenor.Mobile.UI.HeaderStrip();
-            this.places1 = new MySquare.UI.Places.Places();
+            this.lblError = new System.Windows.Forms.Label();
             this.settings1 = new MySquare.UI.Settings.Settings();
+            this.places1 = new MySquare.UI.Places.Places();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -49,6 +50,7 @@
             // mnuRight
             // 
             this.mnuRight.Text = "&Right";
+            this.mnuRight.Click += new System.EventHandler(this.mnuRight_Click);
             // 
             // header
             // 
@@ -59,13 +61,17 @@
             this.header.TabIndex = 0;
             this.header.SelectedTabChanged += new System.EventHandler(this.header_SelectedTabChanged);
             // 
-            // places1
+            // lblError
             // 
-            this.places1.Location = new System.Drawing.Point(43, 64);
-            this.places1.Name = "places1";
-            this.places1.Size = new System.Drawing.Size(150, 150);
-            this.places1.TabIndex = 1;
-            this.places1.Visible = false;
+            this.lblError.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblError.BackColor = System.Drawing.Color.Black;
+            this.lblError.ForeColor = System.Drawing.Color.White;
+            this.lblError.Location = new System.Drawing.Point(3, 126);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(234, 29);
+            this.lblError.Text = "Cannot list nearby venues.";
+            this.lblError.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblError.Visible = false;
             // 
             // settings1
             // 
@@ -75,12 +81,21 @@
             this.settings1.TabIndex = 2;
             this.settings1.Visible = false;
             // 
+            // places1
+            // 
+            this.places1.Location = new System.Drawing.Point(43, 64);
+            this.places1.Name = "places1";
+            this.places1.Size = new System.Drawing.Size(150, 150);
+            this.places1.TabIndex = 1;
+            this.places1.Visible = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 268);
+            this.Controls.Add(this.lblError);
             this.Controls.Add(this.settings1);
             this.Controls.Add(this.places1);
             this.Controls.Add(this.header);
@@ -98,6 +113,7 @@
         private System.Windows.Forms.MenuItem mnuLeft;
         private System.Windows.Forms.MenuItem mnuRight;
         private MySquare.UI.Settings.Settings settings1;
+        private System.Windows.Forms.Label lblError;
     }
 }
 
