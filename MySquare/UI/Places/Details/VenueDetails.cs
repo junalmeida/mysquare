@@ -9,7 +9,7 @@ using MySquare.FourSquare;
 
 namespace MySquare.UI.Places
 {
-    public partial class VenueDetails : UserControl, IPanel
+    public partial class VenueDetails : UserControl, IView, IViewWithTabs
     {
         public VenueDetails()
         {
@@ -26,104 +26,18 @@ namespace MySquare.UI.Places
             tabStrip1.Tabs.Add("Map");
             tabStrip1.Tabs.Add("Tips");
         }
-        MenuItem leftSoft; MenuItem rightSoft;
-        public void ActivateControl(MenuItem leftSoft, MenuItem rightSoft)
-        {
-            if (this.leftSoft != leftSoft)
-            {
-                this.leftSoft = leftSoft;
-                this.leftSoft.Click += new EventHandler(leftSoft_Click);
-            }
 
-            if (this.rightSoft != rightSoft)
-            {
-                this.rightSoft = rightSoft;
-                this.rightSoft.Click += new EventHandler(rightSoft_Click);
-            }
-
-            leftSoft.Text = "&Check in";
-            leftSoft.Enabled = true;
-            rightSoft.Text = "&Back";
-            rightSoft.Enabled = true;
-
-            BringToFront();
-            Dock = DockStyle.Fill;
-            Visible = true;
-        }
-
-        void rightSoft_Click(object sender, EventArgs e)
-        {
-        }
-
-        void leftSoft_Click(object sender, EventArgs e)
-        {
-            if (Visible)
-                checkIn1.DoCheckIn();
-        }
-
-
-
-        Venue venue;
-        internal void OpenVenue(Venue venue)
-        {
-            this.venue = venue;
-
-            lblVenueName.Text = venue.Name;
-            List<string> address = new List<string>();
-            if (!string.IsNullOrEmpty(venue.Address))
-                address.Add(venue.Address);
-            if (!string.IsNullOrEmpty(venue.City))
-                address.Add(venue.City);
-            if (!string.IsNullOrEmpty(venue.State))
-                address.Add(venue.State);
-            lblAddress.Text = string.Join(", ", address.ToArray());
-
-            tabStrip1.SelectedIndex = 0;
-            ChangeView(0);
-        }
-
- 
 
         private void tabStrip1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ChangeView(tabStrip1.SelectedIndex);
+            if (TabChanged != null)
+                TabChanged(this, e);
         }
 
-        private void ChangeView(int i)
-        {
-            switch (i)
-            {
-                case 0:
-                    venueInfo1.Visible = false;
-                    venueMap1.Visible = false;
-                    venueTips1.Visible = false;
-                    checkIn1.ActivateControl(leftSoft, rightSoft);
-                    checkIn1.Venue = venue;
-                    rightSoft.Enabled = true;
-                    break;
-                case 1:
-                    checkIn1.Visible = false;
-                    venueMap1.Visible = false;
-                    venueTips1.Visible = false;
-                    venueInfo1.Activate();
-                    rightSoft.Enabled = false;
-                    break;
-                case 2:
-                    venueInfo1.Visible = false;
-                    checkIn1.Visible = false;
-                    venueTips1.Visible = false;
-                    venueMap1.Activate();
-                    rightSoft.Enabled = false;
-                    break;
-                case 3:
-                    venueInfo1.Visible = false;
-                    venueMap1.Visible = false;
-                    checkIn1.Visible = false;
-                    venueTips1.Activate();
-                    rightSoft.Enabled = false;
-                    break;
-            }
-        }
+        #region IViewWithTabs Members
 
+        public event EventHandler TabChanged;
+
+        #endregion
     }
 }

@@ -63,7 +63,8 @@
 
         #endregion
 
-        private List list1;
-        private VenueDetails venueDetails1;
+        internal List list1;
+        internal VenueDetails venueDetails1;
+
     }
 }

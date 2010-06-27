@@ -133,14 +133,14 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblAddress;
-        private System.Windows.Forms.Label lblVenueName;
-        private MySquare.UI.Places.Details.CheckIn checkIn1;
         private System.Windows.Forms.Panel panelTabs;
-        private TabStrip tabStrip1;
-        private MySquare.UI.Places.Details.VenueInfo venueInfo1;
-        private MySquare.UI.Places.Details.VenueMap venueMap1;
-        private MySquare.UI.Places.Details.VenueTips venueTips1;
+        internal System.Windows.Forms.Label lblAddress;
+        internal System.Windows.Forms.Label lblVenueName;
+        internal MySquare.UI.Places.Details.CheckIn checkIn1;
+        internal TabStrip tabStrip1;
+        internal MySquare.UI.Places.Details.VenueInfo venueInfo1;
+        internal MySquare.UI.Places.Details.VenueMap venueMap1;
+        internal MySquare.UI.Places.Details.VenueTips venueTips1;
 
     }
 }

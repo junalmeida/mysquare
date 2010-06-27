@@ -54,7 +54,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -64,6 +63,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\BaseController.cs" />
+    <Compile Include="Controller\MainController.cs" />
+    <Compile Include="Controller\PlacesController.cs" />
+    <Compile Include="Controller\SettingsController.cs" />
+    <Compile Include="Controller\VenueDetailsController.cs" />
     <Compile Include="FourSquare\Badge.cs" />
     <Compile Include="FourSquare\CheckIn.cs" />
     <Compile Include="FourSquare\Mayor.cs" />

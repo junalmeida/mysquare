@@ -110,17 +110,6 @@
             </summary>
             <param name="timeout">Timeout in milliseconds.</param>
         </member>
-        <member name="M:Tenor.Mobile.Device.Device.HapticSoft">
-            <summary>
-            Vibrates softly.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Device.Device.HapticSoft(System.UInt32)">
-            <summary>
-            Vibrates for an specific period, in miliseconds.
-            </summary>
-            <param name="period"></param>
-        </member>
         <member name="P:Tenor.Mobile.Device.Device.OemInfo">
             <summary>
             Gets the string os OEM.
@@ -890,6 +879,39 @@
         <member name="E:Tenor.Mobile.Network.Connection.Suspended">
             <summary>
             Occurs when the connection is suspended due to a device operation such as a call.
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.Drawing.GradientFill">
+            <summary>
+            Hold methods that can draw a GradientFill on WinCE.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Drawing.GradientFill.Fill(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Color,System.Drawing.Color,Tenor.Mobile.Drawing.GradientFill.FillDirection)">
+            <summary>
+            This method wraps the PInvoke to GradientFill.
+            Returns true if the call to GradientFill succeeded; false
+            otherwise.
+            </summary>
+            <param name="gr">The Graphics object we are filling</param>
+            <param name="rc">The rectangle to fill</param>
+            <param name="startColor">The starting color for the fill</param>
+            <param name="endColor">The ending color for the fill</param>
+            <param name="fillDir">The direction to fill</param>
+            <returns>Returns true if the call to GradientFill succeeded</returns>
+        </member>
+        <member name="T:Tenor.Mobile.Drawing.GradientFill.FillDirection">
+            <summary>
+            The direction to the GradientFill will follow
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight">
+            <summary>
+            The fill goes horizontally
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.Drawing.GradientFill.FillDirection.TopToBottom">
+            <summary>
+            The fill goes vertically
             </summary>
         </member>
         <member name="T:Tenor.Mobile.UI.Samsung">

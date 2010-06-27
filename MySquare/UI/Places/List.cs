@@ -14,90 +14,12 @@ namespace MySquare.UI.Places
 {
     public partial class List : UserControl
     {
-        WorldPosition position;
         public List()
         {
             InitializeComponent();
 
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
 
-
-            Program.Service.SearchArrives += new MySquare.FourSquare.SearchEventHandler(Service_SearchArrives);
-        }
-
-        internal void RefreshList()
-        {
-            Application.DoEvents();
-            ShowLoading();
-
-            position = new WorldPosition(false, false);
-            position.LocationChanged += new EventHandler(position_LocationChanged);
-            position.Error += new EventHandler(position_Error);
-
-            position.PollCell();
-        }
-
-        void position_Error(object sender, EventArgs e)
-        {
-            this.Invoke(new System.Threading.ThreadStart(delegate()
-            {
-                Program.ShowError("Could not get your location, try again later.");
-            }));
-        }
-
-        void position_LocationChanged(object sender, EventArgs e)
-        {
-            if (position.Latitude.HasValue && position.Longitude.HasValue)
-            {
-                Program.Service.SearchNearby(null, position.Latitude.Value, position.Longitude.Value);
-            }
-            else
-            {
-                Program.ShowError("Could not get your location, try again later.");
-            }
-            position = null;
-        }
-
-
-        void Service_SearchArrives(object serder, MySquare.FourSquare.SearchEventArgs e)
-        {
-            if (this.InvokeRequired)
-                this.Invoke(new ThreadStart(delegate()
-                {
-                    LoadVenues(e.Venues);
-                }));
-            else
-                LoadVenues(e.Venues);
-        }
-
-
-
-        private void ShowLoading()
-        {
-            listBox.Visible = false;
-            Cursor.Current = Cursors.WaitCursor;
-            Cursor.Show();
-        }
-
-
-        private void ShowList()
-        {
-            listBox.Visible = true;
-            Cursor.Current = Cursors.Default;
-            Cursor.Show();
-        }
-
-
-
-
-        void LoadVenues(Venue[] venues)
-        {
-            listBox.Clear();
-            foreach (Venue venue in venues)
-            {
-                listBox.AddItem(venue.Name, venue);
-            }
-            ShowList();
         }
 
         Brush brush = new SolidBrush(Tenor.Mobile.UI.Skin.Current.TextForeColor);
@@ -157,7 +79,6 @@ namespace MySquare.UI.Places
         private void listBox_SelectedItemClicked(object sender, EventArgs e)
         {
             ItemSelected(this, new EventArgs());
-
         }
 
         public event EventHandler ItemSelected;
@@ -172,12 +93,5 @@ namespace MySquare.UI.Places
             }
         }
 
-
-
-        internal void Activate()
-        {
-            Dock = DockStyle.Fill;
-            Visible = true;
-        }
     }
 }

@@ -42,7 +42,6 @@
             this.listBox.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
             this.listBox.Size = new System.Drawing.Size(299, 244);
             this.listBox.TabIndex = 0;
-            this.listBox.Visible = false;
             this.listBox.SelectedItemChanged += new System.EventHandler(this.listBox_SelectedItemChanged);
             this.listBox.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.listBox_DrawItem);
             this.listBox.SelectedItemClicked += new System.EventHandler(this.listBox_SelectedItemClicked);
@@ -60,6 +59,6 @@
 
         #endregion
 
-        private Tenor.Mobile.UI.KListControl listBox;
+        internal Tenor.Mobile.UI.KListControl listBox;
     }
 }

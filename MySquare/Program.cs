@@ -9,26 +9,14 @@ namespace MySquare
 {
     static class Program
     {
-        static Program()
-        {
-            Service = new Service();
-        }
-        internal static Service Service { get; private set; }
-        internal static AutoResetEvent WaitThread = new AutoResetEvent(false);
-
-        internal static void ShowError(string text)
-        {
-            mainForm.ShowError(text);
-        }
-
-        static UI.Main mainForm;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [MTAThread]
         static void Main()
         {
-            using (mainForm = new MySquare.UI.Main())
+            using (UI.Main mainForm = new UI.Main())
+            using (Controller.MainController mainController = new MySquare.Controller.MainController(mainForm))
             {
                 Application.Run(mainForm);
             }

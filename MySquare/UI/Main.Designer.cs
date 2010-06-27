@@ -50,7 +50,6 @@
             // mnuRight
             // 
             this.mnuRight.Text = "&Right";
-            this.mnuRight.Click += new System.EventHandler(this.mnuRight_Click);
             // 
             // header
             // 
@@ -102,6 +101,7 @@
             this.Menu = this.mainMenu;
             this.Name = "Main";
             this.Text = "MySquare";
+            this.Load += new System.EventHandler(this.Main_Load);
             this.ResumeLayout(false);
 
         }
@@ -109,11 +109,11 @@
         #endregion
 
         private Tenor.Mobile.UI.HeaderStrip header;
-        private MySquare.UI.Places.Places places1;
-        private System.Windows.Forms.MenuItem mnuLeft;
-        private System.Windows.Forms.MenuItem mnuRight;
-        private MySquare.UI.Settings.Settings settings1;
-        private System.Windows.Forms.Label lblError;
+        internal MySquare.UI.Places.Places places1;
+        internal System.Windows.Forms.MenuItem mnuLeft;
+        internal System.Windows.Forms.MenuItem mnuRight;
+        internal MySquare.UI.Settings.Settings settings1;
+        internal System.Windows.Forms.Label lblError;
     }
 }
 

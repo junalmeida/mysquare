@@ -6,8 +6,14 @@ using System.Windows.Forms;
 
 namespace MySquare.UI
 {
-    interface IPanel
+    interface IView
     {
-        void ActivateControl(MenuItem leftSoft, MenuItem rightSoft);
     }
+
+    interface IViewWithTabs
+    {
+        event EventHandler TabChanged;
+    }
+
+
 }

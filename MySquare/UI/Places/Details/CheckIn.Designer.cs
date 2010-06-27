@@ -101,9 +101,10 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox chkFacebook;
-        private System.Windows.Forms.CheckBox chkTwitter;
-        private System.Windows.Forms.CheckBox chkTellFriends;
-        private System.Windows.Forms.TextBox txtShout;
+        internal System.Windows.Forms.CheckBox chkFacebook;
+        internal System.Windows.Forms.CheckBox chkTwitter;
+        internal System.Windows.Forms.CheckBox chkTellFriends;
+        internal System.Windows.Forms.TextBox txtShout;
+
     }
 }
