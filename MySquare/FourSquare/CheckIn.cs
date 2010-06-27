@@ -6,6 +6,13 @@ using Newtonsoft.Json;
 
 namespace MySquare.FourSquare
 {
+    class CheckInResponse
+    {
+        [JsonProperty("checkin")]
+        public CheckIn CheckIn
+        { get; set; }
+    }
+
     class CheckIn
     {
         [JsonProperty("id")]

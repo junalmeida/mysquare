@@ -49,7 +49,11 @@ namespace MySquare.FourSquare
         internal Service()
         {
             string keyPath = "Software\\RisingMobility\\MySquare";
-            key = Registry.LocalMachine.CreateSubKey(keyPath);
+            if (Environment.OSVersion.Platform == PlatformID.WinCE)
+                key = Registry.LocalMachine.CreateSubKey(keyPath);
+            else
+                key = Registry.CurrentUser.CreateSubKey(keyPath);
+
 
             var asName = typeof(Service).Assembly.GetName();
             userAgent = string.Format("{0}/{1}", asName.Name, asName.Version);
@@ -113,7 +117,28 @@ namespace MySquare.FourSquare
             {
                 request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+            }
+            else
+            {
+                if (queryString.Length > 0)
+                    url += "?" + queryString.Remove(0, 1).ToString();
+                request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "GET";
+            }
 
+            request.Timeout = 15000;
+            request.UserAgent = userAgent;
+
+            if (auth && !string.IsNullOrEmpty(Login))
+            {
+                request.Headers.Add("Authorization", "Basic " +
+                    Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}",
+                    Login, Password))));
+            }
+
+            if (post)
+            {
                 MemoryStream memData = new MemoryStream();
                 using (StreamWriter writer = new StreamWriter(memData))
                 {
@@ -127,21 +152,7 @@ namespace MySquare.FourSquare
                     postData.Close();
                 }
             }
-            else
-            {
-                if (queryString.Length > 0)
-                    url += "?" + queryString.Remove(0, 1).ToString();
-                request = (HttpWebRequest)WebRequest.Create(url);
-                request.Method = "GET";
-            }
-            request.Timeout = 15000;
-            request.UserAgent = userAgent;
-            if (auth && !string.IsNullOrEmpty(Login))
-            {
-                request.AllowAutoRedirect = true;
-                request.AllowWriteStreamBuffering = true;
-                request.Credentials = new NetworkCredential(Login, Password);
-            }
+
 
             request.BeginGetResponse(new AsyncCallback(ParseResponse), service);
         }
