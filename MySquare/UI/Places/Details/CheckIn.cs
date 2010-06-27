@@ -11,6 +11,9 @@ namespace MySquare.UI.Places.Details
 {
     public partial class CheckIn : UserControl, IPanel
     {
+        public event EventHandler Back;
+
+
         public CheckIn()
         {
             InitializeComponent();
@@ -70,8 +73,14 @@ namespace MySquare.UI.Places.Details
             Program.Service.CheckIn(Venue, txtShout.Text, chkTellFriends.Checked, facebook, twitter);
             Program.WaitThread.WaitOne();
             if (result != null)
-                MessageBox.Show(result.Message);
-            EnableInterface();
+            {
+                MessageBox.Show(result.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
+
+                if (Back != null)
+                    Back(this, new EventArgs());
+            }
+            else
+                EnableInterface();
         }
 
         private void EnableInterface()
@@ -91,6 +100,24 @@ namespace MySquare.UI.Places.Details
         {
             if (e.KeyCode == Keys.Enter)
                 e.Handled = true;
+        }
+
+        private void chkTellFriends_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (!chkTellFriends.Checked)
+            {
+                chkTwitter.Enabled = false;
+                chkFacebook.Enabled = false;
+                chkTwitter.CheckState = CheckState.Unchecked;
+                chkFacebook.CheckState = CheckState.Unchecked;
+            }
+            else
+            {
+                chkTwitter.Enabled = true;
+                chkFacebook.Enabled = true;
+                chkTwitter.CheckState = CheckState.Indeterminate;
+                chkFacebook.CheckState = CheckState.Indeterminate;
+            }
         }
     }
 }

@@ -16,6 +16,11 @@ namespace MySquare.FourSquare
         public int CheckIns
         { get; set; }
 
+        [JsonProperty("count")]
+        public int Count
+        { get; set; }
+
+
         [JsonProperty("user")]
         public User User
         { get; set; }

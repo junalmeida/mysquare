@@ -69,6 +69,7 @@
             this.chkTellFriends.Size = new System.Drawing.Size(141, 20);
             this.chkTellFriends.TabIndex = 9;
             this.chkTellFriends.Text = "Tell my friends";
+            this.chkTellFriends.CheckStateChanged += new System.EventHandler(this.chkTellFriends_CheckStateChanged);
             // 
             // txtShout
             // 
