@@ -11,10 +11,10 @@ namespace MySquare.Controller
 {
     class PlacesController : BaseController
     {
-        UI.Places.Places places;
+        UI.Places.Places view;
         public PlacesController(UI.Places.Places view)
         {
-            this.places = view;
+            this.view = view;
             this.Service.SearchArrives += new MySquare.FourSquare.SearchEventHandler(Service_SearchArrives);
         }
 
@@ -22,21 +22,21 @@ namespace MySquare.Controller
         protected override void Activate()
         {
 
-            UI.Main form = places.Parent as UI.Main;
+            UI.Main form = view.Parent as UI.Main;
             form.settings1.Visible = false;
-            places.BringToFront();
-            places.Dock = System.Windows.Forms.DockStyle.Fill;
-            places.Visible = true;
+            view.BringToFront();
+            view.Dock = System.Windows.Forms.DockStyle.Fill;
+            view.Visible = true;
 
             LeftSoftButtonEnabled = true;
             LeftSoftButtonText = "&Refresh";
             RightSoftButtonEnabled = true;
             RightSoftButtonText = "&Create";
 
-            if (places.list1.listBox.Count == 0)
-            {
+            if (view.list1.listBox.Count == 0)
                 Search();
-            }
+            else
+                ShowList();
         }
 
         protected override void OnLeftSoftButtonClick()
@@ -60,7 +60,7 @@ namespace MySquare.Controller
 
             Cursor.Current = Cursors.WaitCursor;
             Cursor.Show();
-
+            view.list1.Visible = false;
 #if DEBUG
             if (Environment.OSVersion.Platform == PlatformID.WinCE)
             {
@@ -102,8 +102,8 @@ namespace MySquare.Controller
 
         void Service_SearchArrives(object serder, MySquare.FourSquare.SearchEventArgs e)
         {
-            if (places.InvokeRequired)
-                places.Invoke(new ThreadStart(delegate()
+            if (view.InvokeRequired)
+                view.Invoke(new ThreadStart(delegate()
                 {
                     LoadVenues(e.Venues);
                 }));
@@ -114,20 +114,20 @@ namespace MySquare.Controller
 
         void LoadVenues(Venue[] venues)
         {
-            places.list1.listBox.Clear();
+            view.list1.listBox.Clear();
             foreach (Venue venue in venues)
             {
-                places.list1.listBox.AddItem(venue.Name, venue);
+                view.list1.listBox.AddItem(venue.Name, venue);
             }
             ShowList();
         }
 
         private void ShowList()
         {
-            places.venueDetails1.Visible = false;
-            places.list1.BringToFront();
-            places.list1.Dock = DockStyle.Fill;
-            places.list1.Visible = true;
+            view.venueDetails1.Visible = false;
+            view.list1.BringToFront();
+            view.list1.Dock = DockStyle.Fill;
+            view.list1.Visible = true;
             Cursor.Current = Cursors.Default;
             Cursor.Show();
         }

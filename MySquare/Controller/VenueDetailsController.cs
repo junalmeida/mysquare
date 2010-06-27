@@ -32,18 +32,21 @@ namespace MySquare.Controller
             view.BringToFront();
             view.Visible = true;
 
+            view.checkIn1.txtShout.Enabled = true;
+            view.checkIn1.chkTellFriends.Enabled = true;
+
             view.checkIn1.txtShout.Text = string.Empty;
             view.checkIn1.chkTellFriends.Checked = true;
+
 
             view.tabStrip1.SelectedIndex = 0;
 
             OpenSection(VenueSection.CheckIn);
         }
 
-        Venue venue;
         internal void OpenVenue(Venue venue)
         {
-            this.venue = venue;
+            this.Venue = venue;
 
             view.lblVenueName.Text = venue.Name;
             List<string> address = new List<string>();
@@ -113,6 +116,15 @@ namespace MySquare.Controller
             }
         }
 
+        protected override void OnLeftSoftButtonClick()
+        {
+            DoCheckIn();
+        }
+
+        protected override void OnRightSoftButtonClick()
+        {
+            BaseController.OpenController(view.Parent as MySquare.UI.IView);
+        }
 
         internal MySquare.FourSquare.Venue Venue
         { get; set; }
@@ -148,10 +160,11 @@ namespace MySquare.Controller
                 view.checkIn1.chkTellFriends.Checked, 
                 facebook, twitter);
             WaitThread.WaitOne();
+
             if (result != null)
-            {
                 MessageBox.Show(result.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
-            }
+            else
+                OnRightSoftButtonClick();
         }
         #endregion
 
