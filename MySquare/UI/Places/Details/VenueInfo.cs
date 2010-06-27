@@ -27,7 +27,7 @@ namespace MySquare.UI.Places.Details
             if (Environment.OSVersion.Platform == PlatformID.WinCE)
             {
                 Microsoft.WindowsMobile.Telephony.Phone p = new Microsoft.WindowsMobile.Telephony.Phone();
-                p.Talk(lblPhone.Text);
+                p.Talk(lblPhone.Text, true);
             }
         }
     }
