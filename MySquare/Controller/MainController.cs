@@ -28,7 +28,7 @@ namespace MySquare.Controller
 
         #region Error Control
 
-        protected override void ShowError(string text)
+        internal void ShowErrorForm(string text)
         {
             if (Form.InvokeRequired)
                 Form.Invoke(new System.Threading.ThreadStart(delegate()
@@ -36,24 +36,21 @@ namespace MySquare.Controller
                     ShowErrorForm(text);
                 }));
             else
-                ShowErrorForm(text);
-        }
+            {
+                Form.settings1.Visible = false;
+                Form.places1.Visible = false;
 
-        private void ShowErrorForm(string text)
-        {
-            Form.settings1.Visible = false;
-            Form.places1.Visible = false;
+                Form.lblError.Text = text;
+                Form.lblError.Visible = true;
 
-            Form.lblError.Text = text;
-            Form.lblError.Visible = true;
 
-            
-            RightSoftButtonText = "&Back";
-            LeftSoftButtonText = "&Refresh";
-            LeftSoftButtonEnabled = false;
+                RightSoftButtonText = "&Back";
+                LeftSoftButtonText = "&Refresh";
+                LeftSoftButtonEnabled = false;
 
-            Cursor.Current = Cursors.Default;
-            Cursor.Show();
+                Cursor.Current = Cursors.Default;
+                Cursor.Show();
+            }
         }
 
         void Service_Error(object serder, ErrorEventArgs e)
@@ -144,6 +141,7 @@ namespace MySquare.Controller
 
         protected override void OnRightSoftButtonClick()
         {
+            Form.lblError.Visible = false;
             BaseController.OpenController(this.Form.places1);
         }
     }

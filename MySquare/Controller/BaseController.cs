@@ -159,10 +159,10 @@ namespace MySquare.Controller
        }
 
         protected abstract void Activate();
-        protected virtual void ShowError(string text)
+        protected void ShowError(string text)
         {
             CurrentController = 0;
-            MainController.ShowError(text);
+            MainController.ShowErrorForm(text);
         }
 
     }
