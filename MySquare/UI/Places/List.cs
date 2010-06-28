@@ -9,6 +9,7 @@ using MySquare.Properties;
 using MySquare.FourSquare;
 using System.Threading;
 using Tenor.Mobile.Location;
+using System.IO;
 
 namespace MySquare.UI.Places
 {
@@ -41,7 +42,7 @@ namespace MySquare.UI.Places
             base.ScaleControl(factor, specified);
         }
 
-        internal Dictionary<string, Image> imageList;
+        internal Dictionary<string, byte[]> imageList;
 
         float itemPadding;
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
@@ -75,17 +76,38 @@ namespace MySquare.UI.Places
                 imageList.ContainsKey(venue.PrimaryCategory.IconUrl)
                 )
             {
-                Image image = imageList[venue.PrimaryCategory.IconUrl];
 
-                e.Graphics.DrawImage(
-                    image,
-                    new Rectangle(
-                        e.Bounds.X + Convert.ToInt32(itemPadding),
-                        e.Bounds.Y + Convert.ToInt32(itemPadding),
-                        e.Bounds.Height - Convert.ToInt32(itemPadding * 2),
-                        e.Bounds.Height - Convert.ToInt32(itemPadding * 2)),
-                    new Rectangle(0, 0, image.Width, image.Height),
-                    GraphicsUnit.Pixel);
+                using (MemoryStream mem = new MemoryStream(imageList[venue.PrimaryCategory.IconUrl]))
+                {
+                    if (Environment.OSVersion.Platform == PlatformID.WinCE)
+                    {
+
+                        Tenor.Mobile.Drawing.AlphaImage.DrawImage(
+                            e.Graphics,
+                            mem,
+                            new Rectangle(
+                                e.Bounds.X + Convert.ToInt32(itemPadding),
+                                e.Bounds.Y + Convert.ToInt32(itemPadding),
+                                e.Bounds.Height - Convert.ToInt32(itemPadding * 2),
+                                e.Bounds.Height - Convert.ToInt32(itemPadding * 2)));
+
+                    }
+                    else
+                    {
+                        using (Bitmap image = new Bitmap(mem))
+                        {
+                            e.Graphics.DrawImage(
+                                image,
+                                new Rectangle(
+                                    e.Bounds.X + Convert.ToInt32(itemPadding),
+                                    e.Bounds.Y + Convert.ToInt32(itemPadding),
+                                    e.Bounds.Height - Convert.ToInt32(itemPadding * 2),
+                                    e.Bounds.Height - Convert.ToInt32(itemPadding * 2)),
+                                new Rectangle(0, 0, image.Width, image.Height),
+                                GraphicsUnit.Pixel);
+                        }
+                    }
+                }
 
             }
         }

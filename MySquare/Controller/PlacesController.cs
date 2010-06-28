@@ -112,16 +112,37 @@ namespace MySquare.Controller
 
         void LoadVenues(Venue[] venues)
         {
-            View.list1.imageList = new Dictionary<string, System.Drawing.Image>();
+            View.list1.imageList = new Dictionary<string, byte[]>();
 
             View.list1.listBox.Clear();
             foreach (Venue venue in venues)
             {
-                if (venue.PrimaryCategory != null)
-                    DownloadImageToDictionary(venue.PrimaryCategory.IconUrl, View.list1.imageList);
                 View.list1.listBox.AddItem(venue.Name, venue);
             }
             ShowList();
+
+
+            Thread t = new Thread(new ThreadStart(delegate()
+            {
+                foreach (Venue venue in venues)
+                {
+
+                    if (venue.PrimaryCategory != null)
+                    {
+                        string url = venue.PrimaryCategory.IconUrl;
+                        if (!string.IsNullOrEmpty(url))
+                        {
+                            View.list1.imageList[url] = Service.DownloadImageSync(url);
+   
+                            View.list1.listBox.Invoke(new ThreadStart(delegate()
+                            {
+                                View.list1.listBox.Invalidate();
+                            }));
+                        }
+                    }
+                }
+            }));
+            t.Start();
         }
 
         private void ShowList()

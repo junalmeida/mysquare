@@ -211,6 +211,9 @@
   <ItemGroup>
     <None Include="Resources\advancedsettings_48x48.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hourglass-select-remain_16x16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

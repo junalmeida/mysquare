@@ -23,7 +23,7 @@ namespace MySquare.UI.Places
 
             tabStrip1.Tabs.Add("Check In");
             tabStrip1.Tabs.Add("Info");
-            //tabStrip1.Tabs.Add("Map");
+            tabStrip1.Tabs.Add("Map");
             //tabStrip1.Tabs.Add("Tips");
         }
 

@@ -38,6 +38,9 @@
             this.imgCategory = new System.Windows.Forms.PictureBox();
             this.lblStats = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.contextMenu = new System.Windows.Forms.ContextMenu();
+            this.mnuCopy = new System.Windows.Forms.MenuItem();
+            this.mnuDial = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // label1
@@ -107,6 +110,7 @@
             this.imgMayor.Name = "imgMayor";
             this.imgMayor.Size = new System.Drawing.Size(33, 33);
             this.imgMayor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imgMayor.Paint += new System.Windows.Forms.PaintEventHandler(this.Img_Paint);
             // 
             // imgCategory
             // 
@@ -115,6 +119,7 @@
             this.imgCategory.Name = "imgCategory";
             this.imgCategory.Size = new System.Drawing.Size(33, 33);
             this.imgCategory.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imgCategory.Paint += new System.Windows.Forms.PaintEventHandler(this.Img_Paint);
             // 
             // lblStats
             // 
@@ -135,6 +140,21 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(191, 15);
             this.label5.Text = "Stats:";
+            // 
+            // contextMenu
+            // 
+            this.contextMenu.MenuItems.Add(this.mnuCopy);
+            this.contextMenu.MenuItems.Add(this.mnuDial);
+            // 
+            // mnuCopy
+            // 
+            this.mnuCopy.Text = "&Copy";
+            this.mnuCopy.Click += new System.EventHandler(this.mnuCopy_Click);
+            // 
+            // mnuDial
+            // 
+            this.mnuDial.Text = "&Dial";
+            this.mnuDial.Click += new System.EventHandler(this.mnuDial_Click);
             // 
             // VenueInfo
             // 
@@ -169,5 +189,8 @@
         internal System.Windows.Forms.PictureBox imgCategory;
         internal System.Windows.Forms.Label lblStats;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ContextMenu contextMenu;
+        private System.Windows.Forms.MenuItem mnuCopy;
+        private System.Windows.Forms.MenuItem mnuDial;
     }
 }

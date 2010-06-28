@@ -5,6 +5,7 @@ using System.Text;
 using MySquare.FourSquare;
 using System.Windows.Forms;
 using System.Threading;
+using System.Globalization;
 
 namespace MySquare.Controller
 {
@@ -18,7 +19,9 @@ namespace MySquare.Controller
             this.View.TabChanged += new EventHandler(venueDetails_TabChanged);
             Service.CheckInResult+=new CheckInEventHandler(Service_CheckInResult);
             Service.VenueResult += new VenueEventHandler(Service_VenueResult);
+            Service.ImageResult += new ImageResultEventHandler(Service_ImageResult);
         }
+
 
 
 
@@ -63,6 +66,8 @@ namespace MySquare.Controller
                 address.Add(venue.State);
             View.lblAddress.Text = string.Join(", ", address.ToArray());
 
+            View.venueMap1.picMap.Image = MySquare.Properties.Resources.HourGlass;
+            View.venueMap1.picMap.Tag = null;
             View.tabStrip1.SelectedIndex = 0;
             OpenSection(VenueSection.CheckIn);
         }
@@ -110,6 +115,7 @@ namespace MySquare.Controller
                     View.venueMap1.Activate();
 
                     LeftSoftButtonEnabled = false;
+                    DownloadMapPosition();
                     break;
                 case VenueSection.Tips:
                     View.venueInfo1.Visible = false;
@@ -210,13 +216,33 @@ namespace MySquare.Controller
                 else
                     View.venueInfo1.lblStats.Text = null;
 
-                View.venueInfo1.imgCategory.Image = null;
-                if (Venue.PrimaryCategory != null && !string.IsNullOrEmpty(Venue.PrimaryCategory.IconUrl))
-                    DownloadImageToPictureBox(Venue.PrimaryCategory.IconUrl, View.venueInfo1.imgCategory);
+                View.venueInfo1.imgCategory.Tag = null;
+                View.venueInfo1.imgMayor.Tag = null;
 
-                View.venueInfo1.imgMayor.Image = null;
-                if (Venue.Status != null && Venue.Status.Mayor != null && !string.IsNullOrEmpty(Venue.Status.Mayor.User.ImageUrl))
-                    DownloadImageToPictureBox(Venue.Status.Mayor.User.ImageUrl, View.venueInfo1.imgMayor);
+                Thread t = new Thread(new ThreadStart(delegate()
+                {
+                    if (Venue.PrimaryCategory != null && !string.IsNullOrEmpty(Venue.PrimaryCategory.IconUrl))
+                    {
+                        byte[] image = Service.DownloadImageSync(Venue.PrimaryCategory.IconUrl);
+                        View.Invoke(new ThreadStart(delegate()
+                        {
+                            View.venueInfo1.imgCategory.Tag = image;
+                            View.venueInfo1.imgCategory.Invalidate();
+                        }));
+                    }
+
+                    if (Venue.Status != null && Venue.Status.Mayor != null && !string.IsNullOrEmpty(Venue.Status.Mayor.User.ImageUrl))
+                    {
+                        byte[] image = Service.DownloadImageSync(Venue.Status.Mayor.User.ImageUrl);
+                        View.Invoke(new ThreadStart(delegate()
+                        {
+                            View.venueInfo1.imgMayor.Tag = image;
+                            View.venueInfo1.imgMayor.Invalidate();
+                        }));
+                    }
+
+                }));
+                t.Start();
             }
         }
         void Service_VenueResult(object serder, VenueEventArgs e)
@@ -224,6 +250,46 @@ namespace MySquare.Controller
             Venue = e.Venue;
             LoadExtraInfo();
         }
+        #endregion
+
+
+        #region Maps
+
+        void DownloadMapPosition()
+        {
+
+            PictureBox box = this.View.venueMap1.picMap;
+            if (box.Tag == null)
+            {
+                string googleMapsUrl =
+                    "http://maps.google.com/maps/api/staticmap?zoom=16&sensor=false&mobile=true&format=jpeg&size={0}x{1}&markers=color:blue|{2},{3}";
+
+                CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
+                googleMapsUrl = string.Format(googleMapsUrl,
+                    box.Width, box.Height,
+                    Venue.Latitude.ToString(culture),
+                    Venue.Longitude.ToString(culture));
+
+                Service.DownloadImage(googleMapsUrl);
+            }
+        }
+
+
+        void Service_ImageResult(object serder, ImageEventArgs e)
+        {
+            if (e.Url.StartsWith("http://maps.google.com"))
+            {
+                PictureBox box = this.View.venueMap1.picMap;
+                var image = new System.Drawing.Bitmap(new System.IO.MemoryStream(e.Image));
+
+                box.Invoke(new ThreadStart(delegate()
+                {
+                    box.Image = image;
+                    box.Tag = 1;
+                }));
+            }
+        }
+
         #endregion
 
     }

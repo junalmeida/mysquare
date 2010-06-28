@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Microsoft.Win32;
+using System.Threading;
 
 namespace MySquare.FourSquare
 {
@@ -283,10 +284,40 @@ namespace MySquare.FourSquare
 
 
         #region Image Service
+        internal byte[] DownloadImageSync(string url)
+        {
+            System.Diagnostics.Debug.WriteLine(url, "ImageDownload");
+            byte[] result = GetFromCache(url);
+            if (result == null)
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                try
+                {
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    {
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            using (Stream stream = response.GetResponseStream())
+                            {
+                                result = Tenor.Mobile.IO.StreamToBytes(stream);
+                                SaveToCache(url, result);
+                            }
+                        }
+                    }
+                }
+                catch { }
+            }
+            return result;
+        }
+
+
         internal void DownloadImage(string url)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.BeginGetResponse(new AsyncCallback(ParseImageResponse), new object[] { request, url });
+            System.Diagnostics.Debug.WriteLine(url, "ImageDownload");
+            request.BeginGetResponse(
+                new AsyncCallback(ParseImageResponse),
+                new object[] { request, url });
         }
 
         private void ParseImageResponse(IAsyncResult r)
@@ -297,7 +328,7 @@ namespace MySquare.FourSquare
             HttpWebRequest request = (HttpWebRequest)items[0];
             string url = (string)items[1];
 
-            System.Drawing.Image result = null;
+            byte[] result = null;
             try
             {
                 using (HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(r))
@@ -306,7 +337,7 @@ namespace MySquare.FourSquare
                     {
                         using (Stream stream = response.GetResponseStream())
                         {
-                            result = new System.Drawing.Bitmap(stream);
+                            result = Tenor.Mobile.IO.StreamToBytes(stream);
                         }
                     }
                 }
@@ -321,6 +352,61 @@ namespace MySquare.FourSquare
 
             if (result != null)
                 OnImageResult(new ImageEventArgs(url, result));
+        }
+
+        #endregion
+
+
+        #region Cache
+
+        static string appPath;
+        private static string GetCachePath(string url)
+        {
+            if (string.IsNullOrEmpty(appPath))
+            {
+                appPath = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
+                if (appPath.StartsWith("file://"))
+                    appPath = appPath.Substring(8).Replace(System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar);
+                appPath = System.IO.Path.GetDirectoryName(appPath);
+
+            }
+            string path = System.IO.Path.Combine(appPath, "cache");
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+
+            string filePath = url.Substring(url.IndexOf(".com/") + 5).Replace("/", "_");
+            filePath = System.IO.Path.Combine(path, filePath);
+            return filePath;
+        }
+
+        private static byte[] GetFromCache(string url)
+        {
+            string path = Service.GetCachePath(url);
+            if (System.IO.File.Exists(path))
+            {
+                using (System.IO.FileStream file = System.IO.File.OpenRead(path))
+                {
+                    return Tenor.Mobile.IO.StreamToBytes(file);
+                }
+            }
+            else
+                return null;
+        }
+
+        private static void SaveToCache(string url, byte[] image)
+        {
+            try
+            {
+                string path = Service.GetCachePath(url);
+                using (var file = System.IO.File.Open(path, System.IO.FileMode.Create))
+                {
+                    file.Write(image, 0, image.Length);
+                    file.Close();
+                }
+            }
+            catch
+            {
+            }
         }
 
         #endregion
@@ -377,7 +463,7 @@ namespace MySquare.FourSquare
     delegate void ImageResultEventHandler(object serder, ImageEventArgs e);
     class ImageEventArgs : EventArgs
     {
-        internal ImageEventArgs(string url, System.Drawing.Image image)
+        internal ImageEventArgs(string url, byte[] image)
         {
             this.Url = url;
             this.Image = image;
@@ -385,7 +471,7 @@ namespace MySquare.FourSquare
         internal string Url
         { get; private set; }
 
-        internal System.Drawing.Image Image
+        internal byte[] Image
         {
             get;
             private set;

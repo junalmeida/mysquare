@@ -28,28 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.picMap = new System.Windows.Forms.PictureBox();
             this.SuspendLayout();
             // 
-            // label1
+            // picMap
             // 
-            this.label1.Location = new System.Drawing.Point(25, 65);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 20);
-            this.label1.Text = "map";
+            this.picMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.picMap.Location = new System.Drawing.Point(3, 3);
+            this.picMap.Name = "picMap";
+            this.picMap.Size = new System.Drawing.Size(225, 188);
+            this.picMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             // 
             // VenueMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.picMap);
             this.Name = "VenueMap";
+            this.Size = new System.Drawing.Size(231, 194);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        internal System.Windows.Forms.PictureBox picMap;
+
     }
 }
