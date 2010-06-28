@@ -79,9 +79,10 @@ namespace MySquare.UI.Places
 
                 using (MemoryStream mem = new MemoryStream(imageList[venue.PrimaryCategory.IconUrl]))
                 {
+#if DEBUG
                     if (Environment.OSVersion.Platform == PlatformID.WinCE)
                     {
-
+#endif
                         Tenor.Mobile.Drawing.AlphaImage.DrawImage(
                             e.Graphics,
                             mem,
@@ -90,7 +91,7 @@ namespace MySquare.UI.Places
                                 e.Bounds.Y + Convert.ToInt32(itemPadding),
                                 e.Bounds.Height - Convert.ToInt32(itemPadding * 2),
                                 e.Bounds.Height - Convert.ToInt32(itemPadding * 2)));
-
+#if DEBUG
                     }
                     else
                     {
@@ -107,6 +108,7 @@ namespace MySquare.UI.Places
                                 GraphicsUnit.Pixel);
                         }
                     }
+#endif
                 }
 
             }

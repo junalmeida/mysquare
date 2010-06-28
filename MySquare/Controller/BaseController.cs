@@ -6,6 +6,7 @@ using System.Threading;
 using MySquare.FourSquare;
 using System.Windows.Forms;
 using System.Collections;
+using MySquare.UI;
 
 namespace MySquare.Controller
 {
@@ -17,8 +18,9 @@ namespace MySquare.Controller
         static IList<BaseController> Controllers = new List<BaseController>();
         static int CurrentController = 0;
         
-        public BaseController()
+        public BaseController(IView view)
         {
+            this.view = view;
             Controllers.Add(this);
             if (Controllers.Count == 1 && Controllers[0] == this)
             {
@@ -159,6 +161,7 @@ namespace MySquare.Controller
         protected abstract void Activate();
         protected virtual void ShowError(string text)
         {
+            CurrentController = 0;
             MainController.ShowError(text);
         }
 

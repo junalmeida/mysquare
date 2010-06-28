@@ -8,11 +8,16 @@ namespace MySquare.Controller
 {
     class SettingsController : BaseController
     {
-        UI.Settings.Settings View;
-        public SettingsController(UI.Settings.Settings view)
+        UI.Settings.Settings View
         {
-            this.View = view;
-            base.view = view;
+            get
+            {
+                return (UI.Settings.Settings)base.view;
+            }
+        }
+        public SettingsController(UI.Settings.Settings view)
+            : base((MySquare.UI.IView)view)
+        {
         }
 
         protected override void Activate()

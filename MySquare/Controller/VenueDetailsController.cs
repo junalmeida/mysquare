@@ -11,13 +11,15 @@ namespace MySquare.Controller
 {
     class VenueDetailsController : BaseController
     {
-        UI.Places.VenueDetails View;
-        public VenueDetailsController(UI.Places.VenueDetails view)
+        UI.Places.VenueDetails View
         {
-            this.View = view;
-            base.view = view;
+            get { return (UI.Places.VenueDetails)base.view; }
+        }
+        public VenueDetailsController(UI.Places.VenueDetails view)
+            : base((MySquare.UI.IView)view)
+        {
             this.View.TabChanged += new EventHandler(venueDetails_TabChanged);
-            Service.CheckInResult+=new CheckInEventHandler(Service_CheckInResult);
+            Service.CheckInResult += new CheckInEventHandler(Service_CheckInResult);
             Service.VenueResult += new VenueEventHandler(Service_VenueResult);
             Service.ImageResult += new ImageResultEventHandler(Service_ImageResult);
         }

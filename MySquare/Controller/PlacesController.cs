@@ -11,11 +11,13 @@ namespace MySquare.Controller
 {
     class PlacesController : BaseController
     {
-        UI.Places.Places View;
-        public PlacesController(UI.Places.Places view)
+        UI.Places.Places View
         {
-            this.View = view;
-            base.view = view;
+            get { return (UI.Places.Places)base.view; }
+        }
+        public PlacesController(UI.Places.Places view)
+            : base((MySquare.UI.IView)view)
+        {
             this.Service.SearchArrives += new MySquare.FourSquare.SearchEventHandler(Service_SearchArrives);
         }
 
