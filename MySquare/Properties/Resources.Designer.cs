@@ -71,6 +71,13 @@ namespace MySquare.Properties {
             }
         }
         
+        internal static System.Drawing.Icon mySquare {
+            get {
+                object obj = ResourceManager.GetObject("mySquare", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap PinMap {
             get {
                 object obj = ResourceManager.GetObject("PinMap", resourceCulture);

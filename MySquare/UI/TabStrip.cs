@@ -32,6 +32,10 @@ namespace MySquare.UI
 
         Pen selectedBorder = new Pen(Tenor.Mobile.Drawing.Strings.ToColor("#DFE6EE"));
         Color selectedColor = Tenor.Mobile.Drawing.Strings.ToColor("#C5CCD4");
+
+        Pen unselectedBorder = new Pen(Tenor.Mobile.Drawing.Strings.ToColor("#303030"));
+        Color unselectedColor = Tenor.Mobile.Drawing.Strings.ToColor("#202020");
+
         SolidBrush selectedBrush = new SolidBrush(Color.Black);
         SolidBrush textBrush = new SolidBrush(Color.WhiteSmoke);
 
@@ -57,15 +61,16 @@ namespace MySquare.UI
                 RectangleF rect = new RectangleF(i * width, 0, width, this.Height);
                 if (Rectangle.Round(rect).IntersectsWith(e.ClipRectangle))
                 {
+                    Rectangle roundedRect = Rectangle.Round(rect);
+                    roundedRect.Height += Convert.ToInt32(corner.Height);
                     if (SelectedIndex == i)
                     {
-                        Rectangle roundedRect = Rectangle.Round(rect);
-                        roundedRect.Height += Convert.ToInt32(corner.Height);
                         Tenor.Mobile.Drawing.RoundedRectangle.Fill(e.Graphics, selectedBorder, selectedColor, roundedRect, corner.ToSize());
                         e.Graphics.DrawString(Tabs[i], Font, selectedBrush, rect, format);
                     }
                     else
                     {
+                        Tenor.Mobile.Drawing.RoundedRectangle.Fill(e.Graphics, unselectedBorder, unselectedColor, roundedRect, corner.ToSize());
                         e.Graphics.DrawString(Tabs[i], Font, textBrush, rect, format);
                         e.Graphics.DrawLine(selectedBorder, Convert.ToInt32(rect.X), Convert.ToInt32(rect.Bottom) - 1, Convert.ToInt32(rect.Right), Convert.ToInt32(rect.Bottom) - 1);
                     }

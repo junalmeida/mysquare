@@ -28,5 +28,9 @@ namespace MySquare.FourSquare
         public string Gender
         { get; set; }
 
+        public override string ToString()
+        {
+            return string.Concat(FirstName, " ", LastName);
+        }
     }
 }

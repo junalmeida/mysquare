@@ -146,21 +146,53 @@ namespace MySquare.FourSquare
             if (post)
             {
                 MemoryStream memData = new MemoryStream();
-                using (StreamWriter writer = new StreamWriter(memData))
-                {
-                    writer.Write(queryString.Remove(0, 1).ToString());
-                    writer.Flush();
-                    request.ContentLength = memData.Length;
+                StreamWriter writer = new StreamWriter(memData);
 
-                    Stream postData = request.GetRequestStream();
-                    memData.Seek(0, SeekOrigin.Begin);
-                    memData.WriteTo(postData);
-                    postData.Close();
-                }
+                writer.Write(queryString.Remove(0, 1).ToString());
+                writer.Flush();
+                request.ContentLength = memData.Length;
+
+                memData.Seek(0, SeekOrigin.Begin);
+
+                request.BeginGetRequestStream(
+                    new AsyncCallback(WriteRequest),
+                    new object[] { service, memData });
+            }
+            else
+            {
+                request.BeginGetResponse(new AsyncCallback(ParseResponse), service);
             }
 
+        }
 
-            request.BeginGetResponse(new AsyncCallback(ParseResponse), service);
+        private void WriteRequest(IAsyncResult r)
+        {
+            object[] data = (object[])r.AsyncState;
+            ServiceResource service = (ServiceResource)data[0];
+            MemoryStream memData = (MemoryStream)data[1];
+
+            try
+            {
+                Stream postData = request.EndGetRequestStream(r);
+                memData.Seek(0, SeekOrigin.Begin);
+                memData.WriteTo(postData);
+                postData.Close();
+
+                request.BeginGetResponse(new AsyncCallback(ParseResponse), service);
+  
+            }
+            catch (Exception ex)
+            {
+                if (ex is WebException && ((WebException)ex).Status == WebExceptionStatus.ProtocolError)
+                    OnError(new ErrorEventArgs(new UnauthorizedAccessException()));
+                else
+                    OnError(new ErrorEventArgs(ex));
+                return;
+            }
+            finally
+            {
+                memData.Close();
+            }
         }
 
         private void ParseResponse(IAsyncResult r)

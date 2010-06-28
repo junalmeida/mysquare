@@ -84,6 +84,9 @@ namespace MySquare.Controller
 
         void OpenSection(VenueSection section)
         {
+            View.checkIn1.txtShout.Enabled = true;
+            View.checkIn1.chkTellFriends.Enabled = true;
+
             RightSoftButtonText = "&Back";
             RightSoftButtonEnabled = true;
 
@@ -177,9 +180,16 @@ namespace MySquare.Controller
             WaitThread.WaitOne();
 
             if (result != null)
+            {
                 MessageBox.Show(result.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
-            else
                 OnRightSoftButtonClick();
+            }
+            else
+            {
+                OpenSection(VenueSection.CheckIn);
+
+            }
+                
         }
         #endregion
 

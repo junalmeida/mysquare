@@ -16,6 +16,7 @@ namespace MySquare.UI
         {
             InitializeComponent();
 
+            this.Icon = Resources.mySquare;
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
 
             header.Tabs.Add(new Tenor.Mobile.UI.HeaderTab("Places", Resources.PinMap));

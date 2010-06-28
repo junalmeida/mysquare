@@ -107,6 +107,10 @@ namespace MySquare.FourSquare
         public Special[] Specials
         { get; set; }
 
+        [JsonProperty("tags")]
+        public string[] Tags
+        { get; set; }
+
         public override string ToString()
         {
             return Name;
