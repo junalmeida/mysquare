@@ -19,12 +19,14 @@ namespace MySquare.UI.Places
             checkIn1.BackColor = bgColor;
             venueInfo1.BackColor = bgColor;
             venueMap1.BackColor = bgColor;
-            venueTips1.BackColor = bgColor;  
+            venueTips1.BackColor = bgColor;
+            venueTips1.listBox.BackColor = bgColor;
+            venueTips1.panel1.BackColor = bgColor;
 
             tabStrip1.Tabs.Add("Check In");
             tabStrip1.Tabs.Add("Info");
             tabStrip1.Tabs.Add("Map");
-            //tabStrip1.Tabs.Add("Tips");
+            tabStrip1.Tabs.Add("Tips");
         }
 
 

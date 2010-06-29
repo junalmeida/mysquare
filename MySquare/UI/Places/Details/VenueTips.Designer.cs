@@ -28,28 +28,78 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.panelDock = new System.Windows.Forms.Panel();
+            this.listBox = new Tenor.Mobile.UI.KListControl();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.txtComment = new System.Windows.Forms.TextBox();
+            this.panelDock.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // panelDock
             // 
-            this.label1.Location = new System.Drawing.Point(25, 65);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 20);
-            this.label1.Text = "tips";
+            this.panelDock.Controls.Add(this.listBox);
+            this.panelDock.Controls.Add(this.panel1);
+            this.panelDock.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelDock.Location = new System.Drawing.Point(0, 0);
+            this.panelDock.Name = "panelDock";
+            this.panelDock.Size = new System.Drawing.Size(306, 100);
+            // 
+            // listBox
+            // 
+            this.listBox.DefaultItemHeight = 38;
+            this.listBox.DefaultItemWidth = 80;
+            this.listBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox.Layout = Tenor.Mobile.UI.KListLayout.Vertical;
+            this.listBox.Location = new System.Drawing.Point(0, 0);
+            this.listBox.Name = "listBox";
+            this.listBox.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
+            this.listBox.Size = new System.Drawing.Size(306, 61);
+            this.listBox.Skinnable = false;
+            this.listBox.TabIndex = 3;
+            this.listBox.SelectedItemChanged += new System.EventHandler(this.listBox_SelectedItemChanged);
+            this.listBox.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.listBox_DrawItem);
+            this.listBox.SelectedItemClicked += new System.EventHandler(this.listBox_SelectedItemClicked);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.txtComment);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 61);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(306, 39);
+            // 
+            // txtComment
+            // 
+            this.txtComment.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtComment.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.txtComment.Location = new System.Drawing.Point(3, 3);
+            this.txtComment.Multiline = true;
+            this.txtComment.Name = "txtComment";
+            this.txtComment.Size = new System.Drawing.Size(300, 33);
+            this.txtComment.TabIndex = 0;
             // 
             // VenueTips
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.panelDock);
             this.Name = "VenueTips";
+            this.Size = new System.Drawing.Size(306, 289);
+            this.panelDock.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panelDock;
+        internal Tenor.Mobile.UI.KListControl listBox;
+        internal System.Windows.Forms.Panel panel1;
+        internal System.Windows.Forms.TextBox txtComment;
+
     }
 }

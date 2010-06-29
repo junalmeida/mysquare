@@ -128,7 +128,9 @@ namespace MySquare.Controller
                     View.checkIn1.Visible = false;
                     View.venueTips1.Activate();
 
-                    LeftSoftButtonEnabled = false;
+                    LoadExtraInfo();
+                    LeftSoftButtonText = "&Comment";
+                    LeftSoftButtonEnabled = true;
                     break;
             }
         }
@@ -136,8 +138,12 @@ namespace MySquare.Controller
 
         protected override void OnLeftSoftButtonClick()
         {
-            DoCheckIn();
+            if (View.checkIn1.Visible)
+                DoCheckIn();
+            else if (View.venueTips1.Visible)
+                Comment();
         }
+
 
         protected override void OnRightSoftButtonClick()
         {
@@ -187,7 +193,6 @@ namespace MySquare.Controller
             else
             {
                 OpenSection(VenueSection.CheckIn);
-
             }
                 
         }
@@ -231,6 +236,8 @@ namespace MySquare.Controller
                 View.venueInfo1.imgCategory.Tag = null;
                 View.venueInfo1.imgMayor.Tag = null;
 
+                LoadTips();
+
                 Thread t = new Thread(new ThreadStart(delegate()
                 {
                     if (Venue.PrimaryCategory != null && !string.IsNullOrEmpty(Venue.PrimaryCategory.IconUrl))
@@ -253,10 +260,28 @@ namespace MySquare.Controller
                         }));
                     }
 
+                    if (Venue.Tips != null)
+                    {
+                        foreach (Tip tip in Venue.Tips)
+                        {
+                            if (tip.User != null)
+                            {
+                                byte[] image = Service.DownloadImageSync(tip.User.ImageUrl);
+                                View.venueTips1.imageList[tip.User.ImageUrl] = image;
+                                View.Invoke(new ThreadStart(delegate()
+                                {
+                                    View.venueTips1.listBox.Invalidate();
+                                }));
+                            }
+                        }
+                    }
+
                 }));
                 t.Start();
             }
         }
+
+    
         void Service_VenueResult(object serder, VenueEventArgs e)
         {
             Venue = e.Venue;
@@ -300,6 +325,23 @@ namespace MySquare.Controller
                     box.Tag = 1;
                 }));
             }
+        }
+
+        #endregion
+
+        #region Tips
+        private void LoadTips()
+        {
+            View.venueTips1.listBox.Clear();
+            if (Venue.Tips != null)
+                foreach (Tip tip in Venue.Tips)
+                {
+                    View.venueTips1.listBox.AddItem(null, tip);
+                }
+        }
+        private void Comment()
+        {
+
         }
 
         #endregion

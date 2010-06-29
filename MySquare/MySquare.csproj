@@ -218,6 +218,12 @@
   <ItemGroup>
     <None Include="Resources\mySquare.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clock_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hourglass.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
