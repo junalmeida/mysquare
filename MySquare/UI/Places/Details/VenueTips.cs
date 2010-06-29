@@ -16,6 +16,8 @@ namespace MySquare.UI.Places.Details
         {
             InitializeComponent();
             listBox.BackColor = this.BackColor;
+            lblError.BackColor = this.BackColor;
+
             font = new Font(Font.Name, 7, FontStyle.Regular);
             fontBold = new Font(Font.Name, 7, FontStyle.Bold);
         }
@@ -28,10 +30,7 @@ namespace MySquare.UI.Places.Details
             SetHeight();
         }
 
-        private void listBox_SelectedItemChanged(object sender, EventArgs e)
-        {
 
-        }
 
         SizeF factor;
         protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
@@ -49,21 +48,24 @@ namespace MySquare.UI.Places.Details
         Font font;
         Font fontBold;
 
-        internal Dictionary<string, byte[]> imageList = new Dictionary<string, byte[]>();
+        internal Dictionary<string, Tenor.Mobile.Drawing.AlphaImage> imageList = new Dictionary<string, Tenor.Mobile.Drawing.AlphaImage>();
 
-        internal int Measure(Tip tip)
+        internal int MeasureHeight(Tip tip)
         {
-            using (Graphics g = this.CreateGraphics())
+            using (Graphics g = this.listBox.CreateGraphics())
             {
                 Rectangle rect = new Rectangle
                         (0,
                          0,
                          listBox.Width - listBox.DefaultItemHeight,
                          listBox.Height);
-                Size size1 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.Text, fontBold, rect);
+                Size size1 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.User.FirstName, fontBold, rect);
                 Size size2 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.Text, font, rect);
 
-                return size1.Height + size2.Height;
+                int size = size1.Height + size2.Height;
+                if (size < listBox.DefaultItemHeight)
+                    size = listBox.DefaultItemHeight;
+                return size;
             }
         }
 
@@ -91,15 +93,13 @@ namespace MySquare.UI.Places.Details
 
                 if (imageList != null && imageList.ContainsKey(tip.User.ImageUrl))
                 {
-                    using (Bitmap bmp = new Bitmap(new MemoryStream(imageList[tip.User.ImageUrl])))
-                    {
-                        Rectangle imgRect =
-                            new Rectangle(0 + Convert.ToInt32(padding),
-                               Convert.ToInt32(rect.Y + (rect.Height / 2) - (bmp.Height / 2)), imageSize, imageSize);
-                        Rectangle srcRect =
-                            new Rectangle(0, 0, bmp.Width, bmp.Height);
-                        e.Graphics.DrawImage(bmp, imgRect, srcRect, GraphicsUnit.Pixel);
-                    }
+                    Tenor.Mobile.Drawing.AlphaImage image = imageList[tip.User.ImageUrl];
+
+                    Rectangle imgRect =
+                        new Rectangle(0 + Convert.ToInt32(padding),
+                           Convert.ToInt32(rect.Y + (rect.Height / 2) - (imageSize / 2)), imageSize, imageSize);
+
+                    image.Draw(e.Graphics, imgRect);
                 }
 
                 e.Graphics.DrawString(
@@ -121,6 +121,12 @@ namespace MySquare.UI.Places.Details
                     Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.Gray, this.BackColor, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
                 }
             }
+
+        }
+
+
+        private void listBox_SelectedItemChanged(object sender, EventArgs e)
+        {
 
         }
 

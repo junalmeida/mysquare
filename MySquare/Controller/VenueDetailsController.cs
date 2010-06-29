@@ -260,22 +260,6 @@ namespace MySquare.Controller
                         }));
                     }
 
-                    if (Venue.Tips != null)
-                    {
-                        foreach (Tip tip in Venue.Tips)
-                        {
-                            if (tip.User != null)
-                            {
-                                byte[] image = Service.DownloadImageSync(tip.User.ImageUrl);
-                                View.venueTips1.imageList[tip.User.ImageUrl] = image;
-                                View.Invoke(new ThreadStart(delegate()
-                                {
-                                    View.venueTips1.listBox.Invalidate();
-                                }));
-                            }
-                        }
-                    }
-
                 }));
                 t.Start();
             }
@@ -334,10 +318,37 @@ namespace MySquare.Controller
         {
             View.venueTips1.listBox.Clear();
             if (Venue.Tips != null)
+            {
                 foreach (Tip tip in Venue.Tips)
                 {
-                    View.venueTips1.listBox.AddItem(null, tip);
+                    View.venueTips1.listBox.AddItem(null, tip, View.venueTips1.MeasureHeight(tip));
                 }
+                View.venueTips1.lblError.Visible = false;
+            }
+            else
+                View.venueTips1.lblError.Visible = true;
+
+            Thread t = new Thread(new ThreadStart(delegate()
+              {
+                  if (Venue.Tips != null)
+                  {
+                      foreach (Tip tip in Venue.Tips)
+                      {
+                          if (tip.User != null)
+                          {
+                              Tenor.Mobile.Drawing.AlphaImage image =
+                                  new Tenor.Mobile.Drawing.AlphaImage(Service.DownloadImageSync(tip.User.ImageUrl));
+                              View.venueTips1.imageList[tip.User.ImageUrl] = image;
+                              View.Invoke(new ThreadStart(delegate()
+                              {
+                                  View.venueTips1.listBox.Invalidate();
+                              }));
+                          }
+                      }
+                  }
+              }));
+            t.Start();
+
         }
         private void Comment()
         {

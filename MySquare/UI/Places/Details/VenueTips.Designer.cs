@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panelDock = new System.Windows.Forms.Panel();
+            this.lblError = new System.Windows.Forms.Label();
             this.listBox = new Tenor.Mobile.UI.KListControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtComment = new System.Windows.Forms.TextBox();
@@ -38,12 +39,23 @@
             // 
             // panelDock
             // 
+            this.panelDock.Controls.Add(this.lblError);
             this.panelDock.Controls.Add(this.listBox);
             this.panelDock.Controls.Add(this.panel1);
             this.panelDock.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelDock.Location = new System.Drawing.Point(0, 0);
             this.panelDock.Name = "panelDock";
             this.panelDock.Size = new System.Drawing.Size(306, 100);
+            // 
+            // lblError
+            // 
+            this.lblError.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblError.Location = new System.Drawing.Point(93, 16);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(121, 20);
+            this.lblError.Text = "No comments yet.";
+            this.lblError.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblError.Visible = false;
             // 
             // listBox
             // 
@@ -100,6 +112,7 @@
         internal Tenor.Mobile.UI.KListControl listBox;
         internal System.Windows.Forms.Panel panel1;
         internal System.Windows.Forms.TextBox txtComment;
+        internal System.Windows.Forms.Label lblError;
 
     }
 }

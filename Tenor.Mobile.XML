@@ -1342,22 +1342,22 @@
             Gets the Bounds.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Drawing.AlphaImage.DrawImage(System.Drawing.Graphics,System.Drawing.Image,System.Drawing.Rectangle)">
+        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle)">
             <summary>
             Draws an image with alpha blending.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Drawing.AlphaImage.DrawImage(System.Drawing.Graphics,System.Drawing.Image,System.Drawing.Rectangle,System.Drawing.Color)">
+        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Color)">
             <summary>
             Draws an image with alpha blending.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Drawing.AlphaImage.DrawImage(System.Drawing.Graphics,System.Drawing.Image,System.Drawing.Rectangle,System.Drawing.Rectangle,System.Drawing.Color)">
+        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Rectangle,System.Drawing.Color)">
             <summary>
             Draws an image with alpha blending.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Drawing.AlphaImage.DrawImage(System.Drawing.Graphics,System.IO.Stream,System.Drawing.Rectangle)">
+        <member name="M:Tenor.Mobile.Drawing.AlphaImage.DrawImageGdi(System.Drawing.Graphics,System.Drawing.Rectangle)">
             <summary>
             Draws an image with alpha blending.
             </summary>

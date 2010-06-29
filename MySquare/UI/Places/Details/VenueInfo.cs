@@ -48,33 +48,16 @@ namespace MySquare.UI.Places.Details
         {
 
             Control control = ((Control)sender);
-            byte[] image = control.Tag as byte[];
-            if (image != null)
+            if (control.Tag != null)
             {
+                if (control.Tag is byte[])
+                    control.Tag = new Tenor.Mobile.Drawing.AlphaImage((byte[])control.Tag);
+                Tenor.Mobile.Drawing.AlphaImage image = (Tenor.Mobile.Drawing.AlphaImage)control.Tag;
+
                 Rectangle rect = new Rectangle(0, 0, control.Width, control.Height);
-                using (MemoryStream mem = new MemoryStream(image))
-                {
-#if DEBUG
-                    if (Environment.OSVersion.Platform == PlatformID.WinCE)
-                    {
-#endif
 
-                        Tenor.Mobile.Drawing.AlphaImage.DrawImage(e.Graphics, mem,
-                            rect
-                            );
+                image.Draw(e.Graphics, rect);
 
-                        image = null;
-#if DEBUG
-                    }
-                    else
-                    {
-                        using (Bitmap img = new Bitmap(mem))
-                        {
-                            e.Graphics.DrawImage(img, rect, new Rectangle(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
-                        }
-                    }
-#endif
-                }
             }
         }
     }

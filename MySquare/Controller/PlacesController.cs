@@ -114,7 +114,7 @@ namespace MySquare.Controller
 
         void LoadVenues(Venue[] venues)
         {
-            View.list1.imageList = new Dictionary<string, byte[]>();
+            View.list1.imageList = new Dictionary<string, Tenor.Mobile.Drawing.AlphaImage>();
 
             View.list1.listBox.Clear();
             foreach (Venue venue in venues)
@@ -134,7 +134,7 @@ namespace MySquare.Controller
                         string url = venue.PrimaryCategory.IconUrl;
                         if (!string.IsNullOrEmpty(url))
                         {
-                            View.list1.imageList[url] = Service.DownloadImageSync(url);
+                            View.list1.imageList[url] = new Tenor.Mobile.Drawing.AlphaImage(Service.DownloadImageSync(url));
    
                             View.list1.listBox.Invoke(new ThreadStart(delegate()
                             {
