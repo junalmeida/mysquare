@@ -77,14 +77,16 @@ namespace MySquare.UI.Places
                 )
             {
                 Tenor.Mobile.Drawing.AlphaImage image = imageList[venue.PrimaryCategory.IconUrl];
-
-                image.Draw(e.Graphics,
-                            new Rectangle(
-                                e.Bounds.X + Convert.ToInt32(itemPadding),
-                                e.Bounds.Y + Convert.ToInt32(itemPadding),
-                                e.Bounds.Height - Convert.ToInt32(itemPadding * 2),
-                                e.Bounds.Height - Convert.ToInt32(itemPadding * 2)));
-
+                try
+                {
+                    image.Draw(e.Graphics,
+                                new Rectangle(
+                                    e.Bounds.X + Convert.ToInt32(itemPadding),
+                                    e.Bounds.Y + Convert.ToInt32(itemPadding),
+                                    e.Bounds.Height - Convert.ToInt32(itemPadding * 2),
+                                    e.Bounds.Height - Convert.ToInt32(itemPadding * 2)));
+                }
+                catch { }
             }
         }
 

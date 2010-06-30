@@ -21,6 +21,7 @@ namespace MySquare.UI.Places
             venueMap1.BackColor = bgColor;
             venueTips1.BackColor = bgColor;
             venueTips1.listBox.BackColor = bgColor;
+            venueTips1.lblError.BackColor = bgColor;
             venueTips1.panel1.BackColor = bgColor;
 
             tabStrip1.Tabs.Add("Check In");

@@ -98,8 +98,11 @@ namespace MySquare.UI.Places.Details
                     Rectangle imgRect =
                         new Rectangle(0 + Convert.ToInt32(padding),
                            Convert.ToInt32(rect.Y + (rect.Height / 2) - (imageSize / 2)), imageSize, imageSize);
-
-                    image.Draw(e.Graphics, imgRect);
+                    try
+                    {
+                        image.Draw(e.Graphics, imgRect);
+                    }
+                    catch { }
                 }
 
                 e.Graphics.DrawString(
