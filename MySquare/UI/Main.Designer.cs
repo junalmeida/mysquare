@@ -29,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mainMenu = new System.Windows.Forms.MainMenu();
             this.mnuLeft = new System.Windows.Forms.MenuItem();
             this.mnuRight = new System.Windows.Forms.MenuItem();
@@ -36,6 +37,7 @@
             this.lblError = new System.Windows.Forms.Label();
             this.settings1 = new MySquare.UI.Settings.Settings();
             this.places1 = new MySquare.UI.Places.Places();
+            this.inputPanel = new Microsoft.WindowsCE.Forms.InputPanel(this.components);
             this.SuspendLayout();
             // 
             // mainMenu
@@ -65,9 +67,9 @@
             this.lblError.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblError.BackColor = System.Drawing.Color.Black;
             this.lblError.ForeColor = System.Drawing.Color.White;
-            this.lblError.Location = new System.Drawing.Point(3, 126);
+            this.lblError.Location = new System.Drawing.Point(12, 126);
             this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(234, 29);
+            this.lblError.Size = new System.Drawing.Size(216, 29);
             this.lblError.Text = "Cannot list nearby venues.";
             this.lblError.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lblError.Visible = false;
@@ -87,6 +89,10 @@
             this.places1.Size = new System.Drawing.Size(150, 150);
             this.places1.TabIndex = 1;
             this.places1.Visible = false;
+            // 
+            // inputPanel
+            // 
+            this.inputPanel.EnabledChanged += new System.EventHandler(this.inputPanel_EnabledChanged);
             // 
             // Main
             // 
@@ -114,6 +120,7 @@
         internal System.Windows.Forms.MenuItem mnuRight;
         internal MySquare.UI.Settings.Settings settings1;
         internal System.Windows.Forms.Label lblError;
+        private Microsoft.WindowsCE.Forms.InputPanel inputPanel;
     }
 }
 

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FD4AA98B-154D-480A-901A-0B9154C8CFE9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -56,6 +56,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -142,6 +143,12 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="UI\Panel.cs" />
+    <Compile Include="UI\Places\Create\CreateVenue.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Places\Create\CreateVenue.Designer.cs">
+      <DependentUpon>CreateVenue.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Places\Details\CheckIn.cs">
       <SubType>UserControl</SubType>
     </Compile>

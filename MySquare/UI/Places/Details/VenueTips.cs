@@ -27,7 +27,6 @@ namespace MySquare.UI.Places.Details
             Dock = DockStyle.Fill;
             BringToFront();
             Visible = true;
-            SetHeight();
         }
 
 
@@ -141,28 +140,7 @@ namespace MySquare.UI.Places.Details
         {
 
         }
-
-        private void txtComment_Focus(object sender, EventArgs e)
-        {
-            //inputPanel.Enabled = true;
-        }
-
-        private void txtComment_LostFocus(object sender, EventArgs e)
-        {
-            //inputPanel.Enabled = false;
-        }
-
-        private void inputPanel_EnabledChanged(object sender, EventArgs e)
-        {
-            SetHeight();
-        }
-
-        private void SetHeight()
-        {
-            panelDock.Height = this.Height;
-            //if (inputPanel.Enabled)
-               // panelDock.Height -= inputPanel.Bounds.Y;
-        }
+ 
 
 
     }

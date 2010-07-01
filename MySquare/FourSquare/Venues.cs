@@ -116,6 +116,29 @@ namespace MySquare.FourSquare
             return Name;
         }
 
+
+        internal void CopyTo(Venue venue)
+        {
+            venue.fullData = fullData;
+            venue.Id = Id;
+            venue.Name = Name;
+            venue.PrimaryCategory = PrimaryCategory;
+            venue.Address = Address;
+            venue.CrossStreet = CrossStreet;
+            venue.Phone = Phone;
+            venue.City = City;
+            venue.State = State;
+            venue.ZipCode = ZipCode;
+            venue.Twitter = Twitter;
+            venue.Latitude = Latitude;
+            venue.Longitude = Longitude;
+            venue.Status = Status;
+            venue.Distance = Distance;
+            venue.Tips = Tips;
+            venue.Categories = Categories;
+            venue.Specials = Specials;
+            venue.Tags = Tags;
+        }
     }
     class Category
     {

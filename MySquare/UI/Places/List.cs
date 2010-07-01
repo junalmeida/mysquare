@@ -111,5 +111,17 @@ namespace MySquare.UI.Places
                     return null;
             }
         }
+
+        private void pnlSearch_Paint(object sender, PaintEventArgs e)
+        {
+            Rectangle rect2 = new Rectangle(
+               0, 0, pnlSearch.Width / 3, 1);
+            Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, this.BackColor, Color.WhiteSmoke, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+            rect2.X += rect2.Width;
+            Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.WhiteSmoke, Color.WhiteSmoke, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+            rect2.X += rect2.Width;
+            Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.WhiteSmoke, this.BackColor, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+
+        }
     }
 }

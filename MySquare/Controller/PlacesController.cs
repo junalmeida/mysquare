@@ -35,7 +35,7 @@ namespace MySquare.Controller
             LeftSoftButtonEnabled = true;
             LeftSoftButtonText = "&Refresh";
             RightSoftButtonEnabled = true;
-            RightSoftButtonText = "&Create";
+            RightSoftButtonText = "&Search";
 
             if (View.list1.listBox.Count == 0)
                 Search();
@@ -50,17 +50,34 @@ namespace MySquare.Controller
 
         protected override void OnRightSoftButtonClick()
         {
-            CreateVenue();
+            SearchVenue();
         }
 
-        private void CreateVenue()
+        private void SearchVenue()
         {
-            MessageBox.Show("Not yet implemented.");
+            if (View.list1.pnlSearch.Visible)
+            {
+                Search(View.list1.txtSearch.Text);
+            }
+            else
+            {
+                View.list1.pnlSearch.Visible = true;
+                View.list1.txtSearch.Focus();
+            }
         }
 
         WorldPosition position;
         private void Search()
         {
+            Search(null);
+        }
+
+        string text;
+        private void Search(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                View.list1.pnlSearch.Visible = false;
+            this.text = text;
 
             Cursor.Current = Cursors.WaitCursor;
             Cursor.Show();
@@ -78,8 +95,8 @@ namespace MySquare.Controller
             }
             else
             {
-               
-                Service.SearchNearby(null, -22.856025, -43.375182);
+
+                Service.SearchNearby(text, -22.856025, -43.375182);
             }
 #endif
 
@@ -94,7 +111,7 @@ namespace MySquare.Controller
         void position_LocationChanged(object sender, EventArgs e)
         {
             if (position.Latitude.HasValue && position.Longitude.HasValue)
-                Service.SearchNearby(null, position.Latitude.Value, position.Longitude.Value);
+                Service.SearchNearby(text, position.Latitude.Value, position.Longitude.Value);
             else
                 ShowError("Could not get your location, try again later.");
             position = null;

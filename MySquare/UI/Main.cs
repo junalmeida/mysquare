@@ -48,5 +48,29 @@ namespace MySquare.UI
             Application.DoEvents();
             BaseController.OpenController(this);
         }
+
+
+
+        private void inputPanel_EnabledChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (Control c in this.Controls)
+                {
+                    if (c.Visible && c is IView)
+                    {
+                        if (inputPanel.Enabled)
+                        {
+                            int h = c.Height;
+                            c.Dock = DockStyle.Top;
+                            c.Height = h - inputPanel.Bounds.Height;
+                        }
+                        else
+                            c.Dock = DockStyle.Fill;
+                    }
+                }
+            }
+            catch (ObjectDisposedException) { }
+        }
     }
 }
