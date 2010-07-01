@@ -22,7 +22,9 @@ namespace MySquare.Controller
             Service.CheckInResult += new CheckInEventHandler(Service_CheckInResult);
             Service.VenueResult += new VenueEventHandler(Service_VenueResult);
             Service.ImageResult += new ImageResultEventHandler(Service_ImageResult);
+            Service.AddTipResult += new AddTipEventHandler(Service_AddTipResult);
         }
+
 
 
 
@@ -154,10 +156,10 @@ namespace MySquare.Controller
         { get; set; }
 
         #region CheckIn
-        MySquare.FourSquare.CheckIn result = null;
+        MySquare.FourSquare.CheckIn checkInResult = null;
         void Service_CheckInResult(object serder, MySquare.FourSquare.CheckInEventArgs e)
         {
-            result = e.CheckIn;
+            checkInResult = e.CheckIn;
             WaitThread.Set();
         }
 
@@ -177,7 +179,7 @@ namespace MySquare.Controller
             if (View.checkIn1.chkFacebook.CheckState != CheckState.Indeterminate)
                 facebook = View.checkIn1.chkFacebook.CheckState == CheckState.Checked;
 
-            result = null;
+            checkInResult = null;
             WaitThread.Reset();
             Service.CheckIn(Venue,
                 View.checkIn1.txtShout.Text,
@@ -185,9 +187,9 @@ namespace MySquare.Controller
                 facebook, twitter);
             WaitThread.WaitOne();
 
-            if (result != null)
+            if (checkInResult != null)
             {
-                MessageBox.Show(result.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
+                MessageBox.Show(checkInResult.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
                 OnRightSoftButtonClick();
             }
             else
@@ -350,9 +352,41 @@ namespace MySquare.Controller
             t.Start();
 
         }
+
+
+        private Tip tipResult;
         private void Comment()
         {
+            Cursor.Current = Cursors.WaitCursor;
+            Cursor.Show();
 
+            string text = View.venueTips1.txtComment.Text;
+
+            tipResult = null;
+            WaitThread.Reset();
+            Service.AddTip(Venue.Id, text);
+            WaitThread.WaitOne();
+
+            Cursor.Current = Cursors.Default;
+            Cursor.Show();
+            if (tipResult != null)
+            {
+                View.venueTips1.txtComment.Text = string.Empty;
+                Venue.fullData = false;
+                LoadExtraInfo();
+                tipResult = null;
+            }
+            else
+            {
+                MessageBox.Show(checkInResult.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
+            }
+        }
+
+
+        void Service_AddTipResult(object serder, TipEventArgs e)
+        {
+            tipResult = e.Tip;
+            WaitThread.Set();
         }
 
         #endregion

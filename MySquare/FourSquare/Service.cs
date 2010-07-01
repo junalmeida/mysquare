@@ -45,7 +45,8 @@ namespace MySquare.FourSquare
         {
             SearchNearby,
             CheckIn,
-            Venue
+            Venue,
+            AddTip
         }
 
         internal Service()
@@ -99,6 +100,10 @@ namespace MySquare.FourSquare
                 case ServiceResource.Venue:
                     url = "http://api.foursquare.com/v1/venue.json";
                     auth = true;
+                    break;
+                case ServiceResource.AddTip:
+                    url = "http://api.foursquare.com/v1/addtip.json";
+                    auth = true; post = true;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -221,6 +226,9 @@ namespace MySquare.FourSquare
                                     case ServiceResource.Venue:
                                         type = typeof(VenueResponse);
                                         break;
+                                    case ServiceResource.AddTip:
+                                        type = typeof(TipResponse);
+                                        break;  
                                     default:
                                         throw new NotImplementedException();
                                 }
@@ -264,6 +272,9 @@ namespace MySquare.FourSquare
                             break;
                         case ServiceResource.Venue:
                             OnVenueResult(new VenueEventArgs(((VenueResponse)result).Venue));
+                            break;
+                        case ServiceResource.AddTip:
+                            OnAddTipResult(new TipEventArgs(((TipResponse)result).Tip));
                             break;
                         default:
                             throw new NotImplementedException();
@@ -312,6 +323,18 @@ namespace MySquare.FourSquare
             parameters.Add("vid", vid.ToString());
 
             Post(ServiceResource.Venue, parameters);
+        }
+
+
+        internal void AddTip(int vid, string text)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("vid", vid.ToString());
+            parameters.Add("text", text.ToString());
+            //parameters.Add("geolat", lat.ToString(culture));
+            //parameters.Add("geolong", lng.ToString(culture));
+
+            Post(ServiceResource.AddTip, parameters);
         }
 
 
@@ -388,7 +411,6 @@ namespace MySquare.FourSquare
 
         #endregion
 
-
         #region Cache
 
         static string appPath;
@@ -444,6 +466,15 @@ namespace MySquare.FourSquare
         #endregion
 
         #region Events
+      internal event AddTipEventHandler AddTipResult;
+        private void OnAddTipResult(TipEventArgs e)
+        {
+            if (AddTipResult != null)
+            {
+                AddTipResult(this, e);
+            }
+        }
+
         internal event ImageResultEventHandler ImageResult;
         private void OnImageResult(ImageEventArgs e)
         {
@@ -509,7 +540,20 @@ namespace MySquare.FourSquare
             private set;
         }
     }
+    delegate void AddTipEventHandler(object serder, TipEventArgs e);
+    class TipEventArgs : EventArgs
+    {
+        internal TipEventArgs(Tip tip)
+        {
+            this.Tip = tip;
+        }
 
+        internal Tip Tip
+        {
+            get;
+            private set;
+        }
+    }
     delegate void VenueEventHandler(object serder, VenueEventArgs e);
     class VenueEventArgs : EventArgs
     {

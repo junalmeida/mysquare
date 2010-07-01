@@ -52,6 +52,10 @@ namespace MySquare.UI.Places.Details
 
         internal int MeasureHeight(Tip tip)
         {
+#if DEBUG
+            if (Environment.OSVersion.Platform != PlatformID.WinCE)
+                return listBox.DefaultItemHeight + 10;
+#endif
             using (Graphics g = this.listBox.CreateGraphics())
             {
                 Rectangle rect = new Rectangle

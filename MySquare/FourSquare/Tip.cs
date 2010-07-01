@@ -27,4 +27,11 @@ namespace MySquare.FourSquare
 
 
     }
+
+    class TipResponse
+    {
+        [JsonProperty("tip")]
+        public Tip Tip
+        { get; set; }
+    }
 }
