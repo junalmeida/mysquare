@@ -19,8 +19,22 @@ namespace MySquare.UI.Places
 
         private void list1_ItemSelected(object sender, EventArgs e)
         {
-            VenueDetailsController controller = (VenueDetailsController)BaseController.OpenController(venueDetails1);
-            controller.OpenVenue(list1.SelectedVenue);
+            if (list1.SelectedVenue == null)
+            {
+                CreateVenueController controller = (CreateVenueController)BaseController.OpenController(createVenue1);
+            }
+            else
+            {
+                VenueDetailsController controller = (VenueDetailsController)BaseController.OpenController(venueDetails1);
+                controller.OpenVenue(list1.SelectedVenue);
+            }
+        }
+
+        public void Reset()
+        {
+            foreach (Control c in Controls)
+                if (c is IView)
+                    c.Visible = false;
         }
  
     }

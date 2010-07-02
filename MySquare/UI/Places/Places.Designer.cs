@@ -30,6 +30,7 @@
         {
             this.list1 = new MySquare.UI.Places.List();
             this.venueDetails1 = new MySquare.UI.Places.VenueDetails();
+            this.createVenue1 = new MySquare.UI.Places.Create.CreateVenue();
             this.SuspendLayout();
             // 
             // list1
@@ -49,10 +50,19 @@
             this.venueDetails1.TabIndex = 1;
             this.venueDetails1.Visible = false;
             // 
+            // createVenue1
+            // 
+            this.createVenue1.Location = new System.Drawing.Point(0, 0);
+            this.createVenue1.Name = "createVenue1";
+            this.createVenue1.Size = new System.Drawing.Size(150, 150);
+            this.createVenue1.TabIndex = 2;
+            this.createVenue1.Visible = false;
+            // 
             // Places
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.createVenue1);
             this.Controls.Add(this.venueDetails1);
             this.Controls.Add(this.list1);
             this.Name = "Places";
@@ -65,6 +75,7 @@
 
         internal List list1;
         internal VenueDetails venueDetails1;
+        private MySquare.UI.Places.Create.CreateVenue createVenue1;
 
     }
 }

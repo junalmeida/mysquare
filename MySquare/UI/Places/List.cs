@@ -47,46 +47,56 @@ namespace MySquare.UI.Places
         float itemPadding;
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
         {
-            
+
             Venue venue = (Venue)e.Item.Value;
-            Brush textBrush = (e.Item.Selected? brushS  : brush);
-
-            SizeF measuring = e.Graphics.MeasureString(venue.Name, Font);
-
-            RectangleF rect = new RectangleF(e.Bounds.Height, e.Bounds.Y + itemPadding, measuring.Width, measuring.Height);
-            e.Graphics.DrawString(venue.Name, this.Font, textBrush, rect, format);
-
-            string secondText = null;
-            if (!string.IsNullOrEmpty(venue.Address))
-                secondText = venue.Address;
-            else if (!string.IsNullOrEmpty(venue.City))
-                secondText = venue.City;
-            else if (!string.IsNullOrEmpty(venue.State))
-                secondText = venue.State;
-
-
-            measuring = e.Graphics.MeasureString(secondText, Font);
-            rect = new RectangleF(rect.X, rect.Bottom + itemPadding, measuring.Width, measuring.Height);
-            if (secondFont == null)
-                secondFont = new Font(Font.Name, Font.Size - 1, Font.Style);
-            e.Graphics.DrawString(secondText, secondFont, secondBrush, rect, format);
-
-            if (
-                venue.PrimaryCategory != null &&
-                imageList.ContainsKey(venue.PrimaryCategory.IconUrl)
-                )
+            Brush textBrush = (e.Item.Selected ? brushS : brush);
+            if (venue == null)
             {
-                Tenor.Mobile.Drawing.AlphaImage image = imageList[venue.PrimaryCategory.IconUrl];
-                try
+                string text = "Create a new place";
+                SizeF measuring = e.Graphics.MeasureString(venue.Name, Font);
+                RectangleF rect = new RectangleF(e.Bounds.Height, e.Bounds.Y + itemPadding, measuring.Width, measuring.Height);
+                e.Graphics.DrawString(text, this.Font, textBrush, rect, format);
+            }
+            else
+            {
+
+                SizeF measuring = e.Graphics.MeasureString(venue.Name, Font);
+
+                RectangleF rect = new RectangleF(e.Bounds.Height, e.Bounds.Y + itemPadding, measuring.Width, measuring.Height);
+                e.Graphics.DrawString(venue.Name, this.Font, textBrush, rect, format);
+
+                string secondText = null;
+                if (!string.IsNullOrEmpty(venue.Address))
+                    secondText = venue.Address;
+                else if (!string.IsNullOrEmpty(venue.City))
+                    secondText = venue.City;
+                else if (!string.IsNullOrEmpty(venue.State))
+                    secondText = venue.State;
+
+
+                measuring = e.Graphics.MeasureString(secondText, Font);
+                rect = new RectangleF(rect.X, rect.Bottom + itemPadding, measuring.Width, measuring.Height);
+                if (secondFont == null)
+                    secondFont = new Font(Font.Name, Font.Size - 1, Font.Style);
+                e.Graphics.DrawString(secondText, secondFont, secondBrush, rect, format);
+
+                if (
+                    venue.PrimaryCategory != null &&
+                    imageList.ContainsKey(venue.PrimaryCategory.IconUrl)
+                    )
                 {
-                    image.Draw(e.Graphics,
-                                new Rectangle(
-                                    e.Bounds.X + Convert.ToInt32(itemPadding),
-                                    e.Bounds.Y + Convert.ToInt32(itemPadding),
-                                    e.Bounds.Height - Convert.ToInt32(itemPadding * 2),
-                                    e.Bounds.Height - Convert.ToInt32(itemPadding * 2)));
+                    Tenor.Mobile.Drawing.AlphaImage image = imageList[venue.PrimaryCategory.IconUrl];
+                    try
+                    {
+                        image.Draw(e.Graphics,
+                                    new Rectangle(
+                                        e.Bounds.X + Convert.ToInt32(itemPadding),
+                                        e.Bounds.Y + Convert.ToInt32(itemPadding),
+                                        e.Bounds.Height - Convert.ToInt32(itemPadding * 2),
+                                        e.Bounds.Height - Convert.ToInt32(itemPadding * 2)));
+                    }
+                    catch { }
                 }
-                catch { }
             }
         }
 

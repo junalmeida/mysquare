@@ -138,6 +138,7 @@ namespace MySquare.Controller
             {
                 View.list1.listBox.AddItem(venue.Name, venue);
             }
+            View.list1.listBox.AddItem(null, null);
             ShowList();
 
 
@@ -145,7 +146,6 @@ namespace MySquare.Controller
             {
                 foreach (Venue venue in venues)
                 {
-
                     if (venue.PrimaryCategory != null)
                     {
                         string url = venue.PrimaryCategory.IconUrl;

@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\BaseController.cs" />
+    <Compile Include="Controller\CreateVenueController.cs" />
     <Compile Include="Controller\MainController.cs" />
     <Compile Include="Controller\PlacesController.cs" />
     <Compile Include="Controller\SettingsController.cs" />
@@ -104,6 +105,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Places\Create\CreateVenue.resx">
+      <DependentUpon>CreateVenue.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Places\Details\CheckIn.resx">
       <DependentUpon>CheckIn.cs</DependentUpon>

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace MySquare.UI.Places.Create
 {
-    public partial class CreateVenue : UserControl
+    public partial class CreateVenue : UserControl, IView
     {
         public CreateVenue()
         {
