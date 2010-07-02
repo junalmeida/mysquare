@@ -60,5 +60,13 @@ namespace MySquare.UI.Places.Details
 
             }
         }
+
+        private void VenueInfo_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                //base.SetDisplayRectLocation(0, 0);
+            }
+        }
     }
 }

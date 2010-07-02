@@ -58,9 +58,9 @@
             this.lblCategory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCategory.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
-            this.lblCategory.Location = new System.Drawing.Point(3, 22);
+            this.lblCategory.Location = new System.Drawing.Point(3, 21);
             this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(191, 15);
+            this.lblCategory.Size = new System.Drawing.Size(191, 25);
             this.lblCategory.Text = "Category";
             // 
             // label3
@@ -70,7 +70,7 @@
             this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.label3.Location = new System.Drawing.Point(3, 46);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(233, 15);
+            this.label3.Size = new System.Drawing.Size(215, 15);
             this.label3.Text = "Phone:";
             // 
             // lblMayor
@@ -98,7 +98,7 @@
             this.lblPhone.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Underline);
             this.lblPhone.Location = new System.Drawing.Point(3, 64);
             this.lblPhone.Name = "lblPhone";
-            this.lblPhone.Size = new System.Drawing.Size(233, 20);
+            this.lblPhone.Size = new System.Drawing.Size(211, 17);
             this.lblPhone.TabIndex = 11;
             this.lblPhone.Text = "phone";
             this.lblPhone.Click += new System.EventHandler(this.lblPhone_Click);
@@ -106,7 +106,7 @@
             // imgMayor
             // 
             this.imgMayor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.imgMayor.Location = new System.Drawing.Point(200, 84);
+            this.imgMayor.Location = new System.Drawing.Point(202, 84);
             this.imgMayor.Name = "imgMayor";
             this.imgMayor.Size = new System.Drawing.Size(33, 33);
             this.imgMayor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -115,7 +115,7 @@
             // imgCategory
             // 
             this.imgCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.imgCategory.Location = new System.Drawing.Point(199, 4);
+            this.imgCategory.Location = new System.Drawing.Point(202, 4);
             this.imgCategory.Name = "imgCategory";
             this.imgCategory.Size = new System.Drawing.Size(33, 33);
             this.imgCategory.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -172,7 +172,8 @@
             this.Controls.Add(this.lblCategory);
             this.Controls.Add(this.label1);
             this.Name = "VenueInfo";
-            this.Size = new System.Drawing.Size(240, 276);
+            this.Size = new System.Drawing.Size(240, 155);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseMove);
             this.ResumeLayout(false);
 
         }

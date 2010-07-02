@@ -39,7 +39,7 @@
             // 
             this.lblError.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblError.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
-            this.lblError.Location = new System.Drawing.Point(93, 107);
+            this.lblError.Location = new System.Drawing.Point(93, 123);
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(121, 20);
             this.lblError.Text = "No comments yet.";

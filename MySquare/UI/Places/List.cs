@@ -123,5 +123,15 @@ namespace MySquare.UI.Places
             Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.WhiteSmoke, this.BackColor, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
 
         }
+
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                
+            }
+
+        }
     }
 }

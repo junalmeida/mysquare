@@ -62,7 +62,10 @@ namespace MySquare.Controller
             if (e.Exception is UnauthorizedAccessException)
                 text = "Invalid credentials, change your settings and try again.";
             else
+            {
                 text = "Cannot connect to foursquare, try again.";
+                Service.RegisterLog(e.Exception);
+            }
 
             ShowError(text);
         }

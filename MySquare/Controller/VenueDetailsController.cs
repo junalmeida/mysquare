@@ -217,7 +217,7 @@ namespace MySquare.Controller
 
 
                 if (Venue.PrimaryCategory != null)
-                    View.venueInfo1.lblCategory.Text = Venue.PrimaryCategory.FullName.Replace(":", " > ");
+                    View.venueInfo1.lblCategory.Text = Venue.PrimaryCategory.FullName.Replace(":", " > ").Replace("&", "&&");
                 else
                     View.venueInfo1.lblCategory.Text = null;
 
