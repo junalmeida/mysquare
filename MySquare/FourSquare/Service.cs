@@ -411,19 +411,25 @@ namespace MySquare.FourSquare
 
         #endregion
 
-        #region Cache
-
-        static string appPath;
-        private static string GetCachePath(string url)
+        static string _appPath;
+        private static string GetAppPath()
         {
-            if (string.IsNullOrEmpty(appPath))
+            if (string.IsNullOrEmpty(_appPath))
             {
-                appPath = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
-                if (appPath.StartsWith("file://"))
-                    appPath = appPath.Substring(8).Replace(System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar);
-                appPath = System.IO.Path.GetDirectoryName(appPath);
+                _appPath = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
+                if (_appPath.StartsWith("file://"))
+                    _appPath = _appPath.Substring(8).Replace(System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar);
+                _appPath = System.IO.Path.GetDirectoryName(_appPath);
 
             }
+            return _appPath;
+        }
+
+        #region Cache
+
+        private static string GetCachePath(string url)
+        {
+            string appPath = GetAppPath();
             string path = System.IO.Path.Combine(appPath, "cache");
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
@@ -435,7 +441,7 @@ namespace MySquare.FourSquare
 
         private static byte[] GetFromCache(string url)
         {
-            string path = Service.GetCachePath(url);
+            string path = GetCachePath(url);
             if (System.IO.File.Exists(path))
             {
                 using (System.IO.FileStream file = System.IO.File.OpenRead(path))
@@ -520,6 +526,41 @@ namespace MySquare.FourSquare
 
         #endregion
 
+
+        #region Log
+        private static string GetLogPath()
+        {
+            string appPath = GetAppPath();
+            string path = System.IO.Path.Combine(appPath, "debug");
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+            DateTime date = DateTime.Now;
+
+            string filePath = string.Format("{0}.txt", date.Ticks);
+            filePath = System.IO.Path.Combine(path, filePath);
+            return filePath;
+        }
+
+        internal void RegisterLog(Exception ex)
+        {
+            using (FileStream file = new FileStream(GetLogPath(), FileMode.Create))
+            using (StreamWriter writer = new StreamWriter(file))
+            {
+                RegisterLog(writer, ex);
+            }
+        }
+
+        private void RegisterLog(StreamWriter writer, Exception ex)
+        {
+            writer.WriteLine(ex.Message);
+            writer.WriteLine(ex.StackTrace);
+            if (ex.InnerException != null)
+            {
+                writer.WriteLine("----");
+                RegisterLog(writer, ex.InnerException);
+            }
+        }
+        #endregion
 
     }
 

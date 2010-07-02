@@ -83,28 +83,25 @@ namespace MySquare.Controller
             Cursor.Show();
             View.list1.Visible = false;
 #if DEBUG
-            if (Environment.OSVersion.Platform == PlatformID.WinCE)
+            if (Environment.OSVersion.Platform != PlatformID.WinCE)
             {
-#endif
-                position = new WorldPosition(false, false);
-                position.LocationChanged += new EventHandler(position_LocationChanged);
-                position.Error += new EventHandler(position_Error);
-
-                position.PollCell();
-#if DEBUG
-            }
-            else
-            {
-
                 Service.SearchNearby(text, -22.856025, -43.375182);
+                return;
             }
+
 #endif
+            position = new WorldPosition(false, false);
+            position.LocationChanged += new EventHandler(position_LocationChanged);
+            position.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+
+            position.PollCell();
 
         }
 
-        void position_Error(object sender, EventArgs e)
+        void position_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
             ShowError("Could not get your location, try again later.");
+            Service.RegisterLog(e.Error);
             position = null;
         }
 
@@ -113,7 +110,10 @@ namespace MySquare.Controller
             if (position.Latitude.HasValue && position.Longitude.HasValue)
                 Service.SearchNearby(text, position.Latitude.Value, position.Longitude.Value);
             else
+            {
                 ShowError("Could not get your location, try again later.");
+                Service.RegisterLog(new Exception("Unknown error from location service."));
+            }
             position = null;
         }
 
