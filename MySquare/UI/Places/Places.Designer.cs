@@ -52,7 +52,7 @@
             // 
             // createVenue1
             // 
-            this.createVenue1.Location = new System.Drawing.Point(0, 0);
+            this.createVenue1.Location = new System.Drawing.Point(20, 13);
             this.createVenue1.Name = "createVenue1";
             this.createVenue1.Size = new System.Drawing.Size(150, 150);
             this.createVenue1.TabIndex = 2;

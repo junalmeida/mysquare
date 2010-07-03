@@ -16,7 +16,7 @@ namespace MySquare.Controller
         }
 
 
-        internal CreateVenueController(CreateVenue view)
+        public CreateVenueController(CreateVenue view)
             : base ((IView)view)
         {
         }
@@ -27,7 +27,9 @@ namespace MySquare.Controller
             Places parent = View.Parent as Places;
             parent.Reset();
             View.Dock = System.Windows.Forms.DockStyle.Fill;
+            View.BringToFront();
             View.Visible = true;
+
         }
     }
 }

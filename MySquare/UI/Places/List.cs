@@ -53,7 +53,7 @@ namespace MySquare.UI.Places
             if (venue == null)
             {
                 string text = "Create a new place";
-                SizeF measuring = e.Graphics.MeasureString(venue.Name, Font);
+                SizeF measuring = e.Graphics.MeasureString(text, Font);
                 RectangleF rect = new RectangleF(e.Bounds.Height, e.Bounds.Y + itemPadding, measuring.Width, measuring.Height);
                 e.Graphics.DrawString(text, this.Font, textBrush, rect, format);
             }

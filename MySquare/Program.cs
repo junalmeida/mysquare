@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#define TEST
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -23,3 +24,29 @@ namespace MySquare
         }
     }
 }
+
+#if TEST
+namespace Microsoft.WindowsCE.Forms
+{
+    public class InputPanel : System.ComponentModel.Component
+    {
+        public InputPanel()
+        {
+
+        }
+
+        public InputPanel(System.ComponentModel.IContainer container)
+        {
+        }
+        public bool Enabled { get; set; }
+        public System.Drawing.Rectangle Bounds
+        {
+            get
+            {
+                return System.Drawing.Rectangle.Empty;
+            }
+        }
+        public event EventHandler EnabledChanged;
+    }
+}
+#endif

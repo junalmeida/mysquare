@@ -37,9 +37,7 @@ namespace MySquare.Controller
         protected override void Activate()
         {
             UI.Places.Places places = View.Parent as UI.Places.Places;
-
-            places.list1.Visible = false;
-
+            places.Reset();
             View.Dock = System.Windows.Forms.DockStyle.Fill;
             View.BringToFront();
             View.Visible = true;
@@ -54,9 +52,10 @@ namespace MySquare.Controller
             View.tabStrip1.SelectedIndex = 0;
 
             OpenSection(VenueSection.CheckIn);
+            OpenVenue(places.list1.listBox.SelectedItem.Value as Venue);
         }
 
-        internal void OpenVenue(Venue venue)
+        private void OpenVenue(Venue venue)
         {
             this.Venue = venue;
 

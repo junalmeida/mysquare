@@ -56,10 +56,70 @@
             // 
             // label1
             // 
-            label1.Location = new System.Drawing.Point(3, 11);
+            label1.ForeColor = System.Drawing.Color.White;
+            label1.Location = new System.Drawing.Point(3, 9);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(100, 20);
             label1.Text = "Name:";
+            // 
+            // label2
+            // 
+            label2.ForeColor = System.Drawing.Color.White;
+            label2.Location = new System.Drawing.Point(3, 51);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(100, 20);
+            label2.Text = "Address:";
+            // 
+            // label3
+            // 
+            label3.ForeColor = System.Drawing.Color.White;
+            label3.Location = new System.Drawing.Point(3, 92);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(100, 20);
+            label3.Text = "Cross Street:";
+            // 
+            // label4
+            // 
+            label4.ForeColor = System.Drawing.Color.White;
+            label4.Location = new System.Drawing.Point(3, 134);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(100, 20);
+            label4.Text = "City:";
+            // 
+            // label5
+            // 
+            label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            label5.ForeColor = System.Drawing.Color.White;
+            label5.Location = new System.Drawing.Point(156, 134);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(39, 20);
+            label5.Text = "State:";
+            // 
+            // label6
+            // 
+            label6.ForeColor = System.Drawing.Color.White;
+            label6.Location = new System.Drawing.Point(3, 176);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(54, 20);
+            label6.Text = "Zip:";
+            // 
+            // label7
+            // 
+            label7.ForeColor = System.Drawing.Color.White;
+            label7.Location = new System.Drawing.Point(90, 176);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(87, 20);
+            label7.Text = "Phone:";
+            // 
+            // label
+            // 
+            label.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            label.ForeColor = System.Drawing.Color.White;
+            label.Location = new System.Drawing.Point(3, 225);
+            label.Name = "label";
+            label.Size = new System.Drawing.Size(65, 20);
+            label.Text = "Location:";
             // 
             // txtName
             // 
@@ -79,13 +139,6 @@
             this.txtAddress.Size = new System.Drawing.Size(209, 21);
             this.txtAddress.TabIndex = 3;
             // 
-            // label2
-            // 
-            label2.Location = new System.Drawing.Point(3, 52);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(100, 20);
-            label2.Text = "Address:";
-            // 
             // txtCross
             // 
             this.txtCross.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -94,13 +147,6 @@
             this.txtCross.Name = "txtCross";
             this.txtCross.Size = new System.Drawing.Size(209, 21);
             this.txtCross.TabIndex = 6;
-            // 
-            // label3
-            // 
-            label3.Location = new System.Drawing.Point(3, 93);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(100, 20);
-            label3.Text = "Cross Street:";
             // 
             // txtCity
             // 
@@ -111,13 +157,6 @@
             this.txtCity.Size = new System.Drawing.Size(147, 21);
             this.txtCity.TabIndex = 9;
             // 
-            // label4
-            // 
-            label4.Location = new System.Drawing.Point(3, 134);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(100, 20);
-            label4.Text = "City:";
-            // 
             // txtState
             // 
             this.txtState.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -126,27 +165,12 @@
             this.txtState.Size = new System.Drawing.Size(56, 21);
             this.txtState.TabIndex = 12;
             // 
-            // label5
-            // 
-            label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            label5.Location = new System.Drawing.Point(156, 134);
-            label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(39, 20);
-            label5.Text = "State:";
-            // 
             // txtZip
             // 
             this.txtZip.Location = new System.Drawing.Point(3, 192);
             this.txtZip.Name = "txtZip";
             this.txtZip.Size = new System.Drawing.Size(81, 21);
             this.txtZip.TabIndex = 15;
-            // 
-            // label6
-            // 
-            label6.Location = new System.Drawing.Point(3, 176);
-            label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(54, 20);
-            label6.Text = "Zip:";
             // 
             // txtPhone
             // 
@@ -157,27 +181,12 @@
             this.txtPhone.Size = new System.Drawing.Size(122, 21);
             this.txtPhone.TabIndex = 18;
             // 
-            // label7
-            // 
-            label7.Location = new System.Drawing.Point(90, 176);
-            label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(87, 20);
-            label7.Text = "Phone:";
-            // 
-            // label
-            // 
-            label.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            label.Location = new System.Drawing.Point(3, 225);
-            label.Name = "label";
-            label.Size = new System.Drawing.Size(65, 20);
-            label.Text = "Location:";
-            // 
             // lblLocation
             // 
             this.lblLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLocation.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            this.lblLocation.ForeColor = System.Drawing.Color.White;
             this.lblLocation.Location = new System.Drawing.Point(64, 226);
             this.lblLocation.Name = "lblLocation";
             this.lblLocation.Size = new System.Drawing.Size(131, 20);
@@ -188,6 +197,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
+            this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.lblLocation);
             this.Controls.Add(label);
             this.Controls.Add(this.txtPhone);

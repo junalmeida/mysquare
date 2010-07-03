@@ -50,6 +50,8 @@ namespace MySquare.Controller
                 type = typeof(VenueDetailsController);
             else if (view is UI.Settings.Settings)
                 type = typeof(SettingsController);
+            else if (view is UI.Places.Create.CreateVenue)
+                type = typeof(CreateVenueController);
             else
                 throw new NotImplementedException();
 
