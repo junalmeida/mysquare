@@ -31,10 +31,10 @@ namespace MySquare.UI
         }
 
         Pen selectedBorder = new Pen(Tenor.Mobile.Drawing.Strings.ToColor("#DFE6EE"));
-        Color selectedColor = Tenor.Mobile.Drawing.Strings.ToColor("#C5CCD4");
+        SolidBrush selectedColor = new SolidBrush(Tenor.Mobile.Drawing.Strings.ToColor("#C5CCD4"));
 
         Pen unselectedBorder = new Pen(Tenor.Mobile.Drawing.Strings.ToColor("#303030"));
-        Color unselectedColor = Tenor.Mobile.Drawing.Strings.ToColor("#202020");
+        SolidBrush unselectedColor = new SolidBrush(Tenor.Mobile.Drawing.Strings.ToColor("#202020"));
 
         SolidBrush selectedBrush = new SolidBrush(Color.Black);
         SolidBrush textBrush = new SolidBrush(Color.WhiteSmoke);

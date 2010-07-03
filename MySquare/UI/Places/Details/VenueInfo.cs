@@ -54,7 +54,7 @@ namespace MySquare.UI.Places.Details
                     control.Tag = new Tenor.Mobile.Drawing.AlphaImage((byte[])control.Tag);
                 Tenor.Mobile.Drawing.AlphaImage image = (Tenor.Mobile.Drawing.AlphaImage)control.Tag;
 
-                Rectangle rect = new Rectangle(0, 0, control.Width, control.Height);
+                Rectangle rect = new Rectangle(0, 0, control.Width, control.Height  /2);
 
                 image.Draw(e.Graphics, rect);
 

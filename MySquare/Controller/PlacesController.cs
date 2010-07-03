@@ -153,12 +153,16 @@ namespace MySquare.Controller
                         string url = venue.PrimaryCategory.IconUrl;
                         if (!string.IsNullOrEmpty(url))
                         {
-                            View.list1.imageList[url] = new Tenor.Mobile.Drawing.AlphaImage(Service.DownloadImageSync(url));
-   
-                            View.list1.listBox.Invoke(new ThreadStart(delegate()
+                            byte[] buffer = Service.DownloadImageSync(url);
+                            if (buffer != null)
                             {
-                                View.list1.listBox.Invalidate();
-                            }));
+                                View.list1.imageList[url] = new Tenor.Mobile.Drawing.AlphaImage(buffer);
+                                buffer = null;
+                                View.list1.listBox.Invoke(new ThreadStart(delegate()
+                                {
+                                    View.list1.listBox.Invalidate();
+                                }));
+                            }
                         }
                     }
                 }

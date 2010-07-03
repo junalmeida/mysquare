@@ -22,11 +22,13 @@ namespace MySquare.Controller
 
 
         public CreateVenueController(CreateVenue view)
-            : base ((IView)view)
+            : base((IView)view)
         {
-            Service.ImageResult+=new ImageResultEventHandler(Service_ImageResult);
+            Service.ImageResult += new ImageResultEventHandler(Service_ImageResult);
             Service.GeocodeResult += new GeocodeEventHandler(Service_GeocodeResult);
+            View.picMap.Click += new EventHandler(picMap_Click);
         }
+
 
 
         WorldPosition pos;
@@ -54,13 +56,19 @@ namespace MySquare.Controller
             View.txtPhone.Text = string.Empty;
             View.txtState.Text = string.Empty;
             View.txtZip.Text = string.Empty;
+            View.FixType = null;
 
+#if DEBUG
+            if (Environment.OSVersion.Platform != PlatformID.WinCE)
+            {
+                DownloadMapPosition();
+                return;
+            }
+#endif
 
             pos = new WorldPosition(true, true);
             pos.LocationChanged += new EventHandler(pos_LocationChanged);
             pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
-
-            
         }
 
         protected override void Deactivate()
@@ -68,6 +76,9 @@ namespace MySquare.Controller
             pos.LocationChanged -= new EventHandler(pos_LocationChanged);
             pos = null;
         }
+
+
+
         void pos_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
             pos = null;
@@ -77,13 +88,18 @@ namespace MySquare.Controller
 
         void pos_LocationChanged(object sender, EventArgs e)
         {
-            Service.GetGeocoding(pos.Latitude.Value, pos.Longitude.Value);
+            pos.PollingInterval = 30000;
             DownloadMapPosition();
+        }
+
+        void picMap_Click(object sender, EventArgs e)
+        {
+            Service.GetGeocoding(pos.Latitude.Value, pos.Longitude.Value);
         }
 
         protected override void OnLeftSoftButtonClick()
         {
-            
+            DoCreate();
         }
 
         protected override void OnRightSoftButtonClick()
@@ -105,13 +121,30 @@ namespace MySquare.Controller
             }));
 
             CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
+            double latitude, longitude;
+#if DEBUG
+            if (Environment.OSVersion.Platform != PlatformID.WinCE)
+            {
+                latitude = -22.856025;
+                longitude = -43.375182;
+            }
+            else
+            {
+                latitude = pos.Latitude.Value;
+                longitude = pos.Longitude.Value;
+            }
+#else
+            latitude = pos.Latitude.Value;
+            longitude = pos.Longitude.Value;
+#endif
+
+
             string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
                 size.Width, size.Height,
-                pos.Latitude.Value.ToString(culture),
-                pos.Longitude.Value.ToString(culture));
+                latitude.ToString(culture),
+                longitude.ToString(culture));
 
             Service.DownloadImage(googleMapsUrl);
-
         }
 
 
@@ -121,10 +154,8 @@ namespace MySquare.Controller
             {
                 if (View.Visible && e.Url.StartsWith("http://maps.google.com"))
                 {
-                    PictureBox box = this.View.picMap;
-                    var image = new System.Drawing.Bitmap(new System.IO.MemoryStream(e.Image));
-
-                    box.Image = image;
+                    View.Map = new System.Drawing.Bitmap(new System.IO.MemoryStream(e.Image));
+                    View.FixType = pos != null && pos.FixType == FixType.Network ? "Low precision" : "High precision";
                 }
             }));
         }
@@ -137,6 +168,7 @@ namespace MySquare.Controller
             {
                 if (View.Visible)
                 {
+                    string number = string.Empty;
                     foreach (Geocode geocode in e.Geocodes)
                     {
                         if (Array.IndexOf(geocode.Types, "street_address") > -1)
@@ -145,6 +177,8 @@ namespace MySquare.Controller
                             {
                                 if (Array.IndexOf(addr.Types, "route") > -1)
                                     View.txtAddress.Text = addr.LongName;
+                                if (Array.IndexOf(addr.Types, "street_number") > -1)
+                                    number = addr.LongName;
                                 if (Array.IndexOf(addr.Types, "locality") > -1)
                                     View.txtCity.Text = addr.LongName;
                                 if (Array.IndexOf(addr.Types, "administrative_area_level_1") > -1)
@@ -154,8 +188,18 @@ namespace MySquare.Controller
                             }
                         }
                     }
+                    if (!string.IsNullOrEmpty(View.txtAddress.Text))
+                        View.txtAddress.Text += ", " + number;
                 }
             }));
         }
+
+
+
+        private void DoCreate()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

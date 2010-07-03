@@ -72,6 +72,8 @@ namespace MySquare.UI.Places.Details
             }
         }
 
+        SolidBrush selectedBrush = new SolidBrush(Color.PaleGoldenrod);
+        Pen borderPen = new Pen(Color.White);
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
         {
             Tip tip = (Tip)e.Item.Value;
@@ -91,7 +93,7 @@ namespace MySquare.UI.Places.Details
                 if (e.Item.Selected)
                 {
                     Tenor.Mobile.Drawing.RoundedRectangle.Fill(e.Graphics,
-                        new Pen(Color.White), Color.PaleGoldenrod, e.Bounds, new SizeF(8 * factor.Width, 8 * factor.Height).ToSize());
+                        borderPen, selectedBrush, e.Bounds, new SizeF(8 * factor.Width, 8 * factor.Height).ToSize());
                 }
 
                 if (imageList != null && imageList.ContainsKey(tip.User.ImageUrl))

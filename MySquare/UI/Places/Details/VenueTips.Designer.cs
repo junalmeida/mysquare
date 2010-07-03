@@ -41,7 +41,7 @@
             this.lblError.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
             this.lblError.Location = new System.Drawing.Point(93, 123);
             this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(121, 20);
+            this.lblError.Size = new System.Drawing.Size(121, 15);
             this.lblError.Text = "No comments yet.";
             this.lblError.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lblError.Visible = false;
