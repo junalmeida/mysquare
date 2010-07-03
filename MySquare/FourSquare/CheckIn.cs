@@ -13,6 +13,23 @@ namespace MySquare.FourSquare
         { get; set; }
     }
 
+
+    delegate void CheckInEventHandler(object serder, CheckInEventArgs e);
+    class CheckInEventArgs : EventArgs
+    {
+        internal CheckInEventArgs(CheckIn checkIn)
+        {
+            this.CheckIn = checkIn;
+        }
+
+        internal CheckIn CheckIn
+        {
+            get;
+            private set;
+        }
+    }
+
+
     class CheckIn
     {
         [JsonProperty("id")]

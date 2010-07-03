@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using MySquare.Properties;
 using MySquare.Controller;
+using Tenor.Mobile.UI;
 
 namespace MySquare.UI
 {
@@ -19,11 +20,20 @@ namespace MySquare.UI
             this.Icon = Resources.mySquare;
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
 
-            header.Tabs.Add(new Tenor.Mobile.UI.HeaderTab("Places", Resources.PinMap));
-            header.Tabs.Add(new Tenor.Mobile.UI.HeaderTab("Settings", Resources.Settings));
+            header.Tabs.Add(tabPlaces = new Tenor.Mobile.UI.HeaderTab("Places", Resources.PinMap));
+            header.Tabs.Add(tabSettings = new Tenor.Mobile.UI.HeaderTab("Settings", Resources.Settings));
         }
+        HeaderTab tabPlaces;
+        HeaderTab tabSettings;
 
-
+        internal void ChangePlacesName(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                tabPlaces.Text = "Places";
+            else
+                tabPlaces.Text = text;
+            header.Invalidate();
+        }
 
         private void header_SelectedTabChanged(object sender, EventArgs e)
         {
@@ -61,12 +71,14 @@ namespace MySquare.UI
                     {
                         if (inputPanel.Enabled)
                         {
-                            int h = c.Height;
-                            c.Dock = DockStyle.Top;
-                            c.Height = h - inputPanel.Bounds.Height;
+                            picAd.Height = inputPanel.Bounds.Height;
+                            picAd.Visible = true;
                         }
                         else
-                            c.Dock = DockStyle.Fill;
+                        {
+                            picAd.Height = 30;
+                            picAd.Visible = false;
+                        }
                     }
                 }
             }

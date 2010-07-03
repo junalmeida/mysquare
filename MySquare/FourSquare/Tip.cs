@@ -34,4 +34,19 @@ namespace MySquare.FourSquare
         public Tip Tip
         { get; set; }
     }
+
+    delegate void AddTipEventHandler(object serder, TipEventArgs e);
+    class TipEventArgs : EventArgs
+    {
+        internal TipEventArgs(Tip tip)
+        {
+            this.Tip = tip;
+        }
+
+        internal Tip Tip
+        {
+            get;
+            private set;
+        }
+    }
 }

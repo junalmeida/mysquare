@@ -6,6 +6,7 @@ using Tenor.Mobile.Location;
 using System.Threading;
 using MySquare.FourSquare;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace MySquare.Controller
 {
@@ -26,6 +27,7 @@ namespace MySquare.Controller
         {
 
             UI.Main form = View.Parent as UI.Main;
+            form.ChangePlacesName(null);
 
             form.settings1.Visible = false;
             View.BringToFront();

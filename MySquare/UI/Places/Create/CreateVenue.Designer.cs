@@ -35,7 +35,6 @@
             System.Windows.Forms.Label label5;
             System.Windows.Forms.Label label6;
             System.Windows.Forms.Label label7;
-            System.Windows.Forms.Label label;
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.txtCross = new System.Windows.Forms.TextBox();
@@ -43,7 +42,7 @@
             this.txtState = new System.Windows.Forms.TextBox();
             this.txtZip = new System.Windows.Forms.TextBox();
             this.txtPhone = new System.Windows.Forms.TextBox();
-            this.lblLocation = new System.Windows.Forms.Label();
+            this.picMap = new System.Windows.Forms.PictureBox();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
@@ -51,7 +50,6 @@
             label5 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
-            label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -110,16 +108,6 @@
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(87, 20);
             label7.Text = "Phone:";
-            // 
-            // label
-            // 
-            label.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            label.ForeColor = System.Drawing.Color.White;
-            label.Location = new System.Drawing.Point(3, 225);
-            label.Name = "label";
-            label.Size = new System.Drawing.Size(65, 20);
-            label.Text = "Location:";
             // 
             // txtName
             // 
@@ -181,16 +169,13 @@
             this.txtPhone.Size = new System.Drawing.Size(122, 21);
             this.txtPhone.TabIndex = 18;
             // 
-            // lblLocation
+            // picMap
             // 
-            this.lblLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.picMap.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblLocation.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
-            this.lblLocation.ForeColor = System.Drawing.Color.White;
-            this.lblLocation.Location = new System.Drawing.Point(64, 226);
-            this.lblLocation.Name = "lblLocation";
-            this.lblLocation.Size = new System.Drawing.Size(131, 20);
-            this.lblLocation.Text = "searching...";
+            this.picMap.Location = new System.Drawing.Point(3, 219);
+            this.picMap.Name = "picMap";
+            this.picMap.Size = new System.Drawing.Size(209, 55);
             // 
             // CreateVenue
             // 
@@ -198,8 +183,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.Black;
-            this.Controls.Add(this.lblLocation);
-            this.Controls.Add(label);
+            this.Controls.Add(this.picMap);
             this.Controls.Add(this.txtPhone);
             this.Controls.Add(label7);
             this.Controls.Add(this.txtZip);
@@ -215,7 +199,7 @@
             this.Controls.Add(this.txtName);
             this.Controls.Add(label1);
             this.Name = "CreateVenue";
-            this.Size = new System.Drawing.Size(215, 270);
+            this.Size = new System.Drawing.Size(215, 309);
             this.ResumeLayout(false);
 
         }
@@ -229,6 +213,6 @@
         internal System.Windows.Forms.TextBox txtState;
         internal System.Windows.Forms.TextBox txtZip;
         internal System.Windows.Forms.TextBox txtPhone;
-        internal System.Windows.Forms.Label lblLocation;
+        internal System.Windows.Forms.PictureBox picMap;
     }
 }

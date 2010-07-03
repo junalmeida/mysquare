@@ -16,7 +16,7 @@ namespace MySquare.Controller
         protected MySquare.UI.IView view;
 
         static IList<BaseController> Controllers = new List<BaseController>();
-        static int CurrentController = 0;
+        static int CurrentController = -1;
         
         public BaseController(IView view)
         {
@@ -38,6 +38,8 @@ namespace MySquare.Controller
         protected Service Service { get; private set; }
         protected AutoResetEvent WaitThread { get; private set; }
 
+        protected const string googleMapsUrl =
+            "http://maps.google.com/maps/api/staticmap?zoom=16&sensor=false&mobile=true&format=jpeg&size={0}x{1}&markers=color:blue|{2},{3}";
 
         public static BaseController OpenController(MySquare.UI.IView view)
         {
@@ -63,6 +65,9 @@ namespace MySquare.Controller
                     Controllers[i].Activate();
                     return Controllers[i];
                 }
+
+            if (CurrentController > -1)
+                Controllers[CurrentController].Deactivate();
 
             var ctors = type.GetConstructors();
             BaseController newController = (BaseController)ctors[0].Invoke(new object[] { view });
@@ -161,6 +166,7 @@ namespace MySquare.Controller
        }
 
         protected abstract void Activate();
+        protected virtual void Deactivate() { }
         protected void ShowError(string text)
         {
             CurrentController = 0;

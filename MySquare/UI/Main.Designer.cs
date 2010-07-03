@@ -38,6 +38,7 @@
             this.settings1 = new MySquare.UI.Settings.Settings();
             this.places1 = new MySquare.UI.Places.Places();
             this.inputPanel = new Microsoft.WindowsCE.Forms.InputPanel(this.components);
+            this.picAd = new System.Windows.Forms.PictureBox();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -94,14 +95,22 @@
             // 
             this.inputPanel.EnabledChanged += new System.EventHandler(this.inputPanel_EnabledChanged);
             // 
+            // picAd
+            // 
+            this.picAd.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.picAd.Location = new System.Drawing.Point(0, 218);
+            this.picAd.Name = "picAd";
+            this.picAd.Size = new System.Drawing.Size(240, 50);
+            this.picAd.Visible = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 268);
-            this.Controls.Add(this.lblError);
+            this.Controls.Add(this.picAd);
             this.Controls.Add(this.settings1);
+            this.Controls.Add(this.lblError);
             this.Controls.Add(this.places1);
             this.Controls.Add(this.header);
             this.Menu = this.mainMenu;
@@ -121,6 +130,7 @@
         internal MySquare.UI.Settings.Settings settings1;
         internal System.Windows.Forms.Label lblError;
         private Microsoft.WindowsCE.Forms.InputPanel inputPanel;
+        private System.Windows.Forms.PictureBox picAd;
     }
 }
 

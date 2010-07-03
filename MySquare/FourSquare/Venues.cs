@@ -20,6 +20,35 @@ namespace MySquare.FourSquare
         { get; set; }
     }
 
+    delegate void SearchEventHandler(object serder, SearchEventArgs e);
+    class SearchEventArgs : EventArgs
+    {
+        internal SearchEventArgs(Venue[] venues)
+        {
+            this.Venues = venues;
+        }
+
+        internal Venue[] Venues
+        {
+            get;
+            private set;
+        }
+    }
+
+    delegate void VenueEventHandler(object serder, VenueEventArgs e);
+    class VenueEventArgs : EventArgs
+    {
+        internal VenueEventArgs(Venue venue)
+        {
+            this.Venue = venue;
+        }
+
+        internal Venue Venue
+        {
+            get;
+            private set;
+        }
+    }
 
     class Group
     {

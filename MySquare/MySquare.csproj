@@ -74,6 +74,7 @@
     <Compile Include="Controller\VenueDetailsController.cs" />
     <Compile Include="FourSquare\Badge.cs" />
     <Compile Include="FourSquare\CheckIn.cs" />
+    <Compile Include="FourSquare\Geocoding.cs" />
     <Compile Include="FourSquare\Mayor.cs" />
     <Compile Include="FourSquare\Service.cs" />
     <Compile Include="FourSquare\Tip.cs" />

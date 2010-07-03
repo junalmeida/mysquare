@@ -37,6 +37,10 @@ namespace MySquare.Controller
         protected override void Activate()
         {
             UI.Places.Places places = View.Parent as UI.Places.Places;
+
+            UI.Main form = places.Parent as UI.Main;
+            form.ChangePlacesName("Place Detail");
+
             places.Reset();
             View.Dock = System.Windows.Forms.DockStyle.Fill;
             View.BringToFront();
@@ -283,11 +287,9 @@ namespace MySquare.Controller
             PictureBox box = this.View.venueMap1.picMap;
             if (box.Tag == null)
             {
-                string googleMapsUrl =
-                    "http://maps.google.com/maps/api/staticmap?zoom=16&sensor=false&mobile=true&format=jpeg&size={0}x{1}&markers=color:blue|{2},{3}";
 
                 CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
-                googleMapsUrl = string.Format(googleMapsUrl,
+                string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
                     box.Width, box.Height,
                     Venue.Latitude.ToString(culture),
                     Venue.Longitude.ToString(culture));

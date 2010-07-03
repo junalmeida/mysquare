@@ -46,7 +46,8 @@ namespace MySquare.FourSquare
             SearchNearby,
             CheckIn,
             Venue,
-            AddTip
+            AddTip,
+            Geocoding
         }
 
         internal Service()
@@ -104,6 +105,10 @@ namespace MySquare.FourSquare
                 case ServiceResource.AddTip:
                     url = "http://api.foursquare.com/v1/addtip.json";
                     auth = true; post = true;
+                    break;
+                case ServiceResource.Geocoding:
+                    url = "http://maps.google.com/maps/api/geocode/json";
+                    auth = false; post = false;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -229,6 +234,9 @@ namespace MySquare.FourSquare
                                     case ServiceResource.AddTip:
                                         type = typeof(TipResponse);
                                         break;  
+                                    case ServiceResource.Geocoding:
+                                        type = typeof(GeocodeResponse);
+                                        break;
                                     default:
                                         throw new NotImplementedException();
                                 }
@@ -275,6 +283,9 @@ namespace MySquare.FourSquare
                             break;
                         case ServiceResource.AddTip:
                             OnAddTipResult(new TipEventArgs(((TipResponse)result).Tip));
+                            break;
+                        case ServiceResource.Geocoding:
+                            OnGeocodeResult(new GeocodeEventArgs(((GeocodeResponse)result).Results));
                             break;
                         default:
                             throw new NotImplementedException();
@@ -323,6 +334,15 @@ namespace MySquare.FourSquare
             parameters.Add("vid", vid.ToString());
 
             Post(ServiceResource.Venue, parameters);
+        }
+
+        internal void GetGeocoding(double latitude, double longitude)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("latlng", string.Format("{0},{1}", latitude.ToString(culture), longitude.ToString(culture)));
+            parameters.Add("sensor", "true");
+
+            Post(ServiceResource.Geocoding, parameters);
         }
 
 
@@ -472,6 +492,15 @@ namespace MySquare.FourSquare
         #endregion
 
         #region Events
+        internal event GeocodeEventHandler GeocodeResult;
+        private void OnGeocodeResult(GeocodeEventArgs e)
+        {
+            if (GeocodeResult != null)
+            {
+                GeocodeResult(this, e);
+            }
+        }
+
       internal event AddTipEventHandler AddTipResult;
         private void OnAddTipResult(TipEventArgs e)
         {
@@ -581,65 +610,10 @@ namespace MySquare.FourSquare
             private set;
         }
     }
-    delegate void AddTipEventHandler(object serder, TipEventArgs e);
-    class TipEventArgs : EventArgs
-    {
-        internal TipEventArgs(Tip tip)
-        {
-            this.Tip = tip;
-        }
 
-        internal Tip Tip
-        {
-            get;
-            private set;
-        }
-    }
-    delegate void VenueEventHandler(object serder, VenueEventArgs e);
-    class VenueEventArgs : EventArgs
-    {
-        internal VenueEventArgs(Venue venue)
-        {
-            this.Venue = venue;
-        }
-
-        internal Venue Venue
-        {
-            get;
-            private set;
-        }
-    }
+ 
 
 
-    delegate void CheckInEventHandler(object serder, CheckInEventArgs e);
-    class CheckInEventArgs : EventArgs
-    {
-        internal CheckInEventArgs(CheckIn checkIn)
-        {
-            this.CheckIn = checkIn;
-        }
-
-        internal CheckIn CheckIn
-        {
-            get;
-            private set;
-        }
-    }
-
-    delegate void SearchEventHandler(object serder, SearchEventArgs e);
-    class SearchEventArgs : EventArgs 
-    {
-        internal SearchEventArgs(Venue[] venues)
-        {
-            this.Venues = venues;
-        }
-
-        internal Venue[] Venues
-        {
-            get;
-            private set;
-        }
-    }
 
 
     delegate void ErrorEventHandler(object serder, ErrorEventArgs e);
