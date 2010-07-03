@@ -80,6 +80,7 @@ namespace MySquare.UI.Places.Create
             }
         }
 
+        #region Scroll Control
         int originalMouse;
         int originalScroll;
         private void CreateVenue_MouseDown(object sender, MouseEventArgs e)
@@ -98,5 +99,6 @@ namespace MySquare.UI.Places.Create
                 this.AutoScrollPosition = new Point(0, (originalMouse - e.Y) - originalScroll); 
             }
         }
+        #endregion
     }
 }

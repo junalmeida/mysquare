@@ -40,6 +40,7 @@
             this.picMap.Name = "picMap";
             this.picMap.Size = new System.Drawing.Size(225, 188);
             this.picMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picMap.Paint += new System.Windows.Forms.PaintEventHandler(this.picMap_Paint);
             // 
             // VenueMap
             // 

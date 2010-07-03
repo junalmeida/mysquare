@@ -19,6 +19,7 @@ namespace MySquare.UI.Places
             checkIn1.BackColor = bgColor;
             venueInfo1.BackColor = bgColor;
             venueMap1.BackColor = bgColor;
+            venueMap1.picMap.BackColor = bgColor;
             venueTips1.BackColor = bgColor;
             venueTips1.listBox.BackColor = bgColor;
             venueTips1.lblError.BackColor = bgColor;

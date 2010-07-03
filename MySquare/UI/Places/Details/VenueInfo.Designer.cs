@@ -108,7 +108,7 @@
             this.imgMayor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.imgMayor.Location = new System.Drawing.Point(202, 84);
             this.imgMayor.Name = "imgMayor";
-            this.imgMayor.Size = new System.Drawing.Size(33, 33);
+            this.imgMayor.Size = new System.Drawing.Size(34, 34);
             this.imgMayor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imgMayor.Paint += new System.Windows.Forms.PaintEventHandler(this.Img_Paint);
             // 
@@ -117,7 +117,7 @@
             this.imgCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.imgCategory.Location = new System.Drawing.Point(202, 4);
             this.imgCategory.Name = "imgCategory";
-            this.imgCategory.Size = new System.Drawing.Size(33, 33);
+            this.imgCategory.Size = new System.Drawing.Size(34, 34);
             this.imgCategory.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imgCategory.Paint += new System.Windows.Forms.PaintEventHandler(this.Img_Paint);
             // 
@@ -174,6 +174,7 @@
             this.Name = "VenueInfo";
             this.Size = new System.Drawing.Size(240, 155);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseMove);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseDown);
             this.ResumeLayout(false);
 
         }

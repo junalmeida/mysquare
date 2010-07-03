@@ -55,6 +55,9 @@ namespace MySquare.Controller
 
             View.tabStrip1.SelectedIndex = 0;
 
+            View.venueMap1.picMap.Image = MySquare.Properties.Resources.HourGlass;
+            View.venueMap1.picMap.Tag = null;
+
             OpenSection(VenueSection.CheckIn);
             OpenVenue(places.list1.listBox.SelectedItem.Value as Venue);
         }
@@ -73,8 +76,6 @@ namespace MySquare.Controller
                 address.Add(venue.State);
             View.lblAddress.Text = string.Join(", ", address.ToArray());
 
-            View.venueMap1.picMap.Image = MySquare.Properties.Resources.HourGlass;
-            View.venueMap1.picMap.Tag = null;
             View.tabStrip1.SelectedIndex = 0;
             OpenSection(VenueSection.CheckIn);
         }
@@ -308,8 +309,9 @@ namespace MySquare.Controller
 
                 box.Invoke(new ThreadStart(delegate()
                 {
-                    box.Image = image;
-                    box.Tag = 1;
+                    box.Image = null;
+                    box.Tag = image;
+                    box.Invalidate();
                 }));
             }
         }

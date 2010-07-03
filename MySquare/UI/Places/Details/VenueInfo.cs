@@ -54,10 +54,22 @@ namespace MySquare.UI.Places.Details
                     control.Tag = new Tenor.Mobile.Drawing.AlphaImage((byte[])control.Tag);
                 Tenor.Mobile.Drawing.AlphaImage image = (Tenor.Mobile.Drawing.AlphaImage)control.Tag;
 
-                Rectangle rect = new Rectangle(0, 0, control.Width, control.Height  /2);
+                Rectangle rect = new Rectangle(0, 0, control.Width, control.Height );
 
                 image.Draw(e.Graphics, rect);
 
+            }
+        }
+
+        #region Scroll Control
+        int originalMouse;
+        int originalScroll;
+        private void VenueInfo_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                originalMouse = e.Y;
+                originalScroll = this.AutoScrollPosition.Y;
             }
         }
 
@@ -65,8 +77,10 @@ namespace MySquare.UI.Places.Details
         {
             if (e.Button == MouseButtons.Left)
             {
-                //base.SetDisplayRectLocation(0, 0);
+                this.AutoScrollPosition = new Point(0, (originalMouse - e.Y) - originalScroll);
             }
         }
+        #endregion
+
     }
 }
