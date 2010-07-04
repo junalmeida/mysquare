@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace MySquare.UI.Places.Details
 {
-    public partial class VenueMap : UserControl
+    internal partial class VenueMap : UserControl
     {
         public VenueMap()
         {

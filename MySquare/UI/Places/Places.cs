@@ -9,7 +9,7 @@ using MySquare.Controller;
 
 namespace MySquare.UI.Places
 {
-    public partial class Places : UserControl, IView
+    internal partial class Places : UserControl, IView
     {
         public Places()
         {

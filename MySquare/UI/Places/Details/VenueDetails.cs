@@ -9,7 +9,7 @@ using MySquare.FourSquare;
 
 namespace MySquare.UI.Places
 {
-    public partial class VenueDetails : UserControl, IView, IViewWithTabs
+    internal partial class VenueDetails : UserControl, IView, IViewWithTabs
     {
         public VenueDetails()
         {

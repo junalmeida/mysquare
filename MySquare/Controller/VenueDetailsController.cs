@@ -59,10 +59,11 @@ namespace MySquare.Controller
             View.venueMap1.picMap.Tag = null;
 
             OpenSection(VenueSection.CheckIn);
-            OpenVenue(places.list1.listBox.SelectedItem.Value as Venue);
+            if (places.list1.listBox.SelectedItem.Value != null)
+                OpenVenue(places.list1.listBox.SelectedItem.Value as Venue);
         }
 
-        private void OpenVenue(Venue venue)
+        internal void OpenVenue(Venue venue)
         {
             this.Venue = venue;
 

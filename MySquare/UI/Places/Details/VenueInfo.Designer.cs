@@ -50,7 +50,7 @@
             this.label1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(3, 4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(191, 15);
+            this.label1.Size = new System.Drawing.Size(69, 15);
             this.label1.Text = "Category:";
             // 
             // lblCategory
@@ -70,7 +70,7 @@
             this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.label3.Location = new System.Drawing.Point(3, 46);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(215, 15);
+            this.label3.Size = new System.Drawing.Size(52, 15);
             this.label3.Text = "Phone:";
             // 
             // lblMayor
@@ -90,7 +90,7 @@
             this.label4.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.label4.Location = new System.Drawing.Point(3, 84);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(191, 15);
+            this.label4.Size = new System.Drawing.Size(52, 15);
             this.label4.Text = "Mayor:";
             // 
             // lblPhone
@@ -138,7 +138,7 @@
             this.label5.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.label5.Location = new System.Drawing.Point(3, 121);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(191, 15);
+            this.label5.Size = new System.Drawing.Size(52, 15);
             this.label5.Text = "Stats:";
             // 
             // contextMenu

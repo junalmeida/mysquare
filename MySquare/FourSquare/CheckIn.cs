@@ -13,6 +13,13 @@ namespace MySquare.FourSquare
         { get; set; }
     }
 
+    class CheckInsResponse
+    {
+        [JsonProperty("checkins")]
+        public CheckIn[] CheckIns
+        { get; set; }
+    }
+
 
     delegate void CheckInEventHandler(object serder, CheckInEventArgs e);
     class CheckInEventArgs : EventArgs
@@ -30,6 +37,21 @@ namespace MySquare.FourSquare
     }
 
 
+    delegate void CheckInsEventHandler(object serder, CheckInsEventArgs e);
+    class CheckInsEventArgs : EventArgs
+    {
+        internal CheckInsEventArgs(CheckIn[] checkIns)
+        {
+            this.CheckIns = checkIns;
+        }
+
+        internal CheckIn[] CheckIns
+        {
+            get;
+            private set;
+        }
+    }
+
     class CheckIn
     {
         [JsonProperty("id")]
@@ -40,8 +62,20 @@ namespace MySquare.FourSquare
         public string Message
         { get; set; }
 
+        [JsonProperty("shout")]
+        public string Shout
+        { get; set; }
+
+        [JsonProperty("display")]
+        public string Display
+        { get; set; }
+
         [JsonProperty("venue")]
         public Venue Venue
+        { get; set; }
+
+        [JsonProperty("user")]
+        public User User
         { get; set; }
 
         [JsonProperty("mayor")]

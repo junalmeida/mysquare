@@ -27,9 +27,10 @@ namespace MySquare.Controller
         {
 
             UI.Main form = View.Parent as UI.Main;
+
             form.ChangePlacesName(null);
 
-            form.settings1.Visible = false;
+            form.Reset();
             View.BringToFront();
             View.Dock = System.Windows.Forms.DockStyle.Fill;
             View.Visible = true;

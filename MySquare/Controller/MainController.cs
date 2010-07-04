@@ -137,9 +137,8 @@ namespace MySquare.Controller
 
         protected override void Activate()
         {
-            Form.settings1.Visible = false;
-            Form.places1.Visible = false;
-            BaseController.OpenController(Form.places1);
+            Form.Reset();
+            BaseController.OpenController(Form.friends1);
         }
 
         protected override void OnRightSoftButtonClick()

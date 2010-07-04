@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace MySquare.UI.Places.Details
 {
-    public partial class CheckIn : UserControl
+    internal partial class CheckIn : UserControl
     {
         public CheckIn()
         {

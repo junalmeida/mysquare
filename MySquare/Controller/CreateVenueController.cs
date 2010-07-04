@@ -26,8 +26,10 @@ namespace MySquare.Controller
         {
             Service.ImageResult += new ImageResultEventHandler(Service_ImageResult);
             Service.GeocodeResult += new GeocodeEventHandler(Service_GeocodeResult);
+            Service.VenueResult += new VenueEventHandler(Service_VenueResult);
             View.picMap.Click += new EventHandler(picMap_Click);
         }
+
 
 
 
@@ -73,7 +75,8 @@ namespace MySquare.Controller
 
         protected override void Deactivate()
         {
-            pos.LocationChanged -= new EventHandler(pos_LocationChanged);
+            if (pos != null)
+                pos.LocationChanged -= new EventHandler(pos_LocationChanged);
             pos = null;
         }
 
@@ -195,11 +198,49 @@ namespace MySquare.Controller
         }
 
 
-
+        #region CreateVenue
+        Venue createdVenue = null;
         private void DoCreate()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(View.txtName.Text))
+            {
+                MessageBox.Show("Type in the name of this place.", "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                return;
+            }
+
+
+            double lat = 0, lng = 0;
+            if (pos != null && pos.Latitude.HasValue)
+            {
+                lat = pos.Latitude.Value;
+                lng = pos.Longitude.Value;
+            }
+
+            createdVenue = null;
+            Service.AddVenue(
+                View.txtName.Text, View.txtAddress.Text, View.txtCross.Text,
+                View.txtCity.Text, View.txtState.Text, View.txtZip.Text,
+                View.txtPhone.Text, lat, lng, null);
+            WaitThread.Reset();
+            WaitThread.WaitOne();
+
+            if (createdVenue != null)
+            {
+                MessageBox.Show(string.Format("{0} was created.", View.txtName.Text), "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
+                (OpenController((View.Parent as Places).venueDetails1) as VenueDetailsController).OpenVenue(createdVenue);
+                createdVenue = null;
+            }
+            else
+                MessageBox.Show(string.Format("{0} was not created.", View.txtName.Text), "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
         }
 
+
+        void Service_VenueResult(object serder, VenueEventArgs e)
+        {
+            createdVenue = e.Venue;
+            WaitThread.Set();
+        }
+        #endregion
     }
 }

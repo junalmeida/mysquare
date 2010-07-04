@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Controller\BaseController.cs" />
     <Compile Include="Controller\CreateVenueController.cs" />
+    <Compile Include="Controller\FriendsController.cs" />
     <Compile Include="Controller\MainController.cs" />
     <Compile Include="Controller\PlacesController.cs" />
     <Compile Include="Controller\SettingsController.cs" />
@@ -86,6 +87,12 @@
     <Compile Include="UI\AnimatedGif.Designer.cs">
       <DependentUpon>AnimatedGif.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Friends\Friends.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Friends\Friends.Designer.cs">
+      <DependentUpon>Friends.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,10 +100,15 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="UI\AnimatedGif.resx">
       <DependentUpon>AnimatedGif.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Friends\Friends.resx">
+      <DependentUpon>Friends.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Main.resx">
@@ -236,6 +248,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\hourglass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Friends.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

@@ -39,6 +39,7 @@
             this.places1 = new MySquare.UI.Places.Places();
             this.inputPanel = new Microsoft.WindowsCE.Forms.InputPanel(this.components);
             this.picAd = new System.Windows.Forms.PictureBox();
+            this.friends1 = new MySquare.UI.Friends.Friends();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -103,11 +104,20 @@
             this.picAd.Size = new System.Drawing.Size(240, 50);
             this.picAd.Visible = false;
             // 
+            // friends1
+            // 
+            this.friends1.Location = new System.Drawing.Point(78, 55);
+            this.friends1.Name = "friends1";
+            this.friends1.Size = new System.Drawing.Size(150, 150);
+            this.friends1.TabIndex = 4;
+            this.friends1.Visible = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(240, 268);
+            this.Controls.Add(this.friends1);
             this.Controls.Add(this.picAd);
             this.Controls.Add(this.settings1);
             this.Controls.Add(this.lblError);
@@ -131,6 +141,7 @@
         internal System.Windows.Forms.Label lblError;
         private Microsoft.WindowsCE.Forms.InputPanel inputPanel;
         private System.Windows.Forms.PictureBox picAd;
+        internal MySquare.UI.Friends.Friends friends1;
     }
 }
 

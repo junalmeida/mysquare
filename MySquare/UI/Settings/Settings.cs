@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace MySquare.UI.Settings
 {
-    public partial class Settings : UserControl, IView
+    internal partial class Settings : UserControl, IView
     {
         public Settings()
         {

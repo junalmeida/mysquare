@@ -57,6 +57,13 @@ namespace MySquare.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Friends {
+            get {
+                object obj = ResourceManager.GetObject("Friends", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap HourGlass {
             get {
                 object obj = ResourceManager.GetObject("HourGlass", resourceCulture);

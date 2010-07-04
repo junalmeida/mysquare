@@ -9,7 +9,7 @@ using System.IO;
 
 namespace MySquare.UI.Places.Details
 {
-    public partial class VenueInfo : UserControl
+    internal partial class VenueInfo : UserControl
     {
         public VenueInfo()
         {

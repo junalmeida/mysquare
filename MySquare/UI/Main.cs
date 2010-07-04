@@ -11,7 +11,7 @@ using Tenor.Mobile.UI;
 
 namespace MySquare.UI
 {
-    public partial class Main : Form, IView
+    internal partial class Main : Form, IView
     {
         public Main()
         {
@@ -20,9 +20,11 @@ namespace MySquare.UI
             this.Icon = Resources.mySquare;
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
 
+            header.Tabs.Add(tabFriends = new Tenor.Mobile.UI.HeaderTab("Friends", Resources.Friends));
             header.Tabs.Add(tabPlaces = new Tenor.Mobile.UI.HeaderTab("Places", Resources.PinMap));
             header.Tabs.Add(tabSettings = new Tenor.Mobile.UI.HeaderTab("Settings", Resources.Settings));
         }
+        HeaderTab tabFriends;
         HeaderTab tabPlaces;
         HeaderTab tabSettings;
 
@@ -35,19 +37,25 @@ namespace MySquare.UI
             header.Invalidate();
         }
 
+        internal void ChangeFriendsName(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                tabFriends.Text = "Friends";
+            else
+                tabFriends.Text = text;
+            header.Invalidate();
+        }
+
         private void header_SelectedTabChanged(object sender, EventArgs e)
         {
             lblError.Visible = false;
-            switch (header.Tabs[header.SelectedIndex].Text)
-            {
-                case "Places":
-                    Controller.BaseController.OpenController(places1);
-                    break;
-                case "Settings":
-                    Controller.BaseController.OpenController(settings1);
-                    break;
-            }
-
+            var tab = header.Tabs[header.SelectedIndex];
+            if (tab == tabPlaces)
+                Controller.BaseController.OpenController(places1);
+            else if (tab == tabSettings)
+                Controller.BaseController.OpenController(settings1);
+            else if (tab == tabFriends)
+                Controller.BaseController.OpenController(friends1);
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -83,6 +91,13 @@ namespace MySquare.UI
                 }
             }
             catch (ObjectDisposedException) { }
+        }
+
+        internal void Reset()
+        {
+            foreach (Control c in Controls)
+                if (c is MySquare.UI.IView)
+                    c.Visible = false;
         }
     }
 }

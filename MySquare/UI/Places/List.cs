@@ -13,7 +13,7 @@ using System.IO;
 
 namespace MySquare.UI.Places
 {
-    public partial class List : UserControl
+    internal partial class List : UserControl
     {
         public List()
         {

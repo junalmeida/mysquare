@@ -47,7 +47,9 @@ namespace MySquare.FourSquare
             CheckIn,
             Venue,
             AddTip,
-            Geocoding
+            Geocoding,
+            AddVenue,
+            CheckIns
         }
 
         internal Service()
@@ -109,6 +111,14 @@ namespace MySquare.FourSquare
                 case ServiceResource.Geocoding:
                     url = "http://maps.google.com/maps/api/geocode/json";
                     auth = false; post = false;
+                    break;
+                case ServiceResource.AddVenue:
+                    url = "http://api.foursquare.com/v1/addvenue.json";
+                    auth = true; post = true;
+                    break;
+                case ServiceResource.CheckIns:
+                    url = "http://api.foursquare.com/v1/checkins.json";
+                    auth = true; post = false;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -189,7 +199,7 @@ namespace MySquare.FourSquare
                 postData.Close();
 
                 request.BeginGetResponse(new AsyncCallback(ParseResponse), service);
-  
+
             }
             catch (Exception ex)
             {
@@ -233,9 +243,15 @@ namespace MySquare.FourSquare
                                         break;
                                     case ServiceResource.AddTip:
                                         type = typeof(TipResponse);
-                                        break;  
+                                        break;
                                     case ServiceResource.Geocoding:
                                         type = typeof(GeocodeResponse);
+                                        break;
+                                    case ServiceResource.AddVenue:
+                                        type = typeof(VenueResponse);
+                                        break;
+                                    case ServiceResource.CheckIns:
+                                        type = typeof(CheckInsResponse);
                                         break;
                                     default:
                                         throw new NotImplementedException();
@@ -287,6 +303,12 @@ namespace MySquare.FourSquare
                         case ServiceResource.Geocoding:
                             OnGeocodeResult(new GeocodeEventArgs(((GeocodeResponse)result).Results));
                             break;
+                        case ServiceResource.AddVenue:
+                            OnVenueResult(new VenueEventArgs(((VenueResponse)result).Venue));
+                            break;
+                        case ServiceResource.CheckIns:
+                            OnCheckInsResult(new CheckInsEventArgs(((CheckInsResponse)result).CheckIns));
+                            break;
                         default:
                             throw new NotImplementedException();
                     }
@@ -298,7 +320,15 @@ namespace MySquare.FourSquare
             }
         }
 
-    
+
+        internal void GetFriendsCheckins(double latitude, double longitude)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("geolat", latitude.ToString(culture));
+            parameters.Add("geolong", longitude.ToString(culture));
+
+            Post(ServiceResource.CheckIns, parameters);
+        }
 
         internal void SearchNearby(string search, double lat, double lgn)
         {
@@ -357,6 +387,27 @@ namespace MySquare.FourSquare
             Post(ServiceResource.AddTip, parameters);
         }
 
+        internal void AddVenue(
+            string name, string address, string crossStreet,
+            string city, string state, string zip, string phone,
+            double lat, double lng, int? primaryCategoryId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("name", name);
+            parameters.Add("address", address);
+            parameters.Add("crossstreet", crossStreet);
+            parameters.Add("city", city);
+            parameters.Add("state", state);
+            parameters.Add("zip", zip);
+            parameters.Add("phone", phone);
+            if (primaryCategoryId.HasValue)
+                parameters.Add("primarycategoryid", primaryCategoryId.Value.ToString());
+
+            parameters.Add("geolat", lat.ToString(culture));
+            parameters.Add("geolong", lng.ToString(culture));
+
+            Post(ServiceResource.AddVenue, parameters);
+        }
 
         #region Image Service
         internal byte[] DownloadImageSync(string url)
@@ -445,6 +496,7 @@ namespace MySquare.FourSquare
             return _appPath;
         }
 
+
         #region Cache
 
         private static string GetCachePath(string url)
@@ -492,6 +544,15 @@ namespace MySquare.FourSquare
         #endregion
 
         #region Events
+        internal event CheckInsEventHandler CheckInsResult;
+        private void OnCheckInsResult(CheckInsEventArgs e)
+        {
+            if (CheckInsResult != null)
+            {
+                CheckInsResult(this, e);
+            }
+        }
+
         internal event GeocodeEventHandler GeocodeResult;
         private void OnGeocodeResult(GeocodeEventArgs e)
         {
@@ -501,7 +562,7 @@ namespace MySquare.FourSquare
             }
         }
 
-      internal event AddTipEventHandler AddTipResult;
+        internal event AddTipEventHandler AddTipResult;
         private void OnAddTipResult(TipEventArgs e)
         {
             if (AddTipResult != null)
@@ -555,7 +616,6 @@ namespace MySquare.FourSquare
 
         #endregion
 
-
         #region Log
         private static string GetLogPath()
         {
@@ -590,7 +650,6 @@ namespace MySquare.FourSquare
             }
         }
         #endregion
-
     }
 
     delegate void ImageResultEventHandler(object serder, ImageEventArgs e);
