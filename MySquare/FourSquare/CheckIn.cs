@@ -70,6 +70,10 @@ namespace MySquare.FourSquare
         public string Display
         { get; set; }
 
+        [JsonProperty("created")]
+        public DateTime Created
+        { get; set; }
+
         [JsonProperty("venue")]
         public Venue Venue
         { get; set; }

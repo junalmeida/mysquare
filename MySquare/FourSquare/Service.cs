@@ -49,7 +49,9 @@ namespace MySquare.FourSquare
             AddTip,
             Geocoding,
             AddVenue,
-            CheckIns
+            CheckIns,
+            User,
+            Friends
         }
 
         internal Service()
@@ -120,6 +122,15 @@ namespace MySquare.FourSquare
                     url = "http://api.foursquare.com/v1/checkins.json";
                     auth = true; post = false;
                     break;
+                case ServiceResource.User:
+                    url = "http://api.foursquare.com/v1/user.json";
+                    auth = true; post = false;
+                    break;
+                case ServiceResource.Friends:
+                    url = "http://api.foursquare.com/v1/friends.json";
+                    auth = true; post = false;
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }
@@ -253,6 +264,12 @@ namespace MySquare.FourSquare
                                     case ServiceResource.CheckIns:
                                         type = typeof(CheckInsResponse);
                                         break;
+                                    case ServiceResource.User:
+                                        type = typeof(UserEventArgs);
+                                        break;
+                                    case ServiceResource.Friends:
+                                        type = typeof(FriendsEventArgs);
+                                        break;
                                     default:
                                         throw new NotImplementedException();
                                 }
@@ -309,6 +326,12 @@ namespace MySquare.FourSquare
                         case ServiceResource.CheckIns:
                             OnCheckInsResult(new CheckInsEventArgs(((CheckInsResponse)result).CheckIns));
                             break;
+                        case ServiceResource.User:
+                            OnUserResult((UserEventArgs)result);
+                            break;
+                        case ServiceResource.Friends:
+                            OnFriendsResult((FriendsEventArgs)result);
+                            break;
                         default:
                             throw new NotImplementedException();
                     }
@@ -320,6 +343,25 @@ namespace MySquare.FourSquare
             }
         }
 
+        internal void GetUser(int uid)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            if (uid > 0)
+                parameters.Add("uid", uid.ToString());
+            parameters.Add("badges", "1");
+            parameters.Add("mayor", "0");
+
+            Post(ServiceResource.User, parameters);
+        }
+
+        internal void GetFriends(int uid)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            if (uid > 0)
+                parameters.Add("uid", uid.ToString());
+
+            Post(ServiceResource.Friends, parameters);
+        }
 
         internal void GetFriendsCheckins(double latitude, double longitude)
         {
@@ -544,6 +586,26 @@ namespace MySquare.FourSquare
         #endregion
 
         #region Events
+        internal event FriendsEventHandler FriendsResult;
+        private void OnFriendsResult(FriendsEventArgs e)
+        {
+            if (FriendsResult != null)
+            {
+                FriendsResult(this, e);
+            }
+        }
+
+
+        internal event UserEventHandler UserResult;
+        private void OnUserResult(UserEventArgs e)
+        {
+            if (UserResult != null)
+            {
+                UserResult(this, e);
+            }
+        }
+
+
         internal event CheckInsEventHandler CheckInsResult;
         private void OnCheckInsResult(CheckInsEventArgs e)
         {

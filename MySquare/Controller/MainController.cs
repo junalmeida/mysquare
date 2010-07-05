@@ -37,8 +37,7 @@ namespace MySquare.Controller
                 }));
             else
             {
-                Form.settings1.Visible = false;
-                Form.places1.Visible = false;
+                Form.Reset();
 
                 Form.lblError.Text = text;
                 Form.lblError.Visible = true;

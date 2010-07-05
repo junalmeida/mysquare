@@ -17,7 +17,7 @@ namespace MySquare.FourSquare
         { get; set; }
 
         [JsonProperty("created")]
-        public string Created
+        public DateTime Created
         { get; set; }
 
 

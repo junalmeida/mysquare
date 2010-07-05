@@ -206,6 +206,14 @@ namespace MySquare.FourSquare
         public int CheckIns
         { get; set; }
 
+        [JsonProperty("friendrequests")]
+        public int FriendRequests
+        { get; set; }
+
+        [JsonProperty("mayorcount")]
+        public int MayorCount
+        { get; set; }
+
         [JsonProperty("beenhere")]
         public BeenHere BeenHere
         { get; set; }
