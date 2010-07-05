@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FD4AA98B-154D-480A-901A-0B9154C8CFE9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -72,6 +72,7 @@
     <Compile Include="Controller\MainController.cs" />
     <Compile Include="Controller\PlacesController.cs" />
     <Compile Include="Controller\SettingsController.cs" />
+    <Compile Include="Controller\UserController.cs" />
     <Compile Include="Controller\VenueDetailsController.cs" />
     <Compile Include="FourSquare\Badge.cs" />
     <Compile Include="FourSquare\CheckIn.cs" />
@@ -93,6 +94,12 @@
     <Compile Include="UI\Friends\Friends.Designer.cs">
       <DependentUpon>Friends.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Friends\UserDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Friends\UserDetail.Designer.cs">
+      <DependentUpon>UserDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +117,9 @@
     <EmbeddedResource Include="UI\Friends\Friends.resx">
       <DependentUpon>Friends.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Friends\UserDetail.resx">
+      <DependentUpon>UserDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

@@ -6,17 +6,10 @@ using System.Windows.Forms;
 
 namespace MySquare.Controller
 {
-    class SettingsController : BaseController
+    class SettingsController : BaseController<UI.Settings.Settings>
     {
-        UI.Settings.Settings View
-        {
-            get
-            {
-                return (UI.Settings.Settings)base.view;
-            }
-        }
         public SettingsController(UI.Settings.Settings view)
-            : base((MySquare.UI.IView)view)
+            : base(view)
         {
         }
 
@@ -60,8 +53,6 @@ namespace MySquare.Controller
 
             MessageBox.Show("Settings saved.", "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
         }
-
-
 
     }
 }

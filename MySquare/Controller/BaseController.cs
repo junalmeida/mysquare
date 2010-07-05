@@ -10,17 +10,31 @@ using MySquare.UI;
 
 namespace MySquare.Controller
 {
-    abstract class BaseController : IDisposable
+    interface IController
+    {
+        Service Service { get; }
+        AutoResetEvent WaitThread { get; }
+        void Activate();
+        void Deactivate();
+        void OnLeftSoftButtonClick();
+        void OnRightSoftButtonClick();
+    }
+
+    abstract class BaseController<T> : IController, IDisposable where T : IView
     {
 
-        protected MySquare.UI.IView view;
-
-        static IList<BaseController> Controllers = new List<BaseController>();
-        static int CurrentController = -1;
-        
-        public BaseController(IView view)
+        protected T View
         {
-            this.view = view;
+            get;
+            private set;
+        }
+
+        static IList<IController> Controllers = new List<IController>();
+        static int CurrentController = -1;
+
+        public BaseController(T view)
+        {
+            this.View = view;
             Controllers.Add(this);
             if (Controllers.Count == 1 && Controllers[0] == this)
             {
@@ -41,7 +55,7 @@ namespace MySquare.Controller
         protected const string googleMapsUrl =
             "http://maps.google.com/maps/api/staticmap?zoom=16&sensor=false&mobile=true&format=jpeg&size={0}x{1}&markers=color:blue|{2},{3}";
 
-        public static BaseController OpenController(MySquare.UI.IView view)
+        public static IController OpenController(MySquare.UI.IView view)
         {
             Type type = null;
             if (view is UI.Main)
@@ -72,7 +86,7 @@ namespace MySquare.Controller
                 Controllers[CurrentController].Deactivate();
 
             var ctors = type.GetConstructors();
-            BaseController newController = (BaseController)ctors[0].Invoke(new object[] { view });
+            IController newController = (IController)ctors[0].Invoke(new object[] { view });
             Controllers.Add(newController);
             CurrentController = Controllers.Count - 1;
             newController.Activate();
@@ -80,7 +94,7 @@ namespace MySquare.Controller
             return newController;
         }
 
-     
+
 
         #region Menu Control
         MainController MainController
@@ -126,7 +140,7 @@ namespace MySquare.Controller
                 MainController.LeftSoftButtonEnabled = value;
             }
         }
-        
+
         protected virtual bool RightSoftButtonEnabled
         {
             get
@@ -165,7 +179,7 @@ namespace MySquare.Controller
             Service.Abort();
             Service = null;
             WaitThread = null;
-       }
+        }
 
         protected abstract void Activate();
         protected virtual void Deactivate() { }
@@ -175,5 +189,38 @@ namespace MySquare.Controller
             MainController.ShowErrorForm(text);
         }
 
+        #region IController Members
+        void IController.Activate()
+        {
+            this.Activate();
+        }
+
+        void IController.Deactivate()
+        {
+            this.Deactivate();
+        }
+
+
+        Service IController.Service
+        {
+            get { return this.Service; }
+        }
+
+        AutoResetEvent IController.WaitThread
+        {
+            get { return this.WaitThread; }
+        }
+
+        void IController.OnLeftSoftButtonClick()
+        {
+            this.OnLeftSoftButtonClick();
+        }
+
+        void IController.OnRightSoftButtonClick()
+        {
+            this.OnRightSoftButtonClick();
+        }
+
+        #endregion
     }
 }

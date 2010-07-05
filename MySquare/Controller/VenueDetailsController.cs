@@ -6,17 +6,16 @@ using MySquare.FourSquare;
 using System.Windows.Forms;
 using System.Threading;
 using System.Globalization;
+using MySquare.UI.Places;
+using MySquare.UI;
 
 namespace MySquare.Controller
 {
-    class VenueDetailsController : BaseController
+    class VenueDetailsController : BaseController<VenueDetails>
     {
-        UI.Places.VenueDetails View
-        {
-            get { return (UI.Places.VenueDetails)base.view; }
-        }
+
         public VenueDetailsController(UI.Places.VenueDetails view)
-            : base((MySquare.UI.IView)view)
+            : base(view)
         {
             this.View.TabChanged += new EventHandler(venueDetails_TabChanged);
             Service.CheckInResult += new CheckInEventHandler(Service_CheckInResult);
@@ -24,10 +23,6 @@ namespace MySquare.Controller
             Service.ImageResult += new ImageResultEventHandler(Service_ImageResult);
             Service.AddTipResult += new AddTipEventHandler(Service_AddTipResult);
         }
-
-
-
-
 
         void venueDetails_TabChanged(object sender, EventArgs e)
         {
@@ -154,7 +149,7 @@ namespace MySquare.Controller
 
         protected override void OnRightSoftButtonClick()
         {
-            BaseController.OpenController(View.Parent as MySquare.UI.IView);
+            BaseController<IView>.OpenController(View.Parent as MySquare.UI.IView);
         }
 
         internal MySquare.FourSquare.Venue Venue
@@ -291,7 +286,7 @@ namespace MySquare.Controller
             {
 
                 CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
-                string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
+                string googleMapsUrl = string.Format(BaseController<IView>.googleMapsUrl,
                     box.Width, box.Height,
                     Venue.Latitude.ToString(culture),
                     Venue.Longitude.ToString(culture));

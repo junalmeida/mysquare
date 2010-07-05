@@ -10,14 +10,11 @@ using System.Drawing;
 
 namespace MySquare.Controller
 {
-    class PlacesController : BaseController
+    class PlacesController : BaseController<UI.Places.Places>
     {
-        UI.Places.Places View
-        {
-            get { return (UI.Places.Places)base.view; }
-        }
+
         public PlacesController(UI.Places.Places view)
-            : base((MySquare.UI.IView)view)
+            : base(view)
         {
             this.Service.SearchArrives += new MySquare.FourSquare.SearchEventHandler(Service_SearchArrives);
         }

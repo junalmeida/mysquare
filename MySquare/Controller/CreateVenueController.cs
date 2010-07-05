@@ -13,16 +13,10 @@ using MySquare.FourSquare;
 
 namespace MySquare.Controller
 {
-    class CreateVenueController : BaseController
+    class CreateVenueController : BaseController<CreateVenue>
     {
-        private CreateVenue View
-        {
-            get { return (CreateVenue)base.view; }
-        }
-
-
         public CreateVenueController(CreateVenue view)
-            : base((IView)view)
+            : base(view)
         {
             Service.ImageResult += new ImageResultEventHandler(Service_ImageResult);
             Service.GeocodeResult += new GeocodeEventHandler(Service_GeocodeResult);
@@ -142,7 +136,7 @@ namespace MySquare.Controller
 #endif
 
 
-            string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
+            string googleMapsUrl = string.Format(BaseController<IView>.googleMapsUrl,
                 size.Width, size.Height,
                 latitude.ToString(culture),
                 longitude.ToString(culture));

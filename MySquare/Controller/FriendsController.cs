@@ -8,28 +8,18 @@ using MySquare.FourSquare;
 using System.Threading;
 using System.Drawing;
 using System.IO;
+using MySquare.UI.Friends;
 
 namespace MySquare.Controller
 {
-    class FriendsController : BaseController
+    class FriendsController : BaseController<Friends>
     {
-        public FriendsController(MySquare.UI.Friends.Friends view)
-            : base((MySquare.UI.IView)view)
+        public FriendsController(Friends view)
+            : base(view)
         {
             Service.CheckInsResult += new MySquare.FourSquare.CheckInsEventHandler(Service_CheckInsResult);
             Service.FriendsResult += new FriendsEventHandler(Service_FriendsResult);
         }
-
-
-
-        MySquare.UI.Friends.Friends View
-        {
-            get
-            {
-                return (MySquare.UI.Friends.Friends)base.view;
-            }
-        }
-
 
         protected override void Activate()
         {

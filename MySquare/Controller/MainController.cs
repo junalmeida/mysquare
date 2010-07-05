@@ -5,22 +5,19 @@ using System.Text;
 using MySquare.FourSquare;
 using System.Threading;
 using System.Windows.Forms;
+using MySquare.UI;
 
 namespace MySquare.Controller
 {
-    class MainController : BaseController
+    class MainController : BaseController<UI.Main>
     {
-        UI.Main Form
-        {
-            get { return (UI.Main)base.view; }
-        }
         #region Controllers
 
-        internal MainController(UI.Main view)
-            : base((MySquare.UI.IView)view)
+        public MainController(UI.Main view)
+            : base(view)
         {
-            this.Form.mnuLeft.Click += new EventHandler(mnuLeft_Click);
-            this.Form.mnuRight.Click += new EventHandler(mnuRight_Click);
+            this.View.mnuLeft.Click += new EventHandler(mnuLeft_Click);
+            this.View.mnuRight.Click += new EventHandler(mnuRight_Click);
             Service.Error += new ErrorEventHandler(Service_Error);
         }
 
@@ -30,17 +27,17 @@ namespace MySquare.Controller
 
         internal void ShowErrorForm(string text)
         {
-            if (Form.InvokeRequired)
-                Form.Invoke(new System.Threading.ThreadStart(delegate()
+            if (View.InvokeRequired)
+                View.Invoke(new System.Threading.ThreadStart(delegate()
                 {
                     ShowErrorForm(text);
                 }));
             else
             {
-                Form.Reset();
+                View.Reset();
 
-                Form.lblError.Text = text;
-                Form.lblError.Visible = true;
+                View.lblError.Text = text;
+                View.lblError.Visible = true;
 
 
                 RightSoftButtonText = "&Back";
@@ -77,11 +74,11 @@ namespace MySquare.Controller
         {
             get
             {
-                return Form.mnuLeft.Enabled;
+                return View.mnuLeft.Enabled;
             }
             set
             {
-                Form.mnuLeft.Enabled = value;
+                View.mnuLeft.Enabled = value;
             }
         }
 
@@ -89,11 +86,11 @@ namespace MySquare.Controller
         {
             get
             {
-                return Form.mnuLeft.Text;
+                return View.mnuLeft.Text;
             }
             set
             {
-                Form.mnuLeft.Text = value;
+                View.mnuLeft.Text = value;
             }
         }
 
@@ -101,11 +98,11 @@ namespace MySquare.Controller
         {
             get
             {
-                return Form.mnuRight.Enabled;
+                return View.mnuRight.Enabled;
             }
             set
             {
-                Form.mnuRight.Enabled = value;
+                View.mnuRight.Enabled = value;
             }
         }
 
@@ -113,11 +110,11 @@ namespace MySquare.Controller
         {
             get
             {
-                return Form.mnuRight.Text;
+                return View.mnuRight.Text;
             }
             set
             {
-                Form.mnuRight.Text = value;
+                View.mnuRight.Text = value;
             }
         }
 
@@ -136,14 +133,14 @@ namespace MySquare.Controller
 
         protected override void Activate()
         {
-            Form.Reset();
-            BaseController.OpenController(Form.friends1);
+            View.Reset();
+            BaseController<IView>.OpenController(View.friends1);
         }
 
         protected override void OnRightSoftButtonClick()
         {
-            Form.lblError.Visible = false;
-            BaseController.OpenController(this.Form.places1);
+            View.lblError.Visible = false;
+            BaseController<IView>.OpenController(View.places1);
         }
     }
 }
