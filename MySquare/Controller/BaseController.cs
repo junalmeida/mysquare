@@ -10,52 +10,21 @@ using MySquare.UI;
 
 namespace MySquare.Controller
 {
-    interface IController
+
+    abstract class BaseController
     {
-        Service Service { get; }
-        AutoResetEvent WaitThread { get; }
-        void Activate();
-        void Deactivate();
-        void OnLeftSoftButtonClick();
-        void OnRightSoftButtonClick();
-    }
+        public abstract Service Service { get; }
+        public abstract AutoResetEvent WaitThread { get; }
+        public virtual void Activate() { }
+        public virtual void Deactivate() { }
 
-    abstract class BaseController<T> : IController, IDisposable where T : IView
-    {
-
-        protected T View
-        {
-            get;
-            private set;
-        }
-
-        static IList<IController> Controllers = new List<IController>();
-        static int CurrentController = -1;
-
-        public BaseController(T view)
-        {
-            this.View = view;
-            Controllers.Add(this);
-            if (Controllers.Count == 1 && Controllers[0] == this)
-            {
-                Service = new Service();
-                WaitThread = new AutoResetEvent(false);
-            }
-            else
-            {
-                Service = Controllers[0].Service;
-                WaitThread = Controllers[0].WaitThread;
-            }
-        }
+        public virtual void OnLeftSoftButtonClick() { }
+        public virtual void OnRightSoftButtonClick() { }
 
 
-        protected Service Service { get; private set; }
-        protected AutoResetEvent WaitThread { get; private set; }
-
-        protected const string googleMapsUrl =
-            "http://maps.google.com/maps/api/staticmap?zoom=16&sensor=false&mobile=true&format=jpeg&size={0}x{1}&markers=color:blue|{2},{3}";
-
-        public static IController OpenController(MySquare.UI.IView view)
+        protected static IList<BaseController> Controllers = new List<BaseController>();
+        protected static int CurrentController = -1;
+        internal static BaseController OpenController(MySquare.UI.IView view)
         {
             Type type = null;
             if (view is UI.Main)
@@ -86,13 +55,53 @@ namespace MySquare.Controller
                 Controllers[CurrentController].Deactivate();
 
             var ctors = type.GetConstructors();
-            IController newController = (IController)ctors[0].Invoke(new object[] { view });
+            BaseController newController = (BaseController)ctors[0].Invoke(new object[] { view });
             Controllers.Add(newController);
             CurrentController = Controllers.Count - 1;
             newController.Activate();
 
             return newController;
         }
+
+        internal const string googleMapsUrl =
+            "http://maps.google.com/maps/api/staticmap?zoom=16&sensor=false&mobile=true&format=jpeg&size={0}x{1}&markers=color:blue|{2},{3}";
+
+    }
+
+    abstract class BaseController<T> : BaseController, IDisposable where T : IView
+    {
+
+        protected T View
+        {
+            get;
+            private set;
+        }
+
+
+        public BaseController(T view)
+        {
+            this.View = view;
+            Controllers.Add(this);
+            if (Controllers.Count == 1 && Controllers[0] == this)
+            {
+                service = new Service();
+                waitThread = new AutoResetEvent(false);
+            }
+            else
+            {
+                service = Controllers[0].Service;
+                waitThread = Controllers[0].WaitThread;
+            }
+        }
+
+
+        private Service service;
+        private AutoResetEvent waitThread;
+        public override Service Service { get { return service; }}
+        public override AutoResetEvent WaitThread { get { return waitThread; } }
+
+
+ 
 
 
 
@@ -162,65 +171,21 @@ namespace MySquare.Controller
         {
             Controllers[CurrentController].OnRightSoftButtonClick();
         }
-
-        protected virtual void OnLeftSoftButtonClick()
-        {
-        }
-
-        protected virtual void OnRightSoftButtonClick()
-        {
-        }
-
         #endregion
 
         public void Dispose()
         {
             WaitThread.Set();
             Service.Abort();
-            Service = null;
-            WaitThread = null;
+            service = null;
+            waitThread = null;
         }
 
-        protected abstract void Activate();
-        protected virtual void Deactivate() { }
         protected void ShowError(string text)
         {
             CurrentController = 0;
             MainController.ShowErrorForm(text);
         }
 
-        #region IController Members
-        void IController.Activate()
-        {
-            this.Activate();
-        }
-
-        void IController.Deactivate()
-        {
-            this.Deactivate();
-        }
-
-
-        Service IController.Service
-        {
-            get { return this.Service; }
-        }
-
-        AutoResetEvent IController.WaitThread
-        {
-            get { return this.WaitThread; }
-        }
-
-        void IController.OnLeftSoftButtonClick()
-        {
-            this.OnLeftSoftButtonClick();
-        }
-
-        void IController.OnRightSoftButtonClick()
-        {
-            this.OnRightSoftButtonClick();
-        }
-
-        #endregion
     }
 }

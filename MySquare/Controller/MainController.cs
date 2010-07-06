@@ -131,16 +131,16 @@ namespace MySquare.Controller
         #endregion
 
 
-        protected override void Activate()
+        public override void Activate()
         {
             View.Reset();
-            BaseController<IView>.OpenController(View.friends1);
+            BaseController.OpenController(View.friends1);
         }
 
-        protected override void OnRightSoftButtonClick()
+        public override void OnRightSoftButtonClick()
         {
             View.lblError.Visible = false;
-            BaseController<IView>.OpenController(View.places1);
+            BaseController.OpenController(View.places1);
         }
     }
 }

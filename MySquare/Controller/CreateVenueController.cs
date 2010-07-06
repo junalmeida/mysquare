@@ -28,7 +28,7 @@ namespace MySquare.Controller
 
 
         WorldPosition pos;
-        protected override void Activate()
+        public override void Activate()
         {
             Places parent = View.Parent as Places;
 
@@ -67,7 +67,7 @@ namespace MySquare.Controller
             pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
         }
 
-        protected override void Deactivate()
+        public override void Deactivate()
         {
             if (pos != null)
                 pos.LocationChanged -= new EventHandler(pos_LocationChanged);
@@ -94,12 +94,12 @@ namespace MySquare.Controller
             Service.GetGeocoding(pos.Latitude.Value, pos.Longitude.Value);
         }
 
-        protected override void OnLeftSoftButtonClick()
+        public override void OnLeftSoftButtonClick()
         {
             DoCreate();
         }
 
-        protected override void OnRightSoftButtonClick()
+        public override void OnRightSoftButtonClick()
         {
             OpenController(View.Parent as IView);
         }
@@ -136,7 +136,7 @@ namespace MySquare.Controller
 #endif
 
 
-            string googleMapsUrl = string.Format(BaseController<IView>.googleMapsUrl,
+            string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
                 size.Width, size.Height,
                 latitude.ToString(culture),
                 longitude.ToString(culture));

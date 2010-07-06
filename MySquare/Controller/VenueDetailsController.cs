@@ -29,7 +29,7 @@ namespace MySquare.Controller
             OpenSection((VenueSection)View.tabStrip1.SelectedIndex);
         }
 
-        protected override void Activate()
+        public override void Activate()
         {
             UI.Places.Places places = View.Parent as UI.Places.Places;
 
@@ -138,7 +138,7 @@ namespace MySquare.Controller
         }
 
 
-        protected override void OnLeftSoftButtonClick()
+        public override void OnLeftSoftButtonClick()
         {
             if (View.checkIn1.Visible)
                 DoCheckIn();
@@ -147,9 +147,9 @@ namespace MySquare.Controller
         }
 
 
-        protected override void OnRightSoftButtonClick()
+        public override void OnRightSoftButtonClick()
         {
-            BaseController<IView>.OpenController(View.Parent as MySquare.UI.IView);
+            BaseController.OpenController(View.Parent as MySquare.UI.IView);
         }
 
         internal MySquare.FourSquare.Venue Venue
@@ -286,7 +286,7 @@ namespace MySquare.Controller
             {
 
                 CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
-                string googleMapsUrl = string.Format(BaseController<IView>.googleMapsUrl,
+                string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
                     box.Width, box.Height,
                     Venue.Latitude.ToString(culture),
                     Venue.Longitude.ToString(culture));

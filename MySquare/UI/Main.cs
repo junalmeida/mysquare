@@ -51,11 +51,11 @@ namespace MySquare.UI
             lblError.Visible = false;
             var tab = header.Tabs[header.SelectedIndex];
             if (tab == tabPlaces)
-                Controller.BaseController<IView>.OpenController(places1);
+                Controller.BaseController.OpenController(places1);
             else if (tab == tabSettings)
-                Controller.BaseController<IView>.OpenController(settings1);
+                Controller.BaseController.OpenController(settings1);
             else if (tab == tabFriends)
-                Controller.BaseController<IView>.OpenController(friends1);
+                Controller.BaseController.OpenController(friends1);
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -64,7 +64,7 @@ namespace MySquare.UI
             mnuRight.Text = string.Empty;
 
             Application.DoEvents();
-            BaseController<IView>.OpenController(this);
+            BaseController.OpenController(this);
         }
 
 

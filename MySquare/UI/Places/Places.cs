@@ -21,11 +21,11 @@ namespace MySquare.UI.Places
         {
             if (list1.SelectedVenue == null)
             {
-                BaseController<IView>.OpenController(createVenue1);
+                BaseController.OpenController(createVenue1);
             }
             else
             {
-                BaseController<IView>.OpenController(venueDetails1);
+                BaseController.OpenController(venueDetails1);
             }
         }
 

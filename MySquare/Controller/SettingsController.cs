@@ -13,7 +13,7 @@ namespace MySquare.Controller
         {
         }
 
-        protected override void Activate()
+        public override void Activate()
         {
             UI.Main form = View.Parent as UI.Main;
             form.places1.Visible = false;
@@ -35,12 +35,12 @@ namespace MySquare.Controller
             View.txtPassword.Text = string.Empty;
         }
 
-        protected override void OnLeftSoftButtonClick()
+        public override void OnLeftSoftButtonClick()
         {
             Save();
         }
 
-        protected override void OnRightSoftButtonClick()
+        public override void OnRightSoftButtonClick()
         {
             Application.Exit();
         }

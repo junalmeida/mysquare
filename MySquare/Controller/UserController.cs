@@ -17,13 +17,13 @@ namespace MySquare.Controller
         }
 
 
-        protected override void Activate()
+        public override void Activate()
         {
             
             Service.UserResult += new MySquare.FourSquare.UserEventHandler(Service_UserResult);
         }
 
-        protected override void Deactivate()
+        public override void Deactivate()
         {
 
             Service.UserResult -= new MySquare.FourSquare.UserEventHandler(Service_UserResult);

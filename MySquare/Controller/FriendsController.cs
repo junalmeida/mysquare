@@ -21,7 +21,7 @@ namespace MySquare.Controller
             Service.FriendsResult += new FriendsEventHandler(Service_FriendsResult);
         }
 
-        protected override void Activate()
+        public override void Activate()
         {
             UI.Main form = View.Parent as UI.Main;
             form.ChangeFriendsName(null);
@@ -40,7 +40,7 @@ namespace MySquare.Controller
                 LoadFriends();
         }
 
-        protected override void OnLeftSoftButtonClick()
+        public override void OnLeftSoftButtonClick()
         {
             LoadFriends();
         }
