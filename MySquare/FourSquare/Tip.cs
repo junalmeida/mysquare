@@ -28,13 +28,6 @@ namespace MySquare.FourSquare
 
     }
 
-    class TipResponse
-    {
-        [JsonProperty("tip")]
-        public Tip Tip
-        { get; set; }
-    }
-
     delegate void AddTipEventHandler(object serder, TipEventArgs e);
     class TipEventArgs : EventArgs
     {
@@ -43,6 +36,7 @@ namespace MySquare.FourSquare
             this.Tip = tip;
         }
 
+        [JsonProperty("tip")]
         internal Tip Tip
         {
             get;

@@ -78,10 +78,12 @@
     <Compile Include="FourSquare\CheckIn.cs" />
     <Compile Include="FourSquare\Geocoding.cs" />
     <Compile Include="FourSquare\Mayor.cs" />
-    <Compile Include="FourSquare\Service.cs" />
+    <Compile Include="Service\FourSquare.cs" />
     <Compile Include="FourSquare\Tip.cs" />
     <Compile Include="FourSquare\User.cs" />
     <Compile Include="FourSquare\Venues.cs" />
+    <Compile Include="Service\Google.cs" />
+    <Compile Include="Service\Network.cs" />
     <Compile Include="UI\AnimatedGif.cs">
       <SubType>Component</SubType>
     </Compile>

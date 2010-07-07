@@ -6,17 +6,6 @@ using Newtonsoft.Json;
 
 namespace MySquare.FourSquare
 {
-    class GeocodeResponse
-    {
-        [JsonProperty("status")]
-        public string Status
-        { get; set; }
-
-        [JsonProperty("results")]
-        public Geocode[] Results
-        { get; set; }
-    }
-
     class Geocode
     {
         [JsonProperty("types")]
@@ -51,15 +40,12 @@ namespace MySquare.FourSquare
     delegate void GeocodeEventHandler(object serder, GeocodeEventArgs e);
     class GeocodeEventArgs : EventArgs
     {
-        internal GeocodeEventArgs(Geocode[] geocodes)
-        {
-            this.Geocodes = geocodes;
-        }
+        [JsonProperty("results")]
+        public Geocode[] Geocodes
+        { get; private set; }
 
-        internal Geocode[] Geocodes
-        {
-            get;
-            private set;
-        }
+        [JsonProperty("status")]
+        public string Status
+        { get; private set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySquare.FourSquare;
 using System.Threading;
+using MySquare.Service;
 
 namespace MySquare.Test
 {
@@ -19,7 +20,7 @@ namespace MySquare.Test
         [TestMethod]
         public void CheckIn()
         {
-            Service service = new Service();
+            var service = new Service.FourSquare();
             service.Login = "junalmeida@gmail.com";
             service.Password= "htc9377@";
 

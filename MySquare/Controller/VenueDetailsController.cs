@@ -8,6 +8,7 @@ using System.Threading;
 using System.Globalization;
 using MySquare.UI.Places;
 using MySquare.UI;
+using MySquare.Service;
 
 namespace MySquare.Controller
 {

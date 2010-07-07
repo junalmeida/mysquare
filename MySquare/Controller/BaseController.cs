@@ -11,10 +11,17 @@ using MySquare.UI;
 namespace MySquare.Controller
 {
 
-    abstract class BaseController
+    abstract class BaseController : IDisposable
     {
-        public abstract Service Service { get; }
+        public BaseController()
+        {
+            Service = new Service.FourSquare();
+        }
+
+        public Service.FourSquare Service { get; private set; }
+
         public abstract AutoResetEvent WaitThread { get; }
+
         public virtual void Activate() { }
         public virtual void Deactivate() { }
 
@@ -66,9 +73,19 @@ namespace MySquare.Controller
         internal const string googleMapsUrl =
             "http://maps.google.com/maps/api/staticmap?zoom=16&sensor=false&mobile=true&format=jpeg&size={0}x{1}&markers=color:blue|{2},{3}";
 
+        public virtual void Dispose()
+        {
+            if (WaitThread != null)
+                WaitThread.Set();
+            if (Service != null)
+            {
+                Service.Abort();
+                Service = null;
+            }
+        }
     }
 
-    abstract class BaseController<T> : BaseController, IDisposable where T : IView
+    abstract class BaseController<T> : BaseController where T : IView
     {
 
         protected T View
@@ -84,20 +101,17 @@ namespace MySquare.Controller
             Controllers.Add(this);
             if (Controllers.Count == 1 && Controllers[0] == this)
             {
-                service = new Service();
                 waitThread = new AutoResetEvent(false);
             }
             else
             {
-                service = Controllers[0].Service;
                 waitThread = Controllers[0].WaitThread;
             }
         }
 
 
-        private Service service;
+
         private AutoResetEvent waitThread;
-        public override Service Service { get { return service; }}
         public override AutoResetEvent WaitThread { get { return waitThread; } }
 
 
@@ -173,13 +187,7 @@ namespace MySquare.Controller
         }
         #endregion
 
-        public void Dispose()
-        {
-            WaitThread.Set();
-            Service.Abort();
-            service = null;
-            waitThread = null;
-        }
+ 
 
         protected void ShowError(string text)
         {
@@ -187,5 +195,10 @@ namespace MySquare.Controller
             MainController.ShowErrorForm(text);
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+            waitThread = null;
+        }
     }
 }

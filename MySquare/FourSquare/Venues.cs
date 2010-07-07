@@ -6,48 +6,32 @@ using Newtonsoft.Json;
 
 namespace MySquare.FourSquare
 {
-    class SearchResponse
-    {
-        [JsonProperty("groups")]
-        public Group[] Groups
-        { get; set; }
-    }
-
-    class VenueResponse
-    {
-        [JsonProperty("venue")]
-        public Venue Venue
-        { get; set; }
-    }
-
     delegate void SearchEventHandler(object serder, SearchEventArgs e);
     class SearchEventArgs : EventArgs
     {
-        internal SearchEventArgs(Venue[] venues)
-        {
-            this.Venues = venues;
-        }
-
         internal Venue[] Venues
         {
-            get;
-            private set;
+            get
+            {
+                if (Groups != null && Groups.Length == 1)
+                    return Groups[0].Venues;
+                else
+                    throw new InvalidOperationException();
+            }
         }
+
+
+        [JsonProperty("groups")]
+        private Group[] Groups
+        { get; set; }
     }
 
     delegate void VenueEventHandler(object serder, VenueEventArgs e);
     class VenueEventArgs : EventArgs
     {
-        internal VenueEventArgs(Venue venue)
-        {
-            this.Venue = venue;
-        }
-
-        internal Venue Venue
-        {
-            get;
-            private set;
-        }
+        [JsonProperty("venue")]
+        public Venue Venue
+        { get; private set; }
     }
 
     class Group
@@ -169,6 +153,7 @@ namespace MySquare.FourSquare
             venue.Tags = Tags;
         }
     }
+
     class Category
     {
 

@@ -6,6 +6,7 @@ using MySquare.FourSquare;
 using System.Threading;
 using System.Windows.Forms;
 using MySquare.UI;
+using MySquare.Service;
 
 namespace MySquare.Controller
 {

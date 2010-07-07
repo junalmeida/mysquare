@@ -10,17 +10,22 @@ using System.Windows.Forms;
 using System.Globalization;
 using System.Threading;
 using MySquare.FourSquare;
+using MySquare.Service;
 
 namespace MySquare.Controller
 {
     class CreateVenueController : BaseController<CreateVenue>
     {
+        Service.Google google;
+
         public CreateVenueController(CreateVenue view)
             : base(view)
         {
             Service.ImageResult += new ImageResultEventHandler(Service_ImageResult);
-            Service.GeocodeResult += new GeocodeEventHandler(Service_GeocodeResult);
             Service.VenueResult += new VenueEventHandler(Service_VenueResult);
+            google = new Google();
+            google.GeocodeResult += new GeocodeEventHandler(Service_GeocodeResult);
+            google.Error += new MySquare.Service.ErrorEventHandler(google_Error);
             View.picMap.Click += new EventHandler(picMap_Click);
         }
 
@@ -74,6 +79,12 @@ namespace MySquare.Controller
             pos = null;
         }
 
+        void google_Error(object serder, MySquare.Service.ErrorEventArgs e)
+        {
+            pos = null;
+            ShowError("Cannot get position from network.");
+            Service.RegisterLog(e.Exception);
+        }
 
 
         void pos_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
@@ -91,7 +102,7 @@ namespace MySquare.Controller
 
         void picMap_Click(object sender, EventArgs e)
         {
-            Service.GetGeocoding(pos.Latitude.Value, pos.Longitude.Value);
+            google.GetGeocoding(pos.Latitude.Value, pos.Longitude.Value);
         }
 
         public override void OnLeftSoftButtonClick()

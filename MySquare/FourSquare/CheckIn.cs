@@ -6,29 +6,10 @@ using Newtonsoft.Json;
 
 namespace MySquare.FourSquare
 {
-    class CheckInResponse
-    {
-        [JsonProperty("checkin")]
-        public CheckIn CheckIn
-        { get; set; }
-    }
-
-    class CheckInsResponse
-    {
-        [JsonProperty("checkins")]
-        public CheckIn[] CheckIns
-        { get; set; }
-    }
-
-
     delegate void CheckInEventHandler(object serder, CheckInEventArgs e);
     class CheckInEventArgs : EventArgs
     {
-        internal CheckInEventArgs(CheckIn checkIn)
-        {
-            this.CheckIn = checkIn;
-        }
-
+        [JsonProperty("checkin")]
         internal CheckIn CheckIn
         {
             get;
@@ -40,11 +21,7 @@ namespace MySquare.FourSquare
     delegate void CheckInsEventHandler(object serder, CheckInsEventArgs e);
     class CheckInsEventArgs : EventArgs
     {
-        internal CheckInsEventArgs(CheckIn[] checkIns)
-        {
-            this.CheckIns = checkIns;
-        }
-
+        [JsonProperty("checkins")]
         internal CheckIn[] CheckIns
         {
             get;

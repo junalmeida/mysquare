@@ -20,7 +20,7 @@ namespace MySquare.Test
         [TestMethod]
         public void SearchVenues()
         {
-            Service service = new Service();
+            Service.FourSquare service = new Service.FourSquare();
             service.SearchArrives += new SearchEventHandler(service_SearchArrives);
 
             wait.Reset();
