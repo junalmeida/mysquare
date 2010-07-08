@@ -35,6 +35,7 @@ namespace MySquare.Test
 
         void service_CheckInResult(object serder, CheckInEventArgs e)
         {
+            result = e.CheckIn;
             wait.Set();
         }
 

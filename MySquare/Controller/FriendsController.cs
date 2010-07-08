@@ -40,6 +40,11 @@ namespace MySquare.Controller
                 LoadFriends();
         }
 
+        public override void Deactivate()
+        {
+            View.Visible = false;
+        }
+
         public override void OnLeftSoftButtonClick()
         {
             LoadFriends();

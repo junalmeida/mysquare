@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using MySquare.FourSquare;
 using Tenor.Mobile.Drawing;
+using MySquare.Controller;
 
 namespace MySquare.UI.Friends
 {
@@ -127,45 +128,29 @@ namespace MySquare.UI.Friends
                 if (!brushList.ContainsKey(userUrl))
                 {
                     Image original = imageList[userUrl];
-                    using (Bitmap bmp1 = new Bitmap(imageSize, imageSize))
-                    {
-                        using (Graphics g = Graphics.FromImage(bmp1))
-                            g.DrawImage(original, new Rectangle(0, 0, bmp1.Width, bmp1.Height), new Rectangle(0, 0, original.Width, original.Height), GraphicsUnit.Pixel);
-
-                        Bitmap bmp2 = new Bitmap(imageSize, imageSize);
-                        using (TextureBrush textureBrush = new TextureBrush(bmp1))
-                        using (Graphics g = Graphics.FromImage(bmp2))
-                        {
-                            g.Clear(Tenor.Mobile.UI.Skin.Current.SelectedBackColor);
-                            RoundedRectangle.Fill(
-                               g, new Pen(Color.DarkGray), textureBrush,
-                                new Rectangle(
-                                    0,
-                                    0,
-                                    bmp2.Width,
-                                    bmp2.Height)
-                                , new SizeF(8 * factor.Width, 8 * factor.Height).ToSize()
-                            );
-                        }
-                        brushList.Add(userUrl, bmp2);
-                    }
+                    Image bmp = Main.CreateRoundedAvatar(original, imageSize, factor);
+                    brushList.Add(userUrl, bmp);
                 }
 
+                try
+                {
+                    AlphaImage alpha = new AlphaImage(brushList[userUrl]);
+                    alpha.Draw(e.Graphics,
+                                new Rectangle(
+                                    e.Bounds.X + Convert.ToInt32(itemPadding),
+                                    e.Bounds.Y + Convert.ToInt32(itemPadding),
+                                    imageSize,
+                                    imageSize), Tenor.Mobile.UI.Skin.Current.SelectedBackColor);
 
-                AlphaImage alpha = new AlphaImage(brushList[userUrl]);
-                alpha.Draw(e.Graphics,
-                            new Rectangle(
-                                e.Bounds.X + Convert.ToInt32(itemPadding),
-                                e.Bounds.Y + Convert.ToInt32(itemPadding),
-                                imageSize,
-                                imageSize), Tenor.Mobile.UI.Skin.Current.SelectedBackColor);
-
+                }
+                catch { }
             }
         }
 
+
         private void listBox_SelectedItemClicked(object sender, EventArgs e)
         {
-
+            BaseController.OpenController(((Main)Parent).userDetail1);
         }
     }
 }

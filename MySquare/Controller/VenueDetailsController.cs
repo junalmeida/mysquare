@@ -59,6 +59,11 @@ namespace MySquare.Controller
                 OpenVenue(places.list1.listBox.SelectedItem.Value as Venue);
         }
 
+        public override void Deactivate()
+        {
+            View.Visible = false;
+        }
+
         internal void OpenVenue(Venue venue)
         {
             this.Venue = venue;

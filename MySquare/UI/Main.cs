@@ -8,11 +8,42 @@ using System.Windows.Forms;
 using MySquare.Properties;
 using MySquare.Controller;
 using Tenor.Mobile.UI;
+using Tenor.Mobile.Drawing;
 
 namespace MySquare.UI
 {
     internal partial class Main : Form, IView
     {
+        public static Image CreateRoundedAvatar(Image original, int imageSize, SizeF scaleFactor)
+        {
+            using (Bitmap bmp1 = new Bitmap(imageSize, imageSize))
+            {
+                using (Graphics g = Graphics.FromImage(bmp1))
+                    g.DrawImage(original, new Rectangle(0, 0, bmp1.Width, bmp1.Height), new Rectangle(0, 0, original.Width, original.Height), GraphicsUnit.Pixel);
+
+                Bitmap bmp2 = new Bitmap(imageSize, imageSize);
+                using (TextureBrush textureBrush = new TextureBrush(bmp1))
+                using (Graphics g = Graphics.FromImage(bmp2))
+                {
+                    g.Clear(Tenor.Mobile.UI.Skin.Current.SelectedBackColor);
+                    RoundedRectangle.Fill(
+                       g, new Pen(Color.DarkGray), textureBrush,
+                        new Rectangle(
+                            0,
+                            0,
+                            bmp2.Width,
+                            bmp2.Height)
+                        , new SizeF(8 * scaleFactor.Width, 8 * scaleFactor.Height).ToSize()
+                    );
+                }
+
+                return bmp2;
+            }
+        }
+
+
+
+
         public Main()
         {
             InitializeComponent();
@@ -20,8 +51,8 @@ namespace MySquare.UI
             this.Icon = Resources.mySquare;
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
 
-            header.Tabs.Add(tabFriends = new Tenor.Mobile.UI.HeaderTab("Friends", Resources.Friends));
             header.Tabs.Add(tabPlaces = new Tenor.Mobile.UI.HeaderTab("Places", Resources.PinMap));
+            header.Tabs.Add(tabFriends = new Tenor.Mobile.UI.HeaderTab("Friends", Resources.Friends));
             header.Tabs.Add(tabSettings = new Tenor.Mobile.UI.HeaderTab("Settings", Resources.Settings));
         }
         HeaderTab tabFriends;

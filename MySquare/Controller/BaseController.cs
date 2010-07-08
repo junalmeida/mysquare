@@ -46,9 +46,14 @@ namespace MySquare.Controller
                 type = typeof(CreateVenueController);
             else if (view is UI.Friends.Friends)
                 type = typeof(FriendsController);
+            else if (view is UI.Friends.UserDetail)
+                type = typeof(UserController);
             else
                 throw new NotImplementedException();
 
+
+            if (CurrentController > -1)
+                Controllers[CurrentController].Deactivate();
 
             for (int i = 0; i < Controllers.Count; i++)
                 if (Controllers[i].GetType() == type)
@@ -58,8 +63,6 @@ namespace MySquare.Controller
                     return Controllers[i];
                 }
 
-            if (CurrentController > -1)
-                Controllers[CurrentController].Deactivate();
 
             var ctors = type.GetConstructors();
             BaseController newController = (BaseController)ctors[0].Invoke(new object[] { view });

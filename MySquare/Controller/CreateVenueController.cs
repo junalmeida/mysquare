@@ -72,11 +72,15 @@ namespace MySquare.Controller
             pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
         }
 
+
+
+
         public override void Deactivate()
         {
             if (pos != null)
                 pos.LocationChanged -= new EventHandler(pos_LocationChanged);
             pos = null;
+            View.Visible = false;
         }
 
         void google_Error(object serder, MySquare.Service.ErrorEventArgs e)

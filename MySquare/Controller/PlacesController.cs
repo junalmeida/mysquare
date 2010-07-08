@@ -43,6 +43,12 @@ namespace MySquare.Controller
                 ShowList();
         }
 
+        public override void Deactivate()
+        {
+            View.Visible = false;
+        }
+
+
         public override void OnLeftSoftButtonClick()
         {
             Search();

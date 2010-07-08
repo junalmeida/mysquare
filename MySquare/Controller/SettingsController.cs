@@ -29,6 +29,11 @@ namespace MySquare.Controller
             Load();
         }
 
+        public override void Deactivate()
+        {
+            View.Visible = false;
+        }
+
         private void Load()
         {
             View.txtEmail.Text = Service.Login;

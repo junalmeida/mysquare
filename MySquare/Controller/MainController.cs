@@ -135,7 +135,7 @@ namespace MySquare.Controller
         public override void Activate()
         {
             View.Reset();
-            BaseController.OpenController(View.friends1);
+            BaseController.OpenController(View.places1);
         }
 
         public override void OnRightSoftButtonClick()

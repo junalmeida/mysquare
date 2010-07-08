@@ -40,6 +40,7 @@
             this.inputPanel = new Microsoft.WindowsCE.Forms.InputPanel(this.components);
             this.picAd = new System.Windows.Forms.PictureBox();
             this.friends1 = new MySquare.UI.Friends.Friends();
+            this.userDetail1 = new MySquare.UI.Friends.UserDetail();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -112,11 +113,20 @@
             this.friends1.TabIndex = 4;
             this.friends1.Visible = false;
             // 
+            // userDetail1
+            // 
+            this.userDetail1.Location = new System.Drawing.Point(12, 62);
+            this.userDetail1.Name = "userDetail1";
+            this.userDetail1.Size = new System.Drawing.Size(150, 150);
+            this.userDetail1.TabIndex = 7;
+            this.userDetail1.Visible = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(240, 268);
+            this.Controls.Add(this.userDetail1);
             this.Controls.Add(this.friends1);
             this.Controls.Add(this.picAd);
             this.Controls.Add(this.settings1);
@@ -142,6 +152,7 @@
         private Microsoft.WindowsCE.Forms.InputPanel inputPanel;
         private System.Windows.Forms.PictureBox picAd;
         internal MySquare.UI.Friends.Friends friends1;
+        internal MySquare.UI.Friends.UserDetail userDetail1;
     }
 }
 
