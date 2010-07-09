@@ -122,26 +122,24 @@ namespace MySquare.UI.Places
             }
         }
 
-        private void pnlSearch_Paint(object sender, PaintEventArgs e)
-        {
-            Rectangle rect2 = new Rectangle(
-               0, 0, pnlSearch.Width / 3, 1);
-            Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, this.BackColor, Color.WhiteSmoke, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
-            rect2.X += rect2.Width;
-            Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.WhiteSmoke, Color.WhiteSmoke, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
-            rect2.X += rect2.Width;
-            Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.WhiteSmoke, this.BackColor, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+        //private void pnlSearch_Paint(object sender, PaintEventArgs e)
+        //{
+            //Rectangle rect2 = new Rectangle(
+            //   0, 0, pnlSearch.Width / 3, 1);
+            //Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, this.BackColor, Color.WhiteSmoke, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+            //rect2.X += rect2.Width;
+            //Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.WhiteSmoke, Color.WhiteSmoke, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+            //rect2.X += rect2.Width;
+            //Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.WhiteSmoke, this.BackColor, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
 
-        }
+        //}
 
         private void txtSearch_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 e.Handled = true;
-                
             }
-
         }
     }
 }

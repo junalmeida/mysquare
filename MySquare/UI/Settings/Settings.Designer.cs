@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.txtEmail = new System.Windows.Forms.TextBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.txtEmail = new Tenor.Mobile.UI.TextControl();
+            this.txtPassword = new Tenor.Mobile.UI.TextControl();
             this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -44,24 +44,53 @@
             // 
             // txtEmail
             // 
+            this.txtEmail.AcceptsReturn = false;
+            this.txtEmail.AcceptsTab = false;
             this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.txtEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.txtEmail.HideSelection = true;
+            this.txtEmail.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
             this.txtEmail.Location = new System.Drawing.Point(13, 29);
+            this.txtEmail.MaxLength = 32767;
+            this.txtEmail.Modified = false;
+            this.txtEmail.Multiline = false;
             this.txtEmail.Name = "txtEmail";
+            this.txtEmail.PasswordChar = '\0';
+            this.txtEmail.ReadOnly = false;
+            this.txtEmail.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtEmail.SelectedText = "";
+            this.txtEmail.SelectionLength = 0;
+            this.txtEmail.SelectionStart = 0;
             this.txtEmail.Size = new System.Drawing.Size(259, 21);
             this.txtEmail.TabIndex = 1;
+            this.txtEmail.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtEmail.WordWrap = true;
             // 
             // txtPassword
             // 
+            this.txtPassword.AcceptsReturn = false;
+            this.txtPassword.AcceptsTab = false;
             this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.txtPassword.HideSelection = true;
+            this.txtPassword.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
             this.txtPassword.Location = new System.Drawing.Point(13, 77);
+            this.txtPassword.MaxLength = 32767;
+            this.txtPassword.Modified = false;
+            this.txtPassword.Multiline = false;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
+            this.txtPassword.ReadOnly = false;
+            this.txtPassword.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtPassword.SelectedText = "";
+            this.txtPassword.SelectionLength = 0;
+            this.txtPassword.SelectionStart = 0;
             this.txtPassword.Size = new System.Drawing.Size(259, 21);
             this.txtPassword.TabIndex = 3;
+            this.txtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtPassword.WordWrap = true;
             // 
             // label2
             // 
@@ -91,7 +120,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        internal System.Windows.Forms.TextBox txtEmail;
-        internal System.Windows.Forms.TextBox txtPassword;
+        internal Tenor.Mobile.UI.TextControl txtEmail;
+        internal Tenor.Mobile.UI.TextControl txtPassword;
     }
 }

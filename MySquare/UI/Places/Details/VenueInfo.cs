@@ -50,13 +50,18 @@ namespace MySquare.UI.Places.Details
             Control control = ((Control)sender);
             if (control.Tag != null)
             {
-                if (control.Tag is byte[])
-                    control.Tag = new Tenor.Mobile.Drawing.AlphaImage((byte[])control.Tag);
-                Tenor.Mobile.Drawing.AlphaImage image = (Tenor.Mobile.Drawing.AlphaImage)control.Tag;
+                try
+                {
+                    if (control.Tag is byte[])
+                        control.Tag = new Tenor.Mobile.Drawing.AlphaImage((byte[])control.Tag);
+                    Tenor.Mobile.Drawing.AlphaImage image = (Tenor.Mobile.Drawing.AlphaImage)control.Tag;
 
-                Rectangle rect = new Rectangle(0, 0, control.Width, control.Height );
+                    Rectangle rect = new Rectangle(0, 0, control.Width, control.Height);
 
-                image.Draw(e.Graphics, rect);
+
+                    image.Draw(e.Graphics, rect);
+                }
+                catch { control.Tag = null; }
 
             }
         }

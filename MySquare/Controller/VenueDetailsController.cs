@@ -32,12 +32,12 @@ namespace MySquare.Controller
 
         public override void Activate()
         {
-            UI.Places.Places places = View.Parent as UI.Places.Places;
 
-            UI.Main form = places.Parent as UI.Main;
+            UI.Main form = (Main)View.Parent;
             form.ChangePlacesName("Place Detail");
 
-            places.Reset();
+            form.Reset();
+
             View.Dock = System.Windows.Forms.DockStyle.Fill;
             View.BringToFront();
             View.Visible = true;
@@ -55,8 +55,6 @@ namespace MySquare.Controller
             View.venueMap1.picMap.Tag = null;
 
             OpenSection(VenueSection.CheckIn);
-            if (places.list1.listBox.SelectedItem.Value != null)
-                OpenVenue(places.list1.listBox.SelectedItem.Value as Venue);
         }
 
         public override void Deactivate()

@@ -35,13 +35,13 @@
             System.Windows.Forms.Label label5;
             System.Windows.Forms.Label label6;
             System.Windows.Forms.Label label7;
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.txtAddress = new System.Windows.Forms.TextBox();
-            this.txtCross = new System.Windows.Forms.TextBox();
-            this.txtCity = new System.Windows.Forms.TextBox();
-            this.txtState = new System.Windows.Forms.TextBox();
-            this.txtZip = new System.Windows.Forms.TextBox();
-            this.txtPhone = new System.Windows.Forms.TextBox();
+            this.txtName = new Tenor.Mobile.UI.TextControl();
+            this.txtAddress = new Tenor.Mobile.UI.TextControl();
+            this.txtCross = new Tenor.Mobile.UI.TextControl();
+            this.txtCity = new Tenor.Mobile.UI.TextControl();
+            this.txtState = new Tenor.Mobile.UI.TextControl();
+            this.txtZip = new Tenor.Mobile.UI.TextControl();
+            this.txtPhone = new Tenor.Mobile.UI.TextControl();
             this.picMap = new System.Windows.Forms.PictureBox();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
@@ -113,7 +113,6 @@
             // 
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtName.Location = new System.Drawing.Point(3, 27);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(209, 21);
@@ -123,7 +122,6 @@
             // 
             this.txtAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtAddress.Location = new System.Drawing.Point(3, 68);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(209, 21);
@@ -133,7 +131,6 @@
             // 
             this.txtCross.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCross.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtCross.Location = new System.Drawing.Point(3, 109);
             this.txtCross.Name = "txtCross";
             this.txtCross.Size = new System.Drawing.Size(209, 21);
@@ -143,7 +140,6 @@
             // 
             this.txtCity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCity.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtCity.Location = new System.Drawing.Point(3, 150);
             this.txtCity.Name = "txtCity";
             this.txtCity.Size = new System.Drawing.Size(147, 21);
@@ -152,7 +148,6 @@
             // txtState
             // 
             this.txtState.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtState.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtState.Location = new System.Drawing.Point(156, 150);
             this.txtState.Name = "txtState";
             this.txtState.Size = new System.Drawing.Size(56, 21);
@@ -160,7 +155,6 @@
             // 
             // txtZip
             // 
-            this.txtZip.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtZip.Location = new System.Drawing.Point(3, 192);
             this.txtZip.Name = "txtZip";
             this.txtZip.Size = new System.Drawing.Size(81, 21);
@@ -170,7 +164,6 @@
             // 
             this.txtPhone.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPhone.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtPhone.Location = new System.Drawing.Point(90, 192);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(122, 21);
@@ -217,13 +210,13 @@
 
         #endregion
 
-        internal System.Windows.Forms.TextBox txtName;
-        internal System.Windows.Forms.TextBox txtAddress;
-        internal System.Windows.Forms.TextBox txtCross;
-        internal System.Windows.Forms.TextBox txtCity;
-        internal System.Windows.Forms.TextBox txtState;
-        internal System.Windows.Forms.TextBox txtZip;
-        internal System.Windows.Forms.TextBox txtPhone;
+        internal Tenor.Mobile.UI.TextControl txtName;
+        internal Tenor.Mobile.UI.TextControl txtAddress;
+        internal Tenor.Mobile.UI.TextControl txtCross;
+        internal Tenor.Mobile.UI.TextControl txtCity;
+        internal Tenor.Mobile.UI.TextControl txtState;
+        internal Tenor.Mobile.UI.TextControl txtZip;
+        internal Tenor.Mobile.UI.TextControl txtPhone;
         internal System.Windows.Forms.PictureBox picMap;
     }
 }

@@ -61,13 +61,13 @@ namespace MySquare.Controller
 
         private void SearchVenue()
         {
-            if (View.list1.pnlSearch.Visible)
+            if (View.list1.txtSearch.Visible)
             {
                 Search(View.list1.txtSearch.Text);
             }
             else
             {
-                View.list1.pnlSearch.Visible = true;
+                View.list1.txtSearch.Visible = true;
                 View.list1.txtSearch.Focus();
             }
         }
@@ -82,7 +82,10 @@ namespace MySquare.Controller
         private void Search(string text)
         {
             if (string.IsNullOrEmpty(text))
-                View.list1.pnlSearch.Visible = false;
+            {
+                View.list1.txtSearch.Text = null;
+                View.list1.txtSearch.Visible = false;
+            }
             this.text = text;
 
             Cursor.Current = Cursors.WaitCursor;
@@ -176,7 +179,6 @@ namespace MySquare.Controller
 
         private void ShowList()
         {
-            View.venueDetails1.Visible = false;
             View.list1.BringToFront();
             View.list1.Dock = DockStyle.Fill;
             View.list1.Visible = true;

@@ -41,6 +41,8 @@
             this.picAd = new System.Windows.Forms.PictureBox();
             this.friends1 = new MySquare.UI.Friends.Friends();
             this.userDetail1 = new MySquare.UI.Friends.UserDetail();
+            this.createVenue1 = new MySquare.UI.Places.Create.CreateVenue();
+            this.venueDetails1 = new MySquare.UI.Places.VenueDetails();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -121,11 +123,29 @@
             this.userDetail1.TabIndex = 7;
             this.userDetail1.Visible = false;
             // 
+            // createVenue1
+            // 
+            this.createVenue1.Location = new System.Drawing.Point(45, 59);
+            this.createVenue1.Name = "createVenue1";
+            this.createVenue1.Size = new System.Drawing.Size(150, 150);
+            this.createVenue1.TabIndex = 10;
+            this.createVenue1.Visible = false;
+            // 
+            // venueDetails1
+            // 
+            this.venueDetails1.Location = new System.Drawing.Point(53, 67);
+            this.venueDetails1.Name = "venueDetails1";
+            this.venueDetails1.Size = new System.Drawing.Size(150, 150);
+            this.venueDetails1.TabIndex = 11;
+            this.venueDetails1.Visible = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(240, 268);
+            this.Controls.Add(this.venueDetails1);
+            this.Controls.Add(this.createVenue1);
             this.Controls.Add(this.userDetail1);
             this.Controls.Add(this.friends1);
             this.Controls.Add(this.picAd);
@@ -153,6 +173,8 @@
         private System.Windows.Forms.PictureBox picAd;
         internal MySquare.UI.Friends.Friends friends1;
         internal MySquare.UI.Friends.UserDetail userDetail1;
+        internal MySquare.UI.Places.Create.CreateVenue createVenue1;
+        internal MySquare.UI.Places.VenueDetails venueDetails1;
     }
 }
 

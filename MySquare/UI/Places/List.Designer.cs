@@ -29,9 +29,7 @@
         private void InitializeComponent()
         {
             this.listBox = new Tenor.Mobile.UI.KListControl();
-            this.pnlSearch = new System.Windows.Forms.Panel();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.pnlSearch.SuspendLayout();
+            this.txtSearch = new Tenor.Mobile.UI.TextControl();
             this.SuspendLayout();
             // 
             // listBox
@@ -43,34 +41,36 @@
             this.listBox.Location = new System.Drawing.Point(0, 0);
             this.listBox.Name = "listBox";
             this.listBox.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
-            this.listBox.Size = new System.Drawing.Size(299, 221);
+            this.listBox.Size = new System.Drawing.Size(299, 220);
             this.listBox.TabIndex = 0;
             this.listBox.SelectedItemChanged += new System.EventHandler(this.listBox_SelectedItemChanged);
             this.listBox.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.listBox_DrawItem);
             this.listBox.SelectedItemClicked += new System.EventHandler(this.listBox_SelectedItemClicked);
             // 
-            // pnlSearch
-            // 
-            this.pnlSearch.BackColor = System.Drawing.Color.Black;
-            this.pnlSearch.Controls.Add(this.txtSearch);
-            this.pnlSearch.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlSearch.Location = new System.Drawing.Point(0, 221);
-            this.pnlSearch.Name = "pnlSearch";
-            this.pnlSearch.Size = new System.Drawing.Size(299, 23);
-            this.pnlSearch.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlSearch_Paint);
-            // 
             // txtSearch
             // 
-            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.BackColor = System.Drawing.Color.Black;
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSearch.AcceptsReturn = false;
+            this.txtSearch.AcceptsTab = false;
+            this.txtSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.txtSearch.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.txtSearch.ForeColor = System.Drawing.Color.White;
-            this.txtSearch.Location = new System.Drawing.Point(6, 3);
+            this.txtSearch.HideSelection = true;
+            this.txtSearch.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
+            this.txtSearch.Location = new System.Drawing.Point(0, 220);
+            this.txtSearch.MaxLength = 32767;
+            this.txtSearch.Modified = false;
+            this.txtSearch.Multiline = false;
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(290, 21);
+            this.txtSearch.PasswordChar = '\0';
+            this.txtSearch.ReadOnly = false;
+            this.txtSearch.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtSearch.SelectedText = "";
+            this.txtSearch.SelectionLength = 0;
+            this.txtSearch.SelectionStart = 0;
+            this.txtSearch.Size = new System.Drawing.Size(299, 24);
             this.txtSearch.TabIndex = 0;
+            this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtSearch.WordWrap = true;
             this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
             // 
             // List
@@ -78,10 +78,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.listBox);
-            this.Controls.Add(this.pnlSearch);
+            this.Controls.Add(this.txtSearch);
             this.Name = "List";
             this.Size = new System.Drawing.Size(299, 244);
-            this.pnlSearch.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -89,7 +88,6 @@
         #endregion
 
         internal Tenor.Mobile.UI.KListControl listBox;
-        internal System.Windows.Forms.Panel pnlSearch;
-        internal System.Windows.Forms.TextBox txtSearch;
+        internal Tenor.Mobile.UI.TextControl txtSearch;
     }
 }

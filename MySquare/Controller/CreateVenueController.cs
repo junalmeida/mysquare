@@ -35,12 +35,10 @@ namespace MySquare.Controller
         WorldPosition pos;
         public override void Activate()
         {
-            Places parent = View.Parent as Places;
-
-            UI.Main form = parent.Parent as UI.Main;
+            UI.Main form = (Main)View.Parent;
             form.ChangePlacesName("Create Place");
             
-            parent.Reset();
+            form.Reset();
             View.Dock = System.Windows.Forms.DockStyle.Fill;
             View.BringToFront();
             View.Visible = true;
@@ -183,7 +181,8 @@ namespace MySquare.Controller
                     string number = string.Empty;
                     foreach (Geocode geocode in e.Geocodes)
                     {
-                        if (Array.IndexOf(geocode.Types, "street_address") > -1)
+                        if (Array.IndexOf(geocode.Types, "street_address") > -1 ||
+                            Array.IndexOf(geocode.Types, "route") > -1)
                         {
                             foreach (AddressComponent addr in geocode.AddressComponents)
                             {
@@ -198,9 +197,10 @@ namespace MySquare.Controller
                                 if (Array.IndexOf(addr.Types, "postal_code") > -1)
                                     View.txtZip.Text = addr.ShortName;
                             }
+                            break;
                         }
                     }
-                    if (!string.IsNullOrEmpty(View.txtAddress.Text))
+                    if (!string.IsNullOrEmpty(View.txtAddress.Text) && !string.IsNullOrEmpty(number))
                         View.txtAddress.Text += ", " + number;
                 }
             }));
@@ -236,7 +236,7 @@ namespace MySquare.Controller
             if (createdVenue != null)
             {
                 MessageBox.Show(string.Format("{0} was created.", View.txtName.Text), "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
-                (OpenController((View.Parent as Places).venueDetails1) as VenueDetailsController).OpenVenue(createdVenue);
+                (OpenController(((Main)View.Parent).venueDetails1) as VenueDetailsController).OpenVenue(createdVenue);
                 createdVenue = null;
             }
             else

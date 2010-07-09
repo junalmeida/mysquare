@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using MySquare.Controller;
+using MySquare.FourSquare;
 
 namespace MySquare.UI.Places
 {
@@ -21,11 +22,11 @@ namespace MySquare.UI.Places
         {
             if (list1.SelectedVenue == null)
             {
-                BaseController.OpenController(createVenue1);
+                BaseController.OpenController(((Main)Parent).createVenue1);
             }
             else
             {
-                BaseController.OpenController(venueDetails1);
+                ((VenueDetailsController)BaseController.OpenController(((Main)Parent).venueDetails1)).OpenVenue((Venue)list1.listBox.SelectedItem.Value);
             }
         }
 

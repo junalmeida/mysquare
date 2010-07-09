@@ -31,7 +31,7 @@
             this.chkFacebook = new System.Windows.Forms.CheckBox();
             this.chkTwitter = new System.Windows.Forms.CheckBox();
             this.chkTellFriends = new System.Windows.Forms.CheckBox();
-            this.txtShout = new System.Windows.Forms.TextBox();
+            this.txtShout = new Tenor.Mobile.UI.TextControl();
             this.SuspendLayout();
             // 
             // chkFacebook
@@ -75,7 +75,6 @@
             // 
             this.txtShout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtShout.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtShout.Location = new System.Drawing.Point(3, 3);
             this.txtShout.MaxLength = 140;
             this.txtShout.Multiline = true;
@@ -104,7 +103,7 @@
         internal System.Windows.Forms.CheckBox chkFacebook;
         internal System.Windows.Forms.CheckBox chkTwitter;
         internal System.Windows.Forms.CheckBox chkTellFriends;
-        internal System.Windows.Forms.TextBox txtShout;
+        internal Tenor.Mobile.UI.TextControl txtShout;
 
     }
 }

@@ -55,13 +55,16 @@ namespace MySquare.UI.Friends
         {
             try
             {
-                AlphaImage alpha = new AlphaImage(avatar);
-                alpha.Draw(e.Graphics,
-                            new Rectangle(
-                                0,
-                                0,
-                                picAvatar.Width,
-                                picAvatar.Height), Tenor.Mobile.UI.Skin.Current.SelectedBackColor);
+                if (avatar != null)
+                {
+                    AlphaImage alpha = new AlphaImage(avatar);
+                    alpha.Draw(e.Graphics,
+                                new Rectangle(
+                                    0,
+                                    0,
+                                    picAvatar.Width,
+                                    picAvatar.Height), Tenor.Mobile.UI.Skin.Current.SelectedBackColor);
+                }
 
             }
             catch { }
