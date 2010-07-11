@@ -34,10 +34,11 @@ namespace MySquare.Controller
 
             LeftSoftButtonEnabled = true;
             LeftSoftButtonText = "&Refresh";
-            RightSoftButtonEnabled = true;
-            RightSoftButtonText = "&Search";
+            RightSoftButtonEnabled = false;
+            RightSoftButtonText = string.Empty;
 
             View.listBox.Visible = true;
+            form.header.Tabs[1].Selected = true;
             if (View.listBox.Count == 0)
                 LoadFriends();
         }

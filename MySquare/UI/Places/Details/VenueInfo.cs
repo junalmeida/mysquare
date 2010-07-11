@@ -26,7 +26,7 @@ namespace MySquare.UI.Places.Details
         private void lblPhone_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(lblPhone.Text))
-                contextMenu.Show(lblPhone, new Point(0, lblPhone.Height));
+                contextMenu.Show(lblPhone, new Point(0, lblPhone.Height / 2));
         }
 
         private void mnuDial_Click(object sender, EventArgs e)

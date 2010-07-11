@@ -159,5 +159,67 @@ namespace MySquare.UI.Friends
             if (user != null)
                 (BaseController.OpenController(((Main)Parent).userDetail1) as UserController).LoadUser(user);
         }
+
+        private void contextMenu_Popup(object sender, EventArgs e)
+        {
+            foreach (MenuItem ct in contextMenu.MenuItems)
+                ct.Dispose();
+            contextMenu.MenuItems.Clear();
+
+            User user = null;
+            Venue venue = null;
+            if (listBox.SelectedItem != null && 
+                listBox.SelectedItem.Value != null)
+                if (listBox.SelectedItem.Value is User)
+                    user = (User)listBox.SelectedItem.Value;
+                else if (listBox.SelectedItem.Value is CheckIn)
+                {
+                    user = ((CheckIn)listBox.SelectedItem.Value).User;
+                    venue = ((CheckIn)listBox.SelectedItem.Value).Venue;
+                }
+
+            MenuItem menu;
+            if (user != null)
+            {
+                menu = new MenuItem();
+                menu.Text = user.ToString();
+                menu.Click += new EventHandler(menuUser_Click);
+                contextMenu.MenuItems.Add(menu);
+            }
+            if (venue != null)
+            {
+                menu = new MenuItem();
+                menu.Text = venue.ToString();
+                menu.Click += new EventHandler(menuVenue_Click);
+                contextMenu.MenuItems.Add(menu);
+            }
+
+        }
+
+        void menuUser_Click(object sender, EventArgs e)
+        {
+            User user = null;
+            if (listBox.SelectedItem.Value != null)
+                if (listBox.SelectedItem.Value is User)
+                    user = (User)listBox.SelectedItem.Value;
+                else if (listBox.SelectedItem.Value is CheckIn)
+                {
+                    user = ((CheckIn)listBox.SelectedItem.Value).User;
+                }
+            if (user != null)
+                ((UserController)BaseController.OpenController(((Main)this.Parent).userDetail1)).LoadUser(user);
+        }
+
+        void menuVenue_Click(object sender, EventArgs e)
+        {
+            Venue venue = null;
+            if (listBox.SelectedItem.Value != null)
+                if (listBox.SelectedItem.Value is CheckIn)
+                {
+                    venue = ((CheckIn)listBox.SelectedItem.Value).Venue;
+                }
+            if (venue != null)
+                ((VenueDetailsController)BaseController.OpenController(((Main)this.Parent).venueDetails1)).OpenVenue(venue);
+        }
     }
 }

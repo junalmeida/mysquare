@@ -39,6 +39,7 @@ namespace MySquare.Controller
             RightSoftButtonEnabled = true;
             RightSoftButtonText = "&Search";
 
+            form.header.Tabs[0].Selected = true;
             if (View.list1.listBox.Count == 0)
                 Search();
             else

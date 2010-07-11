@@ -304,6 +304,15 @@
   <ItemGroup>
     <None Include="Resources\foursquare_270x127.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\email_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\facebook_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\twitter_48_48x48.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

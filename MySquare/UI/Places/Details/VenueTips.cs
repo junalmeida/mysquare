@@ -47,7 +47,7 @@ namespace MySquare.UI.Places.Details
         Font font;
         Font fontBold;
 
-        internal Dictionary<string, Tenor.Mobile.Drawing.AlphaImage> imageList = new Dictionary<string, Tenor.Mobile.Drawing.AlphaImage>();
+        internal Dictionary<string, Bitmap> imageList = new Dictionary<string, Bitmap>();
 
         internal int MeasureHeight(Tip tip)
         {
@@ -65,7 +65,7 @@ namespace MySquare.UI.Places.Details
                 Size size1 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.User.FirstName, fontBold, rect);
                 Size size2 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.Text, font, rect);
 
-                int size = size1.Height + size2.Height;
+                int size = size1.Height * 2 + size2.Height;
                 if (size < listBox.DefaultItemHeight)
                     size = listBox.DefaultItemHeight;
                 return size;
@@ -98,14 +98,15 @@ namespace MySquare.UI.Places.Details
 
                 if (imageList != null && imageList.ContainsKey(tip.User.ImageUrl))
                 {
-                    Tenor.Mobile.Drawing.AlphaImage image = imageList[tip.User.ImageUrl];
+                    Bitmap image = imageList[tip.User.ImageUrl];
 
                     Rectangle imgRect =
                         new Rectangle(0 + Convert.ToInt32(padding),
                            Convert.ToInt32(rect.Y + (rect.Height / 2) - (imageSize / 2)), imageSize, imageSize);
                     try
                     {
-                        image.Draw(e.Graphics, imgRect);
+                        e.Graphics.DrawImage(image, imgRect, new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
+                        //image.Draw(e.Graphics, imgRect);
                     }
                     catch { }
                 }

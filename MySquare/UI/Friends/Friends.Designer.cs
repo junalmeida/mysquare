@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             this.listBox = new Tenor.Mobile.UI.KListControl();
+            this.contextMenu = new System.Windows.Forms.ContextMenu();
             this.SuspendLayout();
             // 
             // listBox
             // 
+            this.listBox.ContextMenu = this.contextMenu;
             this.listBox.DefaultItemHeight = 38;
             this.listBox.DefaultItemWidth = 80;
             this.listBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -45,6 +47,10 @@
             this.listBox.SelectedItemChanged += new System.EventHandler(this.listBox_SelectedItemChanged);
             this.listBox.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.listBox_DrawItem);
             this.listBox.SelectedItemClicked += new System.EventHandler(this.listBox_SelectedItemClicked);
+            // 
+            // contextMenu
+            // 
+            this.contextMenu.Popup += new System.EventHandler(this.contextMenu_Popup);
             // 
             // Friends
             // 
@@ -60,5 +66,6 @@
         #endregion
 
         internal Tenor.Mobile.UI.KListControl listBox;
+        private System.Windows.Forms.ContextMenu contextMenu;
     }
 }

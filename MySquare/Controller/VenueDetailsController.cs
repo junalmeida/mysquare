@@ -9,6 +9,8 @@ using System.Globalization;
 using MySquare.UI.Places;
 using MySquare.UI;
 using MySquare.Service;
+using System.Drawing;
+using System.IO;
 
 namespace MySquare.Controller
 {
@@ -54,6 +56,7 @@ namespace MySquare.Controller
             View.venueMap1.picMap.Image = MySquare.Properties.Resources.HourGlass;
             View.venueMap1.picMap.Tag = null;
 
+            form.header.Tabs[0].Selected = true;
             OpenSection(VenueSection.CheckIn);
         }
 
@@ -351,9 +354,12 @@ namespace MySquare.Controller
                       {
                           if (tip.User != null)
                           {
-                              Tenor.Mobile.Drawing.AlphaImage image =
-                                  new Tenor.Mobile.Drawing.AlphaImage(Service.DownloadImageSync(tip.User.ImageUrl));
-                              View.venueTips1.imageList[tip.User.ImageUrl] = image;
+                              using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(tip.User.ImageUrl)))
+                              {
+                                  Bitmap image =
+                                      new Bitmap(mem);
+                                  View.venueTips1.imageList[tip.User.ImageUrl] = image;
+                              }
                               View.Invoke(new ThreadStart(delegate()
                               {
                                   View.venueTips1.listBox.Invalidate();

@@ -18,7 +18,7 @@ namespace MySquare.UI.Friends
             InitializeComponent();
             tabStrip.Tabs.Add("Info");
             tabStrip.Tabs.Add("Friends");
-            tabStrip.Tabs.Add("Badges");
+            //tabStrip.Tabs.Add("Badges");
         }
 
         SizeF factor;

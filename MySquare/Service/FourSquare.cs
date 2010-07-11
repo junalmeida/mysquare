@@ -220,6 +220,21 @@ namespace MySquare.Service
         {
             if (CheckInsResult != null)
             {
+                foreach (var chkIn in e.CheckIns)
+                {
+                    int index = cacheVenues.IndexOf(chkIn.Venue);
+                    if (index == -1)
+                        cacheVenues.Add(chkIn.Venue);
+                    else
+                        chkIn.Venue = cacheVenues[index];
+
+                    index = cacheUsers.IndexOf(chkIn.User);
+                    if (index == -1)
+                        cacheUsers.Add(chkIn.User);
+                    else
+                        chkIn.User = cacheUsers[index];
+
+                }
                 CheckInsResult(this, e);
             }
         }
