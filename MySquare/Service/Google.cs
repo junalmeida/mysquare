@@ -45,10 +45,10 @@ namespace MySquare.Service
                     throw new NotImplementedException();
             }
 
-            base.Post(null, url, false, null, null, parameters);
+            base.Post(0, url, false, null, null, parameters);
         }
 
-        protected override Type GetJsonType(string key)
+        protected override Type GetJsonType(int key)
         {
             return typeof(GeocodeEventArgs);
         }

@@ -31,6 +31,15 @@ namespace MySquare.Controller
 
         protected static IList<BaseController> Controllers = new List<BaseController>();
         protected static int CurrentController = -1;
+
+        internal static void Terminate()
+        {
+            foreach (var ct in Controllers)
+                ct.Dispose();
+            Controllers.Clear();
+            CurrentController = -1;
+        }
+
         internal static BaseController OpenController(MySquare.UI.IView view)
         {
             Type type = null;

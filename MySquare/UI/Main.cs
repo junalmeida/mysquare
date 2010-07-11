@@ -115,6 +115,8 @@ namespace MySquare.UI
         {
             base.OnActivated(e);
             AdjustInputPanel();
+            if (helpText == null)
+                timer1.Enabled = true;
         }
 
         private void AdjustInputPanel()
@@ -140,5 +142,66 @@ namespace MySquare.UI
                     c.Visible = false;
             help1.Visible = false;
         }
+
+
+
+
+        List<string> helpText;
+        List<Point> helpWidget;
+        int current = -1;
+
+        private void LoadHelp()
+        {
+            helpText = new List<string>();
+            helpWidget = new List<Point>();
+
+
+            helpText.Add("Welcome to MySquare!\r\nBrought to you by Rising Mobility. Here you can see more information.");
+            helpWidget.Add(
+                new Point(170 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
+                    30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
+
+            helpText.Add("To start, first tap here to set your foursquare account.");
+            helpWidget.Add(
+                new Point(130 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
+                    30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
+
+            helpText.Add("Here you will see nearby places to check details and check in.");
+            helpWidget.Add(
+                new Point(35 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
+                    30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
+
+            helpText.Add("And here you will see your friends. Enjoy.");
+            helpWidget.Add(
+                new Point(85 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
+                    30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
+
+
+            current = -1;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            if (helpText == null)
+                LoadHelp();
+            NextHelp();
+        }
+
+        private void contextHelp1_Click(object sender, EventArgs e)
+        {
+            timer1.Interval = 1500;
+            timer1.Enabled = true;
+        }
+
+        private void NextHelp()
+        {
+            current++;
+            if (current < helpText.Count)
+            {
+                contextHelp1.ShowHelp(helpWidget[current], helpText[current]);
+            }
+        }
+
     }
 }

@@ -47,7 +47,7 @@ namespace MySquare.Controller
 
         public override void OnRightSoftButtonClick()
         {
-            Application.Exit();
+            Program.Terminate();
         }
 
         private void Save()

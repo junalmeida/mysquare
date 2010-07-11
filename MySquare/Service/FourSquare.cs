@@ -346,12 +346,12 @@ namespace MySquare.Service
                     throw new NotImplementedException();
             }
 
-            base.Post(service.ToString(), url, post, (auth ? Login : null), (auth ? Password : null), parameters);
+            base.Post((int)service, url, post, (auth ? Login : null), (auth ? Password : null), parameters);
         }
 
-        protected override Type GetJsonType(string key)
+        protected override Type GetJsonType(int key)
         {
-            ServiceResource service = (ServiceResource)Enum.Parse(typeof(ServiceResource), key, false);
+            ServiceResource service = (ServiceResource)(int)key;
             Type type = null;
             switch (service)
             {

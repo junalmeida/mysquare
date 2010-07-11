@@ -28,13 +28,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{FEE3DF99-7
 		Tenor.Mobile.XML = Tenor.Mobile.XML
 	EndProjectSection
 EndProject
+Project("{B900F1C2-3D47-4FEC-85B3-04AAF18C3634}") = "MySquare.Setup", "MySquare.Setup\MySquare.Setup.vddproj", "{CA8AD679-A1ED-45D3-A73B-17720A8623EB}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
 		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = MySquare.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,7 +49,8 @@ Global
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Debug|Any CPU.ActiveCfg = Debug
+		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

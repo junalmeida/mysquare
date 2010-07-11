@@ -7,18 +7,19 @@ using Newtonsoft.Json;
 namespace MySquare.FourSquare
 {
     delegate void SearchEventHandler(object serder, SearchEventArgs e);
+
     class SearchEventArgs : EventArgs
     {
         internal Venue[] Venues
         {
             get
             {
-                if (Groups != null && Groups.Length == 1)
+                if (Groups != null && Groups.Length >= 1 && Groups[0].Venues != null)
                     return Groups[0].Venues;
                 else if (venues != null)
                     return venues;
                 else
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException("Oops");
             }
         }
 

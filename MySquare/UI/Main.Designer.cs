@@ -44,6 +44,8 @@
             this.createVenue1 = new MySquare.UI.Places.Create.CreateVenue();
             this.venueDetails1 = new MySquare.UI.Places.VenueDetails();
             this.help1 = new MySquare.UI.Help();
+            this.contextHelp1 = new MySquare.UI.ContextHelp();
+            this.timer1 = new System.Windows.Forms.Timer();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -148,11 +150,27 @@
             this.help1.TabIndex = 14;
             this.help1.Visible = false;
             // 
+            // contextHelp1
+            // 
+            this.contextHelp1.Location = new System.Drawing.Point(28, 35);
+            this.contextHelp1.Name = "contextHelp1";
+            this.contextHelp1.Size = new System.Drawing.Size(200, 200);
+            this.contextHelp1.TabIndex = 17;
+            this.contextHelp1.Text = "contextHelp1";
+            this.contextHelp1.Visible = false;
+            this.contextHelp1.Click += new System.EventHandler(this.contextHelp1_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 3000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(240, 268);
+            this.Controls.Add(this.contextHelp1);
             this.Controls.Add(this.help1);
             this.Controls.Add(this.venueDetails1);
             this.Controls.Add(this.createVenue1);
@@ -186,6 +204,8 @@
         internal MySquare.UI.Places.VenueDetails venueDetails1;
         private Help help1;
         internal Tenor.Mobile.UI.HeaderStrip header;
+        private ContextHelp contextHelp1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

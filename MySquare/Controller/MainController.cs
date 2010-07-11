@@ -42,6 +42,7 @@ namespace MySquare.Controller
 
 
                 RightSoftButtonText = "&Back";
+                RightSoftButtonEnabled = true;
                 LeftSoftButtonText = string.Empty;
                 LeftSoftButtonEnabled = false;
 
@@ -146,6 +147,13 @@ namespace MySquare.Controller
             else
                 BaseController.OpenController(View.friends1);
 
+        }
+
+        public override void Dispose()
+        {
+            View.Close();
+            View.Dispose();
+            base.Dispose();
         }
     }
 }

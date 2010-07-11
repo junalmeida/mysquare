@@ -93,6 +93,9 @@
     <Compile Include="UI\AnimatedGif.Designer.cs">
       <DependentUpon>AnimatedGif.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ContextHelp.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\Friends\Friends.cs">
       <SubType>UserControl</SubType>
     </Compile>

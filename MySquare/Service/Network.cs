@@ -7,7 +7,7 @@ using System.IO;
 
 namespace MySquare.Service
 {
-    abstract class Network
+    abstract class Network : IDisposable
     {
 
         public Network()
@@ -55,7 +55,7 @@ namespace MySquare.Service
                 OnError(new ErrorEventArgs(ex));
             }
         }
-        protected void Post(string service, string url, bool post, string Login, string Password, Dictionary<string, string> parameters)
+        protected void Post(int service, string url, bool post, string Login, string Password, Dictionary<string, string> parameters)
         {
             bool auth = !string.IsNullOrEmpty(Login);
 
@@ -124,7 +124,7 @@ namespace MySquare.Service
         private void WriteRequest(IAsyncResult r)
         {
             object[] data = (object[])r.AsyncState;
-            string service = (string)data[0];
+            int service = (int)data[0];
             MemoryStream memData = (MemoryStream)data[1];
 
             try
@@ -151,14 +151,15 @@ namespace MySquare.Service
             }
         }
 
-        protected abstract Type GetJsonType(string key);
+        protected abstract Type GetJsonType(int key);
         protected abstract void OnResult(object result);
 
         private void ParseResponse(IAsyncResult r)
         {
             if (request != null)
             {
-                string service = (string)r.AsyncState;
+                int service = (int)r.AsyncState;
+                string responseTxt = null;
                 object result = null;
                 try
                 {
@@ -168,11 +169,17 @@ namespace MySquare.Service
                         {
                             using (Stream stream = response.GetResponseStream())
                             {
+                                StreamReader networkReader = new StreamReader(stream);
+                                responseTxt = networkReader.ReadToEnd();
+                                System.Diagnostics.Trace.WriteLine(request.Address.ToString());
+                                System.Diagnostics.Trace.WriteLine(responseTxt);
+
                                 Type type = GetJsonType(service);
                                 
 
                                 Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
-                                Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
+                                //Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
+                                Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
                                 result = serializer.Deserialize(reader, type);
 
                             }
@@ -340,6 +347,15 @@ namespace MySquare.Service
         #endregion
 
 
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Abort();
+        }
+
+        #endregion
     }
 
 
