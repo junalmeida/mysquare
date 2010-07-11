@@ -48,6 +48,8 @@ namespace MySquare.Controller
                 type = typeof(FriendsController);
             else if (view is UI.Friends.UserDetail)
                 type = typeof(UserController);
+            else if (view is UI.Help)
+                type = typeof(HelpController);
             else
                 throw new NotImplementedException();
 
@@ -123,7 +125,7 @@ namespace MySquare.Controller
 
 
         #region Menu Control
-        MainController MainController
+        protected MainController MainController
         {
             get
             {

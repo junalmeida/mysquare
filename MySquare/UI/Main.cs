@@ -54,10 +54,12 @@ namespace MySquare.UI
             header.Tabs.Add(tabPlaces = new Tenor.Mobile.UI.HeaderTab("Places", Resources.PinMap));
             header.Tabs.Add(tabFriends = new Tenor.Mobile.UI.HeaderTab("Friends", Resources.Friends));
             header.Tabs.Add(tabSettings = new Tenor.Mobile.UI.HeaderTab("Settings", Resources.Settings));
+            header.Tabs.Add(tabAbout = new Tenor.Mobile.UI.HeaderTab("About", Resources.Help));
         }
         HeaderTab tabFriends;
         HeaderTab tabPlaces;
         HeaderTab tabSettings;
+        HeaderTab tabAbout;
 
         internal void ChangePlacesName(string text)
         {
@@ -79,6 +81,8 @@ namespace MySquare.UI
 
         private void header_SelectedTabChanged(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.Default;
+
             lblError.Visible = false;
             var tab = header.Tabs[header.SelectedIndex];
             if (tab == tabPlaces)
@@ -87,6 +91,8 @@ namespace MySquare.UI
                 Controller.BaseController.OpenController(settings1);
             else if (tab == tabFriends)
                 Controller.BaseController.OpenController(friends1);
+            else if (tab == tabAbout)
+                Controller.BaseController.OpenController(help1);
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -102,33 +108,37 @@ namespace MySquare.UI
 
         private void inputPanel_EnabledChanged(object sender, EventArgs e)
         {
-            try
-            {
-                foreach (Control c in this.Controls)
-                {
-                    if (c.Visible && c is IView)
-                    {
-                        if (inputPanel.Enabled)
-                        {
-                            picAd.Height = inputPanel.Bounds.Height;
-                            picAd.Visible = true;
-                        }
-                        else
-                        {
-                            picAd.Height = 30;
-                            picAd.Visible = false;
-                        }
-                    }
-                }
-            }
-            catch (ObjectDisposedException) { }
+            AdjustInputPanel();
         }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            AdjustInputPanel();
+        }
+
+        private void AdjustInputPanel()
+        {
+            if (inputPanel.Enabled)
+            {
+                picAd.Height = inputPanel.Bounds.Height;
+                picAd.Visible = true;
+            }
+            else
+            {
+                picAd.Height = 30;
+                picAd.Visible = false;
+            }
+        }
+
+
 
         internal void Reset()
         {
             foreach (Control c in Controls)
                 if (c is MySquare.UI.IView)
                     c.Visible = false;
+            help1.Visible = false;
         }
     }
 }

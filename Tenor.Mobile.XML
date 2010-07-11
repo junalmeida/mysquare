@@ -4,167 +4,499 @@
         <name>Tenor.Mobile</name>
     </assembly>
     <members>
-        <member name="T:Tenor.Mobile.Device.Notification">
+        <member name="T:Tenor.Mobile.UI.Samsung">
             <summary>
-            Controls options for notification bubbles.
+            Render controls using Samsung's default interface style.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Device.Notification.#ctor(System.Guid)">
+        <member name="P:Tenor.Mobile.UI.Skin.Current">
             <summary>
-            Opens the given notification id.
+            Keeps the current skin for Tenor Mobile controls.
             </summary>
-            <param name="id"></param>
         </member>
-        <member name="M:Tenor.Mobile.Device.Notification.Create(System.Guid)">
+        <member name="T:Tenor.Mobile.Location.Geolocation">
             <summary>
-            Creates a new notification id.
+            Provides location information based on The Google Geocoding Web Service.
+            http://code.google.com/apis/maps/documentation/geocoding/
             </summary>
-            <param name="id"></param>
+        </member>
+        <member name="M:Tenor.Mobile.Location.Geolocation.ToString">
+            <summary>
+            Return a System.String that represents this Geolocation.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Location.Geolocation.Get(System.Double,System.Double)">
+            <summary>
+            Gets an instance of Geolocation based on latitude and longitude values. 
+            This will consume the data plan.
+            </summary>
+            <param name="latitude"></param>
+            <param name="longitude"></param>
             <returns></returns>
         </member>
-        <member name="M:Tenor.Mobile.Device.Notification.Exists(System.Guid)">
+        <member name="M:Tenor.Mobile.Location.Geolocation.Equals(System.Object)">
             <summary>
-            Checks if the given notification id already exists.
+            Determines whether the speficied object is equal to this instance.
             </summary>
-            <param name="id"></param>
+        </member>
+        <member name="M:Tenor.Mobile.Location.Geolocation.GetHashCode">
+            <summary>
+            Retruns a hash that represents this instance.
+            </summary>
             <returns></returns>
         </member>
-        <member name="P:Tenor.Mobile.Device.Notification.Text">
+        <member name="P:Tenor.Mobile.Location.Geolocation.Latitude">
             <summary>
-            A description text of this notification.
+            Gets the latitude position part of this Geolocation instance.
             </summary>
         </member>
-        <member name="P:Tenor.Mobile.Device.Notification.Wave">
+        <member name="P:Tenor.Mobile.Location.Geolocation.Longitude">
             <summary>
-            The wave file to play when sounds are enabled.
+            Gets the longitude position part of this Geolocation instance.
             </summary>
         </member>
-        <member name="P:Tenor.Mobile.Device.Notification.Duration">
+        <member name="P:Tenor.Mobile.Location.Geolocation.Neighborhood">
             <summary>
-            The duration in minutes.
+            Gets the Neighborhood or sublocality. Usually small city divisions.
             </summary>
         </member>
-        <member name="P:Tenor.Mobile.Device.Notification.Options">
+        <member name="P:Tenor.Mobile.Location.Geolocation.Address">
             <summary>
-            A bit-wise combination off <see cref="T:Tenor.Mobile.Device.NotificationOptions"/>
+            Gets the full formatted address.
             </summary>
         </member>
-        <member name="T:Tenor.Mobile.UI.NotificationWithSoftKeys">
+        <member name="P:Tenor.Mobile.Location.Geolocation.City">
             <summary>
-            Implements Windows CE functionality for displaying and responding to user notifications.
-            <para><b>New in v1.3</b></para>
-            </summary>
-            <remarks>This class provides a managed implementation of the Windows CE notification functions.
-            This class is supported only on the Pocket PC.
-            <para>You can create notifications and then display them as needed using the <see cref="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Visible"/> property.
-            The <see cref="P:Tenor.Mobile.UI.NotificationWithSoftKeys.InitialDuration"/> property sets the time the message balloon initially displays.
-            If you set <see cref="P:Tenor.Mobile.UI.NotificationWithSoftKeys.InitialDuration"/> to zero and Visible to true, the message balloon does not appear but its icon is available in the title bar for reactivation when clicked.
-            The <see cref="E:Tenor.Mobile.UI.NotificationWithSoftKeys.BalloonChanged"/> event occurs whenever the balloon is shown or hidden, either programmatically using the <see cref="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Visible"/> property or through user interaction.
-            In addition to plain text, you can create a user notification with HTML content in the message balloon.
-            The HTML is rendered by the Pocket PC HTML control, and you can respond to values in an HTML form by parsing a response string provided by the <see cref="T:Microsoft.WindowsCE.Forms.ResponseSubmittedEventArgs"/> class, through the <see cref="P:Microsoft.WindowsCE.Forms.ResponseSubmittedEventArgs.Response"/> property.</para>
-            <b>Cmd:2 Identifier</b>
-            <para>The identifier "cmd:2" has a special purpose in Windows CE and is used to dismiss notifications.
-            If cmd:2 is the name of an HTML button or other element in a message balloon, the <see cref="E:Tenor.Mobile.UI.NotificationWithSoftKeys.ResponseSubmitted"/> event is not raised.
-            The notification is dismissed, but its icon is placed on the title bar to be responded to at a later time.</para></remarks>
-        </member>
-        <member name="M:Tenor.Mobile.UI.NotificationWithSoftKeys.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.WindowsCE.Forms.Notification"/> class.
-            </summary>
-            <remarks>This class is not supported on the Smartphone or other Windows CE devices that are not Pocket PCs.
-            You can create multiple notifications, such as an array of notifications, and display them as needed with the Visible property.</remarks>
-        </member>
-        <member name="M:Tenor.Mobile.UI.NotificationWithSoftKeys.Dispose(System.Boolean)">
-            <summary>
-            
-            </summary>
-            <param name="disposing"></param>
-        </member>
-        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.NotificationId">
-            <summary>
-            Gets or sets the guid used to managed the notification event.
+            Gets the city name.
             </summary>
         </member>
-        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Caption">
+        <member name="P:Tenor.Mobile.Location.Geolocation.Province">
             <summary>
-            Gets or sets a string specifying the title text for the message balloon.
+            The province or state, usually the first administrative level.
             </summary>
-            <value>A string that specifies the caption text.
-            The default value is an empty string ("").</value>
-            <remarks>The background color of the caption is dependent on the current theme of the user.
-            Use the <see cref="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Text"/> property to modify the text in the body of the message balloon.</remarks>
         </member>
-        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.AvoidBubble">
+        <member name="P:Tenor.Mobile.Location.Geolocation.ZipCode">
             <summary>
-            Don't display the notification bubble when it's initially added;
+            Gets the postal code.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Geolocation.Country">
+            <summary>
+            Gets the political country name.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Geolocation.Route">
+            <summary>
+            Gets only the route. Usually, the street name.
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.Location.Gps.GpsDeviceState">
+            <summary>
+            GpsDeviceState holds the state of the gps device and the friendly name if the 
+            gps supports them.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Location.Gps.GpsDeviceState.#ctor(System.IntPtr)">
+            <summary>
+            Constructor of GpsDeviceState.  It copies values from the native pointer 
+            passed in. 
+            </summary>
+            <param name="pGpsDevice">Native pointer to memory that contains
+            the GPS_DEVICE data</param>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsDeviceState.ServiceState">
+            <summary>
+            State of the GPS Intermediate Driver service
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsDeviceState.DeviceState">
+            <summary>
+            Status of the actual GPS device driver.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsDeviceState.FriendlyName">
+            <summary>
+            Friendly name of the real GPS device we are currently using.
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.Drawing.IconHelper">
+            <summary>
+            Provides functions to manipulate icons.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Drawing.IconHelper.ExtractAssociatedIcon(System.String)">
+            <summary>
+            Extracts an icon from a document or an executable.
+            </summary>
+            <param name="filename">Full path of a file.</param>
+            <returns>An Icon.</returns>
+        </member>
+        <member name="M:Tenor.Mobile.Drawing.IconHelper.ExtractAssociatedIcon(System.String,System.Boolean)">
+            <summary>
+            Extracts an icon from a document or an executable.
+            </summary>
+            <param name="filename">Full path of a file.</param>
+            <param name="largeIcon"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tenor.Mobile.Location.Gps.Utils">
+            <summary>
+            Summary description for Utils.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Device.Device.Vibrate(System.Int32)">
+            <summary>
+            Vibrates the device for milliseconds on <paramref name="timeout"/>.
+            </summary>
+            <param name="timeout">Timeout in milliseconds.</param>
+        </member>
+        <member name="P:Tenor.Mobile.Device.Device.OemInfo">
+            <summary>
+            Gets the string os OEM.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.IO.StreamToBytes(System.IO.Stream)">
+            <summary>
+            Converts any Stream into an array of bytes.
+            </summary>
+            <param name="stream">The desired stream.</param>
+            <returns>An array of bytes.</returns>
+        </member>
+        <member name="T:Tenor.Mobile.NativeMethods.IMessageFilter">
+            <summary>
+            Defines a message filter interface.
+            </summary>
+            <remarks>This interface allows an application to capture a message before it is dispatched to a control or form.
+            <para>A class that implements the IMessageFilter interface can be added to the application's message pump to filter out a message or perform other operations before the message is dispatched to a form or control. To add the message filter to an application's message pump, use the <see cref="M:OpenNETCF.Windows.Forms.ApplicationEx.AddMessageFilter(OpenNETCF.Windows.Forms.IMessageFilter)"/> method in the <see cref="T:OpenNETCF.Windows.Forms.ApplicationEx"/> class.</para></remarks>
+        </member>
+        <member name="M:Tenor.Mobile.NativeMethods.IMessageFilter.PreFilterMessage(Microsoft.WindowsCE.Forms.Message@)">
+            <summary>
+            Filters out a message before it is dispatched.
+            </summary>
+            <param name="m">The message to be dispatched. You cannot modify this message.</param>
+            <returns>true to filter the message and stop it from being dispatched; false to allow the message to continue to the next filter or control.</returns>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNOTIFICATIONDATA.csDuration">
+            <summary>
+            Duration to display the bubble (in seconds).
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNOTIFICATIONDATA.grfFlags">
+            <summary>
+            Flags that affect the behaviour of the Notification bubble
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNOTIFICATIONDATA.lParam">
+            <summary>
+            User defined parameter
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNP.INFORM">
+            <summary>
+            Bubble shown for duration, then goes away
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNP.ICONIC">
+            <summary>
+            No bubble, icon shown for duration then goes away
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.UI.SHNF">
+            <summary>
+            Flags that affect the display behaviour of the Notification
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNF.STRAIGHTTOTRAY">
+            <summary>
+            For SHNP_INFORM priority and above, don't display the notification bubble when it's initially added;
             the icon will display for the duration then it will go straight into the tray.
             The user can view the icon / see the bubble by opening the tray.
             </summary>
         </member>
-        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Silent">
-            <summary>
-            Force the notification to be silent and not vibrate, regardless of Settings. Added for Windows Mobile 2003.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Critical">
+        <member name="F:Tenor.Mobile.UI.SHNF.CRITICAL">
             <summary>
             Critical information - highlights the border and title of the bubble.
             </summary>
         </member>
-        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Icon">
+        <member name="F:Tenor.Mobile.UI.SHNF.FORCEMESSAGE">
             <summary>
-            Gets or sets the current native icon handle for the message balloon on the title bar.
+            Force the message (bubble) to display even if settings says not to.
             </summary>
         </member>
-        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.InitialDuration">
+        <member name="F:Tenor.Mobile.UI.SHNF.DISPLAYON">
             <summary>
-            Gets or sets the number of seconds the message balloon remains visible after initially shown.
-            </summary>
-            <remarks>The amount of time the balloon is visible, in seconds. The default is 10.</remarks>
-        </member>
-        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Text">
-            <summary>
-            Gets or sets the text for the message balloon.
+            Force the display to turn on for notification. Added for Windows Mobile 2003.
             </summary>
         </member>
-        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.TitleTime">
+        <member name="F:Tenor.Mobile.UI.SHNF.SILENT">
             <summary>
-            Gets or sets a value indicating whether the current time is displayed with the notification title. 
+            Force the notification to be silent and not vibrate, regardless of Settings. Added for Windows Mobile 2003.
             </summary>
         </member>
-        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Spinners">
+        <member name="T:Tenor.Mobile.Network.Connection">
             <summary>
-            ???
+            Manages a network connection.
             </summary>
         </member>
-        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Visible">
+        <member name="M:Tenor.Mobile.Network.Connection.#ctor(System.String)">
             <summary>
-            Gets or sets a value indicating whether the message balloon is visible.
+            Creates a new instance to manage a new connection.
+            </summary>
+            <param name="url"></param>
+        </member>
+        <member name="M:Tenor.Mobile.Network.Connection.Connect">
+            <summary>
+            Asyncronously connects to network.
             </summary>
         </member>
-        <member name="E:Tenor.Mobile.UI.NotificationWithSoftKeys.BalloonChanged">
+        <member name="M:Tenor.Mobile.Network.Connection.Disconnect">
             <summary>
-            Occurs when a message balloon is displayed or hidden.
+            Tries to disconnect this connection.
             </summary>
         </member>
-        <member name="E:Tenor.Mobile.UI.NotificationWithSoftKeys.ResponseSubmitted">
+        <member name="P:Tenor.Mobile.Network.Connection.Status">
             <summary>
-            Occurs when the user clicks a button or link in the message balloon.
+            Gets the current status of this connection.
             </summary>
         </member>
-        <member name="E:Tenor.Mobile.UI.NotificationWithSoftKeys.SpinnerClick">
+        <member name="E:Tenor.Mobile.Network.Connection.Connected">
             <summary>
-            Occurs when the user clicks a button or link in the message balloon.
+            Occurs when the connection sucessfuly connects.
             </summary>
         </member>
-        <member name="E:Tenor.Mobile.UI.NotificationWithSoftKeys.LeftSoftKeyClick">
+        <member name="E:Tenor.Mobile.Network.Connection.Disconnected">
             <summary>
-            Occurs when the user clicks the left soft key if it is of type SoftKeyType.StayOpen.
+            Occurs when the connection has gone.
             </summary>
         </member>
-        <member name="E:Tenor.Mobile.UI.NotificationWithSoftKeys.RightSoftKeyClick">
+        <member name="E:Tenor.Mobile.Network.Connection.Failed">
             <summary>
-            Occurs when the user clicks the right soft key if it is of type SoftKeyType.StayOpen.
+            Occurs when cannot connect;
+            </summary>
+        </member>
+        <member name="E:Tenor.Mobile.Network.Connection.Suspended">
+            <summary>
+            Occurs when the connection is suspended due to a device operation such as a call.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.Satellite.Id">
+            <summary>
+            Id of the satellite
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.Satellite.Elevation">
+            <summary>
+            Elevation of the satellite
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.Satellite.Azimuth">
+            <summary>
+            Azimuth of the satellite
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.Satellite.SignalStrength">
+            <summary>
+            SignalStrenth of the satellite
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Location.Gps.GpsPosition.GetSatellitesInSolution">
+            <summary>
+            Satellites used in the solution
+            </summary>
+            <returns>Array of Satellites</returns>
+        </member>
+        <member name="M:Tenor.Mobile.Location.Gps.GpsPosition.GetSatellitesInView">
+            <summary>
+            Satellites in view
+            </summary>
+            <returns>Array of Satellites</returns>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.Time">
+            <summary>
+            UTC according to GPS clock.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.TimeValid">
+            <summary>
+            True if the Time property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SatellitesInSolutionValid">
+            <summary>
+            True if the SatellitesInSolution property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SatellitesInViewValid">
+            <summary>
+            True if the SatellitesInView property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SatelliteCount">
+            <summary>
+            Number of satellites used in solution
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SatelliteCountValid">
+            <summary>
+            True if the SatelliteCount property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SatellitesInViewCount">
+            <summary>
+            Number of satellites in view.  
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SatellitesInViewCountValid">
+            <summary>
+            True if the SatellitesInViewCount property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.Speed">
+            <summary>
+            Speed in knots
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SpeedValid">
+            <summary>
+            True if the Speed property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.EllipsoidAltitude">
+            <summary>
+            Altitude with regards to ellipsoid, in meters
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.EllipsoidAltitudeValid">
+            <summary>
+            True if the EllipsoidAltitude property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SeaLevelAltitude">
+            <summary>
+            Altitute with regards to sea level, in meters
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SeaLevelAltitudeValid">
+            <summary>
+            True if the SeaLevelAltitude property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.Latitude">
+            <summary>
+            Latitude in decimal degrees.  North is positive
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.LatitudeInDegreesMinutesSeconds">
+            <summary>
+            Latitude in degrees, minutes, seconds.  North is positive
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.LatitudeValid">
+            <summary>
+            True if the Latitude property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.Longitude">
+            <summary>
+            Longitude in decimal degrees.  East is positive
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.LongitudeInDegreesMinutesSeconds">
+            <summary>
+            Longitude in degrees, minutes, seconds.  East is positive
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.LongitudeValid">
+            <summary>
+            True if the Longitude property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.Heading">
+            <summary>
+            Degrees heading (course made good).  True North=0
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.HeadingValid">
+            <summary>
+            True if the Heading property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.PositionDilutionOfPrecision">
+            <summary>
+            Position Dilution Of Precision
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.PositionDilutionOfPrecisionValid">
+            <summary>
+            True if the PositionDilutionOfPrecision property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.HorizontalDilutionOfPrecision">
+            <summary>
+            Horizontal Dilution Of Precision
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.HorizontalDilutionOfPrecisionValid">
+            <summary>
+            True if the HorizontalDilutionOfPrecision property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.VerticalDilutionOfPrecision">
+            <summary>
+            Vertical Dilution Of Precision
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.VerticalDilutionOfPrecisionValid">
+            <summary>
+            True if the VerticalDilutionOfPrecision property is valid, false if invalid
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.Location.Gps.DeviceStateChangedEventArgs">
+            <summary>
+            Event args used for DeviceStateChanged event.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.DeviceStateChangedEventArgs.DeviceState">
+            <summary>
+            Gets the new device state when the GPS reports a new device state.
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.Drawing.GradientFill">
+            <summary>
+            Hold methods that can draw a GradientFill on WinCE.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Drawing.GradientFill.Fill(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Color,System.Drawing.Color,Tenor.Mobile.Drawing.GradientFill.FillDirection)">
+            <summary>
+            This method wraps the PInvoke to GradientFill.
+            Returns true if the call to GradientFill succeeded; false
+            otherwise.
+            </summary>
+            <param name="gr">The Graphics object we are filling</param>
+            <param name="rc">The rectangle to fill</param>
+            <param name="startColor">The starting color for the fill</param>
+            <param name="endColor">The ending color for the fill</param>
+            <param name="fillDir">The direction to fill</param>
+            <returns>Returns true if the call to GradientFill succeeded</returns>
+        </member>
+        <member name="T:Tenor.Mobile.Drawing.GradientFill.FillDirection">
+            <summary>
+            The direction to the GradientFill will follow
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight">
+            <summary>
+            The fill goes horizontally
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.Drawing.GradientFill.FillDirection.TopToBottom">
+            <summary>
+            The fill goes vertically
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.UI.NotificationMessageWindow">
+            <summary>
+            Handles messages received from the Notification system and throws events in the parent NotificationEngine object
             </summary>
         </member>
         <member name="T:Tenor.Mobile.UI.KListControl">
@@ -464,477 +796,6 @@
             Scrolling grid.
             </summary>
         </member>
-        <member name="T:Tenor.Mobile.Diagnostics.Window">
-            <summary>
-            Represents a window.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Diagnostics.Window.GetWindows">
-            <summary>
-            Lists all windows currently created.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Tenor.Mobile.Diagnostics.Window.Visible">
-            <summary>
-            Gets whether this window is visible.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Diagnostics.Window.Text">
-            <summary>
-            Gets the window title.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Diagnostics.Window.ClassName">
-            <summary>
-            Gets the window class name.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Diagnostics.Window.ProcessId">
-            <summary>
-            Gets the process id that created this window.
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.Location.Geolocation">
-            <summary>
-            Provides location information based on The Google Geocoding Web Service.
-            http://code.google.com/apis/maps/documentation/geocoding/
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Location.Geolocation.ToString">
-            <summary>
-            Return a System.String that represents this Geolocation.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Location.Geolocation.Get(System.Double,System.Double)">
-            <summary>
-            Gets an instance of Geolocation based on latitude and longitude values. 
-            This will consume the data plan.
-            </summary>
-            <param name="latitude"></param>
-            <param name="longitude"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Tenor.Mobile.Location.Geolocation.Equals(System.Object)">
-            <summary>
-            Determines whether the speficied object is equal to this instance.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Location.Geolocation.GetHashCode">
-            <summary>
-            Retruns a hash that represents this instance.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Geolocation.Latitude">
-            <summary>
-            Gets the latitude position part of this Geolocation instance.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Geolocation.Longitude">
-            <summary>
-            Gets the longitude position part of this Geolocation instance.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Geolocation.Neighborhood">
-            <summary>
-            Gets the Neighborhood or sublocality. Usually small city divisions.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Geolocation.Address">
-            <summary>
-            Gets the full formatted address.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Geolocation.City">
-            <summary>
-            Gets the city name.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Geolocation.Province">
-            <summary>
-            The province or state, usually the first administrative level.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Geolocation.ZipCode">
-            <summary>
-            Gets the postal code.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Geolocation.Country">
-            <summary>
-            Gets the political country name.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Geolocation.Route">
-            <summary>
-            Gets only the route. Usually, the street name.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.Satellite.Id">
-            <summary>
-            Id of the satellite
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.Satellite.Elevation">
-            <summary>
-            Elevation of the satellite
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.Satellite.Azimuth">
-            <summary>
-            Azimuth of the satellite
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.Satellite.SignalStrength">
-            <summary>
-            SignalStrenth of the satellite
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Location.Gps.GpsPosition.GetSatellitesInSolution">
-            <summary>
-            Satellites used in the solution
-            </summary>
-            <returns>Array of Satellites</returns>
-        </member>
-        <member name="M:Tenor.Mobile.Location.Gps.GpsPosition.GetSatellitesInView">
-            <summary>
-            Satellites in view
-            </summary>
-            <returns>Array of Satellites</returns>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.Time">
-            <summary>
-            UTC according to GPS clock.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.TimeValid">
-            <summary>
-            True if the Time property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SatellitesInSolutionValid">
-            <summary>
-            True if the SatellitesInSolution property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SatellitesInViewValid">
-            <summary>
-            True if the SatellitesInView property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SatelliteCount">
-            <summary>
-            Number of satellites used in solution
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SatelliteCountValid">
-            <summary>
-            True if the SatelliteCount property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SatellitesInViewCount">
-            <summary>
-            Number of satellites in view.  
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SatellitesInViewCountValid">
-            <summary>
-            True if the SatellitesInViewCount property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.Speed">
-            <summary>
-            Speed in knots
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SpeedValid">
-            <summary>
-            True if the Speed property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.EllipsoidAltitude">
-            <summary>
-            Altitude with regards to ellipsoid, in meters
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.EllipsoidAltitudeValid">
-            <summary>
-            True if the EllipsoidAltitude property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SeaLevelAltitude">
-            <summary>
-            Altitute with regards to sea level, in meters
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.SeaLevelAltitudeValid">
-            <summary>
-            True if the SeaLevelAltitude property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.Latitude">
-            <summary>
-            Latitude in decimal degrees.  North is positive
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.LatitudeInDegreesMinutesSeconds">
-            <summary>
-            Latitude in degrees, minutes, seconds.  North is positive
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.LatitudeValid">
-            <summary>
-            True if the Latitude property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.Longitude">
-            <summary>
-            Longitude in decimal degrees.  East is positive
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.LongitudeInDegreesMinutesSeconds">
-            <summary>
-            Longitude in degrees, minutes, seconds.  East is positive
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.LongitudeValid">
-            <summary>
-            True if the Longitude property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.Heading">
-            <summary>
-            Degrees heading (course made good).  True North=0
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.HeadingValid">
-            <summary>
-            True if the Heading property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.PositionDilutionOfPrecision">
-            <summary>
-            Position Dilution Of Precision
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.PositionDilutionOfPrecisionValid">
-            <summary>
-            True if the PositionDilutionOfPrecision property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.HorizontalDilutionOfPrecision">
-            <summary>
-            Horizontal Dilution Of Precision
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.HorizontalDilutionOfPrecisionValid">
-            <summary>
-            True if the HorizontalDilutionOfPrecision property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.VerticalDilutionOfPrecision">
-            <summary>
-            Vertical Dilution Of Precision
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsPosition.VerticalDilutionOfPrecisionValid">
-            <summary>
-            True if the VerticalDilutionOfPrecision property is valid, false if invalid
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.Location.Gps.LocationChangedEventArgs">
-            <summary>
-            Event args used for LocationChanged events.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.LocationChangedEventArgs.Position">
-            <summary>
-            Gets the new position when the GPS reports a new position.
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds">
-            <summary>
-            class that represents a gps coordinate in degrees, minutes, and seconds.  
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.#ctor(System.Double)">
-            <summary>
-            Constructs a new instance of DegreesMinutesSeconds converting 
-            from decimal degrees
-            </summary>
-            <param name="decimalDegrees">Initial value as decimal degrees</param>
-        </member>
-        <member name="M:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.#ctor(System.Boolean,System.UInt32,System.UInt32,System.Double)">
-            <summary>
-            Constructs a new instance of DegreesMinutesSeconds
-            </summary>
-            <param name="isPositive">True if the coordinates are positive coordinate, false if they
-            are negative coordinates.</param>
-            <param name="degrees">Degrees unit of the coordinate</param>
-            <param name="minutes">Minutes unit of the coordinate</param>
-            <param name="seconds">Seconds unit of the coordinate. This should be a positive value.</param>
-        </member>
-        <member name="M:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.ToDecimalDegrees">
-            <summary>
-            Converts the decimal, minutes, seconds coordinate to 
-            decimal degrees
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.ToString">
-            <summary>
-            Converts the instance to a string in format: D M' S"
-            </summary>
-            <returns>string representation of degrees, minutes, seconds</returns>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.IsPositive">
-            <summary>
-            Returns true if the degrees, minutes and seconds refer to a positive value,
-            false otherwise.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.Degrees">
-            <summary>
-            The degrees unit of the coordinate
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.Minutes">
-            <summary>
-            The minutes unit of the coordinate
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.Seconds">
-            <summary>
-            The seconds unit of the coordinate
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.Diagnostics.Process">
-            <summary>
-            Represents a running process.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Diagnostics.Process.Kill">
-            <summary>
-            Immediately stops this process.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Diagnostics.Process.Start(System.String,System.String)">
-            <summary>
-            Starts a process by specifying the file name and a set of arguments.
-            </summary>
-            <param name="fileName">The full path of the application.</param>
-            <param name="arguments">A set of arguments.</param>
-            <returns>The Process that references this executable.</returns>
-        </member>
-        <member name="M:Tenor.Mobile.Diagnostics.Process.GetProcesses">
-            <summary>
-            Lists current running process.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Tenor.Mobile.Diagnostics.Process.Id">
-            <summary>
-            Gets the process id.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Diagnostics.Process.FileName">
-            <summary>
-            Gets the full path of this process image.
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.Drawing.GradientFill">
-            <summary>
-            Hold methods that can draw a GradientFill on WinCE.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Drawing.GradientFill.Fill(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Color,System.Drawing.Color,Tenor.Mobile.Drawing.GradientFill.FillDirection)">
-            <summary>
-            This method wraps the PInvoke to GradientFill.
-            Returns true if the call to GradientFill succeeded; false
-            otherwise.
-            </summary>
-            <param name="gr">The Graphics object we are filling</param>
-            <param name="rc">The rectangle to fill</param>
-            <param name="startColor">The starting color for the fill</param>
-            <param name="endColor">The ending color for the fill</param>
-            <param name="fillDir">The direction to fill</param>
-            <returns>Returns true if the call to GradientFill succeeded</returns>
-        </member>
-        <member name="T:Tenor.Mobile.Drawing.GradientFill.FillDirection">
-            <summary>
-            The direction to the GradientFill will follow
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight">
-            <summary>
-            The fill goes horizontally
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.Drawing.GradientFill.FillDirection.TopToBottom">
-            <summary>
-            The fill goes vertically
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.Location.Gps.GpsDeviceState">
-            <summary>
-            GpsDeviceState holds the state of the gps device and the friendly name if the 
-            gps supports them.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Location.Gps.GpsDeviceState.#ctor(System.IntPtr)">
-            <summary>
-            Constructor of GpsDeviceState.  It copies values from the native pointer 
-            passed in. 
-            </summary>
-            <param name="pGpsDevice">Native pointer to memory that contains
-            the GPS_DEVICE data</param>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsDeviceState.ServiceState">
-            <summary>
-            State of the GPS Intermediate Driver service
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsDeviceState.DeviceState">
-            <summary>
-            Status of the actual GPS device driver.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Location.Gps.GpsDeviceState.FriendlyName">
-            <summary>
-            Friendly name of the real GPS device we are currently using.
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.Drawing.IconHelper">
-            <summary>
-            Provides functions to manipulate icons.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Drawing.IconHelper.ExtractAssociatedIcon(System.String)">
-            <summary>
-            Extracts an icon from a document or an executable.
-            </summary>
-            <param name="filename">Full path of a file.</param>
-            <returns>An Icon.</returns>
-        </member>
-        <member name="M:Tenor.Mobile.Drawing.IconHelper.ExtractAssociatedIcon(System.String,System.Boolean)">
-            <summary>
-            Extracts an icon from a document or an executable.
-            </summary>
-            <param name="filename">Full path of a file.</param>
-            <param name="largeIcon"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Tenor.Mobile.UI.NotificationMessageWindow">
-            <summary>
-            Handles messages received from the Notification system and throws events in the parent NotificationEngine object
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.UI.Skin.Current">
-            <summary>
-            Keeps the current skin for Tenor Mobile controls.
-            </summary>
-        </member>
         <member name="T:Tenor.Mobile.Location.WorldPosition">
             <summary>
             Provides location services based on cell id and gps information.
@@ -999,175 +860,128 @@
             The last position cames from the gps anthenna.
             </summary>
         </member>
-        <member name="T:Tenor.Mobile.Location.Gps.Utils">
+        <member name="T:Tenor.Mobile.UI.NotificationWithSoftKeys">
             <summary>
-            Summary description for Utils.
+            Implements Windows CE functionality for displaying and responding to user notifications.
+            <para><b>New in v1.3</b></para>
+            </summary>
+            <remarks>This class provides a managed implementation of the Windows CE notification functions.
+            This class is supported only on the Pocket PC.
+            <para>You can create notifications and then display them as needed using the <see cref="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Visible"/> property.
+            The <see cref="P:Tenor.Mobile.UI.NotificationWithSoftKeys.InitialDuration"/> property sets the time the message balloon initially displays.
+            If you set <see cref="P:Tenor.Mobile.UI.NotificationWithSoftKeys.InitialDuration"/> to zero and Visible to true, the message balloon does not appear but its icon is available in the title bar for reactivation when clicked.
+            The <see cref="E:Tenor.Mobile.UI.NotificationWithSoftKeys.BalloonChanged"/> event occurs whenever the balloon is shown or hidden, either programmatically using the <see cref="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Visible"/> property or through user interaction.
+            In addition to plain text, you can create a user notification with HTML content in the message balloon.
+            The HTML is rendered by the Pocket PC HTML control, and you can respond to values in an HTML form by parsing a response string provided by the <see cref="T:Microsoft.WindowsCE.Forms.ResponseSubmittedEventArgs"/> class, through the <see cref="P:Microsoft.WindowsCE.Forms.ResponseSubmittedEventArgs.Response"/> property.</para>
+            <b>Cmd:2 Identifier</b>
+            <para>The identifier "cmd:2" has a special purpose in Windows CE and is used to dismiss notifications.
+            If cmd:2 is the name of an HTML button or other element in a message balloon, the <see cref="E:Tenor.Mobile.UI.NotificationWithSoftKeys.ResponseSubmitted"/> event is not raised.
+            The notification is dismissed, but its icon is placed on the title bar to be responded to at a later time.</para></remarks>
+        </member>
+        <member name="M:Tenor.Mobile.UI.NotificationWithSoftKeys.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.WindowsCE.Forms.Notification"/> class.
+            </summary>
+            <remarks>This class is not supported on the Smartphone or other Windows CE devices that are not Pocket PCs.
+            You can create multiple notifications, such as an array of notifications, and display them as needed with the Visible property.</remarks>
+        </member>
+        <member name="M:Tenor.Mobile.UI.NotificationWithSoftKeys.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.NotificationId">
+            <summary>
+            Gets or sets the guid used to managed the notification event.
             </summary>
         </member>
-        <member name="F:Tenor.Mobile.UI.SoftKeyType.Dismiss">
+        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Caption">
             <summary>
-            Remove the notification when the softkey is pressed
+            Gets or sets a string specifying the title text for the message balloon.
             </summary>
+            <value>A string that specifies the caption text.
+            The default value is an empty string ("").</value>
+            <remarks>The background color of the caption is dependent on the current theme of the user.
+            Use the <see cref="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Text"/> property to modify the text in the body of the message balloon.</remarks>
         </member>
-        <member name="F:Tenor.Mobile.UI.SoftKeyType.Hide">
+        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.AvoidBubble">
             <summary>
-             Hide the notification when the softkey is pressed (but do not dismiss)
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SoftKeyType.StayOpen">
-            <summary>
-            Do not dismiss or hide the notification when the softkey is pressed.
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SoftKeyType.Submit">
-            <summary>
-            Submit the HTML form in the associated notification instead of sending WM_COMMAND to the sink
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SoftKeyType.Disabled">
-            <summary>
-            This softkey is disabled
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNOTIFICATIONDATA.csDuration">
-            <summary>
-            Duration to display the bubble (in seconds).
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNOTIFICATIONDATA.grfFlags">
-            <summary>
-            Flags that affect the behaviour of the Notification bubble
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNOTIFICATIONDATA.lParam">
-            <summary>
-            User defined parameter
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNP.INFORM">
-            <summary>
-            Bubble shown for duration, then goes away
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNP.ICONIC">
-            <summary>
-            No bubble, icon shown for duration then goes away
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.UI.SHNF">
-            <summary>
-            Flags that affect the display behaviour of the Notification
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNF.STRAIGHTTOTRAY">
-            <summary>
-            For SHNP_INFORM priority and above, don't display the notification bubble when it's initially added;
+            Don't display the notification bubble when it's initially added;
             the icon will display for the duration then it will go straight into the tray.
             The user can view the icon / see the bubble by opening the tray.
             </summary>
         </member>
-        <member name="F:Tenor.Mobile.UI.SHNF.CRITICAL">
-            <summary>
-            Critical information - highlights the border and title of the bubble.
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNF.FORCEMESSAGE">
-            <summary>
-            Force the message (bubble) to display even if settings says not to.
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNF.DISPLAYON">
-            <summary>
-            Force the display to turn on for notification. Added for Windows Mobile 2003.
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNF.SILENT">
+        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Silent">
             <summary>
             Force the notification to be silent and not vibrate, regardless of Settings. Added for Windows Mobile 2003.
             </summary>
         </member>
-        <member name="T:Tenor.Mobile.Network.Connection">
+        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Critical">
             <summary>
-            Manages a network connection.
+            Critical information - highlights the border and title of the bubble.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Network.Connection.#ctor(System.String)">
+        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Icon">
             <summary>
-            Creates a new instance to manage a new connection.
-            </summary>
-            <param name="url"></param>
-        </member>
-        <member name="M:Tenor.Mobile.Network.Connection.Connect">
-            <summary>
-            Asyncronously connects to network.
+            Gets or sets the current native icon handle for the message balloon on the title bar.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Network.Connection.Disconnect">
+        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.InitialDuration">
             <summary>
-            Tries to disconnect this connection.
+            Gets or sets the number of seconds the message balloon remains visible after initially shown.
+            </summary>
+            <remarks>The amount of time the balloon is visible, in seconds. The default is 10.</remarks>
+        </member>
+        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Text">
+            <summary>
+            Gets or sets the text for the message balloon.
             </summary>
         </member>
-        <member name="P:Tenor.Mobile.Network.Connection.Status">
+        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.TitleTime">
             <summary>
-            Gets the current status of this connection.
+            Gets or sets a value indicating whether the current time is displayed with the notification title. 
             </summary>
         </member>
-        <member name="E:Tenor.Mobile.Network.Connection.Connected">
+        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Spinners">
             <summary>
-            Occurs when the connection sucessfuly connects.
+            ???
             </summary>
         </member>
-        <member name="E:Tenor.Mobile.Network.Connection.Disconnected">
+        <member name="P:Tenor.Mobile.UI.NotificationWithSoftKeys.Visible">
             <summary>
-            Occurs when the connection has gone.
+            Gets or sets a value indicating whether the message balloon is visible.
             </summary>
         </member>
-        <member name="E:Tenor.Mobile.Network.Connection.Failed">
+        <member name="E:Tenor.Mobile.UI.NotificationWithSoftKeys.BalloonChanged">
             <summary>
-            Occurs when cannot connect;
+            Occurs when a message balloon is displayed or hidden.
             </summary>
         </member>
-        <member name="E:Tenor.Mobile.Network.Connection.Suspended">
+        <member name="E:Tenor.Mobile.UI.NotificationWithSoftKeys.ResponseSubmitted">
             <summary>
-            Occurs when the connection is suspended due to a device operation such as a call.
+            Occurs when the user clicks a button or link in the message balloon.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Device.Device.Vibrate(System.Int32)">
+        <member name="E:Tenor.Mobile.UI.NotificationWithSoftKeys.SpinnerClick">
             <summary>
-            Vibrates the device for milliseconds on <paramref name="timeout"/>.
-            </summary>
-            <param name="timeout">Timeout in milliseconds.</param>
-        </member>
-        <member name="P:Tenor.Mobile.Device.Device.OemInfo">
-            <summary>
-            Gets the string os OEM.
+            Occurs when the user clicks a button or link in the message balloon.
             </summary>
         </member>
-        <member name="T:Tenor.Mobile.UI.Samsung">
+        <member name="E:Tenor.Mobile.UI.NotificationWithSoftKeys.LeftSoftKeyClick">
             <summary>
-            Render controls using Samsung's default interface style.
+            Occurs when the user clicks the left soft key if it is of type SoftKeyType.StayOpen.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.IO.StreamToBytes(System.IO.Stream)">
+        <member name="E:Tenor.Mobile.UI.NotificationWithSoftKeys.RightSoftKeyClick">
             <summary>
-            Converts any Stream into an array of bytes.
+            Occurs when the user clicks the right soft key if it is of type SoftKeyType.StayOpen.
             </summary>
-            <param name="stream">The desired stream.</param>
-            <returns>An array of bytes.</returns>
         </member>
-        <member name="T:Tenor.Mobile.NativeMethods.IMessageFilter">
+        <member name="P:Tenor.Mobile.UI.HeaderStrip.Text">
             <summary>
-            Defines a message filter interface.
+            Gets or sets the Text of this HeaderStrip.
             </summary>
-            <remarks>This interface allows an application to capture a message before it is dispatched to a control or form.
-            <para>A class that implements the IMessageFilter interface can be added to the application's message pump to filter out a message or perform other operations before the message is dispatched to a form or control. To add the message filter to an application's message pump, use the <see cref="M:OpenNETCF.Windows.Forms.ApplicationEx.AddMessageFilter(OpenNETCF.Windows.Forms.IMessageFilter)"/> method in the <see cref="T:OpenNETCF.Windows.Forms.ApplicationEx"/> class.</para></remarks>
-        </member>
-        <member name="M:Tenor.Mobile.NativeMethods.IMessageFilter.PreFilterMessage(Microsoft.WindowsCE.Forms.Message@)">
-            <summary>
-            Filters out a message before it is dispatched.
-            </summary>
-            <param name="m">The message to be dispatched. You cannot modify this message.</param>
-            <returns>true to filter the message and stop it from being dispatched; false to allow the message to continue to the next filter or control.</returns>
         </member>
         <member name="T:Tenor.Mobile.Location.Gps.Gps">
             <summary>
@@ -1231,48 +1045,49 @@
             True: The GPS device has been opened. False: It has not been opened
             </summary>
         </member>
-        <member name="T:Tenor.Mobile.UI.TabStrip">
+        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle)">
             <summary>
-            The TabControl style for new WM 6.5 devices.
+            Draws an image with alpha blending.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.UI.TabStrip.#ctor">
+        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Color)">
             <summary>
-            Creates a new instance of the TabStrip.
+            Draws an image with alpha blending.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.UI.TabStrip.ScaleControl(System.Drawing.SizeF,System.Windows.Forms.BoundsSpecified)">
+        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Rectangle,System.Drawing.Color)">
             <summary>
-            Scales a control's location, size, padding and margin.
-            </summary>
-            <param name="factor"></param>
-            <param name="specified"></param>
-        </member>
-        <member name="M:Tenor.Mobile.UI.TabStrip.OnResize(System.EventArgs)">
-            <summary>
-            Raises the Resize event.
-            </summary>
-            <param name="e"></param>
-        </member>
-        <member name="M:Tenor.Mobile.UI.TabStrip.OnHandleCreated(System.EventArgs)">
-            <summary>
-            Raises the HandleCreated event.
-            </summary>
-            <param name="e"></param>
-        </member>
-        <member name="P:Tenor.Mobile.UI.HeaderStrip.Text">
-            <summary>
-            Gets or sets the Text of this HeaderStrip.
+            Draws an image with alpha blending.
             </summary>
         </member>
-        <member name="T:Tenor.Mobile.Location.Gps.DeviceStateChangedEventArgs">
+        <member name="M:Tenor.Mobile.Drawing.AlphaImage.DrawImageGdi(System.Drawing.Graphics,System.Drawing.Rectangle)">
             <summary>
-            Event args used for DeviceStateChanged event.
+            Draws an image with alpha blending.
             </summary>
         </member>
-        <member name="P:Tenor.Mobile.Location.Gps.DeviceStateChangedEventArgs.DeviceState">
+        <member name="F:Tenor.Mobile.UI.SoftKeyType.Dismiss">
             <summary>
-            Gets the new device state when the GPS reports a new device state.
+            Remove the notification when the softkey is pressed
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SoftKeyType.Hide">
+            <summary>
+             Hide the notification when the softkey is pressed (but do not dismiss)
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SoftKeyType.StayOpen">
+            <summary>
+            Do not dismiss or hide the notification when the softkey is pressed.
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SoftKeyType.Submit">
+            <summary>
+            Submit the HTML form in the associated notification instead of sending WM_COMMAND to the sink
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SoftKeyType.Disabled">
+            <summary>
+            This softkey is disabled
             </summary>
         </member>
         <member name="T:Tenor.Mobile.UI.KListItem">
@@ -1342,24 +1157,209 @@
             Gets the Bounds.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle)">
+        <member name="T:Tenor.Mobile.Location.Gps.LocationChangedEventArgs">
             <summary>
-            Draws an image with alpha blending.
+            Event args used for LocationChanged events.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Color)">
+        <member name="P:Tenor.Mobile.Location.Gps.LocationChangedEventArgs.Position">
             <summary>
-            Draws an image with alpha blending.
+            Gets the new position when the GPS reports a new position.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Rectangle,System.Drawing.Color)">
+        <member name="T:Tenor.Mobile.UI.TabStrip">
             <summary>
-            Draws an image with alpha blending.
+            The TabControl style for new WM 6.5 devices.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Drawing.AlphaImage.DrawImageGdi(System.Drawing.Graphics,System.Drawing.Rectangle)">
+        <member name="M:Tenor.Mobile.UI.TabStrip.#ctor">
             <summary>
-            Draws an image with alpha blending.
+            Creates a new instance of the TabStrip.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.TabStrip.ScaleControl(System.Drawing.SizeF,System.Windows.Forms.BoundsSpecified)">
+            <summary>
+            Scales a control's location, size, padding and margin.
+            </summary>
+            <param name="factor"></param>
+            <param name="specified"></param>
+        </member>
+        <member name="M:Tenor.Mobile.UI.TabStrip.OnResize(System.EventArgs)">
+            <summary>
+            Raises the Resize event.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tenor.Mobile.UI.TabStrip.OnHandleCreated(System.EventArgs)">
+            <summary>
+            Raises the HandleCreated event.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="T:Tenor.Mobile.Diagnostics.Window">
+            <summary>
+            Represents a window.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Diagnostics.Window.GetWindows">
+            <summary>
+            Lists all windows currently created.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Tenor.Mobile.Diagnostics.Window.Visible">
+            <summary>
+            Gets whether this window is visible.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Diagnostics.Window.Text">
+            <summary>
+            Gets the window title.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Diagnostics.Window.ClassName">
+            <summary>
+            Gets the window class name.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Diagnostics.Window.ProcessId">
+            <summary>
+            Gets the process id that created this window.
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.Diagnostics.Process">
+            <summary>
+            Represents a running process.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Diagnostics.Process.Kill">
+            <summary>
+            Immediately stops this process.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Diagnostics.Process.Start(System.String,System.String)">
+            <summary>
+            Starts a process by specifying the file name and a set of arguments.
+            </summary>
+            <param name="fileName">The full path of the application.</param>
+            <param name="arguments">A set of arguments.</param>
+            <returns>The Process that references this executable.</returns>
+        </member>
+        <member name="M:Tenor.Mobile.Diagnostics.Process.GetProcesses">
+            <summary>
+            Lists current running process.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Tenor.Mobile.Diagnostics.Process.Id">
+            <summary>
+            Gets the process id.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Diagnostics.Process.FileName">
+            <summary>
+            Gets the full path of this process image.
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.Device.Notification">
+            <summary>
+            Controls options for notification bubbles.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Device.Notification.#ctor(System.Guid)">
+            <summary>
+            Opens the given notification id.
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Tenor.Mobile.Device.Notification.Create(System.Guid)">
+            <summary>
+            Creates a new notification id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tenor.Mobile.Device.Notification.Exists(System.Guid)">
+            <summary>
+            Checks if the given notification id already exists.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Tenor.Mobile.Device.Notification.Text">
+            <summary>
+            A description text of this notification.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Device.Notification.Wave">
+            <summary>
+            The wave file to play when sounds are enabled.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Device.Notification.Duration">
+            <summary>
+            The duration in minutes.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Device.Notification.Options">
+            <summary>
+            A bit-wise combination off <see cref="T:Tenor.Mobile.Device.NotificationOptions"/>
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds">
+            <summary>
+            class that represents a gps coordinate in degrees, minutes, and seconds.  
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.#ctor(System.Double)">
+            <summary>
+            Constructs a new instance of DegreesMinutesSeconds converting 
+            from decimal degrees
+            </summary>
+            <param name="decimalDegrees">Initial value as decimal degrees</param>
+        </member>
+        <member name="M:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.#ctor(System.Boolean,System.UInt32,System.UInt32,System.Double)">
+            <summary>
+            Constructs a new instance of DegreesMinutesSeconds
+            </summary>
+            <param name="isPositive">True if the coordinates are positive coordinate, false if they
+            are negative coordinates.</param>
+            <param name="degrees">Degrees unit of the coordinate</param>
+            <param name="minutes">Minutes unit of the coordinate</param>
+            <param name="seconds">Seconds unit of the coordinate. This should be a positive value.</param>
+        </member>
+        <member name="M:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.ToDecimalDegrees">
+            <summary>
+            Converts the decimal, minutes, seconds coordinate to 
+            decimal degrees
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.ToString">
+            <summary>
+            Converts the instance to a string in format: D M' S"
+            </summary>
+            <returns>string representation of degrees, minutes, seconds</returns>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.IsPositive">
+            <summary>
+            Returns true if the degrees, minutes and seconds refer to a positive value,
+            false otherwise.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.Degrees">
+            <summary>
+            The degrees unit of the coordinate
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.Minutes">
+            <summary>
+            The minutes unit of the coordinate
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Location.Gps.DegreesMinutesSeconds.Seconds">
+            <summary>
+            The seconds unit of the coordinate
             </summary>
         </member>
     </members>

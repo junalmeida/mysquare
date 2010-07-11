@@ -150,7 +150,14 @@ namespace MySquare.UI.Friends
 
         private void listBox_SelectedItemClicked(object sender, EventArgs e)
         {
-            BaseController.OpenController(((Main)Parent).userDetail1);
+            User user = null;
+            if (listBox.SelectedItem.Value != null)
+                if (listBox.SelectedItem.Value is User)
+                    user = (User)listBox.SelectedItem.Value;
+                else if (listBox.SelectedItem.Value is CheckIn)
+                    user = ((CheckIn)listBox.SelectedItem.Value).User;
+            if (user != null)
+                (BaseController.OpenController(((Main)Parent).userDetail1) as UserController).LoadUser(user);
         }
     }
 }

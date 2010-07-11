@@ -9,6 +9,7 @@ namespace MySquare.Service
 {
     abstract class Network
     {
+
         public Network()
         {
             var asName = typeof(FourSquare).Assembly.GetName();
@@ -22,6 +23,8 @@ namespace MySquare.Service
         {
             if (Error != null)
                 Error(this, e);
+            else
+                Log.RegisterLog(e.Exception);
         }
 
         internal event ImageResultEventHandler ImageResult;
@@ -45,9 +48,11 @@ namespace MySquare.Service
         {
             if (request != null)
             {
+                Exception ex = new Exception(string.Format("The request on {0} was cancelled.", request.Address.ToString()));
+                
                 Tenor.Mobile.Network.WebRequest.Abort(request);
                 request = null;
-                OnError(new ErrorEventArgs(new Exception("The request was cancelled.")));
+                OnError(new ErrorEventArgs(ex));
             }
         }
         protected void Post(string service, string url, bool post, string Login, string Password, Dictionary<string, string> parameters)
@@ -68,7 +73,8 @@ namespace MySquare.Service
                 }
             }
 
-
+            if (request != null)
+                Abort();
             if (post)
             {
                 request = (HttpWebRequest)WebRequest.Create(url);
@@ -179,7 +185,8 @@ namespace MySquare.Service
                     if (ex is WebException && ((WebException)ex).Status == WebExceptionStatus.ProtocolError)
                         OnError(new ErrorEventArgs(new UnauthorizedAccessException()));
                     else
-                        OnError(new ErrorEventArgs(ex));
+                        OnError(new ErrorEventArgs(new Exception(
+                            string.Format("Request on {0} failed.", request.Address), ex)));
                     return;
                 }
                 finally
@@ -271,7 +278,8 @@ namespace MySquare.Service
         #endregion
 
         static string _appPath;
-        private static string GetAppPath()
+        //TODO: Move this to somewhere else
+        internal static string GetAppPath()
         {
             if (string.IsNullOrEmpty(_appPath))
             {
@@ -331,40 +339,6 @@ namespace MySquare.Service
 
         #endregion
 
-        #region Log
-        private static string GetLogPath()
-        {
-            string appPath = GetAppPath();
-            string path = System.IO.Path.Combine(appPath, "debug");
-            if (!System.IO.Directory.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
-            DateTime date = DateTime.Now;
-
-            string filePath = string.Format("{0}.txt", date.Ticks);
-            filePath = System.IO.Path.Combine(path, filePath);
-            return filePath;
-        }
-
-        internal void RegisterLog(Exception ex)
-        {
-            using (FileStream file = new FileStream(GetLogPath(), FileMode.Create))
-            using (StreamWriter writer = new StreamWriter(file))
-            {
-                RegisterLog(writer, ex);
-            }
-        }
-
-        private void RegisterLog(StreamWriter writer, Exception ex)
-        {
-            writer.WriteLine(ex.Message);
-            writer.WriteLine(ex.StackTrace);
-            if (ex.InnerException != null)
-            {
-                writer.WriteLine("----");
-                RegisterLog(writer, ex.InnerException);
-            }
-        }
-        #endregion
 
     }
 

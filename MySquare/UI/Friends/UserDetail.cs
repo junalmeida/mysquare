@@ -69,5 +69,32 @@ namespace MySquare.UI.Friends
             }
             catch { }
         }
+
+        private void tabStrip_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectSection(tabStrip.SelectedIndex);
+        }
+
+        internal void SelectSection(int section)
+        {
+            userInfo1.Visible = false;
+            userFriends1.Visible = false;
+            tabStrip.SelectedIndex = section;
+            switch (section)
+            {
+                case 0:
+                    userInfo1.BringToFront();
+                    userInfo1.Dock = DockStyle.Fill;
+                    userInfo1.Visible = true;
+                    break;
+                case 1:
+                    userFriends1.BringToFront();
+                    userFriends1.Dock = DockStyle.Fill;
+                    userFriends1.Visible = true;
+                    break;
+                case 2:
+                    break;
+            }
+        }
     }
 }

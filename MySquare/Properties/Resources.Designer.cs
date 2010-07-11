@@ -57,9 +57,23 @@ namespace MySquare.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap FoursquareLogo {
+            get {
+                object obj = ResourceManager.GetObject("FoursquareLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Friends {
             get {
                 object obj = ResourceManager.GetObject("Friends", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Help {
+            get {
+                object obj = ResourceManager.GetObject("Help", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

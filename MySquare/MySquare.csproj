@@ -20,6 +20,7 @@
     </FormFactorID>
     <DeployDirPrefix>%25CSIDL_PROGRAM_FILES%25</DeployDirPrefix>
     <ApplicationIcon>Resources\mySquare.ico</ApplicationIcon>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -69,6 +70,7 @@
     <Compile Include="Controller\BaseController.cs" />
     <Compile Include="Controller\CreateVenueController.cs" />
     <Compile Include="Controller\FriendsController.cs" />
+    <Compile Include="Controller\HelpController.cs" />
     <Compile Include="Controller\MainController.cs" />
     <Compile Include="Controller\PlacesController.cs" />
     <Compile Include="Controller\SettingsController.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="FourSquare\User.cs" />
     <Compile Include="FourSquare\Venues.cs" />
     <Compile Include="Service\Google.cs" />
+    <Compile Include="Service\Log.cs" />
     <Compile Include="Service\Network.cs" />
     <Compile Include="UI\AnimatedGif.cs">
       <SubType>Component</SubType>
@@ -101,6 +104,24 @@
     </Compile>
     <Compile Include="UI\Friends\UserDetail.Designer.cs">
       <DependentUpon>UserDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Friends\UserFriends.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Friends\UserFriends.Designer.cs">
+      <DependentUpon>UserFriends.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Friends\UserInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Friends\UserInfo.Designer.cs">
+      <DependentUpon>UserInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Help.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Help.Designer.cs">
+      <DependentUpon>Help.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Main.cs">
       <SubType>Form</SubType>
@@ -121,6 +142,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Friends\UserDetail.resx">
       <DependentUpon>UserDetail.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Friends\UserFriends.resx">
+      <DependentUpon>UserFriends.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Friends\UserInfo.resx">
+      <DependentUpon>UserInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Help.resx">
+      <DependentUpon>Help.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Main.resx">
@@ -265,6 +298,12 @@
   <ItemGroup>
     <None Include="Resources\Friends.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about_64x64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\foursquare_270x127.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
@@ -283,5 +322,8 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>if /I "$(ConfigurationName)" == "Release" Eazfuscator.NET.exe "$(TargetPath)" --msbuild-project-path "$(ProjectPath)" --msbuild-project-configuration "$(ConfigurationName)" --msbuild-project-platform "$(PlatformName)" -n --newline-flush</PostBuildEvent>
   </PropertyGroup>
 </Project>

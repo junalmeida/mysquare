@@ -8,6 +8,8 @@ namespace MySquare.FourSquare
 {
     class User
     {
+        internal bool fullData;
+        
         [JsonProperty("id")]
         public int Id
         { get; set; }
@@ -41,7 +43,7 @@ namespace MySquare.FourSquare
         { get; set; }
 
         [JsonProperty("friendstatus")]
-        public string FriendStatus
+        public FriendStatus? FriendStatus
         { get; set; }
 
         [JsonProperty("badges")]
@@ -56,9 +58,43 @@ namespace MySquare.FourSquare
         public CheckIn CheckIn
         { get; set; }
 
+        public User[] Friends
+        { get; set; }
+
         public override string ToString()
         {
             return string.Concat(FirstName, " ", LastName);
+        }
+
+
+        internal void CopyTo(User user)
+        {
+            user.fullData = fullData;
+            user.Id = Id;
+            user.FirstName = FirstName;
+            user.LastName = LastName;
+            user.ImageUrl = ImageUrl;
+            user.Gender = Gender;
+            user.Email = Email;
+            user.Twitter = Twitter;
+            user.Facebook = Facebook;
+            user.FriendStatus = FriendStatus;
+            user.Badges = Badges;
+            user.Status = Status;
+            user.CheckIn = CheckIn;
+           
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            return Id == ((User)obj).Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 
@@ -70,7 +106,7 @@ namespace MySquare.FourSquare
         public User User
         {
             get;
-            private set;
+            set;
         }
     }
 
@@ -84,5 +120,12 @@ namespace MySquare.FourSquare
             get;
             private set;
         }
+    }
+
+    enum FriendStatus
+    {
+        friend,
+        pendingyou,
+        pendingthem
     }
 }

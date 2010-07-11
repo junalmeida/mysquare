@@ -11,6 +11,15 @@ namespace MySquare.Service
 {
     class FourSquare : Network
     {
+
+        #region Data Cache 
+
+        static List<User> cacheUsers = new List<User>();
+        static List<Venue> cacheVenues = new List<Venue>();
+
+
+        #endregion
+
         #region Settings
         private RegistryKey key;
         public string Login
@@ -174,6 +183,14 @@ namespace MySquare.Service
         {
             if (FriendsResult != null)
             {
+                for (int i = 0; i < e.Friends.Length; i++)
+                {
+                    int index = (cacheUsers.IndexOf(e.Friends[i]));
+                    if (index > -1)
+                        e.Friends[i] = cacheUsers[index];
+                    else
+                        cacheUsers.Add(e.Friends[i]);
+                }
                 FriendsResult(this, e);
             }
         }
@@ -184,6 +201,15 @@ namespace MySquare.Service
         {
             if (UserResult != null)
             {
+                e.User.fullData = true;
+                int index = cacheUsers.IndexOf(e.User);
+                if (index > -1)
+                {
+                    e.User.CopyTo(cacheUsers[index]);
+                    e.User = cacheUsers[index];
+                }
+                else
+                    cacheUsers.Add(e.User);
                 UserResult(this, e);
             }
         }
@@ -216,6 +242,15 @@ namespace MySquare.Service
             if (VenueResult != null)
             {
                 e.Venue.fullData = true;
+                int index = cacheVenues.IndexOf(e.Venue);
+                if (index > -1)
+                {
+                    e.Venue.CopyTo(cacheVenues[index]);
+                    e.Venue = cacheVenues[index];
+                }
+                else
+                    cacheVenues.Add(e.Venue);
+
                 VenueResult(this, e);
             }
         }
@@ -225,7 +260,9 @@ namespace MySquare.Service
         private void OnCheckInResult(CheckInEventArgs e)
         {
             if (CheckInResult != null)
+            {
                 CheckInResult(this, e);
+            }
         }
 
 
@@ -234,7 +271,17 @@ namespace MySquare.Service
         private void OnSearchArrives(SearchEventArgs e)
         {
             if (SearchArrives != null)
+            {
+                for (int i = 0; i < e.Venues.Length; i++)
+                {
+                    int index = cacheVenues.IndexOf(e.Venues[i]);
+                    if (index > -1)
+                        e.Venues[i] = cacheVenues[index];
+                    else
+                        cacheVenues.Add(e.Venues[i]);
+                }
                 SearchArrives(this, e);
+            }
         }
 
 

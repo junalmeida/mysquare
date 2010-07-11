@@ -193,7 +193,17 @@ namespace MySquare.Controller
 
             if (checkInResult != null)
             {
-                MessageBox.Show(checkInResult.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
+                StringBuilder message = new StringBuilder();
+                message.Append(checkInResult.Message);
+                if (checkInResult.Specials != null && checkInResult.Specials.Length > 0)
+                {
+                    foreach (var sp in checkInResult.Specials)
+                    {
+                        message.AppendLine();
+                        message.Append(sp.Message);
+                    }
+                }
+                MessageBox.Show(message.ToString(), "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
                 OnRightSoftButtonClick();
             }
             else
@@ -235,7 +245,7 @@ namespace MySquare.Controller
 
                 if (Venue.Status != null && (Venue.Status.HereNow > 0 || Venue.Status.CheckIns > 0))
                     View.venueInfo1.lblStats.Text =
-                        string.Concat(Venue.Status.HereNow, " friends here, ", Venue.Status.CheckIns, " check-ins.");
+                        string.Concat(Venue.Status.HereNow, " here, ", Venue.Status.CheckIns, " check-ins.");
                 else
                     View.venueInfo1.lblStats.Text = null;
 
@@ -274,7 +284,7 @@ namespace MySquare.Controller
     
         void Service_VenueResult(object serder, VenueEventArgs e)
         {
-            e.Venue.CopyTo(Venue);
+            this.Venue = e.Venue;
             LoadExtraInfo();
         }
         #endregion

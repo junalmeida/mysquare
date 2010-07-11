@@ -31,7 +31,10 @@
             this.picAvatar = new System.Windows.Forms.PictureBox();
             this.lblUserName = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblFriendStatus = new System.Windows.Forms.Label();
             this.tabStrip = new MySquare.UI.TabStrip();
+            this.userInfo1 = new MySquare.UI.Friends.UserInfo();
+            this.userFriends1 = new MySquare.UI.Friends.UserFriends();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +51,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUserName.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.lblUserName.ForeColor = System.Drawing.Color.White;
-            this.lblUserName.Location = new System.Drawing.Point(58, 6);
+            this.lblUserName.Location = new System.Drawing.Point(58, 9);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(191, 16);
             this.lblUserName.Text = "label1";
@@ -56,6 +59,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(this.lblFriendStatus);
             this.panel1.Controls.Add(this.tabStrip);
             this.panel1.Controls.Add(this.lblUserName);
             this.panel1.Controls.Add(this.picAvatar);
@@ -63,6 +67,17 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(253, 80);
+            // 
+            // lblFriendStatus
+            // 
+            this.lblFriendStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFriendStatus.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            this.lblFriendStatus.ForeColor = System.Drawing.Color.White;
+            this.lblFriendStatus.Location = new System.Drawing.Point(58, 26);
+            this.lblFriendStatus.Name = "lblFriendStatus";
+            this.lblFriendStatus.Size = new System.Drawing.Size(191, 16);
+            this.lblFriendStatus.Text = "label1";
             // 
             // tabStrip
             // 
@@ -72,12 +87,31 @@
             this.tabStrip.Size = new System.Drawing.Size(253, 25);
             this.tabStrip.TabIndex = 5;
             this.tabStrip.Text = "tabStrip1";
+            this.tabStrip.SelectedIndexChanged += new System.EventHandler(this.tabStrip_SelectedIndexChanged);
+            // 
+            // userInfo1
+            // 
+            this.userInfo1.Location = new System.Drawing.Point(32, 86);
+            this.userInfo1.Name = "userInfo1";
+            this.userInfo1.Size = new System.Drawing.Size(137, 115);
+            this.userInfo1.TabIndex = 1;
+            this.userInfo1.Visible = false;
+            // 
+            // userFriends1
+            // 
+            this.userFriends1.Location = new System.Drawing.Point(80, 68);
+            this.userFriends1.Name = "userFriends1";
+            this.userFriends1.Size = new System.Drawing.Size(150, 150);
+            this.userFriends1.TabIndex = 3;
+            this.userFriends1.Visible = false;
             // 
             // UserDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.userFriends1);
+            this.Controls.Add(this.userInfo1);
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "UserDetail";
@@ -93,5 +127,8 @@
         private System.Windows.Forms.Panel panel1;
         internal TabStrip tabStrip;
         internal System.Windows.Forms.Label lblUserName;
+        internal UserInfo userInfo1;
+        internal System.Windows.Forms.Label lblFriendStatus;
+        internal UserFriends userFriends1;
     }
 }

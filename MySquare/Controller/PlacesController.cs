@@ -7,6 +7,7 @@ using System.Threading;
 using MySquare.FourSquare;
 using System.Windows.Forms;
 using System.Drawing;
+using MySquare.Service;
 
 namespace MySquare.Controller
 {
@@ -16,7 +17,8 @@ namespace MySquare.Controller
         public PlacesController(UI.Places.Places view)
             : base(view)
         {
-            this.Service.SearchArrives += new MySquare.FourSquare.SearchEventHandler(Service_SearchArrives);
+            Service.SearchArrives += new MySquare.FourSquare.SearchEventHandler(Service_SearchArrives);
+            Service.Error += new MySquare.Service.ErrorEventHandler(MainController.Service_Error);
         }
 
 
@@ -110,7 +112,7 @@ namespace MySquare.Controller
         void position_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
             ShowError("Could not get your location, try again later.");
-            Service.RegisterLog(e.Error);
+            Log.RegisterLog(e.Error);
             position = null;
         }
 
@@ -121,7 +123,7 @@ namespace MySquare.Controller
             else
             {
                 ShowError("Could not get your location, try again later.");
-                Service.RegisterLog(new Exception("Unknown error from location service."));
+                Log.RegisterLog(new Exception("Unknown error from location service."));
             }
             position = null;
         }

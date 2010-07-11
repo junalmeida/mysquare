@@ -73,14 +73,28 @@
             // 
             // txtShout
             // 
+            this.txtShout.AcceptsReturn = false;
+            this.txtShout.AcceptsTab = false;
             this.txtShout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtShout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.txtShout.HideSelection = true;
+            this.txtShout.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
             this.txtShout.Location = new System.Drawing.Point(3, 3);
             this.txtShout.MaxLength = 140;
+            this.txtShout.Modified = false;
             this.txtShout.Multiline = true;
             this.txtShout.Name = "txtShout";
+            this.txtShout.PasswordChar = '\0';
+            this.txtShout.ReadOnly = false;
+            this.txtShout.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtShout.SelectedText = "";
+            this.txtShout.SelectionLength = 0;
+            this.txtShout.SelectionStart = 0;
             this.txtShout.Size = new System.Drawing.Size(255, 58);
             this.txtShout.TabIndex = 8;
+            this.txtShout.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtShout.WordWrap = true;
             this.txtShout.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtShout_KeyDown);
             // 
             // CheckIn

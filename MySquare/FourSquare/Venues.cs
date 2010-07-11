@@ -15,11 +15,16 @@ namespace MySquare.FourSquare
             {
                 if (Groups != null && Groups.Length == 1)
                     return Groups[0].Venues;
+                else if (venues != null)
+                    return venues;
                 else
                     throw new InvalidOperationException();
             }
         }
 
+        [JsonProperty("venues")]
+        private Venue[] venues
+        { get; set; }
 
         [JsonProperty("groups")]
         private Group[] Groups
@@ -31,7 +36,7 @@ namespace MySquare.FourSquare
     {
         [JsonProperty("venue")]
         public Venue Venue
-        { get; private set; }
+        { get; set; }
     }
 
     class Group
@@ -151,6 +156,18 @@ namespace MySquare.FourSquare
             venue.Categories = Categories;
             venue.Specials = Specials;
             venue.Tags = Tags;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            return Id == ((Venue)obj).Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 

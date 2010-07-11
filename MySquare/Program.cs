@@ -19,7 +19,16 @@ namespace MySquare
             using (UI.Main mainForm = new UI.Main())
             using (Controller.MainController mainController = new MySquare.Controller.MainController(mainForm))
             {
-                Application.Run(mainForm);
+                try
+                {
+                    Application.Run(mainForm);
+                }
+                catch (Exception ex)
+                {
+                    Service.Log.RegisterLog(ex);
+                    MessageBox.Show("Unknown error.\r\n" + ex.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    Application.Exit();
+                }
             }
         }
     }

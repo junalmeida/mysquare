@@ -9,6 +9,7 @@ using System.Threading;
 using System.Drawing;
 using System.IO;
 using MySquare.UI.Friends;
+using MySquare.Service;
 
 namespace MySquare.Controller
 {
@@ -19,6 +20,7 @@ namespace MySquare.Controller
         {
             Service.CheckInsResult += new MySquare.FourSquare.CheckInsEventHandler(Service_CheckInsResult);
             Service.FriendsResult += new FriendsEventHandler(Service_FriendsResult);
+            Service.Error += new MySquare.Service.ErrorEventHandler(MainController.Service_Error);
         }
 
         public override void Activate()
@@ -74,7 +76,7 @@ namespace MySquare.Controller
         void position_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
             ShowError("Could not get your location, try again later.");
-            Service.RegisterLog(e.Error);
+            Log.RegisterLog(e.Error);
             position = null;
         }
 
@@ -85,7 +87,7 @@ namespace MySquare.Controller
             else
             {
                 ShowError("Could not get your location, try again later.");
-                Service.RegisterLog(new Exception("Unknown error from location service."));
+                Log.RegisterLog(new Exception("Unknown error from location service."));
             }
             position = null;
         }

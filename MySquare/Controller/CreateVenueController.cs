@@ -85,7 +85,7 @@ namespace MySquare.Controller
         {
             pos = null;
             ShowError("Cannot get position from network.");
-            Service.RegisterLog(e.Exception);
+            Log.RegisterLog(e.Exception);
         }
 
 
@@ -93,7 +93,7 @@ namespace MySquare.Controller
         {
             pos = null;
             ShowError("Cannot get position from network.");
-            Service.RegisterLog(e.Error);
+            Log.RegisterLog(e.Error);
         }
 
         void pos_LocationChanged(object sender, EventArgs e)

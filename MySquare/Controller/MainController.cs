@@ -42,7 +42,7 @@ namespace MySquare.Controller
 
 
                 RightSoftButtonText = "&Back";
-                LeftSoftButtonText = "&Refresh";
+                LeftSoftButtonText = string.Empty;
                 LeftSoftButtonEnabled = false;
 
                 Cursor.Current = Cursors.Default;
@@ -50,7 +50,7 @@ namespace MySquare.Controller
             }
         }
 
-        void Service_Error(object serder, ErrorEventArgs e)
+        internal void Service_Error(object serder, ErrorEventArgs e)
         {
             WaitThread.Set();
 
@@ -61,7 +61,7 @@ namespace MySquare.Controller
             else
             {
                 text = "Cannot connect to foursquare, try again.";
-                Service.RegisterLog(e.Exception);
+                Log.RegisterLog(e.Exception);
             }
 
             ShowError(text);
@@ -141,7 +141,11 @@ namespace MySquare.Controller
         public override void OnRightSoftButtonClick()
         {
             View.lblError.Visible = false;
-            BaseController.OpenController(View.places1);
+            if (View.header.SelectedIndex == 0)
+                BaseController.OpenController(View.places1);
+            else
+                BaseController.OpenController(View.friends1);
+
         }
     }
 }
