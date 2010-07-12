@@ -36,7 +36,7 @@ namespace MySquare.Controller
 
         private void Load()
         {
-            View.txtEmail.Text = Service.Login;
+            View.txtEmail.Text = MySquare.Service.Configuration.Login;
             View.txtPassword.Text = string.Empty;
         }
 
@@ -52,9 +52,9 @@ namespace MySquare.Controller
 
         private void Save()
         {
-            Service.Login = View.txtEmail.Text;
+            MySquare.Service.Configuration.Login = View.txtEmail.Text;
             if (!string.IsNullOrEmpty(View.txtPassword.Text))
-                Service.Password = View.txtPassword.Text;
+                MySquare.Service.Configuration.Password = View.txtPassword.Text;
 
             MessageBox.Show("Settings saved.", "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
         }

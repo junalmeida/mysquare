@@ -21,8 +21,8 @@ namespace MySquare.Test
         public void CheckIn()
         {
             var service = new Service.FourSquare();
-            service.Login = "junalmeida@gmail.com";
-            service.Password= "htc9377@";
+            Configuration.Login = "junalmeida@gmail.com";
+            Configuration.Password = "htc9377@";
 
             service.Error += new ErrorEventHandler(service_Error);
             service.CheckInResult += new CheckInEventHandler(service_CheckInResult);

@@ -80,6 +80,7 @@
     <Compile Include="FourSquare\CheckIn.cs" />
     <Compile Include="FourSquare\Geocoding.cs" />
     <Compile Include="FourSquare\Mayor.cs" />
+    <Compile Include="Service\Configuration.cs" />
     <Compile Include="Service\FourSquare.cs" />
     <Compile Include="FourSquare\Tip.cs" />
     <Compile Include="FourSquare\User.cs" />

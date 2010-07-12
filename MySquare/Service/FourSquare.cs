@@ -20,32 +20,6 @@ namespace MySquare.Service
 
         #endregion
 
-        #region Settings
-        private RegistryKey key;
-        public string Login
-        {
-            get
-            {
-                return (string)key.GetValue("login", null);
-            }
-            set
-            {
-                key.SetValue("login", value);
-            }
-        }
-
-        public string Password
-        {
-            get
-            {
-                return (string)key.GetValue("password", null);
-            }
-            set
-            {
-                key.SetValue("password", value);
-            }
-        }
-        #endregion
 
 
         enum ServiceResource
@@ -59,21 +33,7 @@ namespace MySquare.Service
             User,
             Friends
         }
-
-        internal FourSquare()
-        {
-            string keyPath = "Software\\RisingMobility\\MySquare";
-            if (Environment.OSVersion.Platform == PlatformID.WinCE)
-                key = Registry.LocalMachine.CreateSubKey(keyPath);
-            else
-                key = Registry.CurrentUser.CreateSubKey(keyPath);
-
-        }
-
-        int limit = 20;
-
-
-
+        
 
         internal void GetUser(int uid)
         {
@@ -109,7 +69,7 @@ namespace MySquare.Service
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("geolat", lat.ToString(culture));
             parameters.Add("geolong", lgn.ToString(culture));
-            parameters.Add("l", limit.ToString(culture));
+            parameters.Add("l", MySquare.Service.Configuration.ResultsLimit.ToString(culture));
             if (!string.IsNullOrEmpty(search))
                 parameters.Add("q", search);
 
@@ -346,7 +306,9 @@ namespace MySquare.Service
                     throw new NotImplementedException();
             }
 
-            base.Post((int)service, url, post, (auth ? Login : null), (auth ? Password : null), parameters);
+            base.Post((int)service, url, post, 
+                (auth ? MySquare.Service.Configuration.Login : null),
+                (auth ? MySquare.Service.Configuration.Password : null), parameters);
         }
 
         protected override Type GetJsonType(int key)

@@ -45,7 +45,7 @@
             this.venueDetails1 = new MySquare.UI.Places.VenueDetails();
             this.help1 = new MySquare.UI.Help();
             this.contextHelp1 = new MySquare.UI.ContextHelp();
-            this.timer1 = new System.Windows.Forms.Timer();
+            this.timerTutorial = new System.Windows.Forms.Timer();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -160,10 +160,10 @@
             this.contextHelp1.Visible = false;
             this.contextHelp1.Click += new System.EventHandler(this.contextHelp1_Click);
             // 
-            // timer1
+            // timerTutorial
             // 
-            this.timer1.Interval = 3000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerTutorial.Interval = 4000;
+            this.timerTutorial.Tick += new System.EventHandler(this.timerTutorial_Tick);
             // 
             // Main
             // 
@@ -205,7 +205,7 @@
         private Help help1;
         internal Tenor.Mobile.UI.HeaderStrip header;
         private ContextHelp contextHelp1;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerTutorial;
     }
 }
 

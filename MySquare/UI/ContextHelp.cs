@@ -22,6 +22,7 @@ namespace MySquare.UI
         public void ShowHelp(Point target, string text)
         {
             Cursor.Current = Cursors.Default;
+            Application.DoEvents();
             bg = Tenor.Mobile.Drawing.GraphicsEx.CopyFromScreen(Parent.CreateGraphics(), new Rectangle(0, 0, Parent.Width, Parent.Height));
 
             this.BringToFront();
@@ -53,6 +54,11 @@ namespace MySquare.UI
             LineAlignment = StringAlignment.Near,
             FormatFlags = StringFormatFlags.NoClip
         };
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             if (bg != null)

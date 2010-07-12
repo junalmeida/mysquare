@@ -161,36 +161,42 @@ namespace MySquare.Service
                 int service = (int)r.AsyncState;
                 string responseTxt = null;
                 object result = null;
+                HttpWebResponse response = null;
                 try
                 {
-                    using (HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(r))
+                    response = (HttpWebResponse)request.EndGetResponse(r);
+
+                    if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        if (response.StatusCode == HttpStatusCode.OK)
+                        using (Stream stream = response.GetResponseStream())
                         {
-                            using (Stream stream = response.GetResponseStream())
-                            {
-                                StreamReader networkReader = new StreamReader(stream);
-                                responseTxt = networkReader.ReadToEnd();
-                                System.Diagnostics.Trace.WriteLine(request.Address.ToString());
-                                System.Diagnostics.Trace.WriteLine(responseTxt);
+                            StreamReader networkReader = new StreamReader(stream);
+                            responseTxt = networkReader.ReadToEnd();
+                            System.Diagnostics.Trace.WriteLine(request.Address.ToString());
+                            System.Diagnostics.Trace.WriteLine(responseTxt);
 
-                                Type type = GetJsonType(service);
-                                
+                            Type type = GetJsonType(service);
 
-                                Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
-                                //Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
-                                Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
-                                result = serializer.Deserialize(reader, type);
 
-                            }
+                            Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+                            //Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
+                            Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
+                            result = serializer.Deserialize(reader, type);
 
                         }
+
                     }
                 }
                 catch (Exception ex)
                 {
-                    if (ex is WebException && ((WebException)ex).Status == WebExceptionStatus.ProtocolError)
+                    if (ex is WebException &&
+                        ((WebException)ex).Status == WebExceptionStatus.ProtocolError
+                        && ex.Message.IndexOf("401") > -1
+                        )
+                    {
                         OnError(new ErrorEventArgs(new UnauthorizedAccessException()));
+
+                    }
                     else
                         OnError(new ErrorEventArgs(new Exception(
                             string.Format("Request on {0} failed.", request.Address), ex)));
@@ -198,6 +204,9 @@ namespace MySquare.Service
                 }
                 finally
                 {
+                    if (response != null)
+                        (response as IDisposable).Dispose();
+                    response = null;
                     request = null;
                 }
 

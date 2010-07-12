@@ -19,7 +19,7 @@ namespace MySquare.UI
 
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(lblHelpText);
             lblHelpText.ForeColor = Tenor.Mobile.UI.Skin.Current.TextForeColor;
-            lblHelpText.Text = string.Format(lblHelpText.Text, this.GetType().Assembly.GetName().Version);
+            lblHelpText.Text = string.Format(lblHelpText.Text, MySquare.Service.Configuration.GetVersion());
         }
 
 

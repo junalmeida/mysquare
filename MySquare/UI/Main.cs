@@ -115,8 +115,9 @@ namespace MySquare.UI
         {
             base.OnActivated(e);
             AdjustInputPanel();
-            if (helpText == null)
-                timer1.Enabled = true;
+
+            if (MySquare.Service.Configuration.IsFirstTime())
+                timerTutorial.Enabled = true;
         }
 
         private void AdjustInputPanel()
@@ -144,7 +145,7 @@ namespace MySquare.UI
         }
 
 
-
+        #region Help Tutorial
 
         List<string> helpText;
         List<Point> helpWidget;
@@ -180,9 +181,9 @@ namespace MySquare.UI
             current = -1;
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timerTutorial_Tick(object sender, EventArgs e)
         {
-            timer1.Enabled = false;
+            timerTutorial.Enabled = false;
             if (helpText == null)
                 LoadHelp();
             NextHelp();
@@ -190,8 +191,8 @@ namespace MySquare.UI
 
         private void contextHelp1_Click(object sender, EventArgs e)
         {
-            timer1.Interval = 1500;
-            timer1.Enabled = true;
+            timerTutorial.Interval = 300;
+            timerTutorial.Enabled = true;
         }
 
         private void NextHelp()
@@ -202,6 +203,8 @@ namespace MySquare.UI
                 contextHelp1.ShowHelp(helpWidget[current], helpText[current]);
             }
         }
+
+        #endregion
 
     }
 }
