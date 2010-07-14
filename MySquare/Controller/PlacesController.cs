@@ -8,6 +8,7 @@ using MySquare.FourSquare;
 using System.Windows.Forms;
 using System.Drawing;
 using MySquare.Service;
+using System.IO;
 
 namespace MySquare.Controller
 {
@@ -143,7 +144,7 @@ namespace MySquare.Controller
 
         void LoadVenues(Venue[] venues)
         {
-            View.list1.imageList = new Dictionary<string, Tenor.Mobile.Drawing.AlphaImage>();
+            View.list1.ImageList = new Dictionary<string, Image>();
 
             View.list1.listBox.Clear();
             foreach (Venue venue in venues)
@@ -166,7 +167,8 @@ namespace MySquare.Controller
                             byte[] buffer = Service.DownloadImageSync(url);
                             if (buffer != null)
                             {
-                                View.list1.imageList[url] = new Tenor.Mobile.Drawing.AlphaImage(buffer);
+                                using (MemoryStream mem = new MemoryStream(buffer))
+                                    View.list1.ImageList[url] = new Bitmap(mem);
                                 buffer = null;
                                 View.list1.listBox.Invoke(new ThreadStart(delegate()
                                 {

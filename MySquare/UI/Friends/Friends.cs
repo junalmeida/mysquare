@@ -130,6 +130,7 @@ namespace MySquare.UI.Friends
                     Image original = imageList[userUrl];
                     Image bmp = Main.CreateRoundedAvatar(original, imageSize, factor);
                     brushList.Add(userUrl, bmp);
+                    original.Dispose(); imageList[userUrl] = null;
                 }
 
                 try

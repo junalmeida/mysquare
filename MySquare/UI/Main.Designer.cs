@@ -46,6 +46,7 @@
             this.help1 = new MySquare.UI.Help();
             this.contextHelp1 = new MySquare.UI.ContextHelp();
             this.timerTutorial = new System.Windows.Forms.Timer();
+            this.timerAds = new System.Windows.Forms.Timer();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -109,6 +110,7 @@
             this.picAd.Name = "picAd";
             this.picAd.Size = new System.Drawing.Size(240, 50);
             this.picAd.Visible = false;
+            this.picAd.Paint += new System.Windows.Forms.PaintEventHandler(this.picAd_Paint);
             // 
             // friends1
             // 
@@ -152,9 +154,9 @@
             // 
             // contextHelp1
             // 
-            this.contextHelp1.Location = new System.Drawing.Point(28, 35);
+            this.contextHelp1.Location = new System.Drawing.Point(43, 55);
             this.contextHelp1.Name = "contextHelp1";
-            this.contextHelp1.Size = new System.Drawing.Size(200, 200);
+            this.contextHelp1.Size = new System.Drawing.Size(134, 136);
             this.contextHelp1.TabIndex = 17;
             this.contextHelp1.Text = "contextHelp1";
             this.contextHelp1.Visible = false;
@@ -164,6 +166,11 @@
             // 
             this.timerTutorial.Interval = 4000;
             this.timerTutorial.Tick += new System.EventHandler(this.timerTutorial_Tick);
+            // 
+            // timerAds
+            // 
+            this.timerAds.Interval = 10000;
+            this.timerAds.Tick += new System.EventHandler(this.timerAds_Tick);
             // 
             // Main
             // 
@@ -206,6 +213,7 @@
         internal Tenor.Mobile.UI.HeaderStrip header;
         private ContextHelp contextHelp1;
         private System.Windows.Forms.Timer timerTutorial;
+        private System.Windows.Forms.Timer timerAds;
     }
 }
 

@@ -10,6 +10,7 @@ using MySquare.FourSquare;
 using System.Threading;
 using Tenor.Mobile.Location;
 using System.IO;
+using Tenor.Mobile.Drawing;
 
 namespace MySquare.UI.Places
 {
@@ -42,7 +43,15 @@ namespace MySquare.UI.Places
             base.ScaleControl(factor, specified);
         }
 
-        internal Dictionary<string, Tenor.Mobile.Drawing.AlphaImage> imageList;
+
+        Dictionary<string, Image> imageList;
+        Dictionary<string, Image> brushList;
+        internal Dictionary<string, Image> ImageList
+        {
+            get { return imageList; }
+            set { imageList = value; brushList = new Dictionary<string, Image>(); }
+        }
+
 
         float itemPadding;
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
@@ -85,17 +94,30 @@ namespace MySquare.UI.Places
                     imageList.ContainsKey(venue.PrimaryCategory.IconUrl)
                     )
                 {
-                    Tenor.Mobile.Drawing.AlphaImage image = imageList[venue.PrimaryCategory.IconUrl];
+                    string iconUrl = venue.PrimaryCategory.IconUrl;
+
+                    int imageSize = e.Bounds.Height - Convert.ToInt32(itemPadding * 2);
+                    if (!brushList.ContainsKey(venue.PrimaryCategory.IconUrl))
+                    {
+                        Image original = imageList[iconUrl];
+                        Image bmp = Main.CreateRoundedAvatar(original, imageSize, factor);
+                        brushList.Add(iconUrl, bmp);
+                        original.Dispose(); imageList[iconUrl] = null;
+                    }
+
                     try
                     {
-                        image.Draw(e.Graphics,
+                        AlphaImage alpha = new AlphaImage(brushList[iconUrl]);
+                        alpha.Draw(e.Graphics,
                                     new Rectangle(
                                         e.Bounds.X + Convert.ToInt32(itemPadding),
                                         e.Bounds.Y + Convert.ToInt32(itemPadding),
-                                        e.Bounds.Height - Convert.ToInt32(itemPadding * 2),
-                                        e.Bounds.Height - Convert.ToInt32(itemPadding * 2)));
+                                        imageSize,
+                                        imageSize), Tenor.Mobile.UI.Skin.Current.SelectedBackColor);
+
                     }
                     catch { }
+
                 }
             }
         }

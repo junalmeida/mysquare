@@ -118,6 +118,8 @@ namespace MySquare.UI
 
             if (MySquare.Service.Configuration.IsFirstTime())
                 timerTutorial.Enabled = true;
+            else
+                timerAds.Enabled = true;
         }
 
         private void AdjustInputPanel()
@@ -128,10 +130,7 @@ namespace MySquare.UI
                 picAd.Visible = true;
             }
             else
-            {
-                picAd.Height = 30;
                 picAd.Visible = false;
-            }
         }
 
 
@@ -202,8 +201,50 @@ namespace MySquare.UI
             {
                 contextHelp1.ShowHelp(helpWidget[current], helpText[current]);
             }
+            else
+                timerAds.Enabled = true;
         }
 
+        #endregion
+
+        #region AdSense
+        private void timerAds_Tick(object sender, EventArgs e)
+        {
+            if (!inputPanel.Enabled && !picAd.Visible)
+            {
+                picAd.Height = 1;
+                picAd.Visible = true;
+
+                int finalHeight = 30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height;
+                int i = 1;
+                do
+                {
+                    if (i > finalHeight)
+                    {
+                        picAd.Height = finalHeight;
+                        break;
+                    }
+                    picAd.Height = i;
+                    Application.DoEvents();
+                    i *= Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height;
+                } while (true);
+
+            }
+        }
+
+        private void picAd_Paint(object sender, PaintEventArgs e)
+        {
+            Rectangle rect = new Rectangle(0, 0, picAd.Width, 5 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height);
+            Tenor.Mobile.Drawing.GradientFill.Fill(
+                e.Graphics, rect,
+                Color.DarkGray, Color.Black, GradientFill.FillDirection.TopToBottom);
+
+            rect = new Rectangle(
+                0, rect.Height, picAd.Width, picAd.Height - rect.Height);
+            e.Graphics.FillRectangle(
+                new SolidBrush(Color.Black),
+                rect);
+        }
         #endregion
 
     }
