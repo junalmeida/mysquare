@@ -95,6 +95,9 @@ namespace MySquare.Controller
         {
             View.checkIn1.txtShout.Enabled = true;
             View.checkIn1.chkTellFriends.Enabled = true;
+            View.checkIn1.chkTwitter.Enabled = View.checkIn1.chkTellFriends.Checked;
+            View.checkIn1.chkFacebook.Enabled = View.checkIn1.chkTellFriends.Checked;
+
 
             RightSoftButtonText = "&Back";
             RightSoftButtonEnabled = true;

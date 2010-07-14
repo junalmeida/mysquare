@@ -51,15 +51,16 @@
             this.lblHelpText.ForeColor = System.Drawing.Color.White;
             this.lblHelpText.Location = new System.Drawing.Point(20, 80);
             this.lblHelpText.Name = "lblHelpText";
-            this.lblHelpText.Size = new System.Drawing.Size(200, 116);
+            this.lblHelpText.Size = new System.Drawing.Size(200, 150);
             this.lblHelpText.Text = "MySquare for Windows Phone\r\n\r\nVersion {0}.\r\nRising Mobility Software\r\n\r\nThis prog" +
-                "ram is distributed as-is without warranty.\t";
+                "ram is distributed as-is without warranty.\t\r\n\r\nPortions based on NewtonSoft Json" +
+                ".net\r\n";
             this.lblHelpText.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // linkLabel1
             // 
             this.linkLabel1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.linkLabel1.Location = new System.Drawing.Point(62, 196);
+            this.linkLabel1.Location = new System.Drawing.Point(62, 234);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(115, 20);
             this.linkLabel1.TabIndex = 2;

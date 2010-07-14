@@ -190,7 +190,11 @@ namespace MySquare.Service
 
                     index = cacheUsers.IndexOf(chkIn.User);
                     if (index == -1)
+                    {
                         cacheUsers.Add(chkIn.User);
+                        if (chkIn.User.CheckIn == null)
+                            chkIn.User.CheckIn = chkIn;
+                    }
                     else
                         chkIn.User = cacheUsers[index];
 
