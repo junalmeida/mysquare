@@ -310,9 +310,13 @@ namespace MySquare.Service
                     throw new NotImplementedException();
             }
 
-            base.Post((int)service, url, post, 
-                (auth ? MySquare.Service.Configuration.Login : null),
-                (auth ? MySquare.Service.Configuration.Password : null), parameters);
+            if (auth &&
+                string.IsNullOrEmpty(MySquare.Service.Configuration.Login))
+                OnError(new ErrorEventArgs(new UnauthorizedAccessException()));
+            else 
+                base.Post((int)service, url, post, 
+                    (auth ? MySquare.Service.Configuration.Login : null),
+                    (auth ? MySquare.Service.Configuration.Password : null), parameters);
         }
 
         protected override Type GetJsonType(int key)

@@ -41,6 +41,17 @@ namespace MySquare.FourSquare
         { get; set; }
     }
 
+    public enum SpecialType
+    {
+        mayor, count, frequency, other
+    }
+
+    public enum SpecialKind
+    {
+        here,
+        nearby
+    }
+
     class Special
     {
         [JsonProperty("id")]
@@ -49,11 +60,11 @@ namespace MySquare.FourSquare
 
 
         [JsonProperty("type")]
-        public string Type
+        public SpecialType Type
         { get; set; }
 
         [JsonProperty("kind")]
-        public string Kind
+        public SpecialKind Kind
         { get; set; }
 
         [JsonProperty("message")]

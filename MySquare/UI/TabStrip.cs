@@ -80,7 +80,7 @@ namespace MySquare.UI
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (Enabled && e.Button == MouseButtons.Left)
             {
                 float width = this.Width / Tabs.Count;
                 for (int i = 0; i < Tabs.Count; i++)

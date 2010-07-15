@@ -19,7 +19,7 @@ namespace MySquare.Service
 
         #region Events
         internal event ErrorEventHandler Error;
-        private void OnError(ErrorEventArgs e)
+        protected void OnError(ErrorEventArgs e)
         {
             if (Error != null)
                 Error(this, e);

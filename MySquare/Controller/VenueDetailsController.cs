@@ -25,7 +25,10 @@ namespace MySquare.Controller
             Service.VenueResult += new VenueEventHandler(Service_VenueResult);
             Service.ImageResult += new ImageResultEventHandler(Service_ImageResult);
             Service.AddTipResult += new AddTipEventHandler(Service_AddTipResult);
+            Service.Error += new ErrorEventHandler(Service_Error);
+
         }
+
 
         void venueDetails_TabChanged(object sender, EventArgs e)
         {
@@ -44,12 +47,6 @@ namespace MySquare.Controller
             View.BringToFront();
             View.Visible = true;
 
-            View.checkIn1.txtShout.Enabled = true;
-            View.checkIn1.chkTellFriends.Enabled = true;
-
-            View.checkIn1.txtShout.Text = string.Empty;
-            View.checkIn1.chkTellFriends.Checked = true;
-
 
             View.tabStrip1.SelectedIndex = 0;
 
@@ -57,7 +54,10 @@ namespace MySquare.Controller
             View.venueMap1.picMap.Tag = null;
 
             form.header.Tabs[0].Selected = true;
+            View.checkIn1.pnlCheckInResult.Visible = false;
+            View.checkIn1.pnlShout.Visible = true;
             OpenSection(VenueSection.CheckIn);
+
         }
 
         public override void Deactivate()
@@ -65,23 +65,6 @@ namespace MySquare.Controller
             View.Visible = false;
         }
 
-        internal void OpenVenue(Venue venue)
-        {
-            this.Venue = venue;
-
-            View.lblVenueName.Text = venue.Name;
-            List<string> address = new List<string>();
-            if (!string.IsNullOrEmpty(venue.Address))
-                address.Add(venue.Address);
-            if (!string.IsNullOrEmpty(venue.City))
-                address.Add(venue.City);
-            if (!string.IsNullOrEmpty(venue.State))
-                address.Add(venue.State);
-            View.lblAddress.Text = string.Join(", ", address.ToArray());
-
-            View.tabStrip1.SelectedIndex = 0;
-            OpenSection(VenueSection.CheckIn);
-        }
 
         enum VenueSection
         {
@@ -93,10 +76,8 @@ namespace MySquare.Controller
 
         void OpenSection(VenueSection section)
         {
-            View.checkIn1.txtShout.Enabled = true;
-            View.checkIn1.chkTellFriends.Enabled = true;
-            View.checkIn1.chkTwitter.Enabled = View.checkIn1.chkTellFriends.Checked;
-            View.checkIn1.chkFacebook.Enabled = View.checkIn1.chkTellFriends.Checked;
+            View.tabStrip1.Enabled = true;
+            View.checkIn1.pnlShout.Enabled = true;
 
 
             RightSoftButtonText = "&Back";
@@ -113,7 +94,7 @@ namespace MySquare.Controller
                     View.checkIn1.Activate();
 
 
-                    LeftSoftButtonEnabled = true;
+                    LeftSoftButtonEnabled = View.checkIn1.pnlShout.Visible;
                     break;
                 case VenueSection.Info:
                     View.checkIn1.Visible = false;
@@ -145,8 +126,26 @@ namespace MySquare.Controller
                     LeftSoftButtonEnabled = true;
                     break;
             }
+            Cursor.Current = Cursors.Default;
         }
 
+        internal void OpenVenue(Venue venue)
+        {
+            this.Venue = venue;
+
+            View.lblVenueName.Text = venue.Name;
+            List<string> address = new List<string>();
+            if (!string.IsNullOrEmpty(venue.Address))
+                address.Add(venue.Address);
+            if (!string.IsNullOrEmpty(venue.City))
+                address.Add(venue.City);
+            if (!string.IsNullOrEmpty(venue.State))
+                address.Add(venue.State);
+            View.lblAddress.Text = string.Join(", ", address.ToArray());
+
+            View.tabStrip1.SelectedIndex = 0;
+            OpenSection(VenueSection.CheckIn);
+        }
 
         public override void OnLeftSoftButtonClick()
         {
@@ -159,26 +158,39 @@ namespace MySquare.Controller
 
         public override void OnRightSoftButtonClick()
         {
-            BaseController.OpenController(View.Parent as MySquare.UI.IView);
+            if (RightSoftButtonText == "&Cancel")
+            {
+                Service.Abort();
+                Activate();
+            }
+            else
+                BaseController.OpenController(View.Parent as MySquare.UI.IView);
         }
 
         internal MySquare.FourSquare.Venue Venue
         { get; set; }
 
-        #region CheckIn
-        MySquare.FourSquare.CheckIn checkInResult = null;
-        void Service_CheckInResult(object serder, MySquare.FourSquare.CheckInEventArgs e)
+
+
+        void Service_Error(object sender, ErrorEventArgs e)
         {
-            checkInResult = e.CheckIn;
-            WaitThread.Set();
+            if (waitingCheckIn)
+                ShowError(e.Exception);
+            else
+                Log.RegisterLog(e.Exception);
+            waitingCheckIn = false;
         }
+
+        #region CheckIn
+        bool waitingCheckIn;
+        MySquare.FourSquare.CheckIn checkInResult = null;
 
         internal void DoCheckIn()
         {
-            View.checkIn1.txtShout.Enabled = false;
-            View.checkIn1.chkFacebook.Enabled = false;
-            View.checkIn1.chkTwitter.Enabled = false;
-            View.checkIn1.chkTellFriends.Enabled = false;
+            waitingCheckIn = true;
+            View.checkIn1.pnlShout.Enabled = false;
+            View.tabStrip1.Enabled = false;
+
             Cursor.Current = Cursors.WaitCursor;
             Cursor.Show();
 
@@ -195,29 +207,49 @@ namespace MySquare.Controller
                 View.checkIn1.txtShout.Text,
                 View.checkIn1.chkTellFriends.Checked, 
                 facebook, twitter);
-            WaitThread.WaitOne();
 
+            RightSoftButtonText = "&Cancel";
+                
+        }
+
+        void Service_CheckInResult(object serder, MySquare.FourSquare.CheckInEventArgs e)
+        {
+            waitingCheckIn = false;
+            checkInResult = e.CheckIn;
+            CheckInResult();
+        }
+
+        private void CheckInResult()
+        {
+            if (View.InvokeRequired)
+            {
+                View.Invoke(new ThreadStart(CheckInResult));
+                return;
+            }
             if (checkInResult != null)
             {
                 StringBuilder message = new StringBuilder();
                 message.Append(checkInResult.Message);
                 if (checkInResult.Specials != null && checkInResult.Specials.Length > 0)
                 {
-                    foreach (var sp in checkInResult.Specials)
+                    foreach (var sp in checkInResult.Specials.Where(s => s.Kind == SpecialKind.here))
                     {
+                        message.AppendLine();
                         message.AppendLine();
                         message.Append(sp.Message);
                     }
                 }
-                MessageBox.Show(message.ToString(), "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
-                OnRightSoftButtonClick();
+                View.tabStrip1.Enabled = true;
+                View.checkIn1.pnlShout.Visible = false;
+                View.checkIn1.pnlCheckInResult.Visible = true;
+                View.checkIn1.lblMessage.Text = message.ToString();
             }
-            else
-            {
-                OpenSection(VenueSection.CheckIn);
-            }
-                
+
+            OpenSection(VenueSection.CheckIn);
+
         }
+
+
         #endregion
 
 

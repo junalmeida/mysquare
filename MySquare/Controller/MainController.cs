@@ -54,18 +54,7 @@ namespace MySquare.Controller
         internal void Service_Error(object serder, ErrorEventArgs e)
         {
             WaitThread.Set();
-
-            string text = null;
-
-            if (e.Exception is UnauthorizedAccessException)
-                text = "Invalid credentials, change your settings and try again.";
-            else
-            {
-                text = "Cannot connect to foursquare, try again.";
-                Log.RegisterLog(e.Exception);
-            }
-
-            ShowError(text);
+            ShowError(e.Exception);
         }
 
         #endregion

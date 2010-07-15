@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Net;
 
 namespace MySquare.Service
 {
@@ -23,6 +24,12 @@ namespace MySquare.Service
 
         internal static void RegisterLog(Exception ex)
         {
+            if (ex == null)
+                return;
+            else if (ex.InnerException != null && ex.InnerException is WebException && ((WebException)ex.InnerException).Status == WebExceptionStatus.RequestCanceled)
+                return;
+
+
             using (FileStream file = new FileStream(GetLogPath(), FileMode.Create))
             using (StreamWriter writer = new StreamWriter(file))
             {

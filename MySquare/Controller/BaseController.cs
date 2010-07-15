@@ -7,6 +7,7 @@ using MySquare.FourSquare;
 using System.Windows.Forms;
 using System.Collections;
 using MySquare.UI;
+using MySquare.Service;
 
 namespace MySquare.Controller
 {
@@ -207,6 +208,22 @@ namespace MySquare.Controller
         {
             CurrentController = 0;
             MainController.ShowErrorForm(text);
+        }
+
+        protected void ShowError(Exception ex)
+        {
+            string text = null;
+
+            if (ex is UnauthorizedAccessException)
+                text = "Invalid credentials, change your settings and try again.";
+            else
+            {
+                text = "Cannot connect to foursquare, try again.";
+                Log.RegisterLog(ex);
+            }
+
+            ShowError(text);
+
         }
 
         public override void Dispose()

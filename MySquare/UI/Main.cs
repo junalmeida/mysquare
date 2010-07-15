@@ -216,7 +216,7 @@ namespace MySquare.UI
                 picAd.Visible = true;
 
                 int finalHeight = 30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height;
-                int i = 1;
+                double i = 1;
                 do
                 {
                     if (i > finalHeight)
@@ -224,9 +224,9 @@ namespace MySquare.UI
                         picAd.Height = finalHeight;
                         break;
                     }
-                    picAd.Height = i;
+                    picAd.Height = Convert.ToInt32(i);
                     Application.DoEvents();
-                    i *= Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height;
+                    i *= (Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height + .4);
                 } while (true);
 
             }
