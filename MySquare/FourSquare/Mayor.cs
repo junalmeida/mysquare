@@ -9,7 +9,7 @@ namespace MySquare.FourSquare
     class Mayor
     {
         [JsonProperty("type")]
-        public string Type
+        public MayorType Type
         { get; set; }
 
         [JsonProperty("checkins")]
@@ -29,5 +29,10 @@ namespace MySquare.FourSquare
         public string Message
         { get; set; }
 
+    }
+
+    enum MayorType
+    {
+        @new, nochange, stolen
     }
 }

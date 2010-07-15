@@ -90,14 +90,17 @@ namespace MySquare.UI.Places
                 e.Graphics.DrawString(secondText, secondFont, secondBrush, rect, format);
 
                 if (
-                    venue.PrimaryCategory != null &&
-                    imageList.ContainsKey(venue.PrimaryCategory.IconUrl)
+                    (venue.PrimaryCategory == null && imageList.ContainsKey("http://foursquare.com/img/categories/none.png")) ||
+                    (venue.PrimaryCategory != null &&
+                    imageList.ContainsKey(venue.PrimaryCategory.IconUrl))
                     )
                 {
-                    string iconUrl = venue.PrimaryCategory.IconUrl;
+                    string iconUrl = "http://foursquare.com/img/categories/none.png";
+                    if (venue.PrimaryCategory != null)
+                        iconUrl = venue.PrimaryCategory.IconUrl;
 
                     int imageSize = e.Bounds.Height - Convert.ToInt32(itemPadding * 2);
-                    if (!brushList.ContainsKey(venue.PrimaryCategory.IconUrl))
+                    if (!brushList.ContainsKey(iconUrl))
                     {
                         Image original = imageList[iconUrl];
                         Image bmp = Main.CreateRoundedAvatar(original, imageSize, factor);

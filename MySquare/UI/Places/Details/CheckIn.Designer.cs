@@ -34,9 +34,7 @@
             this.txtShout = new Tenor.Mobile.UI.TextControl();
             this.pnlShout = new System.Windows.Forms.Panel();
             this.pnlCheckInResult = new System.Windows.Forms.Panel();
-            this.lblMessage = new System.Windows.Forms.Label();
             this.pnlShout.SuspendLayout();
-            this.pnlCheckInResult.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkFacebook
@@ -117,39 +115,24 @@
             // pnlCheckInResult
             // 
             this.pnlCheckInResult.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
-            this.pnlCheckInResult.Controls.Add(this.lblMessage);
-            this.pnlCheckInResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlCheckInResult.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlCheckInResult.Location = new System.Drawing.Point(0, 117);
             this.pnlCheckInResult.Name = "pnlCheckInResult";
-            this.pnlCheckInResult.Size = new System.Drawing.Size(226, 170);
+            this.pnlCheckInResult.Size = new System.Drawing.Size(226, 121);
             this.pnlCheckInResult.Visible = false;
             this.pnlCheckInResult.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlCheckInResult_Paint);
-            // 
-            // lblMessage
-            // 
-            this.lblMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblMessage.BackColor = System.Drawing.Color.White;
-            this.lblMessage.ForeColor = System.Drawing.Color.Black;
-            this.lblMessage.Location = new System.Drawing.Point(12, 11);
-            this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(201, 147);
-            this.lblMessage.Text = "OK! We\\\'ve got you @ Restaurante Quinta da Boa Vista. This is your 8th checkin he" +
-                "re!";
-            this.lblMessage.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // CheckIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
             this.Controls.Add(this.pnlCheckInResult);
             this.Controls.Add(this.pnlShout);
             this.Name = "CheckIn";
             this.Size = new System.Drawing.Size(226, 287);
             this.pnlShout.ResumeLayout(false);
-            this.pnlCheckInResult.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -162,7 +145,6 @@
         internal Tenor.Mobile.UI.TextControl txtShout;
         internal System.Windows.Forms.Panel pnlShout;
         internal System.Windows.Forms.Panel pnlCheckInResult;
-        internal System.Windows.Forms.Label lblMessage;
 
     }
 }

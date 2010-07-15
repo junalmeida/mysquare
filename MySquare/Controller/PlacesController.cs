@@ -95,19 +95,16 @@ namespace MySquare.Controller
             Cursor.Current = Cursors.WaitCursor;
             Cursor.Show();
             View.list1.Visible = false;
-#if DEBUG
-            if (Environment.OSVersion.Platform != PlatformID.WinCE)
-            {
-                Service.SearchNearby(text, -22.856025, -43.375182);
-                return;
-            }
+#if TESTING
 
-#endif
+            Service.SearchNearby(text, -22.856025, -43.375182);
+#else
             position = new WorldPosition(false, false);
             position.LocationChanged += new EventHandler(position_LocationChanged);
             position.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
 
             position.PollCell();
+#endif
 
         }
 
@@ -159,24 +156,25 @@ namespace MySquare.Controller
             {
                 foreach (Venue venue in venues)
                 {
+                    //TODO: revise the null category image.
+                    string url = "http://foursquare.com/img/categories/none.png";
                     if (venue.PrimaryCategory != null)
+                        url = venue.PrimaryCategory.IconUrl;
+                    if (!string.IsNullOrEmpty(url) && !View.list1.ImageList.ContainsKey(url))
                     {
-                        string url = venue.PrimaryCategory.IconUrl;
-                        if (!string.IsNullOrEmpty(url))
+                        byte[] buffer = Service.DownloadImageSync(url);
+                        if (buffer != null)
                         {
-                            byte[] buffer = Service.DownloadImageSync(url);
-                            if (buffer != null)
+                            using (MemoryStream mem = new MemoryStream(buffer))
+                                View.list1.ImageList[url] = new Bitmap(mem);
+                            buffer = null;
+                            View.list1.listBox.Invoke(new ThreadStart(delegate()
                             {
-                                using (MemoryStream mem = new MemoryStream(buffer))
-                                    View.list1.ImageList[url] = new Bitmap(mem);
-                                buffer = null;
-                                View.list1.listBox.Invoke(new ThreadStart(delegate()
-                                {
-                                    View.list1.listBox.Invalidate();
-                                }));
-                            }
+                                View.list1.listBox.Invalidate();
+                            }));
                         }
                     }
+
                 }
             }));
             t.Start();

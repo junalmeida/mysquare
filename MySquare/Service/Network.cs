@@ -4,9 +4,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.IO;
+using System.Threading;
 
 namespace MySquare.Service
 {
+    class RequestAbortException : Exception
+    {
+        public RequestAbortException(string url, Exception inner)
+            : base (string.Format("The request on {0} was cancelled.", url), inner)
+        {
+        }
+    }
+
     abstract class Network : IDisposable
     {
 
@@ -48,13 +57,15 @@ namespace MySquare.Service
         {
             if (request != null)
             {
-                Exception ex = new Exception(string.Format("The request on {0} was cancelled.", request.Address.ToString()));
+                RequestAbortException ex = new RequestAbortException(request.Address.ToString(), null);
                 
                 Tenor.Mobile.Network.WebRequest.Abort(request);
                 request = null;
                 OnError(new ErrorEventArgs(ex));
             }
+
         }
+
         protected void Post(int service, string url, bool post, string Login, string Password, Dictionary<string, string> parameters)
         {
             bool auth = !string.IsNullOrEmpty(Login);
@@ -99,6 +110,13 @@ namespace MySquare.Service
                     Login, Password))));
             }
 
+
+#if TESTING
+            Thread t = new Thread(new ThreadStart(delegate() {
+                ParseResponse((int)service, url);            
+            }));
+            t.Start();
+#else
             if (post)
             {
                 MemoryStream memData = new MemoryStream();
@@ -118,7 +136,50 @@ namespace MySquare.Service
             {
                 request.BeginGetResponse(new AsyncCallback(ParseResponse), service);
             }
+#endif
         }
+
+#if TESTING
+        private void ParseResponse(int service, string resourceFile)
+        {
+            resourceFile = resourceFile.Substring(resourceFile.LastIndexOf("/") + 1).Replace(".json", "Test.txt");
+            int qs = resourceFile.IndexOf("?");
+            if (qs > -1)
+                resourceFile = resourceFile.Substring(0, qs);
+            resourceFile = "MySquare.Service." + resourceFile;
+
+            object result;
+            try
+            {
+                using (Stream stream = this.GetType().Assembly.GetManifestResourceStream(resourceFile))
+                {
+
+                    Type type = GetJsonType(service);
+
+
+                    Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+                    Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
+                    result = serializer.Deserialize(reader, type);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                OnError(new ErrorEventArgs(new Exception(
+                    string.Format("Request on {0} failed.", resourceFile), ex)));
+                return;
+            }
+
+            if (result != null)
+                OnResult(result);
+            else
+                OnError(new ErrorEventArgs(new Exception("Invalid response.")));
+
+        }
+#endif
+
 
 
         private void WriteRequest(IAsyncResult r)

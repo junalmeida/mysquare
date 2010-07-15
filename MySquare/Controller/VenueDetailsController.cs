@@ -174,11 +174,13 @@ namespace MySquare.Controller
 
         void Service_Error(object sender, ErrorEventArgs e)
         {
-            if (waitingCheckIn)
+            if (waitingCheckIn && !(e.Exception is RequestAbortException))
+            {
                 ShowError(e.Exception);
+                waitingCheckIn = false;
+            }
             else
                 Log.RegisterLog(e.Exception);
-            waitingCheckIn = false;
         }
 
         #region CheckIn
@@ -228,25 +230,71 @@ namespace MySquare.Controller
             }
             if (checkInResult != null)
             {
-                StringBuilder message = new StringBuilder();
-                message.Append(checkInResult.Message);
-                if (checkInResult.Specials != null && checkInResult.Specials.Length > 0)
-                {
-                    foreach (var sp in checkInResult.Specials.Where(s => s.Kind == SpecialKind.here))
-                    {
-                        message.AppendLine();
-                        message.AppendLine();
-                        message.Append(sp.Message);
-                    }
-                }
+
                 View.tabStrip1.Enabled = true;
                 View.checkIn1.pnlShout.Visible = false;
                 View.checkIn1.pnlCheckInResult.Visible = true;
-                View.checkIn1.lblMessage.Text = message.ToString();
+
+                View.checkIn1.message = checkInResult.Message;
+                if (checkInResult.Mayor != null && checkInResult.Mayor.Type != MayorType.nochange)
+                    View.checkIn1.mayorship = checkInResult.Mayor.Message;
+                else
+                    View.checkIn1.mayorship = null;
+
+                if (checkInResult.Badges != null && checkInResult.Badges.Length > 0)
+                    View.checkIn1.badges = checkInResult.Badges;
+                else
+                    View.checkIn1.badges = null;
+
+                if (checkInResult.Scoring != null && checkInResult.Scoring.Length > 0)
+                    View.checkIn1.scoring = checkInResult.Scoring;
+                else
+                    View.checkIn1.scoring = null;
+
+                if (checkInResult.Specials != null && checkInResult.Specials.Length > 0)
+                    View.checkIn1.specials = checkInResult.Specials;
+                else
+                    View.checkIn1.specials = null;
             }
 
             OpenSection(VenueSection.CheckIn);
 
+            Thread t = new Thread(new ThreadStart(delegate()
+            {
+                View.checkIn1.badgeImageList = new Dictionary<string, Image>();
+                if (checkInResult.Badges != null)
+                    foreach (var badge in checkInResult.Badges)
+                    {
+                        try
+                        {
+                            if (!string.IsNullOrEmpty(badge.ImageUrl))
+                                using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(badge.ImageUrl)))
+                                {
+                                    Bitmap bmp = new Bitmap(mem);
+                                    View.checkIn1.badgeImageList.Add(badge.ImageUrl, bmp);
+                                    View.checkIn1.pnlCheckInResult.Invoke(new ThreadStart(delegate() { View.checkIn1.pnlCheckInResult.Invalidate(); }));
+                                }
+                        }
+                        catch { }
+                    }
+                View.checkIn1.scoreImageList = new Dictionary<string, Image>();
+                if (checkInResult.Scoring != null)
+                    foreach (var score in checkInResult.Scoring)
+                    {
+                        try
+                        {
+                            if (!string.IsNullOrEmpty(score.ImageUrl))
+                                using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(score.ImageUrl)))
+                                {
+                                    Bitmap bmp = new Bitmap(mem);
+                                    View.checkIn1.scoreImageList.Add(score.ImageUrl, bmp);
+                                    View.checkIn1.pnlCheckInResult.Invoke(new ThreadStart(delegate() { View.checkIn1.pnlCheckInResult.Invalidate(); }));
+                                }
+                        }
+                        catch { }
+                    }
+            }));
+            t.Start();
         }
 
 

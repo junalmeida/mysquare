@@ -31,13 +31,10 @@ EndProject
 Project("{B900F1C2-3D47-4FEC-85B3-04AAF18C3634}") = "MySquare.Setup", "MySquare.Setup\MySquare.Setup.vddproj", "{CA8AD679-A1ED-45D3-A73B-17720A8623EB}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Testing|Any CPU = Testing|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -46,11 +43,17 @@ Global
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Testing|Any CPU.Build.0 = Testing|Any CPU
+		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Testing|Any CPU.Deploy.0 = Testing|Any CPU
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
+		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Testing|Any CPU.Build.0 = Debug|Any CPU
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Debug|Any CPU.ActiveCfg = Debug
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Release|Any CPU.ActiveCfg = Release
+		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Testing|Any CPU.ActiveCfg = Debug
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,5 +61,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2A7C32F4-5D22-4DFC-9665-D60C07D0758B} = {05FA69D7-6B40-4F57-8B8F-6643525B37F8}
 		{FEE3DF99-755C-4A85-9BB7-B7C1339B080A} = {05FA69D7-6B40-4F57-8B8F-6643525B37F8}
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

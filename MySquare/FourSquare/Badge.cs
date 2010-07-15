@@ -23,6 +23,12 @@ namespace MySquare.FourSquare
         [JsonProperty("description")]
         public string Description
         { get; set; }
+
+
+        public override string ToString()
+        {
+            return string.Format("{0}: {1}", Name, Description);
+        }
     }
 
     class Score
@@ -39,6 +45,11 @@ namespace MySquare.FourSquare
         [JsonProperty("message")]
         public string Message
         { get; set; }
+
+        public override string ToString()
+        {
+            return Message;
+        }
     }
 
     public enum SpecialType

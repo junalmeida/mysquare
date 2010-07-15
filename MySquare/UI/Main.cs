@@ -183,9 +183,11 @@ namespace MySquare.UI
         private void timerTutorial_Tick(object sender, EventArgs e)
         {
             timerTutorial.Enabled = false;
+#if !TESTING
             if (helpText == null)
                 LoadHelp();
             NextHelp();
+#endif
         }
 
         private void contextHelp1_Click(object sender, EventArgs e)

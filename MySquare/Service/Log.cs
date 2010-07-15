@@ -26,7 +26,7 @@ namespace MySquare.Service
         {
             if (ex == null)
                 return;
-            else if (ex.InnerException != null && ex.InnerException is WebException && ((WebException)ex.InnerException).Status == WebExceptionStatus.RequestCanceled)
+            else if (ex is RequestAbortException || (ex.InnerException != null && ex.InnerException is WebException && ((WebException)ex.InnerException).Status == WebExceptionStatus.RequestCanceled))
                 return;
 
 
