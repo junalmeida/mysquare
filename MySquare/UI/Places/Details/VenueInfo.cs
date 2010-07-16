@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using MySquare.Controller;
+using MySquare.FourSquare;
 
 namespace MySquare.UI.Places.Details
 {
@@ -86,6 +88,20 @@ namespace MySquare.UI.Places.Details
             }
         }
         #endregion
+
+        private void lblMayor_Click(object sender, EventArgs e)
+        {
+            (BaseController.OpenController((Parent.Parent as Main).userDetail1) as UserController)
+                .LoadUser(lblMayor.Tag as User);
+        }
+
+        private void lblSpecials_TextChanged(object sender, EventArgs e)
+        {
+            Graphics g = this.CreateGraphics();
+            Size size = Tenor.Mobile.Drawing.Strings.Measure(g, lblSpecials.Text, lblSpecials.Font,
+                new Rectangle(lblSpecials.Left, lblSpecials.Top, lblSpecials.Width, this.Height));
+            lblSpecials.Height = size.Height + (20 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height);
+        }
 
     }
 }

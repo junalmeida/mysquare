@@ -121,6 +121,8 @@
             this.pnlCheckInResult.Size = new System.Drawing.Size(226, 121);
             this.pnlCheckInResult.Visible = false;
             this.pnlCheckInResult.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlCheckInResult_Paint);
+            this.pnlCheckInResult.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseMove);
+            this.pnlCheckInResult.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseDown);
             // 
             // CheckIn
             // 
@@ -132,6 +134,8 @@
             this.Controls.Add(this.pnlShout);
             this.Name = "CheckIn";
             this.Size = new System.Drawing.Size(226, 287);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseMove);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseDown);
             this.pnlShout.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -112,11 +112,22 @@ namespace MySquare.Service
 
 
 #if TESTING
-            Thread t = new Thread(new ThreadStart(delegate() {
-                ParseResponse((int)service, url);            
-            }));
-            t.Start();
-#else
+            string resourceFile = url.Substring(url.LastIndexOf("/") + 1).Replace(".json", "Test.txt");
+            int qs = resourceFile.IndexOf("?");
+            if (qs > -1)
+                resourceFile = resourceFile.Substring(0, qs);
+            resourceFile = "MySquare.Service." + resourceFile;
+            Stream stream = this.GetType().Assembly.GetManifestResourceStream(resourceFile);
+            if (stream != null)
+            {
+                Thread t = new Thread(new ThreadStart(delegate()
+                {
+                    ParseResponse((int)service, resourceFile, stream);
+                }));
+                t.Start();
+                return;
+            }
+#endif
             if (post)
             {
                 MemoryStream memData = new MemoryStream();
@@ -136,22 +147,17 @@ namespace MySquare.Service
             {
                 request.BeginGetResponse(new AsyncCallback(ParseResponse), service);
             }
-#endif
+
         }
 
 #if TESTING
-        private void ParseResponse(int service, string resourceFile)
+        private void ParseResponse(int service, string file, Stream stream)
         {
-            resourceFile = resourceFile.Substring(resourceFile.LastIndexOf("/") + 1).Replace(".json", "Test.txt");
-            int qs = resourceFile.IndexOf("?");
-            if (qs > -1)
-                resourceFile = resourceFile.Substring(0, qs);
-            resourceFile = "MySquare.Service." + resourceFile;
 
             object result;
             try
             {
-                using (Stream stream = this.GetType().Assembly.GetManifestResourceStream(resourceFile))
+                using (stream)
                 {
 
                     Type type = GetJsonType(service);
@@ -168,7 +174,7 @@ namespace MySquare.Service
             {
 
                 OnError(new ErrorEventArgs(new Exception(
-                    string.Format("Request on {0} failed.", resourceFile), ex)));
+                    string.Format("Request on {0} failed.", file), ex)));
                 return;
             }
 

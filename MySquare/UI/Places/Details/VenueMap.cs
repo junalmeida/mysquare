@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using MySquare.Service;
 
 namespace MySquare.UI.Places.Details
 {
@@ -34,10 +35,14 @@ namespace MySquare.UI.Places.Details
             Image image = picMap.Tag as Image;
             if (image != null)
             {
-                TextureBrush brush = new TextureBrush(image);
-                Tenor.Mobile.Drawing.RoundedRectangle.Fill(
-                    e.Graphics, new Pen(Color.White), brush, new Rectangle(0, 0, picMap.Width, picMap.Height),
-                    new SizeF(8 * factor.Width, 8 * factor.Height).ToSize());
+                try
+                {
+                    TextureBrush brush = new TextureBrush(image);
+                    Tenor.Mobile.Drawing.RoundedRectangle.Fill(
+                        e.Graphics, new Pen(Color.White), brush, new Rectangle(0, 0, picMap.Width, picMap.Height),
+                        new SizeF(8 * factor.Width, 8 * factor.Height).ToSize());
+                }
+                catch (Exception ex) { Log.RegisterLog(ex); picMap.Tag = null; }
             }
         }
     }

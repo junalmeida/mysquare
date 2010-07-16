@@ -321,14 +321,29 @@ namespace MySquare.Controller
                 else
                     View.venueInfo1.lblCategory.Text = null;
 
-                View.venueInfo1.lblPhone.Text = Venue.Phone;
+                if (!string.IsNullOrEmpty(Venue.Phone))
+                {
+                    View.venueInfo1.lblPhone.Text = Venue.Phone;
+                    View.venueInfo1.lblPhone.Enabled = true;
+                }
+                else
+                {
+                    View.venueInfo1.lblPhone.Text = "Not available";
+                    View.venueInfo1.lblPhone.Enabled = false;
+                }
 
                 if (Venue.Status != null && Venue.Status.Mayor != null)
+                {
                     View.venueInfo1.lblMayor.Text =
                         string.Concat(Venue.Status.Mayor.User.FirstName, " ", Venue.Status.Mayor.User.LastName);
+                    View.venueInfo1.lblMayor.Enabled = true;
+                    View.venueInfo1.lblMayor.Tag = Venue.Status.Mayor.User;
+                }
                 else
-                    View.venueInfo1.lblMayor.Text = null;
-
+                {
+                    View.venueInfo1.lblMayor.Text = "Not available";
+                    View.venueInfo1.lblMayor.Enabled = false;
+                }
                 if (Venue.Status != null && (Venue.Status.HereNow > 0 || Venue.Status.CheckIns > 0))
                     View.venueInfo1.lblStats.Text =
                         string.Concat(Venue.Status.HereNow, " here, ", Venue.Status.CheckIns, " check-ins.");
@@ -337,6 +352,17 @@ namespace MySquare.Controller
 
                 View.venueInfo1.imgCategory.Tag = null;
                 View.venueInfo1.imgMayor.Tag = null;
+                StringBuilder txtSpecials = new StringBuilder();
+                if (Venue.Specials != null)
+                    foreach (var sp in Venue.Specials.Where(s=> s.Kind == SpecialKind.here))
+                    {
+                        if (txtSpecials.Length > 0)
+                        {
+                            txtSpecials.AppendLine(); txtSpecials.AppendLine();
+                        }
+                        txtSpecials.Append(sp.Message); 
+                    }
+                View.venueInfo1.lblSpecials.Text = txtSpecials.ToString();
 
                 LoadTips();
 

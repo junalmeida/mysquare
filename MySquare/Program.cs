@@ -23,9 +23,12 @@ namespace MySquare
         {
             using (UI.Main mainForm = new UI.Main())
             {
+#if !DEBUG
                 try
                 {
+#endif
                     Application.Run(mainForm);
+#if !DEBUG
                 }
                 catch (ObjectDisposedException)
                 {
@@ -36,6 +39,7 @@ namespace MySquare
                     MessageBox.Show("Unknown error.\r\n" + ex.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                     Terminate();
                 }
+#endif
             }
         }
 
