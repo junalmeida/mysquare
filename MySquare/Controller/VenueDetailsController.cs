@@ -152,7 +152,7 @@ namespace MySquare.Controller
                 address.Add(Venue.City);
             if (!string.IsNullOrEmpty(Venue.State))
                 address.Add(Venue.State);
-            View.lblAddress.Text = string.Join(", ", address.ToArray());
+            View.lblAddress.Text = string.Join(", ", address.ToArray()).Replace("&", "&&");
         }
 
         public override void OnLeftSoftButtonClick()
@@ -185,13 +185,16 @@ namespace MySquare.Controller
 
         void Service_Error(object sender, ErrorEventArgs e)
         {
-            if (waitingCheckIn && !(e.Exception is RequestAbortException))
+            if (e.Exception is UnauthorizedAccessException || (waitingCheckIn && !(e.Exception is RequestAbortException)))
             {
                 ShowError(e.Exception);
                 waitingCheckIn = false;
             }
             else
             {
+                View.Invoke(new ThreadStart(delegate() {
+                    View.lblAddress.Text = "unable to read data.";
+                }));
                 Log.RegisterLog(e.Exception);
             }
         }

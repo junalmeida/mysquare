@@ -292,7 +292,7 @@ namespace MySquare.Service
                     break;
                 case ServiceResource.Venue:
                     url = "http://api.foursquare.com/v1/venue.json";
-                    auth = true;
+                    auth = !string.IsNullOrEmpty(Configuration.Login);
                     break;
                 case ServiceResource.AddTip:
                     url = "http://api.foursquare.com/v1/addtip.json";

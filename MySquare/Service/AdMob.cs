@@ -22,6 +22,7 @@ namespace MySquare.Service
             param.Add("rt", "0"); //ad request
             param.Add("u", UserAgent); //user-agent
             param.Add("i", "127.0.0.1"); //ip??
+            param.Add("o", Configuration.Cookie);
              
 #if DEBUG
             //param.Add("m", "test"); // test mode

@@ -43,6 +43,23 @@ namespace MySquare.Service
             }
         }
 
+
+        public static string Cookie
+        {
+            get
+            {
+                string cookie = (string)key.GetValue("Cookie", null);
+                if (string.IsNullOrEmpty(cookie))
+                {
+                    cookie = Guid.NewGuid().ToString().Replace("-", "");
+
+                    
+                    key.SetValue("Cookie", cookie);
+                }
+                return cookie;
+            }
+        }
+
         static int limit = 20;
         public static int ResultsLimit
         {

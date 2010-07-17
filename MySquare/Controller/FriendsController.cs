@@ -62,9 +62,11 @@ namespace MySquare.Controller
             View.ImageList = new Dictionary<string, System.Drawing.Image>();
             View.listBox.Clear();
 #if DEBUG
-            if (Environment.OSVersion.Platform != PlatformID.WinCE)
+            if (Environment.OSVersion.Platform != PlatformID.WinCE || Tenor.Mobile.Device.Device.OemInfo.IndexOf("Emulator") > -1)
             {
-                Service.GetFriendsCheckins(-22.856025, -43.375182);
+                lastLatitude = 40.769362;
+                lastLongitude = -73.971033;
+                Service.GetFriendsCheckins(lastLatitude.Value, lastLongitude.Value);
                 return;
             }
 #endif
@@ -84,7 +86,11 @@ namespace MySquare.Controller
         void position_LocationChanged(object sender, EventArgs e)
         {
             if (position.Latitude.HasValue && position.Longitude.HasValue)
+            {
+                lastLatitude = position.Latitude;
+                lastLongitude = position.Longitude;
                 Service.GetFriendsCheckins(position.Latitude.Value, position.Longitude.Value);
+            }
             else
             {
                 ShowError("Could not get your location, try again later.");

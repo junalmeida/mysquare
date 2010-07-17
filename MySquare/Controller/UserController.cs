@@ -66,10 +66,13 @@ namespace MySquare.Controller
 
         void Service_Error(object serder, MySquare.Service.ErrorEventArgs e)
         {
-            View.Invoke(new ThreadStart(delegate()
-            {
-                View.lblFriendStatus.Text = "unable to read";
-            }));
+            if (e.Exception is UnauthorizedAccessException)
+                ShowError(e.Exception);
+            else
+                View.Invoke(new ThreadStart(delegate()
+                {
+                    View.lblFriendStatus.Text = "unable to read data.";
+                }));
         }
 
 
@@ -90,7 +93,10 @@ namespace MySquare.Controller
 
             base.SaveNavigation(user);
             if (!user.fullData)
+            {
+                View.lblFriendStatus.Text = "reading user data...";
                 Service.GetUser(user.Id);
+            }
 
             
             View.lblUserName.Text = string.Format("{0} {1}", user.FirstName, user.LastName);
@@ -178,10 +184,7 @@ namespace MySquare.Controller
                 else
                     View.lblFriendStatus.Text = string.Empty;
             }
-            else
-            {
-                View.lblFriendStatus.Text = "reading user data...";
-            }
+
 
             if (user.fullData && user.Friends == null)
                 Service.GetFriends(user.Id);

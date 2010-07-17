@@ -108,13 +108,24 @@ namespace MySquare.Controller
 #if TESTING
 
             Service.SearchNearby(text, -22.856025, -43.375182);
-#else
+            return;
+#endif
+#if DEBUG
+            if (Environment.OSVersion.Platform == PlatformID.WinCE && Tenor.Mobile.Device.Device.OemInfo.IndexOf("Emulator") > -1)
+            {
+                //search on new york, near broadway
+                lastLatitude = 40.769362;
+                lastLongitude = -73.971033;
+                Service.SearchNearby(text, lastLatitude.Value, lastLongitude.Value);
+                return;
+            }
+#endif
+
             position = new WorldPosition(false, false);
             position.LocationChanged += new EventHandler(position_LocationChanged);
             position.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
 
             position.PollCell();
-#endif
 
         }
 
@@ -127,10 +138,10 @@ namespace MySquare.Controller
 
         void position_LocationChanged(object sender, EventArgs e)
         {
-            lastLatitude = position.Latitude;
-            lastLongitude = position.Longitude;
             if (position.Latitude.HasValue && position.Longitude.HasValue)
             {
+                lastLatitude = position.Latitude;
+                lastLongitude = position.Longitude;
                 Service.SearchNearby(text, position.Latitude.Value, position.Longitude.Value);
             }
             else
