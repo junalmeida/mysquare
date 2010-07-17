@@ -132,19 +132,25 @@ namespace MySquare.Controller
         internal void OpenVenue(Venue venue)
         {
             this.Venue = venue;
-
-            View.lblVenueName.Text = venue.Name;
-            List<string> address = new List<string>();
-            if (!string.IsNullOrEmpty(venue.Address))
-                address.Add(venue.Address);
-            if (!string.IsNullOrEmpty(venue.City))
-                address.Add(venue.City);
-            if (!string.IsNullOrEmpty(venue.State))
-                address.Add(venue.State);
-            View.lblAddress.Text = string.Join(", ", address.ToArray());
+            this.SaveNavigation(venue);
+            FillAddress();
 
             View.tabStrip1.SelectedIndex = 0;
             OpenSection(VenueSection.CheckIn);
+        }
+
+
+        private void FillAddress()
+        {
+            View.lblVenueName.Text = Venue.Name;
+            List<string> address = new List<string>();
+            if (!string.IsNullOrEmpty(Venue.Address))
+                address.Add(Venue.Address);
+            if (!string.IsNullOrEmpty(Venue.City))
+                address.Add(Venue.City);
+            if (!string.IsNullOrEmpty(Venue.State))
+                address.Add(Venue.State);
+            View.lblAddress.Text = string.Join(", ", address.ToArray());
         }
 
         public override void OnLeftSoftButtonClick()
@@ -164,7 +170,10 @@ namespace MySquare.Controller
                 Activate();
             }
             else
-                BaseController.OpenController(View.Parent as MySquare.UI.IView);
+            {
+                if (!base.GoBack())
+                    BaseController.OpenController(View.Parent as MySquare.UI.IView);
+            }
         }
 
         internal MySquare.FourSquare.Venue Venue
@@ -180,7 +189,9 @@ namespace MySquare.Controller
                 waitingCheckIn = false;
             }
             else
+            {
                 Log.RegisterLog(e.Exception);
+            }
         }
 
         #region CheckIn
@@ -312,14 +323,17 @@ namespace MySquare.Controller
 
                 if (!Venue.fullData)
                 {
+                    View.lblAddress.Text = "reading place details...";
                     Service.GetVenue(Venue.Id);
                 }
-
+                else
+                    FillAddress();
 
                 if (Venue.PrimaryCategory != null)
                     View.venueInfo1.lblCategory.Text = Venue.PrimaryCategory.FullName.Replace(":", " > ").Replace("&", "&&");
                 else
                     View.venueInfo1.lblCategory.Text = null;
+           
 
                 if (!string.IsNullOrEmpty(Venue.Phone))
                 {

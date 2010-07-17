@@ -76,5 +76,10 @@ namespace MySquare.UI
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("http://foursquare.com/legal/terms", string.Empty));
         }
 
+        private void linkLabel2_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("http://risingmobility.com/mysquare", string.Empty));
+        }
+
     }
 }

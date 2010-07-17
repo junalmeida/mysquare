@@ -48,6 +48,7 @@ namespace MySquare.UI.Friends
                     avatar.Dispose();
                     avatar = null;
                 }
+                picAvatar.Invalidate();
             }
         }
 

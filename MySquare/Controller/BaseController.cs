@@ -14,6 +14,47 @@ namespace MySquare.Controller
 
     abstract class BaseController : IDisposable
     {
+        internal static Stack<object[]> Navigation = new Stack<object[]>();
+
+        protected void SaveNavigation(object value)
+        {
+            if (Navigation.Count > 0)
+            {
+                object[] last = Navigation.Peek();
+                if (last[0] == this && last[1] == value)
+                    return;
+            }
+            Navigation.Push(new object[] { this, value });
+        }
+
+        protected bool GoBack()
+        {
+            if (Navigation.Count == 0)
+                return false;
+            object[] last = Navigation.Pop();
+            if (Navigation.Count == 0)
+                return false;
+            last = Navigation.Pop();
+            BaseController controller = last[0] as BaseController;
+            if (controller is VenueDetailsController)
+            {
+                controller.Activate();
+                ((VenueDetailsController)controller).OpenVenue((Venue)last[1]);
+            }
+            else if (controller is UserController)
+            {
+                controller.Activate();
+                ((UserController)controller).LoadUser((User)last[1]);
+            }
+            else
+                return false;
+            CurrentController = Controllers.IndexOf(controller);
+            return true;
+        }
+
+
+
+
         public BaseController()
         {
             Service = new Service.FourSquare();

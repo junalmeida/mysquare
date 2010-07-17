@@ -17,12 +17,11 @@ namespace MySquare.Controller
         public UserController(UserDetail view)
             : base(view)
         {
-            Service.UserResult+=new UserEventHandler(Service_UserResult);
+            Service.UserResult += new UserEventHandler(Service_UserResult);
             Service.FriendsResult += new FriendsEventHandler(Service_FriendsResult);
+            Service.Error += new MySquare.Service.ErrorEventHandler(Service_Error);
         }
-
-
-
+        
         public override void Activate()
         {
             View.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -37,6 +36,7 @@ namespace MySquare.Controller
 
             LeftSoftButtonText = string.Empty;
             LeftSoftButtonEnabled = false;
+            main.header.Tabs[1].Selected = true;
         }
 
         public override void OnLeftSoftButtonClick()
@@ -46,7 +46,8 @@ namespace MySquare.Controller
 
         public override void OnRightSoftButtonClick()
         {
-            OpenController((View.Parent as Main).friends1);
+            if (!base.GoBack())
+                OpenController((View.Parent as Main).friends1);
         }
 
         public override void Deactivate()
@@ -62,9 +63,20 @@ namespace MySquare.Controller
             LoadUser(this.user);
         }
 
+
+        void Service_Error(object serder, MySquare.Service.ErrorEventArgs e)
+        {
+            View.Invoke(new ThreadStart(delegate()
+            {
+                View.lblFriendStatus.Text = "unable to read";
+            }));
+        }
+
+
         User user;
         internal void LoadUser(MySquare.FourSquare.User user)
         {
+
             if (View.InvokeRequired)
             {
                 View.Invoke(new ThreadStart(delegate()
@@ -75,10 +87,12 @@ namespace MySquare.Controller
             }
 
             this.user = user;
+
+            base.SaveNavigation(user);
             if (!user.fullData)
                 Service.GetUser(user.Id);
 
-
+            
             View.lblUserName.Text = string.Format("{0} {1}", user.FirstName, user.LastName);
             if (!string.IsNullOrEmpty(user.ImageUrl))
                 View.Avatar = Service.DownloadImageSync(user.ImageUrl);
@@ -122,31 +136,89 @@ namespace MySquare.Controller
                 View.userInfo1.lblTwitter.Enabled = false;
             }
 
-
-            if (user.FriendStatus.HasValue)
-                switch (user.FriendStatus.Value)
-                {
-                    case FriendStatus.friend:
-                        View.lblFriendStatus.Text = "is your friend";
-                        break;
-                    case FriendStatus.pendingyou:
-                        View.lblFriendStatus.Text = "is waiting you to accept";
-                        break;
-                    case FriendStatus.pendingthem:
-                        View.lblFriendStatus.Text = "have not answered yet";
-                        break;
-                    default:
-                        break;
-                }
+            if (user.CheckIn == null)
+            {
+                View.userInfo1.lblShout.Text = null;
+                View.userInfo1.lblLastSeen.Text = null;
+            }
             else
-                View.lblFriendStatus.Text = string.Empty;
+            {
+                View.userInfo1.lblShout.Text = user.CheckIn.Shout;
+                if (user.CheckIn.Venue == null)
+                {
+                    View.userInfo1.lblLastSeen.Text = null;
+                    View.userInfo1.lblLastSeen.Tag = null;
+                }
+                else
+                {
+                    View.userInfo1.lblLastSeen.Text = user.CheckIn.Venue.ToString();
+                    View.userInfo1.lblLastSeen.Tag = user.CheckIn.Venue;
+                }
+            }
+
+            View.userInfo1.Badges = user.Badges;
+
+            if (user.fullData)
+            {
+                if (user.FriendStatus.HasValue)
+                    switch (user.FriendStatus.Value)
+                    {
+                        case FriendStatus.friend:
+                            View.lblFriendStatus.Text = "is your friend";
+                            break;
+                        case FriendStatus.pendingyou:
+                            View.lblFriendStatus.Text = "is waiting you to accept";
+                            break;
+                        case FriendStatus.pendingthem:
+                            View.lblFriendStatus.Text = "have not answered yet";
+                            break;
+                        default:
+                            break;
+                    }
+                else
+                    View.lblFriendStatus.Text = string.Empty;
+            }
+            else
+            {
+                View.lblFriendStatus.Text = "reading user data...";
+            }
 
             if (user.fullData && user.Friends == null)
                 Service.GetFriends(user.Id);
             else
                 LoadFriends(user.Friends);
 
+            LoadBadges(user.Badges);
+        }
 
+
+        private void LoadBadges(Badge[] badges)
+        {
+            View.userInfo1.imageList = new Dictionary<string, byte[]>();
+            if (badges != null)
+            {
+                Thread t = new Thread(new ThreadStart(delegate()
+                {
+                    foreach (Badge b in badges)
+                    {
+                        if (!string.IsNullOrEmpty(b.ImageUrl))
+                        {
+                            try
+                            {
+                                byte[] image = Service.DownloadImageSync(b.ImageUrl);
+
+                                if (!View.userInfo1.imageList.ContainsKey(b.ImageUrl))
+                                {
+                                    View.userInfo1.imageList.Add(b.ImageUrl, image);
+                                    View.Invoke(new ThreadStart(delegate() { View.userInfo1.pnlBadges.Invalidate(); }));
+                                }
+                            }
+                            catch { }
+                        }
+                    }
+                }));
+                t.Start();
+            }
         }
 
 

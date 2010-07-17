@@ -31,6 +31,7 @@
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.lblHelpText = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // pictureBox
@@ -60,13 +61,24 @@
             // linkLabel1
             // 
             this.linkLabel1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.linkLabel1.Location = new System.Drawing.Point(62, 234);
+            this.linkLabel1.Location = new System.Drawing.Point(10, 234);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(115, 20);
+            this.linkLabel1.Size = new System.Drawing.Size(112, 20);
             this.linkLabel1.TabIndex = 2;
             this.linkLabel1.Text = "FourSquare Terms";
             this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.linkLabel1.Click += new System.EventHandler(this.linkLabel1_Click);
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.linkLabel2.Location = new System.Drawing.Point(132, 234);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(92, 20);
+            this.linkLabel2.TabIndex = 5;
+            this.linkLabel2.Text = "MySquare Web";
+            this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.linkLabel2.Click += new System.EventHandler(this.linkLabel2_Click);
             // 
             // Help
             // 
@@ -74,6 +86,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.lblHelpText);
             this.Controls.Add(this.pictureBox);
@@ -90,5 +103,6 @@
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Label lblHelpText;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabel2;
     }
 }

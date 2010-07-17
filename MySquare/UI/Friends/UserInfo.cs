@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using Tenor.Mobile.Drawing;
 using MySquare.Properties;
+using MySquare.FourSquare;
+using MySquare.Controller;
 
 namespace MySquare.UI.Friends
 {
@@ -78,5 +80,111 @@ namespace MySquare.UI.Friends
                     lblTwitter.Top,
                     lblTwitter.Height - padd, lblTwitter.Height - padd));
         }
+
+
+
+        private void lblShout_TextChanged(object sender, EventArgs e)
+        {
+            lblShout.Visible = !string.IsNullOrEmpty(lblShout.Text);
+            lblShoutT.Visible = lblShout.Visible;
+
+        }
+
+        private void lblLastSeen_TextChanged(object sender, EventArgs e)
+        {
+            lblLastSeen.Visible = !string.IsNullOrEmpty(lblLastSeen.Text);
+            lblLastSeenT.Visible = lblLastSeen.Visible;
+
+        }
+
+        internal Dictionary<string, byte[]> imageList;
+        Badge[] badges;
+
+        internal Badge[] Badges
+        {
+            get { return badges; }
+            set
+            {
+                badges = value;
+                pnlBadges.Visible = value != null && value.Length > 0;
+                pnlBadges.Height = 32;
+                pnlBadges.Invalidate();
+                lblBadgesT.Visible = pnlBadges.Visible;
+
+            }
+        }
+
+
+        Size ellipse = new Size(
+            8 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width, 8 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height);
+        private void pnlBadges_Paint(object sender, PaintEventArgs e)
+        {
+            
+            int stampSize = 28 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
+            int padding = 4 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
+            int separator = padding * 3;
+            Rectangle rect = new Rectangle(
+                padding, padding,
+                ((stampSize + separator) * Convert.ToInt32((pnlBadges.Width - padding) / (stampSize + separator))) - padding, 
+                pnlBadges.Height - (padding * 2));
+
+            rect.X = (pnlBadges.Width / 2) - (rect.Width / 2);
+
+            RoundedRectangle.Fill(e.Graphics, new Pen(Color.Gray), new SolidBrush(Color.White), rect, ellipse);
+
+
+            int left = rect.Left + padding;
+            int top = padding * 2;
+            int i = 0;
+            foreach (Badge b in Badges)
+            {
+                if (imageList.ContainsKey(b.ImageUrl))
+                {
+                    AlphaImage image = new AlphaImage(imageList[b.ImageUrl]);
+                    image.Draw(e.Graphics, new Rectangle(left, top, stampSize, stampSize));
+
+                    left += stampSize + separator;
+                    if (left + stampSize > rect.Right && i < Badges.Length - 1)
+                    {
+                        left = rect.Left + padding;
+                        top += stampSize + separator;
+                    }
+                }
+                i++;
+            }
+
+            if (pnlBadges.Height != top + stampSize + (padding * 2))
+                pnlBadges.Height = top + stampSize + (padding * 2);
+        }
+
+
+        #region Scroll Control
+        int originalMouse;
+        int originalScroll;
+        private void VenueInfo_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                originalMouse = e.Y;
+                originalScroll = this.AutoScrollPosition.Y;
+            }
+        }
+
+        private void VenueInfo_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.AutoScrollPosition = new Point(0, (originalMouse - e.Y) - originalScroll);
+            }
+        }
+        #endregion
+
+        private void lblLastSeen_Click(object sender, EventArgs e)
+        {
+            Venue venue = lblLastSeen.Tag as Venue;
+            if (venue != null)
+                (BaseController.OpenController((Parent.Parent as Main).venueDetails1) as VenueDetailsController).OpenVenue(venue);
+        }
+
     }
 }

@@ -230,6 +230,15 @@ namespace MySquare.Service
                 else
                     cacheVenues.Add(e.Venue);
 
+                if (e.Venue.Status != null && e.Venue.Status.Mayor != null)
+                {
+                    index = cacheUsers.IndexOf(e.Venue.Status.Mayor.User);
+                    if (index == -1)
+                        cacheUsers.Add(e.Venue.Status.Mayor.User);
+                    else if (cacheUsers[index].fullData)
+                        e.Venue.Status.Mayor.User = cacheUsers[index];
+                }
+
                 VenueResult(this, e);
             }
         }
