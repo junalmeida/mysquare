@@ -55,7 +55,16 @@ namespace MySquare.Controller
 
         public override void OnLeftSoftButtonClick()
         {
-            Search();
+            if (View.list1.txtSearch.Visible)
+            {
+                LeftSoftButtonText = "&Refresh";
+                View.list1.txtSearch.Visible = false;
+                ((UI.Main)View.Parent).inputPanel.Enabled = false;
+            }
+            else
+            {
+                Search();
+            }
         }
 
         public override void OnRightSoftButtonClick()
@@ -73,6 +82,7 @@ namespace MySquare.Controller
             {
                 View.list1.txtSearch.Visible = true;
                 View.list1.txtSearch.Focus();
+                LeftSoftButtonText = "&Cancel";
             }
         }
 
@@ -117,8 +127,12 @@ namespace MySquare.Controller
 
         void position_LocationChanged(object sender, EventArgs e)
         {
+            lastLatitude = position.Latitude;
+            lastLongitude = position.Longitude;
             if (position.Latitude.HasValue && position.Longitude.HasValue)
+            {
                 Service.SearchNearby(text, position.Latitude.Value, position.Longitude.Value);
+            }
             else
             {
                 ShowError("Could not get your location, try again later.");

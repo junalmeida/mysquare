@@ -74,6 +74,10 @@ namespace MySquare.Controller
         protected static IList<BaseController> Controllers = new List<BaseController>();
         protected static int CurrentController = -1;
 
+        protected static double? lastLatitude;
+        protected static double? lastLongitude;
+        protected static string[] lastTags;
+
         internal static void Terminate()
         {
             foreach (var ct in Controllers)
@@ -139,6 +143,8 @@ namespace MySquare.Controller
                 Service = null;
             }
         }
+
+        
     }
 
     abstract class BaseController<T> : BaseController where T : IView

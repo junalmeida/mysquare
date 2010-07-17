@@ -73,12 +73,20 @@ namespace MySquare.UI
 
         private void linkLabel1_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("http://foursquare.com/legal/terms", string.Empty));
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("http://foursquare.com/legal/terms", string.Empty));
+            }
+            catch { }
         }
 
         private void linkLabel2_Click(object sender, EventArgs e)
         {
+            try
+            {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("http://risingmobility.com/mysquare", string.Empty));
+            }
+            catch { }
         }
 
     }

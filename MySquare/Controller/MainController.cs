@@ -126,6 +126,8 @@ namespace MySquare.Controller
         {
             View.Reset();
             BaseController.OpenController(View.places1);
+            StartAdTimer();
+            
         }
 
         public override void OnRightSoftButtonClick()
@@ -144,5 +146,43 @@ namespace MySquare.Controller
             View.Dispose();
             base.Dispose();
         }
+
+        #region AdSense
+
+        AdMob adMob;
+        System.Threading.Timer timer;
+
+        private void StartAdTimer()
+        {
+            if (timer == null)
+                timer = new System.Threading.Timer(new TimerCallback(this.GetAdSense), null,
+           7000, 7000 * 5);
+        }
+
+        private void GetAdSense(object state)
+        {
+            if (adMob == null)
+            {
+                //initialize
+                adMob = new AdMob();
+                adMob.AdArrived += new AdEventHandler(adMob_AdArrived);
+            }
+            //todo: check if mainform is activated
+            adMob.GetAd(lastLatitude, lastLongitude, lastTags);
+
+        }
+
+        void adMob_AdArrived(object sender, AdEventArgs e)
+        {
+            timer.Change(60000 * 4, 60000 * 4);
+            View.Invoke(new ThreadStart(delegate()
+            {
+                View.picAd.Tag = e;
+                View.picAd.Invalidate();
+            }));
+        }
+
+
+        #endregion
     }
 }

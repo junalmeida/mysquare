@@ -134,6 +134,8 @@ namespace MySquare.Controller
             this.Venue = venue;
             this.SaveNavigation(venue);
             FillAddress();
+            if (venue.Tags != null && venue.Tags.Length > 0)
+                lastTags = venue.Tags;
 
             View.tabStrip1.SelectedIndex = 0;
             OpenSection(VenueSection.CheckIn);

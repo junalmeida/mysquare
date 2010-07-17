@@ -38,7 +38,8 @@
             this.settings1 = new MySquare.UI.Settings.Settings();
             this.places1 = new MySquare.UI.Places.Places();
             this.inputPanel = new Microsoft.WindowsCE.Forms.InputPanel(this.components);
-            this.picAd = new System.Windows.Forms.PictureBox();
+            this.picAd = new System.Windows.Forms.Panel();
+            this.lnkTextLink = new System.Windows.Forms.LinkLabel();
             this.friends1 = new MySquare.UI.Friends.Friends();
             this.userDetail1 = new MySquare.UI.Friends.UserDetail();
             this.createVenue1 = new MySquare.UI.Places.Create.CreateVenue();
@@ -47,6 +48,7 @@
             this.contextHelp1 = new MySquare.UI.ContextHelp();
             this.timerTutorial = new System.Windows.Forms.Timer();
             this.timerAds = new System.Windows.Forms.Timer();
+            this.picAd.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -105,12 +107,25 @@
             // 
             // picAd
             // 
+            this.picAd.BackColor = System.Drawing.Color.Black;
+            this.picAd.Controls.Add(this.lnkTextLink);
             this.picAd.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.picAd.Location = new System.Drawing.Point(0, 218);
             this.picAd.Name = "picAd";
             this.picAd.Size = new System.Drawing.Size(240, 50);
             this.picAd.Visible = false;
             this.picAd.Paint += new System.Windows.Forms.PaintEventHandler(this.picAd_Paint);
+            // 
+            // lnkTextLink
+            // 
+            this.lnkTextLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkTextLink.Location = new System.Drawing.Point(0, 18);
+            this.lnkTextLink.Name = "lnkTextLink";
+            this.lnkTextLink.Size = new System.Drawing.Size(240, 20);
+            this.lnkTextLink.TabIndex = 0;
+            this.lnkTextLink.Text = "linkLabel1";
+            this.lnkTextLink.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lnkTextLink.Click += new System.EventHandler(this.lnkTextLink_Click);
             // 
             // friends1
             // 
@@ -192,6 +207,7 @@
             this.Name = "Main";
             this.Text = "MySquare";
             this.Load += new System.EventHandler(this.Main_Load);
+            this.picAd.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -203,8 +219,6 @@
         internal System.Windows.Forms.MenuItem mnuRight;
         internal MySquare.UI.Settings.Settings settings1;
         internal System.Windows.Forms.Label lblError;
-        private Microsoft.WindowsCE.Forms.InputPanel inputPanel;
-        private System.Windows.Forms.PictureBox picAd;
         internal MySquare.UI.Friends.Friends friends1;
         internal MySquare.UI.Friends.UserDetail userDetail1;
         internal MySquare.UI.Places.Create.CreateVenue createVenue1;
@@ -214,6 +228,9 @@
         private ContextHelp contextHelp1;
         private System.Windows.Forms.Timer timerTutorial;
         private System.Windows.Forms.Timer timerAds;
+        internal Microsoft.WindowsCE.Forms.InputPanel inputPanel;
+        internal System.Windows.Forms.Panel picAd;
+        private System.Windows.Forms.LinkLabel lnkTextLink;
     }
 }
 

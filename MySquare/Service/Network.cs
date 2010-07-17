@@ -28,7 +28,7 @@ namespace MySquare.Service
 
         #region Events
         internal event ErrorEventHandler Error;
-        protected void OnError(ErrorEventArgs e)
+        protected virtual void OnError(ErrorEventArgs e)
         {
             if (Error != null)
                 Error(this, e);
@@ -51,6 +51,7 @@ namespace MySquare.Service
 
 
         private string userAgent;
+        protected string UserAgent { get { return userAgent; } }
 
         HttpWebRequest request = null;
         public void Abort()
@@ -243,13 +244,21 @@ namespace MySquare.Service
                             System.Diagnostics.Trace.WriteLine(responseTxt);
 
                             Type type = GetJsonType(service);
-
-
-                            Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
-                            //Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
-                            Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
-                            result = serializer.Deserialize(reader, type);
-
+                            if (type == null)
+                            {
+#if DEBUG
+                                if (string.IsNullOrEmpty(responseTxt))
+                                    throw new WebException("Empty response.");
+#endif
+                                result = responseTxt;
+                            }
+                            else
+                            {
+                                Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+                                //Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
+                                Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
+                                result = serializer.Deserialize(reader, type);
+                            }
                         }
 
                     }

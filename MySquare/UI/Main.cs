@@ -9,6 +9,7 @@ using MySquare.Properties;
 using MySquare.Controller;
 using Tenor.Mobile.UI;
 using Tenor.Mobile.Drawing;
+using MySquare.Service;
 
 namespace MySquare.UI
 {
@@ -82,7 +83,7 @@ namespace MySquare.UI
         private void header_SelectedTabChanged(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.Default;
-
+            Controller.BaseController.Navigation.Clear();
             lblError.Visible = false;
             var tab = header.Tabs[header.SelectedIndex];
             if (tab == tabPlaces)
@@ -116,6 +117,10 @@ namespace MySquare.UI
             base.OnActivated(e);
             AdjustInputPanel();
 
+#if DEBUG
+            timerAds.Enabled = true;
+            return;
+#endif
             if (MySquare.Service.Configuration.IsFirstTime())
                 timerTutorial.Enabled = true;
             else
@@ -212,7 +217,7 @@ namespace MySquare.UI
         #region AdSense
         private void timerAds_Tick(object sender, EventArgs e)
         {
-            if (!inputPanel.Enabled && !picAd.Visible)
+            if (!inputPanel.Enabled && !picAd.Visible && picAd.Tag != null)
             {
                 picAd.Height = 1;
                 picAd.Visible = true;
@@ -246,6 +251,32 @@ namespace MySquare.UI
             e.Graphics.FillRectangle(
                 new SolidBrush(Color.Black),
                 rect);
+
+            if (picAd.Tag != null)
+            {
+                AdEventArgs ad = picAd.Tag as AdEventArgs;
+                if (ad != null && lnkTextLink.Text != ad.Text && ad.Text != null)
+                    lnkTextLink.Text = ad.Text.Replace("&", "&&");
+            }
+        }
+                        
+                        
+
+        private void lnkTextLink_Click(object sender, EventArgs e)
+        {
+            if (picAd.Tag != null)
+            {
+                AdEventArgs ad = picAd.Tag as AdEventArgs;
+                if (ad != null)
+                {
+                    try
+                    {
+                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(ad.Link, string.Empty));
+                    }
+                    catch { }
+                }
+
+            }
         }
         #endregion
 
