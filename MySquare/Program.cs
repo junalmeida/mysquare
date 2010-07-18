@@ -13,13 +13,13 @@ using MySquare.Controller;
 [assembly: System.Reflection.Obfuscation(Feature = "Apply to MySquare.FourSquare.*: all", Exclude = true, ApplyToMembers = true)]
 namespace MySquare
 {
-    static class Program
+    public static class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [MTAThread]
-        static void Main()
+        public static void Main()
         {
             using (UI.Main mainForm = new UI.Main())
             {
