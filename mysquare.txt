@@ -1,1 +1,1 @@
-1.0.1.1
+{version: "1.0.1.1",cabinet: "http://www.risingmobility.com/mysquare-1.0-beta-1.cab"}
