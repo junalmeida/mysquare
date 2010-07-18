@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MySquare.Launcher")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A FourSquare client.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MySquare.Launcher")]
-[assembly: AssemblyCopyright("Copyright ©  2010")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Rising Mobility")]
+[assembly: AssemblyProduct("MySquare")]
+[assembly: AssemblyCopyright("Rising Mobility")]
+[assembly: AssemblyTrademark("Rising Mobility")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.*")]
 
 // Below attribute is to suppress FxCop warning "CA2232 : Microsoft.Usage : Add STAThreadAttribute to assembly"
 // as Device app does not support STA thread.

@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Windows.Forms;
 using System.Diagnostics;
-using Tenor.Mobile.Drawing;
-using MySquare.Properties;
-using MySquare.FourSquare;
+using System.Drawing;
+using System.Windows.Forms;
 using MySquare.Controller;
+using MySquare.FourSquare;
+using MySquare.Properties;
+using Tenor.Mobile.Drawing;
 
 namespace MySquare.UI.Friends
 {

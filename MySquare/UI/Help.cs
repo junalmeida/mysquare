@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 using MySquare.Properties;
-using Tenor.Mobile.Diagnostics;
 
 namespace MySquare.UI
 {

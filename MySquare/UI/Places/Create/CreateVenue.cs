@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
-using Tenor.Mobile.Drawing;
 using MySquare.Properties;
+using Tenor.Mobile.Drawing;
 
 namespace MySquare.UI.Places.Create
 {
