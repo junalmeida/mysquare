@@ -23,7 +23,6 @@ namespace MySquare.Controller
             this.View.TabChanged += new EventHandler(venueDetails_TabChanged);
             Service.CheckInResult += new CheckInEventHandler(Service_CheckInResult);
             Service.VenueResult += new VenueEventHandler(Service_VenueResult);
-            Service.ImageResult += new ImageResultEventHandler(Service_ImageResult);
             Service.AddTipResult += new AddTipEventHandler(Service_AddTipResult);
             Service.Error += new ErrorEventHandler(Service_Error);
 
@@ -425,35 +424,32 @@ namespace MySquare.Controller
 
         void DownloadMapPosition()
         {
+            ((Main)this.View.Parent).inputPanel.Enabled = false;
 
             PictureBox box = this.View.venueMap1.picMap;
             if (box.Tag == null)
             {
+                Size size = box.Size;
+                box.Tag = "downloading";
 
-                CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
-                string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
-                    box.Width, box.Height,
-                    Venue.Latitude.ToString(culture),
-                    Venue.Longitude.ToString(culture));
-
-                Service.DownloadImage(googleMapsUrl);
-            }
-        }
-
-
-        void Service_ImageResult(object serder, ImageEventArgs e)
-        {
-            if (e.Url.StartsWith("http://maps.google.com"))
-            {
-                PictureBox box = this.View.venueMap1.picMap;
-                var image = new System.Drawing.Bitmap(new System.IO.MemoryStream(e.Image));
-
-                box.Invoke(new ThreadStart(delegate()
+                Thread t = new Thread(new ThreadStart(delegate()
                 {
-                    box.Image = null;
-                    box.Tag = image;
-                    box.Invalidate();
+                    CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
+                    string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
+                        size.Width, size.Height,
+                        Venue.Latitude.ToString(culture),
+                        Venue.Longitude.ToString(culture));
+
+                    byte[] buffer = Service.DownloadImageSync(googleMapsUrl, false);
+
+                    this.View.Invoke(new ThreadStart(delegate()
+                    {
+                        box.Image = null;
+                        box.Tag = buffer;
+                        box.Invalidate();
+                    }));
                 }));
+                t.Start();
             }
         }
 

@@ -11,6 +11,8 @@ using System.Globalization;
 using System.Threading;
 using MySquare.FourSquare;
 using MySquare.Service;
+using System.Drawing;
+using Tenor.Mobile.Drawing;
 
 namespace MySquare.Controller
 {
@@ -21,12 +23,12 @@ namespace MySquare.Controller
         public CreateVenueController(CreateVenue view)
             : base(view)
         {
-            Service.ImageResult += new ImageResultEventHandler(Service_ImageResult);
             Service.VenueResult += new VenueEventHandler(Service_VenueResult);
             google = new Google();
             google.GeocodeResult += new GeocodeEventHandler(Service_GeocodeResult);
             google.Error += new MySquare.Service.ErrorEventHandler(google_Error);
             View.picMap.Click += new EventHandler(picMap_Click);
+            View.picMap.Resize += new EventHandler(picMap_Resize);
         }
 
 
@@ -102,10 +104,15 @@ namespace MySquare.Controller
             DownloadMapPosition();
         }
 
-        void picMap_Click(object sender, EventArgs e)
+        Size oldSize = Size.Empty;
+        void picMap_Resize(object sender, EventArgs e)
         {
-            google.GetGeocoding(pos.Latitude.Value, pos.Longitude.Value);
+            Size current = ((Control)sender).Size;
+            if (pos != null && pos.Latitude.HasValue && pos.Longitude.HasValue && !Size.Equals(current, oldSize))
+                DownloadMapPosition();
+            oldSize = current;
         }
+
 
         public override void OnLeftSoftButtonClick()
         {
@@ -124,53 +131,67 @@ namespace MySquare.Controller
         {
 
             PictureBox box = this.View.picMap;
-            System.Drawing.Size size = new System.Drawing.Size();
+
+            Size size = new Size();
             box.Invoke(new ThreadStart(delegate()
             {
                 size = box.Size;
             }));
 
-            CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
-            double latitude, longitude;
+            Thread t = new Thread(new ThreadStart(delegate()
+            {
+                CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
+                double latitude, longitude;
 #if DEBUG
-            if (Environment.OSVersion.Platform != PlatformID.WinCE)
-            {
-                latitude = -22.856025;
-                longitude = -43.375182;
-            }
-            else
-            {
-                latitude = pos.Latitude.Value;
-                longitude = pos.Longitude.Value;
-            }
+                if (Environment.OSVersion.Platform != PlatformID.WinCE)
+                {
+                    latitude = -22.856025;
+                    longitude = -43.375182;
+                }
+                else
+                {
+                    latitude = pos.Latitude.Value;
+                    longitude = pos.Longitude.Value;
+                }
 #else
             latitude = pos.Latitude.Value;
             longitude = pos.Longitude.Value;
 #endif
+                View.latitudeCenter = latitude;
+                View.longitudeCenter = longitude;
+                View.latitudeSelected = null;
+                View.longitudeSelected = null;
+                View.selectedPoint = Point.Empty;
 
+                string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
+                    size.Width, size.Height,
+                    latitude.ToString(culture),
+                    longitude.ToString(culture));
+                byte[] buffer = Service.DownloadImageSync(googleMapsUrl, false);
 
-            string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
-                size.Width, size.Height,
-                latitude.ToString(culture),
-                longitude.ToString(culture));
-
-            Service.DownloadImage(googleMapsUrl);
-        }
-
-
-        void Service_ImageResult(object serder, ImageEventArgs e)
-        {
-            View.Invoke(new ThreadStart(delegate()
-            {
-                if (View.Visible && e.Url.StartsWith("http://maps.google.com"))
+                this.View.Invoke(new ThreadStart(delegate()
                 {
-                    View.Map = new System.Drawing.Bitmap(new System.IO.MemoryStream(e.Image));
                     View.FixType = pos != null && pos.FixType == FixType.Network ? "Low precision" : "High precision";
-                }
+                    box.Image = null;
+                    if (box.Tag != null && box.Tag is IDisposable)
+                        ((IDisposable)box.Tag).Dispose();
+                    box.Tag = buffer;
+                    box.Invalidate();
+
+                }));
             }));
+            t.Start();
+
         }
 
-        #endregion
+
+        void picMap_Click(object sender, EventArgs e)
+        {
+            if (View.latitudeSelected.HasValue && View.longitudeSelected.HasValue)
+                google.GetGeocoding(View.latitudeSelected.Value, View.longitudeSelected.Value);
+            else
+                google.GetGeocoding(pos.Latitude.Value, pos.Longitude.Value);
+        }
 
         void Service_GeocodeResult(object serder, GeocodeEventArgs e)
         {
@@ -201,10 +222,16 @@ namespace MySquare.Controller
                         }
                     }
                     if (!string.IsNullOrEmpty(View.txtAddress.Text) && !string.IsNullOrEmpty(number))
+                    {
+                        int i = number.IndexOf("-");
+                        if (i > -1)
+                            number = number.Substring(0, i);
                         View.txtAddress.Text += ", " + number;
+                    }
                 }
             }));
         }
+        #endregion
 
 
         #region CreateVenue
@@ -216,6 +243,7 @@ namespace MySquare.Controller
                 MessageBox.Show("Type in the name of this place.", "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return;
             }
+            Cursor.Current = Cursors.WaitCursor;
 
 
             double lat = 0, lng = 0;
@@ -232,6 +260,7 @@ namespace MySquare.Controller
                 View.txtPhone.Text, lat, lng, null);
             WaitThread.Reset();
             WaitThread.WaitOne();
+            Cursor.Current = Cursors.Default;
 
             if (createdVenue != null)
             {

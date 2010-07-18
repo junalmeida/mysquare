@@ -16,8 +16,12 @@ namespace MySquare.UI
 {
     internal partial class Main : Form, IView
     {
-
         public static Image CreateRoundedAvatar(byte[] original, int imageSize, SizeF scaleFactor)
+        {
+            return CreateRoundedAvatar(original, new Size(imageSize, imageSize), scaleFactor);
+        }
+
+        public static Image CreateRoundedAvatar(byte[] original, Size imageSize, SizeF scaleFactor)
         {
             using (MemoryStream mem = new MemoryStream(original))
             using (Bitmap bmp = new Bitmap(mem))
@@ -28,12 +32,17 @@ namespace MySquare.UI
 
         public static Image CreateRoundedAvatar(Image original, int imageSize, SizeF scaleFactor)
         {
-            using (Bitmap bmp1 = new Bitmap(imageSize, imageSize))
+            return CreateRoundedAvatar(original, new Size(imageSize, imageSize), scaleFactor);
+        }
+
+        public static Image CreateRoundedAvatar(Image original, Size imageSize, SizeF scaleFactor)
+        {
+            using (Bitmap bmp1 = new Bitmap(imageSize.Width, imageSize.Height))
             {
                 using (Graphics g = Graphics.FromImage(bmp1))
                     g.DrawImage(original, new Rectangle(0, 0, bmp1.Width, bmp1.Height), new Rectangle(0, 0, original.Width, original.Height), GraphicsUnit.Pixel);
 
-                Bitmap bmp2 = new Bitmap(imageSize, imageSize);
+                Bitmap bmp2 = new Bitmap(imageSize.Width, imageSize.Height);
                 using (TextureBrush textureBrush = new TextureBrush(bmp1))
                 using (Graphics g = Graphics.FromImage(bmp2))
                 {

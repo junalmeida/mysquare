@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using MySquare.Service;
+using Tenor.Mobile.Drawing;
 
 namespace MySquare.UI.Places.Details
 {
@@ -32,15 +33,16 @@ namespace MySquare.UI.Places.Details
 
         private void picMap_Paint(object sender, PaintEventArgs e)
         {
-            Image image = picMap.Tag as Image;
-            if (image != null)
+            if (picMap.Tag != null && picMap.Tag is byte[])
             {
+                picMap.Tag = new AlphaImage(Main.CreateRoundedAvatar((byte[])picMap.Tag, picMap.Size, factor));
+            }
+            if (picMap.Tag != null && picMap.Tag is AlphaImage)
+            {
+                AlphaImage image = (AlphaImage)picMap.Tag;
                 try
                 {
-                    TextureBrush brush = new TextureBrush(image);
-                    Tenor.Mobile.Drawing.RoundedRectangle.Fill(
-                        e.Graphics, new Pen(Color.White), brush, new Rectangle(0, 0, picMap.Width, picMap.Height),
-                        new SizeF(8 * factor.Width, 8 * factor.Height).ToSize());
+                    image.Draw(e.Graphics, new Rectangle(0, 0, image.Width, image.Height));
                 }
                 catch (Exception ex) { Log.RegisterLog(ex); picMap.Tag = null; }
             }

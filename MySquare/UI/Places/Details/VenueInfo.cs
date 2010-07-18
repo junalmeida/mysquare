@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 using MySquare.Controller;
 using MySquare.FourSquare;
+using Tenor.Mobile.Drawing;
 
 namespace MySquare.UI.Places.Details
 {
@@ -46,6 +47,14 @@ namespace MySquare.UI.Places.Details
 
         }
 
+
+        SizeF factor;
+        protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
+        {
+            this.factor = factor;
+            base.ScaleControl(factor, specified);
+        }
+
         private void Img_Paint(object sender, PaintEventArgs e)
         {
 
@@ -55,17 +64,23 @@ namespace MySquare.UI.Places.Details
                 try
                 {
                     if (control.Tag is byte[])
-                        control.Tag = new Tenor.Mobile.Drawing.AlphaImage((byte[])control.Tag);
-                    Tenor.Mobile.Drawing.AlphaImage image = (Tenor.Mobile.Drawing.AlphaImage)control.Tag;
+                        control.Tag = new AlphaImage
+                            (Main.CreateRoundedAvatar((byte[])control.Tag, control.Width, factor));
 
+                    AlphaImage image = (AlphaImage)control.Tag;
                     Rectangle rect = new Rectangle(0, 0, control.Width, control.Height);
-
-
                     image.Draw(e.Graphics, rect);
                 }
                 catch { control.Tag = null; }
-
             }
+        }
+
+        ~VenueInfo()
+        {
+            if (imgCategory.Tag != null && imgCategory.Tag is AlphaImage)
+                ((AlphaImage)imgCategory.Tag).Dispose();
+            if (imgMayor.Tag != null && imgMayor.Tag is AlphaImage)
+                ((AlphaImage)imgMayor.Tag).Dispose();
         }
 
         #region Scroll Control

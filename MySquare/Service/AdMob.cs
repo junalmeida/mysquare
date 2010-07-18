@@ -47,17 +47,20 @@ namespace MySquare.Service
         {
             if (!string.IsNullOrEmpty(result as string))
             {
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml((string)result);
-
-                AdEventArgs args = new AdEventArgs();
-                if (doc.DocumentElement != null && doc.DocumentElement.Name == "a")
+                string r = ((string)result).Trim();
+                if (r != string.Empty && r.StartsWith("<"))
                 {
-                    args.Link = doc.DocumentElement.Attributes["href"].Value;
-                    args.Text = doc.DocumentElement.InnerText;
-                    OnAdArrived(args);
-                }
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(r);
 
+                    AdEventArgs args = new AdEventArgs();
+                    if (doc.DocumentElement != null && doc.DocumentElement.Name == "a")
+                    {
+                        args.Link = doc.DocumentElement.Attributes["href"].Value;
+                        args.Text = doc.DocumentElement.InnerText;
+                        OnAdArrived(args);
+                    }
+                }
             }
         }
 

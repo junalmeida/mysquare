@@ -36,15 +36,6 @@ namespace MySquare.Service
                 Log.RegisterLog(e.Exception);
         }
 
-        internal event ImageResultEventHandler ImageResult;
-        private void OnImageResult(ImageEventArgs e)
-        {
-            if (ImageResult != null)
-            {
-                ImageResult(this, e);
-            }
-        }
-
         #endregion
 
         protected readonly System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.GetCultureInfo("en-us");
@@ -299,8 +290,14 @@ namespace MySquare.Service
         #region Image Service
         internal byte[] DownloadImageSync(string url)
         {
+            return DownloadImageSync(url, true);
+        }
+        internal byte[] DownloadImageSync(string url, bool cache)
+        {
             System.Diagnostics.Debug.WriteLine(url, "ImageDownload");
-            byte[] result = GetFromCache(url);
+            byte[] result = null;
+            if (cache)
+                result = GetFromCache(url);
             if (result == null)
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -313,7 +310,8 @@ namespace MySquare.Service
                             using (Stream stream = response.GetResponseStream())
                             {
                                 result = Tenor.Mobile.IO.StreamToBytes(stream);
-                                SaveToCache(url, result);
+                                if (cache)
+                                    SaveToCache(url, result);
                             }
                         }
                     }
@@ -321,50 +319,6 @@ namespace MySquare.Service
                 catch { }
             }
             return result;
-        }
-
-
-        internal void DownloadImage(string url)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            System.Diagnostics.Debug.WriteLine(url, "ImageDownload");
-            request.BeginGetResponse(
-                new AsyncCallback(ParseImageResponse),
-                new object[] { request, url });
-        }
-
-        private void ParseImageResponse(IAsyncResult r)
-        {
-
-            object[] items = (object[])r.AsyncState;
-
-            HttpWebRequest request = (HttpWebRequest)items[0];
-            string url = (string)items[1];
-
-            byte[] result = null;
-            try
-            {
-                using (HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(r))
-                {
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        using (Stream stream = response.GetResponseStream())
-                        {
-                            result = Tenor.Mobile.IO.StreamToBytes(stream);
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                request = null;
-            }
-
-            if (result != null)
-                OnImageResult(new ImageEventArgs(url, result));
         }
 
         #endregion
