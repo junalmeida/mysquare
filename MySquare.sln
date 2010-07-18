@@ -20,10 +20,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{FEE3DF99-755C-4A85-9BB7-B7C1339B080A}"
 	ProjectSection(SolutionItems) = preProject
 		Newtonsoft.Json.Compact.dll = Newtonsoft.Json.Compact.dll
-		Newtonsoft.Json.Compact.pdb = Newtonsoft.Json.Compact.pdb
 		Newtonsoft.Json.Compact.xml = Newtonsoft.Json.Compact.xml
 		Tenor.Mobile.dll = Tenor.Mobile.dll
-		Tenor.Mobile.pdb = Tenor.Mobile.pdb
 		Tenor.Mobile.PocketPC.asmmeta.dll = Tenor.Mobile.PocketPC.asmmeta.dll
 		Tenor.Mobile.XML = Tenor.Mobile.XML
 	EndProjectSection

@@ -11,7 +11,7 @@ using MySquare.Properties;
 
 namespace MySquare.UI.Places.Create
 {
-    public partial class CreateVenue : UserControl, IView
+    partial class CreateVenue : UserControl, IView
     {
         public CreateVenue()
         {
@@ -51,6 +51,7 @@ namespace MySquare.UI.Places.Create
                 }
                 catch
                 {
+                    GC.Collect();
                 }
             }
 

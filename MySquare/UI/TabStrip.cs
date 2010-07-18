@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace MySquare.UI
 {
-    public partial class TabStrip : Control
+    partial class TabStrip : Control
     {
         public TabStrip()
         {

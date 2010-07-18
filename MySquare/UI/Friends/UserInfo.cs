@@ -14,7 +14,7 @@ using MySquare.Controller;
 
 namespace MySquare.UI.Friends
 {
-    public partial class UserInfo : UserControl
+    partial class UserInfo : UserControl
     {
         public UserInfo()
         {

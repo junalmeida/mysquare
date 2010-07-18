@@ -35,7 +35,14 @@ namespace MySquare.UI.Places.Details
         {
             if (picMap.Tag != null && picMap.Tag is byte[])
             {
-                picMap.Tag = new AlphaImage(Main.CreateRoundedAvatar((byte[])picMap.Tag, picMap.Size, factor));
+                try
+                {
+                    picMap.Tag = new AlphaImage(Main.CreateRoundedAvatar((byte[])picMap.Tag, picMap.Size, factor));
+                }
+                catch (Exception)
+                {
+                    GC.Collect();
+                }
             }
             if (picMap.Tag != null && picMap.Tag is AlphaImage)
             {

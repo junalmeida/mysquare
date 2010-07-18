@@ -52,12 +52,12 @@ namespace MySquare.FourSquare
         }
     }
 
-    public enum SpecialType
+    enum SpecialType
     {
         mayor, count, frequency, other
     }
 
-    public enum SpecialKind
+    enum SpecialKind
     {
         here,
         nearby

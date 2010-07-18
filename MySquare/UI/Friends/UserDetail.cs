@@ -11,7 +11,7 @@ using Tenor.Mobile.Drawing;
 
 namespace MySquare.UI.Friends
 {
-    public partial class UserDetail : UserControl, IView
+    partial class UserDetail : UserControl, IView
     {
         public UserDetail()
         {

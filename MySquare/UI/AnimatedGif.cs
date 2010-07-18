@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace MySquare.UI
 {
-    public partial class AnimatedGif : Control
+    partial class AnimatedGif : Control
     {
         public AnimatedGif()
         {
