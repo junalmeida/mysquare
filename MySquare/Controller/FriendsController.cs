@@ -85,7 +85,7 @@ namespace MySquare.Controller
 
         void position_LocationChanged(object sender, EventArgs e)
         {
-            if (position.Latitude.HasValue && position.Longitude.HasValue)
+            if (position != null && position.Latitude.HasValue && position.Longitude.HasValue)
             {
                 lastLatitude = position.Latitude;
                 lastLongitude = position.Longitude;

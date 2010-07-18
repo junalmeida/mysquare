@@ -102,8 +102,11 @@ namespace MySquare.Controller
 
         void pos_LocationChanged(object sender, EventArgs e)
         {
-            pos.PollingInterval = 30000;
-            DownloadMapPosition();
+            if (pos != null)
+            {
+                pos.PollingInterval = 30000;
+                DownloadMapPosition();
+            }
         }
 
         Size oldSize = Size.Empty;
@@ -131,7 +134,6 @@ namespace MySquare.Controller
 
         void DownloadMapPosition()
         {
-
             PictureBox box = this.View.picMap;
 
             Size size = new Size();
@@ -282,5 +284,15 @@ namespace MySquare.Controller
             WaitThread.Set();
         }
         #endregion
+
+
+        public override void Dispose()
+        {
+            if (google != null)
+                google.Dispose();
+            if (pos != null)
+                pos.Dispose();
+            base.Dispose();
+        }
     }
 }

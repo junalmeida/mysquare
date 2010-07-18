@@ -39,8 +39,11 @@ namespace MySquare
                     MessageBox.Show("Unknown error.\r\n" + ex.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                     Terminate();
                 }
+                mainForm.Close();
+                mainForm.Dispose();
 #endif
             }
+            Application.Exit();
         }
 
         internal static void Terminate()

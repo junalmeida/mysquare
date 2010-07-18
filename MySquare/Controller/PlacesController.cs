@@ -138,7 +138,7 @@ namespace MySquare.Controller
 
         void position_LocationChanged(object sender, EventArgs e)
         {
-            if (position.Latitude.HasValue && position.Longitude.HasValue)
+            if (position != null && position.Latitude.HasValue && position.Longitude.HasValue)
             {
                 lastLatitude = position.Latitude;
                 lastLongitude = position.Longitude;
@@ -213,6 +213,13 @@ namespace MySquare.Controller
             View.list1.Visible = true;
             Cursor.Current = Cursors.Default;
             Cursor.Show();
+        }
+
+        public override void Dispose()
+        {
+            if (position != null)
+                position.Dispose();
+            base.Dispose();
         }
     }
 }

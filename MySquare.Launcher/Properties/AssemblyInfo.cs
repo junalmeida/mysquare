@@ -7,13 +7,6 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("MySquare.Launcher")]
 [assembly: AssemblyDescription("A FourSquare client.")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Rising Mobility")]
-[assembly: AssemblyProduct("MySquare")]
-[assembly: AssemblyCopyright("Rising Mobility")]
-[assembly: AssemblyTrademark("Rising Mobility")]
-[assembly: AssemblyCulture("")]
-
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
 // COM, set the ComVisible attribute to true on that type.
@@ -22,14 +15,6 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("acd968f1-aa8a-4b6c-a293-72e812e3b9c0")]
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version
-//      Build Number
-//      Revision
-//
-[assembly: AssemblyVersion("1.0.*")]
 
 // Below attribute is to suppress FxCop warning "CA2232 : Microsoft.Usage : Add STAThreadAttribute to assembly"
 // as Device app does not support STA thread.

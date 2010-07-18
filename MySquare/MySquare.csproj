@@ -81,6 +81,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Controller\BaseController.cs" />
     <Compile Include="Controller\CreateVenueController.cs" />
     <Compile Include="Controller\FriendsController.cs" />
