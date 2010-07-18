@@ -11,6 +11,7 @@ using System.Threading;
 using Tenor.Mobile.Location;
 using System.IO;
 using Tenor.Mobile.Drawing;
+using MySquare.Service;
 
 namespace MySquare.UI.Places
 {
@@ -44,14 +45,8 @@ namespace MySquare.UI.Places
         }
 
 
-        Dictionary<string, Image> imageList;
-        Dictionary<string, Image> brushList;
-        internal Dictionary<string, Image> ImageList
-        {
-            get { return imageList; }
-            set { imageList = value; brushList = new Dictionary<string, Image>(); }
-        }
-
+        internal Dictionary<string, byte[]> imageList;
+        internal Dictionary<string, AlphaImage> imageListBuffer;
 
         float itemPadding;
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
@@ -90,41 +85,56 @@ namespace MySquare.UI.Places
                 e.Graphics.DrawString(secondText, secondFont, secondBrush, rect, format);
 
                 if (
-                    (venue.PrimaryCategory == null && imageList.ContainsKey("http://foursquare.com/img/categories/none.png")) ||
+                    (venue.PrimaryCategory == null && imageList.ContainsKey(string.Empty)) ||
                     (venue.PrimaryCategory != null &&
                     imageList.ContainsKey(venue.PrimaryCategory.IconUrl))
                     )
                 {
-                    string iconUrl = "http://foursquare.com/img/categories/none.png";
+                    string iconUrl = string.Empty;
                     if (venue.PrimaryCategory != null)
                         iconUrl = venue.PrimaryCategory.IconUrl;
 
                     int imageSize = e.Bounds.Height - Convert.ToInt32(itemPadding * 2);
-                    if (!brushList.ContainsKey(iconUrl))
-                    {
-                        Image original = imageList[iconUrl];
-                        Image bmp = Main.CreateRoundedAvatar(original, imageSize, factor);
-                        brushList.Add(iconUrl, bmp);
-                        original.Dispose(); imageList[iconUrl] = null;
-                    }
 
+                    if (!imageListBuffer.ContainsKey(iconUrl))
+                    {
+                        imageListBuffer.Add(iconUrl, new AlphaImage(Main.CreateRoundedAvatar(imageList[iconUrl], imageSize, factor)));
+                    }
+                    AlphaImage alpha = imageListBuffer[iconUrl];
                     try
                     {
-                        AlphaImage alpha = new AlphaImage(brushList[iconUrl]);
                         alpha.Draw(e.Graphics,
-                                    new Rectangle(
-                                        e.Bounds.X + Convert.ToInt32(itemPadding),
-                                        e.Bounds.Y + Convert.ToInt32(itemPadding),
-                                        imageSize,
-                                        imageSize), Tenor.Mobile.UI.Skin.Current.SelectedBackColor);
+                                  new Rectangle(
+                                      e.Bounds.X + Convert.ToInt32(itemPadding),
+                                      e.Bounds.Y + Convert.ToInt32(itemPadding),
+                                      imageSize,
+                                      imageSize), Tenor.Mobile.UI.Skin.Current.SelectedBackColor);
+
 
                     }
-                    catch { }
-
+                    catch (Exception ex)
+                    {
+                        imageListBuffer.Remove(iconUrl);
+                        Log.RegisterLog(ex);
+                    }
                 }
             }
+           
         }
 
+        
+        ~List()
+        {
+            if (imageList != null)
+                imageList = null;
+            if (imageListBuffer != null)
+            {
+                foreach (var key in imageListBuffer.Keys)
+                    if (imageListBuffer[key] != null)
+                        imageListBuffer[key].Dispose();
+                imageListBuffer = null;
+            }
+        }
 
         private void listBox_SelectedItemChanged(object sender, EventArgs e)
         {

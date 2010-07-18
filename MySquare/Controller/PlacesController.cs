@@ -166,7 +166,8 @@ namespace MySquare.Controller
 
         void LoadVenues(Venue[] venues)
         {
-            View.list1.ImageList = new Dictionary<string, Image>();
+            View.list1.imageList = new Dictionary<string, byte[]>();
+            View.list1.imageListBuffer = new Dictionary<string, Tenor.Mobile.Drawing.AlphaImage>();
 
             View.list1.listBox.Clear();
             foreach (Venue venue in venues)
@@ -182,17 +183,17 @@ namespace MySquare.Controller
                 foreach (Venue venue in venues)
                 {
                     //TODO: revise the null category image.
-                    string url = "http://foursquare.com/img/categories/none.png";
+                    string url = string.Empty;
                     if (venue.PrimaryCategory != null)
                         url = venue.PrimaryCategory.IconUrl;
-                    if (!string.IsNullOrEmpty(url) && !View.list1.ImageList.ContainsKey(url))
+                    if (!View.list1.imageList.ContainsKey(url))
                     {
-                        byte[] buffer = Service.DownloadImageSync(url);
+                        byte[] buffer = Service.DownloadImageSync
+                            (string.IsNullOrEmpty(url) ? "http://foursquare.com/img/categories/none.png" : url);
+
                         if (buffer != null)
                         {
-                            using (MemoryStream mem = new MemoryStream(buffer))
-                                View.list1.ImageList[url] = new Bitmap(mem);
-                            buffer = null;
+                            View.list1.imageList[url] = buffer;
                             View.list1.listBox.Invoke(new ThreadStart(delegate()
                             {
                                 View.list1.listBox.Invalidate();

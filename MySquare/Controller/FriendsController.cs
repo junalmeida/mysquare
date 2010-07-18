@@ -59,7 +59,7 @@ namespace MySquare.Controller
             Cursor.Current = Cursors.WaitCursor;
             Cursor.Show();
             View.listBox.Visible = false;
-            View.ImageList = new Dictionary<string, System.Drawing.Image>();
+            View.ImageList = new Dictionary<string, byte[]>();
             View.listBox.Clear();
 #if DEBUG
             if (Environment.OSVersion.Platform != PlatformID.WinCE || Tenor.Mobile.Device.Device.OemInfo.IndexOf("Emulator") > -1)
@@ -127,20 +127,16 @@ namespace MySquare.Controller
                 {
                     if (chk.User != null && !string.IsNullOrEmpty(chk.User.ImageUrl))
                     {
-                        try
+                        if (!View.ImageList.ContainsKey(chk.User.ImageUrl))
                         {
-
-                            using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(chk.User.ImageUrl)))
+                            try
                             {
-                                Bitmap bmp = new Bitmap(mem);
-                                if (!View.ImageList.ContainsKey(chk.User.ImageUrl))
-                                {
-                                    View.ImageList.Add(chk.User.ImageUrl, bmp);
-                                    View.Invoke(new ThreadStart(delegate() { View.listBox.Invalidate(); }));
-                                }
+                                byte[] buffer = Service.DownloadImageSync(chk.User.ImageUrl);
+                                View.ImageList.Add(chk.User.ImageUrl, buffer);
+                                View.Invoke(new ThreadStart(delegate() { View.listBox.Invalidate(); }));
                             }
+                            catch { }
                         }
-                        catch { }
                     }
                 }
             }));
@@ -185,24 +181,17 @@ namespace MySquare.Controller
             {
                 foreach (User u in users)
                 {
-                    if (!string.IsNullOrEmpty(u.ImageUrl))
+                    if (!string.IsNullOrEmpty(u.ImageUrl) && !View.ImageList.ContainsKey(u.ImageUrl))
                     {
                         try
                         {
-
-                            using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(u.ImageUrl)))
-                            {
-                                Bitmap bmp = new Bitmap(mem);
-                                if (!View.ImageList.ContainsKey(u.ImageUrl))
-                                {
-                                    View.ImageList.Add(u.ImageUrl, bmp);
-                                    View.Invoke(new ThreadStart(delegate() { View.listBox.Invalidate(); }));
-                                }
-                            }
+                            byte[] buffer = Service.DownloadImageSync(u.ImageUrl);
+                            View.ImageList.Add(u.ImageUrl, buffer);
+                            View.Invoke(new ThreadStart(delegate() { View.listBox.Invalidate(); }));
                         }
                         catch { }
                     }
-                }
+               }
             }));
             t.Start();
         }

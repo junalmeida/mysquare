@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using MySquare.FourSquare;
 using Tenor.Mobile.Drawing;
 using MySquare.Controller;
+using MySquare.Service;
 
 namespace MySquare.UI.Friends
 {
@@ -33,12 +34,12 @@ namespace MySquare.UI.Friends
         }
 
 
-        Dictionary<string, Image> imageList;
-        Dictionary<string, Image> brushList;
-        internal Dictionary<string, Image> ImageList
+        Dictionary<string, byte[]> imageList;
+        Dictionary<string, AlphaImage> imageListBuffer;
+        internal Dictionary<string, byte[]> ImageList
         {
             get { return imageList; }
-            set { imageList = value; brushList = new Dictionary<string, Image>(); }
+            set { imageList = value; imageListBuffer = new Dictionary<string, AlphaImage>(); }
         }
 
         Brush brush = new SolidBrush(Tenor.Mobile.UI.Skin.Current.TextForeColor);
@@ -125,17 +126,13 @@ namespace MySquare.UI.Friends
             {
                 int imageSize = e.Bounds.Height - Convert.ToInt32(itemPadding * 2);
 
-                if (!brushList.ContainsKey(userUrl))
-                {
-                    Image original = imageList[userUrl];
-                    Image bmp = Main.CreateRoundedAvatar(original, imageSize, factor);
-                    brushList.Add(userUrl, bmp);
-                    original.Dispose(); imageList[userUrl] = null;
-                }
+                if (!imageListBuffer.ContainsKey(userUrl))
+                    imageListBuffer.Add(userUrl, 
+                        new AlphaImage(Main.CreateRoundedAvatar(imageList[userUrl], imageSize, factor)));
+                AlphaImage alpha = imageListBuffer[userUrl];
 
                 try
                 {
-                    AlphaImage alpha = new AlphaImage(brushList[userUrl]);
                     alpha.Draw(e.Graphics,
                                 new Rectangle(
                                     e.Bounds.X + Convert.ToInt32(itemPadding),
@@ -144,10 +141,27 @@ namespace MySquare.UI.Friends
                                     imageSize), Tenor.Mobile.UI.Skin.Current.SelectedBackColor);
 
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    imageListBuffer.Remove(userUrl);
+                    Log.RegisterLog(ex);
+                }
             }
         }
 
+
+        ~Friends()
+        {
+            if (imageList != null)
+                imageList = null;
+            if (imageListBuffer != null)
+            {
+                foreach (var key in imageListBuffer.Keys)
+                    if (imageListBuffer[key] != null)
+                        imageListBuffer[key].Dispose();
+                imageListBuffer = null;
+            }
+        }
 
         private void listBox_SelectedItemClicked(object sender, EventArgs e)
         {

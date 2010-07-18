@@ -10,11 +10,22 @@ using MySquare.Controller;
 using Tenor.Mobile.UI;
 using Tenor.Mobile.Drawing;
 using MySquare.Service;
+using System.IO;
 
 namespace MySquare.UI
 {
     internal partial class Main : Form, IView
     {
+
+        public static Image CreateRoundedAvatar(byte[] original, int imageSize, SizeF scaleFactor)
+        {
+            using (MemoryStream mem = new MemoryStream(original))
+            using (Bitmap bmp = new Bitmap(mem))
+            {
+                return CreateRoundedAvatar(bmp, imageSize, scaleFactor);
+            }
+        }
+
         public static Image CreateRoundedAvatar(Image original, int imageSize, SizeF scaleFactor)
         {
             using (Bitmap bmp1 = new Bitmap(imageSize, imageSize))
