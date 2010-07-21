@@ -149,7 +149,7 @@ namespace MySquare.Controller
 
         #region AdSense
 
-        AdMob adMob;
+        RisingMobility adMob;
         System.Threading.Timer timer;
 
         private void StartAdTimer()
@@ -164,7 +164,7 @@ namespace MySquare.Controller
             if (adMob == null)
             {
                 //initialize
-                adMob = new AdMob();
+                adMob = new RisingMobility();
                 adMob.AdArrived += new AdEventHandler(adMob_AdArrived);
             }
             //todo: check if mainform is activated
