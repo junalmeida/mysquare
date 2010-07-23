@@ -55,6 +55,7 @@ namespace MySquare.Controller
             form.header.Tabs[0].Selected = true;
             View.checkIn1.pnlCheckInResult.Visible = false;
             View.checkIn1.pnlShout.Visible = true;
+            View.venueTips1.Enabled = true;
             OpenSection(VenueSection.CheckIn);
 
         }
@@ -502,34 +503,44 @@ namespace MySquare.Controller
         {
             Cursor.Current = Cursors.WaitCursor;
             Cursor.Show();
+            View.venueTips1.Enabled = false;
+            View.tabStrip1.Enabled = false;
+            LeftSoftButtonEnabled = false;
 
             string text = View.venueTips1.txtComment.Text;
 
             tipResult = null;
-            WaitThread.Reset();
             Service.AddTip(Venue.Id, text);
-            WaitThread.WaitOne();
 
-            Cursor.Current = Cursors.Default;
-            Cursor.Show();
-            if (tipResult != null)
-            {
-                View.venueTips1.txtComment.Text = string.Empty;
-                Venue.fullData = false;
-                LoadExtraInfo();
-                tipResult = null;
-            }
-            else
-            {
-                MessageBox.Show(checkInResult.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
-            }
+            RightSoftButtonText = "&Cancel";
         }
 
 
         void Service_AddTipResult(object serder, TipEventArgs e)
         {
             tipResult = e.Tip;
-            WaitThread.Set();
+            if (View.InvokeRequired)
+                View.Invoke(new ThreadStart(AddTipResult));
+            else
+                AddTipResult();
+
+        }
+
+        void AddTipResult()
+        {
+            Cursor.Current = Cursors.Default;
+            Cursor.Show();
+            if (tipResult != null)
+            {
+                View.venueTips1.txtComment.Text = string.Empty;
+                View.venueTips1.Enabled = true;
+                View.tabStrip1.Enabled = true;
+                LeftSoftButtonEnabled = true;
+
+                Venue.fullData = false;
+                LoadExtraInfo();
+                tipResult = null;
+            }
         }
 
         #endregion
