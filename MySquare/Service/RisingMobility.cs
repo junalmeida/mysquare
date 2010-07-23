@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace MySquare.Service
 {
@@ -54,9 +55,10 @@ namespace MySquare.Service
     }
 
     delegate void AdEventHandler(object sender, AdEventArgs e);
+    [Obfuscation(Exclude=true, ApplyToMembers=true)]
     class AdEventArgs : EventArgs
     {
-        internal AdEventArgs() { }
+        public AdEventArgs() { }
 
         [JsonProperty("link")]
         public string Link
