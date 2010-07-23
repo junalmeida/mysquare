@@ -31,7 +31,7 @@ namespace MySquare.FourSquare
     delegate void AddTipEventHandler(object serder, TipEventArgs e);
     class TipEventArgs : EventArgs
     {
-        internal TipEventArgs(Tip tip)
+        public TipEventArgs(Tip tip)
         {
             this.Tip = tip;
         }
