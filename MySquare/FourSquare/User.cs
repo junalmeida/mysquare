@@ -101,6 +101,10 @@ namespace MySquare.FourSquare
     delegate void UserEventHandler(object serder, UserEventArgs e);
     class UserEventArgs : EventArgs
     {
+        public UserEventArgs()
+        {
+            Accepted = null;
+        }
 
         [JsonProperty("user")]
         public User User
@@ -108,6 +112,9 @@ namespace MySquare.FourSquare
             get;
             set;
         }
+
+        public bool? Accepted
+        { get; set; }
     }
 
 
@@ -126,6 +133,19 @@ namespace MySquare.FourSquare
     {
         friend,
         pendingyou,
-        pendingthem
+        pendingthem,
+        self
+    }
+
+
+    delegate void PendingFriendsEventHandler(object serder, PendingFriendsEventArgs e);
+    class PendingFriendsEventArgs : EventArgs
+    {
+        [JsonProperty("requests")]
+        public User[] Friends
+        {
+            get;
+            private set;
+        }
     }
 }

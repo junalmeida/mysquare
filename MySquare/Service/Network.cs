@@ -44,18 +44,23 @@ namespace MySquare.Service
         private string userAgent;
         protected string UserAgent { get { return userAgent; } }
 
-        HttpWebRequest request = null;
+        Dictionary<int, HttpWebRequest> requests = new Dictionary<int, HttpWebRequest>();
         public void Abort()
         {
-            if (request != null)
+            foreach (int key in requests.Keys)
             {
-                RequestAbortException ex = new RequestAbortException(request.Address.ToString(), null);
-                
-                Tenor.Mobile.Network.WebRequest.Abort(request);
-                request = null;
-                OnError(new ErrorEventArgs(ex));
+                Abort(key);
             }
+        }
 
+        private void Abort(int service)
+        {
+            var request = requests[service];
+            RequestAbortException ex = new RequestAbortException(request.Address.ToString(), null);
+
+            Tenor.Mobile.Network.WebRequest.Abort(request);
+            requests.Remove(service);
+            OnError(new ErrorEventArgs(ex));
         }
 
         protected void Post(int service, string url, bool post, string Login, string Password, Dictionary<string, string> parameters)
@@ -64,20 +69,23 @@ namespace MySquare.Service
 
             StringBuilder queryString = new StringBuilder();
 
-            foreach (string key in parameters.Keys)
-            {
-                string value = parameters[key];
-                if (!string.IsNullOrEmpty(value))
+            if (parameters != null)
+                foreach (string key in parameters.Keys)
                 {
-                    queryString.Append("&");
-                    queryString.Append(key);
-                    queryString.Append("=");
-                    queryString.Append(value);
+                    string value = parameters[key];
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        queryString.Append("&");
+                        queryString.Append(key);
+                        queryString.Append("=");
+                        queryString.Append(value);
+                    }
                 }
-            }
 
-            if (request != null)
-                Abort();
+            if (requests.ContainsKey(service))
+                Abort(service);
+
+            HttpWebRequest request;
             if (post)
             {
                 request = (HttpWebRequest)WebRequest.Create(url);
@@ -91,6 +99,7 @@ namespace MySquare.Service
                 request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "GET";
             }
+            requests.Add(service, request);
 
             request.Timeout = 15000;
             request.UserAgent = userAgent;
@@ -124,8 +133,8 @@ namespace MySquare.Service
             {
                 MemoryStream memData = new MemoryStream();
                 StreamWriter writer = new StreamWriter(memData);
-
-                writer.Write(queryString.Remove(0, 1).ToString());
+                if (queryString.Length > 0)
+                    writer.Write(queryString.Remove(0, 1).ToString());
                 writer.Flush();
                 request.ContentLength = memData.Length;
 
@@ -188,6 +197,7 @@ namespace MySquare.Service
 
             try
             {
+                HttpWebRequest request = requests[service];
                 Stream postData = request.EndGetRequestStream(r);
                 memData.Seek(0, SeekOrigin.Begin);
                 memData.WriteTo(postData);
@@ -211,13 +221,14 @@ namespace MySquare.Service
         }
 
         protected abstract Type GetJsonType(int key);
-        protected abstract void OnResult(object result);
+        protected abstract void OnResult(object result, int key);
 
         private void ParseResponse(IAsyncResult r)
         {
+            int service = (int)r.AsyncState;
+            HttpWebRequest request = requests[service];
             if (request != null)
             {
-                int service = (int)r.AsyncState;
                 string responseTxt = null;
                 object result = null;
                 HttpWebResponse response = null;
@@ -274,11 +285,13 @@ namespace MySquare.Service
                     if (response != null)
                         (response as IDisposable).Dispose();
                     response = null;
+
                     request = null;
+                    requests.Remove(service);
                 }
 
                 if (result != null)
-                    OnResult(result);
+                    OnResult(result, service);
                 else
                     OnError(new ErrorEventArgs(new Exception("Invalid response.")));
 

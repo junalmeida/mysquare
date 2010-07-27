@@ -31,7 +31,10 @@ namespace MySquare.Service
             AddVenue,
             CheckIns,
             User,
-            Friends
+            Friends, 
+            PendingFriends,
+            AcceptFriend,
+            RejectFriend
         }
         
 
@@ -53,6 +56,27 @@ namespace MySquare.Service
                 parameters.Add("uid", uid.ToString());
 
             Post(ServiceResource.Friends, parameters);
+        }
+
+        internal void GetPendingFriends()
+        {
+            Post(ServiceResource.PendingFriends, null);
+        }
+
+        internal void AcceptFriend(int uid)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            if (uid > 0)
+                parameters.Add("uid", uid.ToString());
+            Post(ServiceResource.AcceptFriend, parameters);
+        }
+
+        internal void RejectFriend(int uid)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            if (uid > 0)
+                parameters.Add("uid", uid.ToString());
+            Post(ServiceResource.RejectFriend, parameters);
         }
 
         internal void GetFriendsCheckins(double latitude, double longitude)
@@ -137,7 +161,23 @@ namespace MySquare.Service
 
 
 
-        #region Events
+        #region Events     
+        internal event PendingFriendsEventHandler PendingFriendsResult;
+        private void OnPendingFriendsResult(PendingFriendsEventArgs e)
+        {
+            if (PendingFriendsResult != null)
+            {
+                for (int i = 0; i < e.Friends.Length; i++)
+                {
+                    int index = (cacheUsers.IndexOf(e.Friends[i]));
+                    if (index > -1)
+                        e.Friends[i] = cacheUsers[index];
+                    else
+                        cacheUsers.Add(e.Friends[i]);
+                }
+                PendingFriendsResult(this, e);
+            }
+        }
         internal event FriendsEventHandler FriendsResult;
         private void OnFriendsResult(FriendsEventArgs e)
         {
@@ -161,7 +201,11 @@ namespace MySquare.Service
         {
             if (UserResult != null)
             {
-                e.User.fullData = true;
+                if (e.Accepted.HasValue)
+                    e.User.fullData = false; //force it to get out from cache.
+                else
+                    e.User.fullData = true;
+
                 int index = cacheUsers.IndexOf(e.User);
                 if (index > -1)
                 {
@@ -272,7 +316,6 @@ namespace MySquare.Service
             }
         }
 
-
         #endregion
 
         private void Post(ServiceResource service, Dictionary<string, string> parameters)
@@ -314,7 +357,18 @@ namespace MySquare.Service
                     url = "http://api.foursquare.com/v1/friends.json";
                     auth = true; post = false;
                     break;
-
+                case ServiceResource.PendingFriends:
+                    url = "http://api.foursquare.com/v1/friend/requests.json";
+                    auth = true; post = false;
+                    break;
+                case ServiceResource.AcceptFriend:
+                    url = "http://api.foursquare.com/v1/friend/approve.json";
+                    auth = true; post = true;
+                    break;
+                case ServiceResource.RejectFriend:
+                    url = "http://api.foursquare.com/v1/friend/deny.json";
+                    auth = true; post = true;
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -358,13 +412,20 @@ namespace MySquare.Service
                 case ServiceResource.Friends:
                     type = typeof(FriendsEventArgs);
                     break;
+                case ServiceResource.PendingFriends:
+                    type = typeof(PendingFriendsEventArgs);
+                    break;
+                case ServiceResource.RejectFriend:
+                case ServiceResource.AcceptFriend:
+                    type = typeof(UserEventArgs);
+                    break;
                 default:
                     throw new NotImplementedException();
             }
             return type;
         }
 
-        protected override void OnResult(object result)
+        protected override void OnResult(object result, int key)
         {
             if (result is SearchEventArgs)
                 OnSearchArrives((SearchEventArgs)result);
@@ -377,9 +438,20 @@ namespace MySquare.Service
             else if (result is CheckInsEventArgs)
                 OnCheckInsResult((CheckInsEventArgs)result);
             else if (result is UserEventArgs)
-                OnUserResult((UserEventArgs)result);
+            {
+                ServiceResource service = (ServiceResource)key;
+                UserEventArgs userResult = (UserEventArgs)result;
+                if (service == ServiceResource.AcceptFriend)
+                    userResult.Accepted = true;
+                else if (service == ServiceResource.RejectFriend)
+                    userResult.Accepted = false;
+
+                OnUserResult(userResult);
+            }
             else if (result is FriendsEventArgs)
                 OnFriendsResult((FriendsEventArgs)result);
+            else if (result is PendingFriendsEventArgs)
+                OnPendingFriendsResult((PendingFriendsEventArgs)result);
             else
                 throw new NotImplementedException();
 

@@ -202,6 +202,12 @@ namespace MySquare.Controller
             }
         }
 
+
+        protected virtual void AddLeftSubMenu(MenuItem item)
+        {
+            MainController.AddLeftSubMenu(item);
+        }
+
         protected virtual string RightSoftButtonText
         {
             get

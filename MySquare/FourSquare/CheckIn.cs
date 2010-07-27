@@ -75,5 +75,10 @@ namespace MySquare.FourSquare
         [JsonProperty("specials")]
         public Special[] Specials
         { get; set; }
+
+        public override string ToString()
+        {
+            return string.IsNullOrEmpty(Display) ? Shout : Display;
+        }
     }
 }

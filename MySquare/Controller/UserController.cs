@@ -8,6 +8,7 @@ using MySquare.FourSquare;
 using System.Threading;
 using System.IO;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace MySquare.Controller
 {
@@ -59,7 +60,6 @@ namespace MySquare.Controller
         void Service_UserResult(object serder, MySquare.FourSquare.UserEventArgs e)
         {
             this.user = e.User;
-
             LoadUser(this.user);
         }
 
@@ -164,6 +164,8 @@ namespace MySquare.Controller
 
             View.userInfo1.Badges = user.Badges;
 
+            LeftSoftButtonEnabled = false;
+            LeftSoftButtonText = string.Empty;
             if (user.fullData)
             {
                 if (user.FriendStatus.HasValue)
@@ -174,6 +176,20 @@ namespace MySquare.Controller
                             break;
                         case FriendStatus.pendingyou:
                             View.lblFriendStatus.Text = "is waiting you to accept";
+                            LeftSoftButtonEnabled = true;
+                            LeftSoftButtonText = "&Actions";
+                            MenuItem item = new MenuItem()
+                            {
+                                Text = "&Accept"
+                            };
+                            item.Click += new EventHandler(AcceptUser_Click);
+                            AddLeftSubMenu(item);
+                            item = new MenuItem()
+                            {
+                                Text = "&Reject"
+                            };
+                            item.Click += new EventHandler(RejectUser_Click);
+                            AddLeftSubMenu(item);
                             break;
                         case FriendStatus.pendingthem:
                             View.lblFriendStatus.Text = "have not answered yet";
@@ -192,6 +208,16 @@ namespace MySquare.Controller
                 LoadFriends(user.Friends);
 
             LoadBadges(user.Badges);
+        }
+
+        void RejectUser_Click(object sender, EventArgs e)
+        {
+            Service.RejectFriend(user.Id);
+        }
+
+        void AcceptUser_Click(object sender, EventArgs e)
+        {
+            Service.AcceptFriend(user.Id);
         }
 
 

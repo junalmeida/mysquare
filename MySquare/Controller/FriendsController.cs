@@ -21,7 +21,10 @@ namespace MySquare.Controller
             Service.CheckInsResult += new MySquare.FourSquare.CheckInsEventHandler(Service_CheckInsResult);
             Service.FriendsResult += new FriendsEventHandler(Service_FriendsResult);
             Service.Error += new MySquare.Service.ErrorEventHandler(MainController.Service_Error);
+            Service.PendingFriendsResult += new PendingFriendsEventHandler(Service_PendingFriendsResult);
         }
+
+
 
         public override void Activate()
         {
@@ -108,17 +111,15 @@ namespace MySquare.Controller
         }
 
         CheckIn[] checkIns;
+        User[] friends;
+        User[] pendingFriends;
+        bool alreadyDone;
         void LoadCheckIns(CheckIn[] checkIns)
         {
+            alreadyDone = false;
+            friends = null;
+            pendingFriends = null;
             this.checkIns = checkIns;
-            View.listBox.AddItem("Check Ins", null, View.listBox.DefaultItemHeight / 2);
-            foreach (CheckIn checkin in checkIns)
-            {
-                View.listBox.AddItem(null, checkin);
-            }
-            View.listBox.Visible = true;
-            Cursor.Current = Cursors.Default;
-            Cursor.Show();
 
 
             Thread t = new Thread(new ThreadStart(delegate()
@@ -142,6 +143,7 @@ namespace MySquare.Controller
             }));
             t.Start();
 
+            Service.GetPendingFriends();
             Service.GetFriends(0);
         }
 
@@ -150,13 +152,24 @@ namespace MySquare.Controller
         {
             this.View.Invoke(new ThreadStart(delegate()
             {
+                friends = e.Friends;
+                LoadFriends(e.Friends);
+            }));
+        }
+
+        void Service_PendingFriendsResult(object serder, PendingFriendsEventArgs e)
+        {
+            this.View.Invoke(new ThreadStart(delegate()
+            {
+                pendingFriends = e.Friends;
                 LoadFriends(e.Friends);
             }));
         }
 
         private void LoadFriends(User[] user)
         {
-            List<User> users = new List<User>();
+            List<User> otherUsers = new List<User>();
+            List<User> pendingUsers = new List<User>();
 
             foreach (User u in user)
             {
@@ -167,19 +180,34 @@ namespace MySquare.Controller
                     { found = true; break; }
 
                 }
-                if (!found) users.Add(u);
+                if (!found)
+                {
+                    if (u.FriendStatus == FriendStatus.pendingyou)
+                        pendingUsers.Add(u);
+                    else
+                        otherUsers.Add(u);
+                }
             }
 
-            if (users.Count > 0)
+            if (pendingUsers.Count > 0)
+            {
+                View.listBox.AddItem("Pending requests", null, View.listBox.DefaultItemHeight / 2);
+                foreach (User u in pendingUsers)
+                    View.listBox.AddItem(null, u);
+            }
+
+            if (otherUsers.Count > 0)
             {
                 View.listBox.AddItem("Other friends", null, View.listBox.DefaultItemHeight / 2);
-                foreach (User u in users)
+                foreach (User u in otherUsers)
                     View.listBox.AddItem(null, u);
             }
 
             Thread t = new Thread(new ThreadStart(delegate()
             {
-                foreach (User u in users)
+                List<User> all = new List<User>(otherUsers);
+                all.AddRange(pendingUsers);
+                foreach (User u in all)
                 {
                     if (!string.IsNullOrEmpty(u.ImageUrl) && !View.ImageList.ContainsKey(u.ImageUrl))
                     {
@@ -191,11 +219,26 @@ namespace MySquare.Controller
                         }
                         catch { }
                     }
-               }
+                }
             }));
             t.Start();
+
+
+
+
+            if (pendingFriends != null && !alreadyDone)
+            {
+                alreadyDone = true;
+
+                View.listBox.AddItem("Check Ins", null, View.listBox.DefaultItemHeight / 2);
+                foreach (CheckIn checkin in checkIns)
+                {
+                    View.listBox.AddItem(null, checkin);
+                }
+                View.listBox.Visible = true;
+                Cursor.Current = Cursors.Default;
+                Cursor.Show();
+            }
         }
-
-
     }
 }

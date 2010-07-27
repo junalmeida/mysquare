@@ -53,7 +53,7 @@ namespace MySquare.Service
             return typeof(GeocodeEventArgs);
         }
 
-        protected override void OnResult(object result)
+        protected override void OnResult(object result, int key)
         {
             OnGeocodeResult((GeocodeEventArgs)result);
         }

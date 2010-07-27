@@ -82,7 +82,12 @@ namespace MySquare.Controller
             set
             {
                 View.mnuLeft.Text = value;
+                View.mnuLeft.MenuItems.Clear();
             }
+        }
+        protected override void AddLeftSubMenu(MenuItem item)
+        {
+            View.mnuLeft.MenuItems.Add(item);
         }
 
         protected override bool RightSoftButtonEnabled
@@ -94,6 +99,7 @@ namespace MySquare.Controller
             set
             {
                 View.mnuRight.Enabled = value;
+                View.mnuRight.MenuItems.Clear();
             }
         }
 
@@ -108,6 +114,8 @@ namespace MySquare.Controller
                 View.mnuRight.Text = value;
             }
         }
+
+
 
 
         void mnuRight_Click(object sender, EventArgs e)

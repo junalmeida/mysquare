@@ -32,7 +32,7 @@ namespace MySquare.Service
             base.Post(0, adService, false, null, null, param);
         }
 
-        protected override void OnResult(object result)
+        protected override void OnResult(object result, int key)
         {
             OnAdArrived(result as AdEventArgs);
         }
