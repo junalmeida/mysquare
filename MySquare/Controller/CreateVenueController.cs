@@ -24,11 +24,17 @@ namespace MySquare.Controller
             : base(view)
         {
             Service.VenueResult += new VenueEventHandler(Service_VenueResult);
+            Service.Error += new MySquare.Service.ErrorEventHandler(Service_Error);
             google = new Google();
             google.GeocodeResult += new GeocodeEventHandler(Service_GeocodeResult);
             google.Error += new MySquare.Service.ErrorEventHandler(google_Error);
             View.picMap.Click += new EventHandler(picMap_Click);
             View.picMap.Resize += new EventHandler(picMap_Resize);
+        }
+
+        void Service_Error(object serder, MySquare.Service.ErrorEventArgs e)
+        {
+            WaitThread.Set();
         }
 
 
@@ -132,6 +138,7 @@ namespace MySquare.Controller
 
         #region Maps
 
+        Thread t;
         void DownloadMapPosition()
         {
             PictureBox box = this.View.picMap;
@@ -142,7 +149,9 @@ namespace MySquare.Controller
                 size = box.Size;
             }));
 
-            Thread t = new Thread(new ThreadStart(delegate()
+            if (t != null)
+                t.Abort();
+            t = new Thread(new ThreadStart(delegate()
             {
                 CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
                 double latitude, longitude;
@@ -185,14 +194,15 @@ namespace MySquare.Controller
                 }));
             }));
             t.Start();
-
         }
 
 
         void picMap_Click(object sender, EventArgs e)
         {
-            if (View.latitudeSelected.HasValue && View.longitudeSelected.HasValue)
-                google.GetGeocoding(View.latitudeSelected.Value, View.longitudeSelected.Value);
+            double? latSel = View.latitudeSelected;
+            double? lngSel = View.longitudeSelected;
+            if (latSel.HasValue && lngSel.HasValue)
+                google.GetGeocoding(latSel.Value, lngSel.Value);
             else
                 google.GetGeocoding(pos.Latitude.Value, pos.Longitude.Value);
         }
@@ -237,7 +247,6 @@ namespace MySquare.Controller
         }
         #endregion
 
-
         #region CreateVenue
         Venue createdVenue = null;
         private void DoCreate()
@@ -251,7 +260,14 @@ namespace MySquare.Controller
 
 
             double lat = 0, lng = 0;
-            if (pos != null && pos.Latitude.HasValue)
+            double? latSel = View.latitudeSelected;
+            double? longSel = View.longitudeSelected;
+            if (latSel.HasValue && longSel.HasValue)
+            {
+                lat = latSel.Value;
+                lng = longSel.Value;
+            }
+            else if (pos != null && pos.Latitude.HasValue)
             {
                 lat = pos.Latitude.Value;
                 lng = pos.Longitude.Value;
@@ -285,13 +301,16 @@ namespace MySquare.Controller
         }
         #endregion
 
-
         public override void Dispose()
         {
             if (google != null)
                 google.Dispose();
             if (pos != null)
                 pos.Dispose();
+
+            if (t != null)
+                t.Abort();
+
             base.Dispose();
         }
     }

@@ -83,7 +83,11 @@ namespace MySquare.UI.Friends
         {
             lblShout.Visible = !string.IsNullOrEmpty(lblShout.Text);
             lblShoutT.Visible = lblShout.Visible;
-
+            using (Graphics g = this.CreateGraphics())
+            {
+                Size size = Tenor.Mobile.Drawing.Strings.Measure(g, lblShout.Text, lblShout.Font, new Rectangle(0, 0, lblShout.Width, this.Height));
+                lblShout.Height = size.Height + (5 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height);
+            }
         }
 
         private void lblLastSeen_TextChanged(object sender, EventArgs e)
