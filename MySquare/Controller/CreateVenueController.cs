@@ -64,8 +64,7 @@ namespace MySquare.Controller
             View.txtState.Text = string.Empty;
             View.txtZip.Text = string.Empty;
             View.FixType = null;
-            View.picMap.Image = MySquare.Properties.Resources.HourGlass;
-
+            View.picMap.Tag = null;
 
 #if DEBUG
             if (Environment.OSVersion.Platform != PlatformID.WinCE)

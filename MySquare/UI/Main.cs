@@ -253,7 +253,7 @@ namespace MySquare.UI
                     }
                     picAd.Height = Convert.ToInt32(i);
                     Application.DoEvents();
-                    i *= (Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height + .4);
+                    i *= (Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height + .7);
                 } while (true);
 
             }
@@ -275,8 +275,18 @@ namespace MySquare.UI
             if (picAd.Tag != null)
             {
                 AdEventArgs ad = picAd.Tag as AdEventArgs;
-                if (ad != null && lnkTextLink.Text != ad.Text && ad.Text != null)
-                    lnkTextLink.Text = ad.Text.Replace("&", "&&");
+                if (ad != null && lnkTextLink.Text != ad.Text)
+                {
+                    if (ad.Text != null)
+                    {
+                        lnkTextLink.Text = ad.Text.Replace("&", "&&");
+                        lnkTextLink.Visible = true;
+                    }
+                    else
+                    {
+                        lnkTextLink.Visible = false;
+                    }
+                }
             }
         }
                         

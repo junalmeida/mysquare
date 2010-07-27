@@ -49,7 +49,6 @@ namespace MySquare.Controller
 
             View.tabStrip1.SelectedIndex = 0;
 
-            View.venueMap1.picMap.Image = MySquare.Properties.Resources.HourGlass;
             View.venueMap1.picMap.Tag = null;
 
             form.header.Tabs[0].Selected = true;

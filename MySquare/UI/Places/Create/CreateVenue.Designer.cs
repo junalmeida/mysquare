@@ -35,14 +35,14 @@
             System.Windows.Forms.Label label5;
             System.Windows.Forms.Label label6;
             System.Windows.Forms.Label label7;
-            System.Windows.Forms.Panel panel1;
-            this.txtName = new Tenor.Mobile.UI.TextControl();
-            this.txtAddress = new Tenor.Mobile.UI.TextControl();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.txtCross = new Tenor.Mobile.UI.TextControl();
-            this.txtCity = new Tenor.Mobile.UI.TextControl();
-            this.txtState = new Tenor.Mobile.UI.TextControl();
-            this.txtZip = new Tenor.Mobile.UI.TextControl();
+            this.txtName = new Tenor.Mobile.UI.TextControl();
             this.txtPhone = new Tenor.Mobile.UI.TextControl();
+            this.txtAddress = new Tenor.Mobile.UI.TextControl();
+            this.txtZip = new Tenor.Mobile.UI.TextControl();
+            this.txtState = new Tenor.Mobile.UI.TextControl();
+            this.txtCity = new Tenor.Mobile.UI.TextControl();
             this.picMap = new System.Windows.Forms.PictureBox();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
@@ -51,8 +51,7 @@
             label5 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
-            panel1 = new System.Windows.Forms.Panel();
-            panel1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -112,53 +111,31 @@
             label7.Size = new System.Drawing.Size(46, 20);
             label7.Text = "Phone:";
             // 
-            // txtName
+            // panel1
             // 
-            this.txtName.AcceptsReturn = false;
-            this.txtName.AcceptsTab = false;
-            this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtName.HideSelection = true;
-            this.txtName.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
-            this.txtName.Location = new System.Drawing.Point(0, 28);
-            this.txtName.MaxLength = 32767;
-            this.txtName.Modified = false;
-            this.txtName.Multiline = false;
-            this.txtName.Name = "txtName";
-            this.txtName.PasswordChar = '\0';
-            this.txtName.ReadOnly = false;
-            this.txtName.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtName.SelectedText = "";
-            this.txtName.SelectionLength = 0;
-            this.txtName.SelectionStart = 0;
-            this.txtName.Size = new System.Drawing.Size(189, 21);
-            this.txtName.TabIndex = 1;
-            this.txtName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtName.WordWrap = true;
-            // 
-            // txtAddress
-            // 
-            this.txtAddress.AcceptsReturn = false;
-            this.txtAddress.AcceptsTab = false;
-            this.txtAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAddress.HideSelection = true;
-            this.txtAddress.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
-            this.txtAddress.Location = new System.Drawing.Point(0, 69);
-            this.txtAddress.MaxLength = 32767;
-            this.txtAddress.Modified = false;
-            this.txtAddress.Multiline = false;
-            this.txtAddress.Name = "txtAddress";
-            this.txtAddress.PasswordChar = '\0';
-            this.txtAddress.ReadOnly = false;
-            this.txtAddress.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtAddress.SelectedText = "";
-            this.txtAddress.SelectionLength = 0;
-            this.txtAddress.SelectionStart = 0;
-            this.txtAddress.Size = new System.Drawing.Size(189, 21);
-            this.txtAddress.TabIndex = 3;
-            this.txtAddress.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtAddress.WordWrap = true;
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(this.txtCross);
+            this.panel1.Controls.Add(this.txtName);
+            this.panel1.Controls.Add(this.txtPhone);
+            this.panel1.Controls.Add(this.txtAddress);
+            this.panel1.Controls.Add(this.txtZip);
+            this.panel1.Controls.Add(this.txtState);
+            this.panel1.Controls.Add(this.txtCity);
+            this.panel1.Controls.Add(label1);
+            this.panel1.Controls.Add(this.picMap);
+            this.panel1.Controls.Add(label2);
+            this.panel1.Controls.Add(label7);
+            this.panel1.Controls.Add(label3);
+            this.panel1.Controls.Add(label6);
+            this.panel1.Controls.Add(label4);
+            this.panel1.Controls.Add(label5);
+            this.panel1.Location = new System.Drawing.Point(3, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(194, 363);
+            this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CreateVenue_MouseMove);
+            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CreateVenue_MouseDown);
             // 
             // txtCross
             // 
@@ -184,74 +161,29 @@
             this.txtCross.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtCross.WordWrap = true;
             // 
-            // txtCity
+            // txtName
             // 
-            this.txtCity.AcceptsReturn = false;
-            this.txtCity.AcceptsTab = false;
-            this.txtCity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtName.AcceptsReturn = false;
+            this.txtName.AcceptsTab = false;
+            this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCity.HideSelection = true;
-            this.txtCity.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
-            this.txtCity.Location = new System.Drawing.Point(0, 295);
-            this.txtCity.MaxLength = 32767;
-            this.txtCity.Modified = false;
-            this.txtCity.Multiline = false;
-            this.txtCity.Name = "txtCity";
-            this.txtCity.PasswordChar = '\0';
-            this.txtCity.ReadOnly = false;
-            this.txtCity.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtCity.SelectedText = "";
-            this.txtCity.SelectionLength = 0;
-            this.txtCity.SelectionStart = 0;
-            this.txtCity.Size = new System.Drawing.Size(132, 21);
-            this.txtCity.TabIndex = 9;
-            this.txtCity.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtCity.WordWrap = true;
-            // 
-            // txtState
-            // 
-            this.txtState.AcceptsReturn = false;
-            this.txtState.AcceptsTab = false;
-            this.txtState.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtState.HideSelection = true;
-            this.txtState.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
-            this.txtState.Location = new System.Drawing.Point(138, 295);
-            this.txtState.MaxLength = 32767;
-            this.txtState.Modified = false;
-            this.txtState.Multiline = false;
-            this.txtState.Name = "txtState";
-            this.txtState.PasswordChar = '\0';
-            this.txtState.ReadOnly = false;
-            this.txtState.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtState.SelectedText = "";
-            this.txtState.SelectionLength = 0;
-            this.txtState.SelectionStart = 0;
-            this.txtState.Size = new System.Drawing.Size(51, 21);
-            this.txtState.TabIndex = 12;
-            this.txtState.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtState.WordWrap = true;
-            // 
-            // txtZip
-            // 
-            this.txtZip.AcceptsReturn = false;
-            this.txtZip.AcceptsTab = false;
-            this.txtZip.HideSelection = true;
-            this.txtZip.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
-            this.txtZip.Location = new System.Drawing.Point(0, 337);
-            this.txtZip.MaxLength = 32767;
-            this.txtZip.Modified = false;
-            this.txtZip.Multiline = false;
-            this.txtZip.Name = "txtZip";
-            this.txtZip.PasswordChar = '\0';
-            this.txtZip.ReadOnly = false;
-            this.txtZip.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtZip.SelectedText = "";
-            this.txtZip.SelectionLength = 0;
-            this.txtZip.SelectionStart = 0;
-            this.txtZip.Size = new System.Drawing.Size(81, 21);
-            this.txtZip.TabIndex = 15;
-            this.txtZip.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtZip.WordWrap = true;
+            this.txtName.HideSelection = true;
+            this.txtName.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
+            this.txtName.Location = new System.Drawing.Point(0, 28);
+            this.txtName.MaxLength = 32767;
+            this.txtName.Modified = false;
+            this.txtName.Multiline = false;
+            this.txtName.Name = "txtName";
+            this.txtName.PasswordChar = '\0';
+            this.txtName.ReadOnly = false;
+            this.txtName.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtName.SelectedText = "";
+            this.txtName.SelectionLength = 0;
+            this.txtName.SelectionStart = 0;
+            this.txtName.Size = new System.Drawing.Size(189, 21);
+            this.txtName.TabIndex = 1;
+            this.txtName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtName.WordWrap = true;
             // 
             // txtPhone
             // 
@@ -277,6 +209,99 @@
             this.txtPhone.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPhone.WordWrap = true;
             // 
+            // txtAddress
+            // 
+            this.txtAddress.AcceptsReturn = false;
+            this.txtAddress.AcceptsTab = false;
+            this.txtAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAddress.HideSelection = true;
+            this.txtAddress.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
+            this.txtAddress.Location = new System.Drawing.Point(0, 69);
+            this.txtAddress.MaxLength = 32767;
+            this.txtAddress.Modified = false;
+            this.txtAddress.Multiline = false;
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.PasswordChar = '\0';
+            this.txtAddress.ReadOnly = false;
+            this.txtAddress.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtAddress.SelectedText = "";
+            this.txtAddress.SelectionLength = 0;
+            this.txtAddress.SelectionStart = 0;
+            this.txtAddress.Size = new System.Drawing.Size(189, 21);
+            this.txtAddress.TabIndex = 3;
+            this.txtAddress.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtAddress.WordWrap = true;
+            // 
+            // txtZip
+            // 
+            this.txtZip.AcceptsReturn = false;
+            this.txtZip.AcceptsTab = false;
+            this.txtZip.HideSelection = true;
+            this.txtZip.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
+            this.txtZip.Location = new System.Drawing.Point(0, 337);
+            this.txtZip.MaxLength = 32767;
+            this.txtZip.Modified = false;
+            this.txtZip.Multiline = false;
+            this.txtZip.Name = "txtZip";
+            this.txtZip.PasswordChar = '\0';
+            this.txtZip.ReadOnly = false;
+            this.txtZip.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtZip.SelectedText = "";
+            this.txtZip.SelectionLength = 0;
+            this.txtZip.SelectionStart = 0;
+            this.txtZip.Size = new System.Drawing.Size(81, 21);
+            this.txtZip.TabIndex = 15;
+            this.txtZip.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtZip.WordWrap = true;
+            // 
+            // txtState
+            // 
+            this.txtState.AcceptsReturn = false;
+            this.txtState.AcceptsTab = false;
+            this.txtState.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtState.HideSelection = true;
+            this.txtState.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
+            this.txtState.Location = new System.Drawing.Point(138, 295);
+            this.txtState.MaxLength = 32767;
+            this.txtState.Modified = false;
+            this.txtState.Multiline = false;
+            this.txtState.Name = "txtState";
+            this.txtState.PasswordChar = '\0';
+            this.txtState.ReadOnly = false;
+            this.txtState.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtState.SelectedText = "";
+            this.txtState.SelectionLength = 0;
+            this.txtState.SelectionStart = 0;
+            this.txtState.Size = new System.Drawing.Size(51, 21);
+            this.txtState.TabIndex = 12;
+            this.txtState.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtState.WordWrap = true;
+            // 
+            // txtCity
+            // 
+            this.txtCity.AcceptsReturn = false;
+            this.txtCity.AcceptsTab = false;
+            this.txtCity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCity.HideSelection = true;
+            this.txtCity.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
+            this.txtCity.Location = new System.Drawing.Point(0, 295);
+            this.txtCity.MaxLength = 32767;
+            this.txtCity.Modified = false;
+            this.txtCity.Multiline = false;
+            this.txtCity.Name = "txtCity";
+            this.txtCity.PasswordChar = '\0';
+            this.txtCity.ReadOnly = false;
+            this.txtCity.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtCity.SelectedText = "";
+            this.txtCity.SelectionLength = 0;
+            this.txtCity.SelectionStart = 0;
+            this.txtCity.Size = new System.Drawing.Size(132, 21);
+            this.txtCity.TabIndex = 9;
+            this.txtCity.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtCity.WordWrap = true;
+            // 
             // picMap
             // 
             this.picMap.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -287,43 +312,19 @@
             this.picMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMap_MouseDown);
             this.picMap.Paint += new System.Windows.Forms.PaintEventHandler(this.picMap_Paint);
             // 
-            // panel1
-            // 
-            panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            panel1.BackColor = System.Drawing.Color.Black;
-            panel1.Controls.Add(this.txtCross);
-            panel1.Controls.Add(this.txtName);
-            panel1.Controls.Add(this.txtPhone);
-            panel1.Controls.Add(this.txtAddress);
-            panel1.Controls.Add(this.txtZip);
-            panel1.Controls.Add(this.txtState);
-            panel1.Controls.Add(this.txtCity);
-            panel1.Controls.Add(label1);
-            panel1.Controls.Add(this.picMap);
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(label7);
-            panel1.Controls.Add(label3);
-            panel1.Controls.Add(label6);
-            panel1.Controls.Add(label4);
-            panel1.Controls.Add(label5);
-            panel1.Location = new System.Drawing.Point(3, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(194, 363);
-            // 
             // CreateVenue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.Black;
-            this.Controls.Add(panel1);
+            this.Controls.Add(this.panel1);
             this.Name = "CreateVenue";
             this.Size = new System.Drawing.Size(202, 383);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CreateVenue_MouseMove);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CreateVenue_MouseDown);
             this.Resize += new System.EventHandler(this.CreateVenue_Resize);
-            panel1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -338,5 +339,6 @@
         internal Tenor.Mobile.UI.TextControl txtZip;
         internal Tenor.Mobile.UI.TextControl txtPhone;
         internal System.Windows.Forms.PictureBox picMap;
+        private System.Windows.Forms.Panel panel1;
     }
 }

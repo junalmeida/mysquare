@@ -15,9 +15,11 @@ namespace MySquare.UI.Places.Create
         }
 
         SizeF factor;
+        Size ellipse;
         protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
         {
             this.factor = factor;
+            ellipse = new SizeF(8 * factor.Width, 8 * factor.Height).ToSize();
             base.ScaleControl(factor, specified);
         }
 
@@ -50,14 +52,16 @@ namespace MySquare.UI.Places.Create
                 }
             }
 
+            Rectangle picMapRect=new Rectangle(0, 0, picMap.Width, picMap.Height);
+
             if (picMap.Tag != null && picMap.Tag is AlphaImage)
             {
-  
+
                 string text = string.Format("{0}\r\n{1}", fixType, helpText);
                 try
                 {
-                    ((AlphaImage)picMap.Tag).Draw(e.Graphics, 
-                        new Rectangle(0, 0, picMap.Width, picMap.Height));
+                    ((AlphaImage)picMap.Tag).Draw(e.Graphics,
+                        picMapRect);
 
                     e.Graphics.DrawString(
                         text,
@@ -79,6 +83,11 @@ namespace MySquare.UI.Places.Create
                 }
                 catch (Exception ex) { MySquare.Service.Log.RegisterLog(ex); }
             }
+            else if (!ellipse.IsEmpty)
+            {
+                TextureBrush brush = new TextureBrush(Resources.MapBg);
+                Tenor.Mobile.Drawing.RoundedRectangle.Fill(e.Graphics, new Pen(Color.Gray), brush, picMapRect, ellipse);
+            }
         }
 
         ~CreateVenue()
@@ -89,15 +98,20 @@ namespace MySquare.UI.Places.Create
                 picMap.Tag = null;
         }
 
+        DateTime lastResize = DateTime.MinValue;
         private void CreateVenue_Resize(object sender, EventArgs e)
         {
-            foreach (Control c in Controls)
+            if ((DateTime.Now - lastResize).TotalSeconds > 2)
             {
-                if (c.Focused)
+                foreach (Control c in panel1.Controls)
                 {
-                    this.AutoScrollPosition = new Point(0, c.Top - (c.Height * 2));
-                    break;
+                    if (c.Focused)
+                    {
+                        this.AutoScrollPosition = new Point(0, c.Top - (c.Height * 2));
+                        break;
+                    }
                 }
+                lastResize = DateTime.Now;
             }
         }
 
