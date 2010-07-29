@@ -53,7 +53,7 @@
             this.lblHelpText.Location = new System.Drawing.Point(20, 80);
             this.lblHelpText.Name = "lblHelpText";
             this.lblHelpText.Size = new System.Drawing.Size(200, 150);
-            this.lblHelpText.Text = "MySquare for Windows Phone\r\n\r\nVersion {0}.beta1.\r\nRising Mobility Software\r\n\r\nThi" +
+            this.lblHelpText.Text = "MySquare for Windows Phone\r\n\r\nVersion {0}.\r\nRising Mobility Software\r\n\r\nThi" +
                 "s program is distributed as-is without warranty.\t\r\n\r\nPortions based on NewtonSof" +
                 "t Json.net\r\n";
             this.lblHelpText.TextAlign = System.Drawing.ContentAlignment.TopCenter;

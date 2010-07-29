@@ -32,12 +32,17 @@
             this.txtEmail = new Tenor.Mobile.UI.TextControl();
             this.txtPassword = new Tenor.Mobile.UI.TextControl();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pnlPremium = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.chkShowAds = new System.Windows.Forms.CheckBox();
+            this.pnlPremium.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(13, 11);
+            this.label1.Location = new System.Drawing.Point(13, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 15);
             this.label1.Text = "E-mail:";
@@ -51,7 +56,7 @@
             this.txtEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtEmail.HideSelection = true;
             this.txtEmail.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
-            this.txtEmail.Location = new System.Drawing.Point(13, 29);
+            this.txtEmail.Location = new System.Drawing.Point(13, 45);
             this.txtEmail.MaxLength = 32767;
             this.txtEmail.Modified = false;
             this.txtEmail.Multiline = false;
@@ -62,7 +67,7 @@
             this.txtEmail.SelectedText = "";
             this.txtEmail.SelectionLength = 0;
             this.txtEmail.SelectionStart = 0;
-            this.txtEmail.Size = new System.Drawing.Size(259, 21);
+            this.txtEmail.Size = new System.Drawing.Size(224, 21);
             this.txtEmail.TabIndex = 1;
             this.txtEmail.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtEmail.WordWrap = true;
@@ -76,7 +81,7 @@
             this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtPassword.HideSelection = true;
             this.txtPassword.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
-            this.txtPassword.Location = new System.Drawing.Point(13, 77);
+            this.txtPassword.Location = new System.Drawing.Point(13, 93);
             this.txtPassword.MaxLength = 32767;
             this.txtPassword.Modified = false;
             this.txtPassword.Multiline = false;
@@ -87,7 +92,7 @@
             this.txtPassword.SelectedText = "";
             this.txtPassword.SelectionLength = 0;
             this.txtPassword.SelectionStart = 0;
-            this.txtPassword.Size = new System.Drawing.Size(259, 21);
+            this.txtPassword.Size = new System.Drawing.Size(224, 21);
             this.txtPassword.TabIndex = 3;
             this.txtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPassword.WordWrap = true;
@@ -95,23 +100,65 @@
             // label2
             // 
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(13, 59);
+            this.label2.Location = new System.Drawing.Point(13, 75);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 15);
             this.label2.Text = "Password:";
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(3, 5);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(63, 15);
+            this.label3.Text = "Account:";
+            // 
+            // pnlPremium
+            // 
+            this.pnlPremium.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlPremium.BackColor = System.Drawing.Color.Black;
+            this.pnlPremium.Controls.Add(this.chkShowAds);
+            this.pnlPremium.Controls.Add(this.label4);
+            this.pnlPremium.Location = new System.Drawing.Point(0, 120);
+            this.pnlPremium.Name = "pnlPremium";
+            this.pnlPremium.Size = new System.Drawing.Size(249, 57);
+            this.pnlPremium.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(2, 6);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(121, 15);
+            this.label4.Text = "Premium Options:";
+            // 
+            // chkShowAds
+            // 
+            this.chkShowAds.ForeColor = System.Drawing.Color.White;
+            this.chkShowAds.Location = new System.Drawing.Point(10, 28);
+            this.chkShowAds.Name = "chkShowAds";
+            this.chkShowAds.Size = new System.Drawing.Size(100, 20);
+            this.chkShowAds.TabIndex = 11;
+            this.chkShowAds.Text = "Show Ads";
             // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.pnlPremium);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.label1);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "Settings";
-            this.Size = new System.Drawing.Size(287, 243);
+            this.Size = new System.Drawing.Size(252, 204);
+            this.pnlPremium.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -122,5 +169,9 @@
         private System.Windows.Forms.Label label2;
         internal Tenor.Mobile.UI.TextControl txtEmail;
         internal Tenor.Mobile.UI.TextControl txtPassword;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        internal System.Windows.Forms.CheckBox chkShowAds;
+        internal System.Windows.Forms.Panel pnlPremium;
     }
 }

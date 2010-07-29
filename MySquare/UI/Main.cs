@@ -237,7 +237,7 @@ namespace MySquare.UI
         #region AdSense
         private void timerAds_Tick(object sender, EventArgs e)
         {
-            if (!inputPanel.Enabled && !picAd.Visible && picAd.Tag != null)
+            if (!inputPanel.Enabled && !picAd.Visible && picAd.Tag != null && Configuration.ShowAds)
             {
                 picAd.Height = 1;
                 picAd.Visible = true;

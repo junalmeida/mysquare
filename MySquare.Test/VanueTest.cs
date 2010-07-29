@@ -17,7 +17,7 @@ namespace MySquare.Test
         AutoResetEvent wait = new AutoResetEvent(false);
 
 
-        [TestMethod]
+        //[TestMethod]
         public void SearchVenues()
         {
             Service.FourSquare service = new Service.FourSquare();

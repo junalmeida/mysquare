@@ -9,6 +9,7 @@ using MySquare.FourSquare;
 using Tenor.Mobile.Location;
 using System.Threading;
 using MySquare.Controller;
+using System.Drawing;
 
 [assembly: System.Reflection.Obfuscation(Feature = "Apply to MySquare.FourSquare.*: all", Exclude = true, ApplyToMembers = true)]
 namespace MySquare
@@ -54,10 +55,21 @@ namespace MySquare
             }
             catch { }
         }
+
+        internal static void DrawSeparator(Graphics g, Rectangle bounds, System.Drawing.Color color)
+        {
+            Rectangle rect2 = new Rectangle(
+               bounds.X, bounds.Y, bounds.Width / 3, 1);
+            Tenor.Mobile.Drawing.GradientFill.Fill(g, rect2, color, Color.LightGray, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+            rect2.X += rect2.Width;
+            Tenor.Mobile.Drawing.GradientFill.Fill(g, rect2, Color.LightGray, Color.LightGray, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+            rect2.X += rect2.Width;
+            Tenor.Mobile.Drawing.GradientFill.Fill(g, rect2, Color.LightGray, color, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+        }
     }
 }
 
-#if TEST
+#if TESTING
 namespace Microsoft.WindowsCE.Forms
 {
     public class InputPanel : System.ComponentModel.Component

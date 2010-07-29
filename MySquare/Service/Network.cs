@@ -47,7 +47,7 @@ namespace MySquare.Service
         Dictionary<int, HttpWebRequest> requests = new Dictionary<int, HttpWebRequest>();
         public void Abort()
         {
-            foreach (int key in requests.Keys)
+            foreach (int key in requests.Keys.ToArray())
             {
                 Abort(key);
             }
@@ -55,12 +55,18 @@ namespace MySquare.Service
 
         private void Abort(int service)
         {
-            var request = requests[service];
-            RequestAbortException ex = new RequestAbortException(request.Address.ToString(), null);
+            lock (this)
+            {
+                if (requests.ContainsKey(service))
+                {
+                    var request = requests[service];
+                    RequestAbortException ex = new RequestAbortException(request.Address.ToString(), null);
 
-            Tenor.Mobile.Network.WebRequest.Abort(request);
-            requests.Remove(service);
-            OnError(new ErrorEventArgs(ex));
+                    Tenor.Mobile.Network.WebRequest.Abort(request);
+                    requests.Remove(service);
+                    OnError(new ErrorEventArgs(ex));
+                }
+            }
         }
 
         protected void Post(int service, string url, bool post, string Login, string Password, Dictionary<string, string> parameters)
@@ -180,7 +186,7 @@ namespace MySquare.Service
             }
 
             if (result != null)
-                OnResult(result);
+                OnResult(result, service);
             else
                 OnError(new ErrorEventArgs(new Exception("Invalid response.")));
 

@@ -20,6 +20,7 @@ namespace MySquare.Controller
             this.View.mnuLeft.Click += new EventHandler(mnuLeft_Click);
             this.View.mnuRight.Click += new EventHandler(mnuRight_Click);
             Service.Error += new ErrorEventHandler(Service_Error);
+            Configuration.LoadPremiumInfo();
         }
 
         #endregion
@@ -53,7 +54,8 @@ namespace MySquare.Controller
 
         internal void Service_Error(object serder, ErrorEventArgs e)
         {
-            WaitThread.Set();
+            if (WaitThread != null)
+                WaitThread.Set();
             ShowError(e.Exception);
         }
 

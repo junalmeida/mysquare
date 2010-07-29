@@ -31,7 +31,8 @@ namespace MySquare.Controller
 
         void venueDetails_TabChanged(object sender, EventArgs e)
         {
-            OpenSection((VenueSection)View.tabStrip1.SelectedIndex);
+
+            OpenSection(View.SelectedTab);
         }
 
         public override void Activate()
@@ -54,6 +55,7 @@ namespace MySquare.Controller
             form.header.Tabs[0].Selected = true;
             View.checkIn1.pnlCheckInResult.Visible = false;
             View.checkIn1.pnlShout.Visible = true;
+            View.checkIn1.txtShout.Text = string.Empty;
             View.venueTips1.Enabled = true;
             OpenSection(VenueSection.CheckIn);
 
@@ -65,7 +67,7 @@ namespace MySquare.Controller
         }
 
 
-        enum VenueSection
+        internal enum VenueSection
         {
             CheckIn,
             Info, 
@@ -191,9 +193,14 @@ namespace MySquare.Controller
             }
             else
             {
-                View.Invoke(new ThreadStart(delegate() {
-                    View.lblAddress.Text = "unable to read data.";
-                }));
+                try
+                {
+                    View.Invoke(new ThreadStart(delegate()
+                    {
+                        View.lblAddress.Text = "unable to read data.";
+                    }));
+                }
+                catch (InvalidOperationException) { }
                 Log.RegisterLog(e.Exception);
             }
         }

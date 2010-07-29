@@ -10,12 +10,30 @@ namespace MySquare.Service
 {
     class RisingMobility : Service.Network
     {
+        enum ServiceKey
+        {
+            Ad,
+            Premium
+        }
+
+
         protected override Type GetJsonType(int key)
         {
-            return typeof(AdEventArgs);
+            ServiceKey service = (ServiceKey)key;
+            switch (service)
+            {
+                case ServiceKey.Ad:
+                    return typeof(AdEventArgs);
+                case ServiceKey.Premium:
+                    return typeof(RisingMobilityEventArgs);
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         internal const string adService = "http://risingmobility.com/admob.ashx";
+        //internal const string rService = "http://risingmobility.com/mysquare/service.ashx";
+        internal const string rService = "http://localhost:49617/mysquare/service.ashx";
 
         internal void GetAd(double? latitude, double? longitude, string[] keywords)
         {
@@ -29,12 +47,40 @@ namespace MySquare.Service
                 param.Add("lat", latitude.Value.ToString(culture));
                 param.Add("lng", longitude.Value.ToString(culture));
             }
-            base.Post(0, adService, false, null, null, param);
+            base.Post((int)ServiceKey.Ad, adService, false, null, null, param);
         }
+
+        internal void GetPremiumInfo(string username)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            string token = DateTime.UtcNow.ToString("yyyy-MM");
+            token += "||" + username;
+
+            var md5 = System.Security.Cryptography.MD5.Create();
+            byte[] crypt = md5.ComputeHash(System.Text.Encoding.ASCII.GetBytes(token));
+            token = Convert.ToBase64String(crypt, 0, crypt.Length);
+
+            param.Add("u", token);
+            param.Add("t", ".prm");
+
+            base.Post((int)ServiceKey.Premium, rService, true, null, null, param);
+        }
+
 
         protected override void OnResult(object result, int key)
         {
-            OnAdArrived(result as AdEventArgs);
+            ServiceKey service = (ServiceKey)key;
+            switch (service)
+            {
+                case ServiceKey.Ad:
+                    OnAdArrived(result as AdEventArgs);
+                    break;
+                case ServiceKey.Premium:
+                    OnPremiumArrived(result as RisingMobilityEventArgs);
+                    break;
+                default:
+                    break;
+            }
         }
 
         protected override void OnError(ErrorEventArgs e)
@@ -51,6 +97,12 @@ namespace MySquare.Service
         }
 
 
+        public event RisingMobilityEventHandler PremiumArrived;
+        private void OnPremiumArrived(RisingMobilityEventArgs e)
+        {
+            if (PremiumArrived != null)
+                PremiumArrived(this, e);
+        }
         
     }
 
@@ -70,6 +122,17 @@ namespace MySquare.Service
 
         [JsonProperty("image")]
         public byte[] Image
+        { get; set; }
+    }
+
+
+
+    delegate void RisingMobilityEventHandler(object sender, RisingMobilityEventArgs e);
+    [Obfuscation(Exclude = true, ApplyToMembers = true)]
+    class RisingMobilityEventArgs : EventArgs
+    {
+        [JsonProperty("result")]
+        public byte[] Result
         { get; set; }
     }
 }

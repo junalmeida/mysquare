@@ -3,13 +3,17 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Win32;
+using System.Threading;
 
 namespace MySquare.Service
 {
     static class Configuration
     {
+        private static object time;
         static Configuration()
         {
+            time = DateTime.UtcNow.ToString("yyyy-MM");
+
             string keyPath = "Software\\RisingMobility\\MySquare";
             if (Environment.OSVersion.Platform == PlatformID.WinCE)
                 key = Registry.LocalMachine.CreateSubKey(keyPath);
@@ -17,6 +21,62 @@ namespace MySquare.Service
                 key = Registry.CurrentUser.CreateSubKey(keyPath);
 
         }
+        private static bool? isPremium = null;
+        public static bool IsPremium
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Login))
+                    return false;
+                else
+                {
+                    if (isPremium == null)
+                        LoadPremiumInfo();
+                    if (isPremium == null)
+                        return false;
+                    else
+                        return isPremium.Value;
+                }
+            }
+        }
+
+
+        static AutoResetEvent aEvent;
+        internal static void LoadPremiumInfo()
+        {
+            if (string.IsNullOrEmpty(Login))
+            {
+                isPremium = false;
+                return;
+            }
+            aEvent = new AutoResetEvent(false);
+            RisingMobility service = new RisingMobility();
+            service.PremiumArrived += new RisingMobilityEventHandler(service_PremiumArrived);
+            service.Error += new ErrorEventHandler(service_Error);
+            service.GetPremiumInfo(Login);
+            aEvent.WaitOne();
+        }
+
+        static void service_Error(object serder, ErrorEventArgs e)
+        {
+            isPremium = null;
+            aEvent.Set();
+        }
+
+        static void service_PremiumArrived(object sender, RisingMobilityEventArgs e)
+        {
+            if (e.Result == null)
+                isPremium = false;
+            else
+            {
+                string resultS = "true||" + time + "||" + Login;
+                var md5 = System.Security.Cryptography.MD5.Create();
+                byte[] crypt = md5.ComputeHash(System.Text.Encoding.ASCII.GetBytes(resultS));
+                isPremium = crypt.SequenceEqual(e.Result);
+            }
+            aEvent.Set();
+        }
+
 
         private static RegistryKey key;
         public static string Login
@@ -27,7 +87,9 @@ namespace MySquare.Service
             }
             set
             {
+                isPremium = null;
                 key.SetValue("login", value);
+                LoadPremiumInfo();
             }
         }
 
@@ -43,6 +105,26 @@ namespace MySquare.Service
             }
         }
 
+        public static bool ShowAds
+        {
+            get
+            {
+                if (!IsPremium)
+                    return true;
+                else
+                {
+                    try
+                    {
+                        return Convert.ToBoolean(key.GetValue("ShowAds", true));
+                    }
+                    catch { return true; }
+                }
+            }
+            set
+            {
+                key.SetValue("ShowAds", value);
+            }
+        }
 
         public static string Cookie
         {
@@ -72,7 +154,21 @@ namespace MySquare.Service
 
         public static string GetVersion()
         {
-            return typeof(Configuration).Assembly.GetName().Version.ToString();
+            var a = typeof(Configuration).Assembly;
+            string version = a.GetName().Version.ToString();
+            string suffix = null;
+            object[] atts = a.GetCustomAttributes(typeof(System.Reflection.AssemblyConfigurationAttribute), true);
+            foreach (var at in atts)
+            {
+                if (at is System.Reflection.AssemblyConfigurationAttribute)
+                {
+                    suffix = (at as System.Reflection.AssemblyConfigurationAttribute).Configuration;
+                    break;
+                }
+            }
+            if (!string.IsNullOrEmpty(suffix))
+                version += " (" + suffix + ")";
+            return version;
         }
 
         public static bool IsFirstTime()

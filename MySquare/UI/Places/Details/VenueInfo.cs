@@ -112,10 +112,12 @@ namespace MySquare.UI.Places.Details
 
         private void lblSpecials_TextChanged(object sender, EventArgs e)
         {
+#if !TESTING
             Graphics g = this.CreateGraphics();
             Size size = Tenor.Mobile.Drawing.Strings.Measure(g, lblSpecials.Text, lblSpecials.Font,
                 new Rectangle(lblSpecials.Left, lblSpecials.Top, lblSpecials.Width, this.Height));
             lblSpecials.Height = size.Height + (20 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height);
+#endif
         }
 
     }

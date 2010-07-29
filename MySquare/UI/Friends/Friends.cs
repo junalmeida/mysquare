@@ -64,14 +64,7 @@ namespace MySquare.UI.Friends
 
                 if (e.Item.YIndex > 0)
                 {
-                    Rectangle rect2 = new Rectangle(
-                       e.Bounds.X, e.Bounds.Y, e.Bounds.Width / 3, 1);
-                    Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, color, Color.LightGray, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
-                    rect2.X += rect2.Width;
-                    Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.LightGray, Color.LightGray, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
-                    rect2.X += rect2.Width;
-                    Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.LightGray, color, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
-
+                    Program.DrawSeparator(e.Graphics, e.Bounds, color);
                 }
             }
             else if (e.Item.Value != null && e.Item.Value is CheckIn)
@@ -144,6 +137,7 @@ namespace MySquare.UI.Friends
                 }
             }
         }
+
 
 
         ~Friends()

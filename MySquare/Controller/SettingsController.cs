@@ -38,6 +38,8 @@ namespace MySquare.Controller
         {
             View.txtEmail.Text = MySquare.Service.Configuration.Login;
             View.txtPassword.Text = string.Empty;
+            View.pnlPremium.Enabled = MySquare.Service.Configuration.IsPremium;
+            View.chkShowAds.Checked = MySquare.Service.Configuration.ShowAds;
         }
 
         public override void OnLeftSoftButtonClick()
@@ -55,6 +57,8 @@ namespace MySquare.Controller
             MySquare.Service.Configuration.Login = View.txtEmail.Text;
             if (!string.IsNullOrEmpty(View.txtPassword.Text))
                 MySquare.Service.Configuration.Password = View.txtPassword.Text;
+
+            MySquare.Service.Configuration.ShowAds = View.chkShowAds.Checked;
 
             MessageBox.Show("Settings saved.", "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
         }
