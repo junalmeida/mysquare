@@ -10,26 +10,26 @@ namespace MySquare.FourSquare
 
     class SearchEventArgs : EventArgs
     {
-        internal Venue[] Venues
+        [JsonProperty("venues")]
+        private Venue[] Venues
+        { get; set; }
+
+        private Group[] groups;
+        [JsonProperty("groups")]
+        public Group[] Groups
         {
             get
             {
-                if (Groups != null && Groups.Length >= 1 && Groups[0].Venues != null)
-                    return Groups[0].Venues;
-                else if (venues != null)
-                    return venues;
+                if (groups == null)
+                    return new Group[] { new Group() { Venues = this.Venues }};
                 else
-                    throw new InvalidOperationException("Oops");
+                    return groups;
+            }
+            set
+            {
+                groups = value;
             }
         }
-
-        [JsonProperty("venues")]
-        private Venue[] venues
-        { get; set; }
-
-        [JsonProperty("groups")]
-        private Group[] Groups
-        { get; set; }
     }
 
     delegate void VenueEventHandler(object serder, VenueEventArgs e);

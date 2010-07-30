@@ -304,14 +304,15 @@ namespace MySquare.Service
         {
             if (SearchArrives != null)
             {
-                for (int i = 0; i < e.Venues.Length; i++)
-                {
-                    int index = cacheVenues.IndexOf(e.Venues[i]);
-                    if (index > -1)
-                        e.Venues[i] = cacheVenues[index];
-                    else
-                        cacheVenues.Add(e.Venues[i]);
-                }
+                foreach (Group g in e.Groups)
+                    for (int i = 0; i < g.Venues.Length; i++)
+                    {
+                        int index = cacheVenues.IndexOf(g.Venues[i]);
+                        if (index > -1)
+                            g.Venues[i] = cacheVenues[index];
+                        else
+                            cacheVenues.Add(g.Venues[i]);
+                    }
                 SearchArrives(this, e);
             }
         }
@@ -328,6 +329,7 @@ namespace MySquare.Service
             {
                 case ServiceResource.SearchNearby:
                     url = "http://api.foursquare.com/v1/venues.json";
+                    auth = !string.IsNullOrEmpty(Configuration.Login);
                     break;
                 case ServiceResource.CheckIn:
                     url = "http://api.foursquare.com/v1/checkin.json";

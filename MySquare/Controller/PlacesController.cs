@@ -157,51 +157,58 @@ namespace MySquare.Controller
             if (View.InvokeRequired)
                 View.Invoke(new ThreadStart(delegate()
                 {
-                    LoadVenues(e.Venues);
+                    LoadVenues(e.Groups);
                 }));
             else
-                LoadVenues(e.Venues);
+                LoadVenues(e.Groups);
         }
 
 
-        void LoadVenues(Venue[] venues)
+        void LoadVenues(Group[] groups)
         {
             View.list1.imageList = new Dictionary<string, byte[]>();
             View.list1.imageListBuffer = new Dictionary<string, Tenor.Mobile.Drawing.AlphaImage>();
 
             View.list1.listBox.Clear();
-            foreach (Venue venue in venues)
+
+            foreach (Group g in groups)
             {
-                View.list1.listBox.AddItem(venue.Name, venue);
+                if (!string.IsNullOrEmpty(g.Type))
+                    View.list1.listBox.AddItem(g.Type, null, View.list1.listBox.DefaultItemHeight / 2);
+                foreach (Venue venue in g.Venues)
+                {
+                    View.list1.listBox.AddItem(venue.Name, venue);
+                }
             }
-            View.list1.listBox.AddItem(null, null);
+            View.list1.listBox.AddItem("Create a new place", null);
             ShowList();
 
 
             Thread t = new Thread(new ThreadStart(delegate()
             {
-                foreach (Venue venue in venues)
-                {
-                    //TODO: revise the null category image.
-                    string url = string.Empty;
-                    if (venue.PrimaryCategory != null)
-                        url = venue.PrimaryCategory.IconUrl;
-                    if (!View.list1.imageList.ContainsKey(url))
+                foreach (Group g in groups)
+                    foreach (Venue venue in g.Venues)
                     {
-                        byte[] buffer = Service.DownloadImageSync
-                            (string.IsNullOrEmpty(url) ? "http://foursquare.com/img/categories/none.png" : url);
-
-                        if (buffer != null)
+                        //TODO: revise the null category image.
+                        string url = string.Empty;
+                        if (venue.PrimaryCategory != null)
+                            url = venue.PrimaryCategory.IconUrl;
+                        if (!View.list1.imageList.ContainsKey(url))
                         {
-                            View.list1.imageList[url] = buffer;
-                            View.list1.listBox.Invoke(new ThreadStart(delegate()
-                            {
-                                View.list1.listBox.Invalidate();
-                            }));
-                        }
-                    }
+                            byte[] buffer = Service.DownloadImageSync
+                                (string.IsNullOrEmpty(url) ? "http://foursquare.com/img/categories/none.png" : url);
 
-                }
+                            if (buffer != null)
+                            {
+                                View.list1.imageList[url] = buffer;
+                                View.list1.listBox.Invoke(new ThreadStart(delegate()
+                                {
+                                    View.list1.listBox.Invalidate();
+                                }));
+                            }
+                        }
+
+                    }
             }));
             t.Start();
         }

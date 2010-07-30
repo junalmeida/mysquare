@@ -75,13 +75,13 @@ namespace Microsoft.WindowsCE.Forms
     public class InputPanel : System.ComponentModel.Component
     {
         public InputPanel()
-        {
-
-        }
+            : base()
+        { }
 
         public InputPanel(System.ComponentModel.IContainer container)
-        {
-        }
+            : this()
+        { }
+
         public bool Enabled { get; set; }
         public System.Drawing.Rectangle Bounds
         {

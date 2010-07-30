@@ -328,7 +328,13 @@ namespace MySquare.Controller
         private void LoadExtraInfo()
         {
             if (View.InvokeRequired)
-                View.Invoke(new ThreadStart(this.LoadExtraInfo));
+            {
+                try
+                {
+                    View.Invoke(new ThreadStart(this.LoadExtraInfo));
+                }
+                catch (ObjectDisposedException) { }
+            }
             else
             {
 
@@ -344,7 +350,7 @@ namespace MySquare.Controller
                     View.venueInfo1.lblCategory.Text = Venue.PrimaryCategory.FullName.Replace(":", " > ").Replace("&", "&&");
                 else
                     View.venueInfo1.lblCategory.Text = null;
-           
+
 
                 if (!string.IsNullOrEmpty(Venue.Phone))
                 {
@@ -379,13 +385,13 @@ namespace MySquare.Controller
                 View.venueInfo1.imgMayor.Tag = null;
                 StringBuilder txtSpecials = new StringBuilder();
                 if (Venue.Specials != null)
-                    foreach (var sp in Venue.Specials.Where(s=> s.Kind == SpecialKind.here))
+                    foreach (var sp in Venue.Specials.Where(s => s.Kind == SpecialKind.here))
                     {
                         if (txtSpecials.Length > 0)
                         {
                             txtSpecials.AppendLine(); txtSpecials.AppendLine();
                         }
-                        txtSpecials.Append(sp.Message); 
+                        txtSpecials.Append(sp.Message);
                     }
                 View.venueInfo1.lblSpecials.Text = txtSpecials.ToString();
 
@@ -485,16 +491,21 @@ namespace MySquare.Controller
                       {
                           if (tip.User != null)
                           {
-                              using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(tip.User.ImageUrl)))
+                              byte[] buffer = Service.DownloadImageSync(tip.User.ImageUrl);
+                              if (buffer != null)
                               {
-                                  Bitmap image =
-                                      new Bitmap(mem);
-                                  View.venueTips1.imageList[tip.User.ImageUrl] = image;
+                                  using (MemoryStream mem = new MemoryStream(buffer))
+                                  {
+                                      Bitmap image =
+                                          new Bitmap(mem);
+                                      View.venueTips1.imageList[tip.User.ImageUrl] = image;
+                                  }
+                                  View.Invoke(new ThreadStart(delegate()
+                                  {
+                                      View.venueTips1.listBox.Invalidate();
+                                  }));
                               }
-                              View.Invoke(new ThreadStart(delegate()
-                              {
-                                  View.venueTips1.listBox.Invalidate();
-                              }));
+                              buffer = null;
                           }
                       }
                   }

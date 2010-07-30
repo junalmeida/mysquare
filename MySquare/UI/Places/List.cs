@@ -56,9 +56,17 @@ namespace MySquare.UI.Places
             Brush textBrush = (e.Item.Selected ? brushS : brush);
             if (venue == null)
             {
-                string text = "Create a new place";
+                string text = e.Item.Text;
                 SizeF measuring = e.Graphics.MeasureString(text, Font);
                 RectangleF rect = new RectangleF(e.Bounds.Height, e.Bounds.Y + itemPadding, measuring.Width, measuring.Height);
+
+                Color color = Tenor.Mobile.UI.Skin.Current.ControlBackColor;
+                if (e.Item.YIndex % 2 == 0)
+                    color = Tenor.Mobile.UI.Skin.Current.AlternateBackColor;
+                if (e.Item.YIndex < listBox.Count - 1)
+                    e.Graphics.FillRectangle(new SolidBrush(color), e.Bounds);
+                if (e.Item.YIndex > 0)
+                    Program.DrawSeparator(e.Graphics, e.Bounds, color);
                 e.Graphics.DrawString(text, this.Font, textBrush, rect, format);
             }
             else
@@ -119,6 +127,24 @@ namespace MySquare.UI.Places
                         Log.RegisterLog(ex);
                     }
                 }
+
+                if (venue.Specials != null && venue.Specials.Length > 0)
+                {
+                    try
+                    {
+                        int padd = 10 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height;
+                        AlphaImage alpha = new AlphaImage(Resources.SpecialHere);
+                        Rectangle rectS = new Rectangle(e.Bounds.Right - e.Bounds.Height - padd, e.Bounds.Y, e.Bounds.Height + padd, e.Bounds.Height + padd);
+                        rectS.Y = rectS.Y - (padd / 2);
+
+                        alpha.Draw(e.Graphics, rectS);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.RegisterLog(ex);
+                    }
+                }
+
             }
            
         }
@@ -143,6 +169,9 @@ namespace MySquare.UI.Places
 
         private void listBox_SelectedItemClicked(object sender, EventArgs e)
         {
+            if (SelectedVenue == null && listBox.SelectedItem.YIndex < listBox.Count - 1)
+                return;
+
             ItemSelected(this, new EventArgs());
         }
 

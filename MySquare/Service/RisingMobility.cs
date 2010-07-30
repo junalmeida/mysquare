@@ -13,7 +13,8 @@ namespace MySquare.Service
         enum ServiceKey
         {
             Ad,
-            Premium
+            Premium,
+            Version
         }
 
 
@@ -26,6 +27,8 @@ namespace MySquare.Service
                     return typeof(AdEventArgs);
                 case ServiceKey.Premium:
                     return typeof(RisingMobilityEventArgs);
+                case ServiceKey.Version:
+                    return typeof(VersionInfoEventArgs);
                 default:
                     throw new NotImplementedException();
             }
@@ -66,6 +69,14 @@ namespace MySquare.Service
             base.Post((int)ServiceKey.Premium, rService, true, null, null, param);
         }
 
+        internal void GetVersionInfo()
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("t", ".upd");
+            base.Post((int)ServiceKey.Version, rService, false, null, null, param);
+        }
+
+
 
         protected override void OnResult(object result, int key)
         {
@@ -77,6 +88,9 @@ namespace MySquare.Service
                     break;
                 case ServiceKey.Premium:
                     OnPremiumArrived(result as RisingMobilityEventArgs);
+                    break;
+                case ServiceKey.Version:
+                    OnVersionResult(result as VersionInfoEventArgs);
                     break;
                 default:
                     break;
@@ -103,7 +117,15 @@ namespace MySquare.Service
             if (PremiumArrived != null)
                 PremiumArrived(this, e);
         }
-        
+
+
+        public event VersionInfoEventHandler VersionArrived;
+        private void OnVersionResult(VersionInfoEventArgs e)
+        {
+            if (VersionArrived != null)
+                VersionArrived(this, e);
+        }
+
     }
 
     delegate void AdEventHandler(object sender, AdEventArgs e);
@@ -134,5 +156,24 @@ namespace MySquare.Service
         [JsonProperty("result")]
         public byte[] Result
         { get; set; }
+    }
+
+    delegate void VersionInfoEventHandler(object sender, VersionInfoEventArgs e);
+    [Obfuscation(Exclude = true, ApplyToMembers = true)]
+    class VersionInfoEventArgs : EventArgs
+    {
+
+        [JsonProperty("value")]
+        public string Version
+        { get; set; }
+
+        [JsonProperty("beta")]
+        public bool Beta
+        { get; set; }
+
+        [JsonProperty("date")]
+        public System.DateTime Date
+        { get; set; }
+
     }
 }
