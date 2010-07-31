@@ -35,8 +35,8 @@ namespace MySquare.Service
         }
 
         internal const string adService = "http://risingmobility.com/admob.ashx";
-        //internal const string rService = "http://risingmobility.com/mysquare/service.ashx";
-        internal const string rService = "http://localhost:49617/mysquare/service.ashx";
+        internal const string rService = "http://risingmobility.com/mysquare/service.ashx";
+        //internal const string rService = "http://localhost:49617/mysquare/service.ashx";
 
         internal void GetAd(double? latitude, double? longitude, string[] keywords)
         {

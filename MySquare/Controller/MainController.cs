@@ -20,7 +20,6 @@ namespace MySquare.Controller
             this.View.mnuLeft.Click += new EventHandler(mnuLeft_Click);
             this.View.mnuRight.Click += new EventHandler(mnuRight_Click);
             Service.Error += new ErrorEventHandler(Service_Error);
-            Configuration.LoadPremiumInfo();
         }
 
         #endregion
@@ -157,6 +156,8 @@ namespace MySquare.Controller
         {
             View.Close();
             View.Dispose();
+            if (timer != null)
+                timer.Dispose();
             base.Dispose();
         }
 
@@ -174,15 +175,17 @@ namespace MySquare.Controller
 
         private void GetAdSense(object state)
         {
-            if (adMob == null)
+            if (Configuration.ShowAds)
             {
-                //initialize
-                adMob = new RisingMobility();
-                adMob.AdArrived += new AdEventHandler(adMob_AdArrived);
+                if (adMob == null)
+                {
+                    //initialize
+                    adMob = new RisingMobility();
+                    adMob.AdArrived += new AdEventHandler(adMob_AdArrived);
+                }
+                //todo: check if mainform is activated
+                adMob.GetAd(lastLatitude, lastLongitude, lastTags);
             }
-            //todo: check if mainform is activated
-            adMob.GetAd(lastLatitude, lastLongitude, lastTags);
-
         }
 
         void adMob_AdArrived(object sender, AdEventArgs e)

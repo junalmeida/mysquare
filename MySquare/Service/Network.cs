@@ -88,8 +88,6 @@ namespace MySquare.Service
                     }
                 }
 
-            if (requests.ContainsKey(service))
-                Abort(service);
 
             HttpWebRequest request;
             if (post)
@@ -105,7 +103,12 @@ namespace MySquare.Service
                 request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "GET";
             }
-            requests.Add(service, request);
+
+            lock (this)
+            {
+                Abort(service);
+                requests.Add(service, request);
+            }
 
             request.Timeout = 15000;
             request.UserAgent = userAgent;

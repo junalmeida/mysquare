@@ -42,7 +42,7 @@ namespace MySquare.Service
 
 
         static AutoResetEvent aEvent;
-        internal static void LoadPremiumInfo()
+        private static void LoadPremiumInfo()
         {
             if (string.IsNullOrEmpty(Login))
             {
@@ -167,7 +167,7 @@ namespace MySquare.Service
                 }
             }
             if (!string.IsNullOrEmpty(suffix))
-                version += " (" + suffix + ")";
+                version += "." + suffix;
             return version;
         }
 
