@@ -305,14 +305,15 @@ namespace MySquare.Service
             if (SearchArrives != null)
             {
                 foreach (Group g in e.Groups)
-                    for (int i = 0; i < g.Venues.Length; i++)
-                    {
-                        int index = cacheVenues.IndexOf(g.Venues[i]);
-                        if (index > -1)
-                            g.Venues[i] = cacheVenues[index];
-                        else
-                            cacheVenues.Add(g.Venues[i]);
-                    }
+                    if (g.Venues != null)
+                        for (int i = 0; i < g.Venues.Length; i++)
+                        {
+                            int index = cacheVenues.IndexOf(g.Venues[i]);
+                            if (index > -1)
+                                g.Venues[i] = cacheVenues[index];
+                            else
+                                cacheVenues.Add(g.Venues[i]);
+                        }
                 SearchArrives(this, e);
             }
         }

@@ -83,6 +83,10 @@ namespace MySquare.UI.Friends
         {
             lblShout.Visible = !string.IsNullOrEmpty(lblShout.Text);
             lblShoutT.Visible = lblShout.Visible;
+#if DEBUG
+            if (Environment.OSVersion.Platform != PlatformID.WinCE)
+                return;
+#endif
             using (Graphics g = this.CreateGraphics())
             {
                 Size size = Tenor.Mobile.Drawing.Strings.Measure(g, lblShout.Text, lblShout.Font, new Rectangle(0, 0, lblShout.Width, this.Height));

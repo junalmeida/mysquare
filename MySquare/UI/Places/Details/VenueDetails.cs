@@ -29,10 +29,10 @@ namespace MySquare.UI.Places
             venueTips1.txtComment.BackColor = bgColor;
 
 
-            tabs.Add("Check In"); tabStrip1.Tabs.Add(tabs[0]);
-            tabs.Add("Info"); tabStrip1.Tabs.Add(tabs[1]);
-            tabs.Add("Map"); if (Configuration.IsPremium) tabStrip1.Tabs.Add(tabs[2]);
-            tabs.Add("Tips"); tabStrip1.Tabs.Add(tabs[3]);
+            tabStrip1.Tabs.Add("Check In");
+            tabStrip1.Tabs.Add("Info");
+            tabStrip1.Tabs.Add("Map");
+            tabStrip1.Tabs.Add("Tips");
 
 
         }
@@ -43,21 +43,18 @@ namespace MySquare.UI.Places
             if (TabChanged != null)
                 TabChanged(this, e);
         }
-        List<string> tabs = new List<string>();
         internal MySquare.Controller.VenueDetailsController.VenueSection SelectedTab
         {
             get
             {
                 return
                     (MySquare.Controller.VenueDetailsController.VenueSection)
-                        tabs.IndexOf(tabStrip1.Tabs[tabStrip1.SelectedIndex]);
+                        tabStrip1.SelectedIndex;
             }
         }
 
-        #region IViewWithTabs Members
 
         public event EventHandler TabChanged;
 
-        #endregion
     }
 }

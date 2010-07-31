@@ -107,7 +107,8 @@ namespace MySquare.Controller
             View.list1.Visible = false;
 #if TESTING
 
-            Service.SearchNearby(text, -22.856025, -43.375182);
+            //Service.SearchNearby(text, -22.856025, -43.375182);
+            Service.SearchNearby(text, -22.908683, -43.17782);
             return;
 #endif
 #if DEBUG

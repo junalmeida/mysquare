@@ -145,9 +145,12 @@ namespace MySquare.Controller
             View.lblError.Visible = false;
             if (View.header.SelectedIndex == 0)
                 BaseController.OpenController(View.places1);
-            else
+            else if (View.header.SelectedIndex == 1)
                 BaseController.OpenController(View.friends1);
-
+            else if (View.header.SelectedIndex == 2)
+                BaseController.OpenController(View.settings1);
+            else if (View.header.SelectedIndex == 3)
+                BaseController.OpenController(View.help1);
         }
 
         public override void Dispose()

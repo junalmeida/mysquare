@@ -108,13 +108,23 @@ namespace MySquare.Controller
                     LeftSoftButtonEnabled = false;
                     break;
                 case VenueSection.Map:
-                    View.venueInfo1.Visible = false;
-                    View.checkIn1.Visible = false;
-                    View.venueTips1.Visible = false;
-                    View.venueMap1.Activate();
+                    if (Configuration.IsPremium)
+                    {
+                        View.venueInfo1.Visible = false;
+                        View.checkIn1.Visible = false;
+                        View.venueTips1.Visible = false;
+                        View.venueMap1.Activate();
 
-                    LeftSoftButtonEnabled = false;
-                    DownloadMapPosition();
+                        LeftSoftButtonEnabled = false;
+                        DownloadMapPosition();
+                    }
+                    else
+                    {
+                        View.tabStrip1.SelectedIndex = 0;
+                        OpenSection(VenueSection.CheckIn);
+                        View.tabStrip1.Invalidate();
+                        MessageBox.Show("The map tab is a premium feature. Check MySquare website.", "MySquare");
+                    }
                     break;
                 case VenueSection.Tips:
                     View.venueInfo1.Visible = false;

@@ -47,7 +47,7 @@ namespace MySquare.Controller
 
         void service_Error(object serder, ErrorEventArgs e)
         {
-            ShowError(e.Exception);
+            ShowError("Unable to check for updates. Try again later.");
         }
 
         public override void Activate()

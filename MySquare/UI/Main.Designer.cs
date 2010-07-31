@@ -223,7 +223,6 @@
         internal MySquare.UI.Friends.UserDetail userDetail1;
         internal MySquare.UI.Places.Create.CreateVenue createVenue1;
         internal MySquare.UI.Places.VenueDetails venueDetails1;
-        private Help help1;
         internal Tenor.Mobile.UI.HeaderStrip header;
         private ContextHelp contextHelp1;
         private System.Windows.Forms.Timer timerTutorial;
@@ -231,6 +230,7 @@
         internal Microsoft.WindowsCE.Forms.InputPanel inputPanel;
         internal System.Windows.Forms.Panel picAd;
         private System.Windows.Forms.LinkLabel lnkTextLink;
+        internal Help help1;
     }
 }
 

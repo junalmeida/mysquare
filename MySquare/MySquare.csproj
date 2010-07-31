@@ -358,7 +358,7 @@
     <None Include="Resources\mapbg.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Service\venueTest.txt" />
+    <None Include="Service\venueTest.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>
