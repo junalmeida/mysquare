@@ -36,7 +36,16 @@ namespace MySquare.Controller
         {
             if (Configuration.GetVersion() != version.Version)
             {
-                MessageBox.Show("There is a new version available.\r\n\r\nDownload it now at http://www.risingmobility.com/mysquare", "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                if (MessageBox.Show("There is a new version available.\r\n\r\nDo you want to upgrade now?", "MySquare", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                {
+                    try
+                    {
+                        System.Diagnostics.Process.Start(
+                            new System.Diagnostics.ProcessStartInfo("http://www.risingmobility.com/mysquare/update.axd/mysquare.cab", string.Empty));
+                        Application.Exit();
+                    }
+                    catch { }
+                }
             }
             else
             {
