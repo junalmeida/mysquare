@@ -40,9 +40,6 @@ Global
 		Svn-Managed = True
 		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = MySquare4.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -61,6 +58,7 @@ Global
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Testing|Any CPU.Build.0 = Debug|Any CPU
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Debug|Any CPU.ActiveCfg = Debug
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Release|Any CPU.ActiveCfg = Release
+		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Release|Any CPU.Build.0 = Release
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Testing|Any CPU.ActiveCfg = Debug
 		{16B51630-2C6E-48D9-8772-E8D0801849C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16B51630-2C6E-48D9-8772-E8D0801849C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
