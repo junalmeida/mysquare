@@ -14,7 +14,7 @@ namespace MySquare.Service
             string appPath = Network.GetAppPath();
             string path = System.IO.Path.Combine(appPath, "debug");
             if (!System.IO.Directory.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
+                return null;
             DateTime date = DateTime.Now;
 
             string filePath = string.Format("{0}.txt", date.Ticks);
@@ -26,20 +26,34 @@ namespace MySquare.Service
         {
             if (ex == null)
                 return;
-            else if (ex is RequestAbortException || (ex.InnerException != null && ex.InnerException is WebException && ((WebException)ex.InnerException).Status == WebExceptionStatus.RequestCanceled))
+            else if (ex is ObjectDisposedException || ex is RequestAbortException || (ex.InnerException != null && ex.InnerException is WebException && ((WebException)ex.InnerException).Status == WebExceptionStatus.RequestCanceled))
                 return;
 
-
-            using (FileStream file = new FileStream(GetLogPath(), FileMode.Create))
-            using (StreamWriter writer = new StreamWriter(file))
+            string fileName = GetLogPath();
+            if (!string.IsNullOrEmpty(fileName))
             {
-                RegisterLog(writer, ex);
+                using (FileStream file = new FileStream(fileName, FileMode.Create))
+                using (StreamWriter writer = new StreamWriter(file))
+                {
+                    RegisterLog(writer, ex);
+                }
             }
         }
 
         private static void RegisterLog(StreamWriter writer, Exception ex)
         {
             writer.WriteLine(ex.Message);
+            try
+            {
+                if (ex is WebException)
+                {
+                    WebException wex = (WebException)ex;
+                    writer.WriteLine("Status: " + wex.Status.ToString());
+                    writer.WriteLine("Headers: " + wex.Response.Headers.ToString());
+
+                }
+            }
+            catch { }
             writer.WriteLine(ex.StackTrace);
             if (ex.InnerException != null)
             {
