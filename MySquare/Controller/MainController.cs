@@ -190,12 +190,16 @@ namespace MySquare.Controller
 
         void adMob_AdArrived(object sender, AdEventArgs e)
         {
-            timer.Change(60000 * 4, 60000 * 4);
-            View.Invoke(new ThreadStart(delegate()
+            try
             {
-                View.picAd.Tag = e;
-                View.picAd.Invalidate();
-            }));
+                timer.Change(60000 * 4, 60000 * 4);
+                View.Invoke(new ThreadStart(delegate()
+                {
+                    View.picAd.Tag = e;
+                    View.picAd.Invalidate();
+                }));
+            }
+            catch (ObjectDisposedException) { }
         }
 
 

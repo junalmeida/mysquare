@@ -73,7 +73,8 @@ namespace MySquare.Controller
                 return;
             }
 #endif
-
+            if (pos != null)
+                pos.Dispose();
             pos = new WorldPosition(true, true);
             pos.LocationChanged += new EventHandler(pos_LocationChanged);
             pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
@@ -92,17 +93,24 @@ namespace MySquare.Controller
 
         void google_Error(object serder, MySquare.Service.ErrorEventArgs e)
         {
-            pos = null;
-            ShowError("Cannot get position from network.");
-            Log.RegisterLog(e.Exception);
+            if (Log.RegisterLog(e.Exception))
+            {
+                ShowError("Cannot connect with Google service.");
+                pos.Dispose();
+                pos = null;
+            }
         }
 
 
         void pos_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
-            pos = null;
-            ShowError("Cannot get position from network.");
-            Log.RegisterLog(e.Error);
+            if (Log.RegisterLog(e.Error))
+            {
+                ShowError("Cannot get position from network.");
+                pos.Dispose();
+                pos = null;
+            }
+
         }
 
         void pos_LocationChanged(object sender, EventArgs e)

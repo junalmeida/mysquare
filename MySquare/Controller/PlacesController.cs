@@ -108,7 +108,8 @@ namespace MySquare.Controller
 #if TESTING
 
             //Service.SearchNearby(text, -22.856025, -43.375182);
-            Service.SearchNearby(text, -22.908683, -43.17782);
+            //Service.SearchNearby(text, -22.908683, -43.17782);
+            Service.SearchNearby(text, 37.535364,-77.509575);
             return;
 #endif
 #if DEBUG
@@ -121,20 +122,23 @@ namespace MySquare.Controller
                 return;
             }
 #endif
+            if (position != null)
+                position.Dispose();
+            position = new WorldPosition(true, true);
 
-            position = new WorldPosition(false, false);
             position.LocationChanged += new EventHandler(position_LocationChanged);
             position.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
 
-            position.PollCell();
-
+            position.Poll();
         }
+
 
         void position_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
+            position.Dispose();
+            position = null;
             ShowError("Could not get your location, try again later.");
             Log.RegisterLog(e.Error);
-            position = null;
         }
 
         void position_LocationChanged(object sender, EventArgs e)
@@ -143,13 +147,14 @@ namespace MySquare.Controller
             {
                 lastLatitude = position.Latitude;
                 lastLongitude = position.Longitude;
-                Service.SearchNearby(text, position.Latitude.Value, position.Longitude.Value);
+                Service.SearchNearby(text, lastLatitude.Value, lastLongitude.Value);
             }
             else
             {
                 ShowError("Could not get your location, try again later.");
                 Log.RegisterLog(new Exception("Unknown error from location service."));
             }
+            position.Dispose();
             position = null;
         }
 
@@ -162,6 +167,7 @@ namespace MySquare.Controller
                 }));
             else
                 LoadVenues(e.Groups);
+
         }
 
 

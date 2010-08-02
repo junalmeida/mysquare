@@ -22,12 +22,12 @@ namespace MySquare.Service
             return filePath;
         }
 
-        internal static void RegisterLog(Exception ex)
+        internal static bool RegisterLog(Exception ex)
         {
             if (ex == null)
-                return;
+                return false;
             else if (ex is ObjectDisposedException || ex is RequestAbortException || (ex.InnerException != null && ex.InnerException is WebException && ((WebException)ex.InnerException).Status == WebExceptionStatus.RequestCanceled))
-                return;
+                return false;
 
             string fileName = GetLogPath();
             if (!string.IsNullOrEmpty(fileName))
@@ -38,10 +38,12 @@ namespace MySquare.Service
                     RegisterLog(writer, ex);
                 }
             }
+            return true;
         }
 
         private static void RegisterLog(StreamWriter writer, Exception ex)
         {
+            writer.WriteLine(ex.GetType().FullName);
             writer.WriteLine(ex.Message);
             try
             {

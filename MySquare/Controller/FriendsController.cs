@@ -73,17 +73,23 @@ namespace MySquare.Controller
                 return;
             }
 #endif
-            position = new WorldPosition(false, false);
+            if (position != null)
+                position.Dispose();
+            position = new WorldPosition(true, true);
             position.LocationChanged += new EventHandler(position_LocationChanged);
             position.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
-            position.PollCell();
+            position.Poll();
         }
 
         void position_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
             ShowError("Could not get your location, try again later.");
             Log.RegisterLog(e.Error);
-            position = null;
+            if (position != null)
+            {
+                position.Dispose();
+                position = null;
+            }
         }
 
         void position_LocationChanged(object sender, EventArgs e)
@@ -99,7 +105,11 @@ namespace MySquare.Controller
                 ShowError("Could not get your location, try again later.");
                 Log.RegisterLog(new Exception("Unknown error from location service."));
             }
-            position = null;
+            if (position != null)
+            {
+                position.Dispose();
+                position = null;
+            }
         }
 
         void Service_CheckInsResult(object serder, MySquare.FourSquare.CheckInsEventArgs e)

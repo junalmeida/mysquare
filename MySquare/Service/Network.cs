@@ -206,8 +206,18 @@ namespace MySquare.Service
 
             try
             {
-                HttpWebRequest request = requests[service];
-                Stream postData = request.EndGetRequestStream(r);
+                HttpWebRequest request = null;
+                Stream postData = null;
+                lock (this)
+                {
+                    if (requests.ContainsKey(service))
+                        request = requests[service];
+                    if (request == null)
+                        return;
+                    else
+                        postData = request.EndGetRequestStream(r);
+                }
+
                 memData.Seek(0, SeekOrigin.Begin);
                 memData.WriteTo(postData);
                 postData.Close();
@@ -235,16 +245,27 @@ namespace MySquare.Service
         private void ParseResponse(IAsyncResult r)
         {
             int service = (int)r.AsyncState;
-            HttpWebRequest request = requests[service];
+            HttpWebRequest request = null;
+            lock (this)
+            {
+                if (requests.ContainsKey(service))
+                    request = requests[service];
+            }
             if (request != null)
             {
+                HttpWebResponse response = null;
                 string responseTxt = null;
                 object result = null;
-                HttpWebResponse response = null;
                 try
                 {
-                    response = (HttpWebResponse)request.EndGetResponse(r);
-
+                    try
+                    {
+                        response = (HttpWebResponse)request.EndGetResponse(r);
+                    }
+                    catch (ArgumentException)
+                    {
+                        return;
+                    }
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         using (Stream stream = response.GetResponseStream())
@@ -269,6 +290,13 @@ namespace MySquare.Service
                                 //Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
                                 Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
                                 result = serializer.Deserialize(reader, type);
+                            }
+
+                            if (this.GetType() != typeof(RisingMobility))
+                            {
+                                Log.RegisterLog(new Exception(
+                                    "Request address: " + request.Address.ToString() + "\r\n" +
+                                    "Request output: " + responseTxt));
                             }
                         }
 
@@ -296,7 +324,11 @@ namespace MySquare.Service
                     response = null;
 
                     request = null;
-                    requests.Remove(service);
+                    lock (this)
+                    {
+                        if (requests.ContainsKey(service))
+                            requests.Remove(service);
+                    }
                 }
 
                 if (result != null)
