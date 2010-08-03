@@ -264,26 +264,31 @@ namespace MySquare.Service
         {
             if (VenueResult != null)
             {
-                e.Venue.fullData = true;
-                int index = cacheVenues.IndexOf(e.Venue);
-                if (index > -1)
-                {
-                    e.Venue.CopyTo(cacheVenues[index]);
-                    e.Venue = cacheVenues[index];
-                }
+                if (e.Venue == null)
+                    OnError(new ErrorEventArgs(new Exception("Invalid foursquare response.")));
                 else
-                    cacheVenues.Add(e.Venue);
-
-                if (e.Venue.Status != null && e.Venue.Status.Mayor != null)
                 {
-                    index = cacheUsers.IndexOf(e.Venue.Status.Mayor.User);
-                    if (index == -1)
-                        cacheUsers.Add(e.Venue.Status.Mayor.User);
-                    else if (cacheUsers[index].fullData)
-                        e.Venue.Status.Mayor.User = cacheUsers[index];
-                }
+                    e.Venue.fullData = true;
+                    int index = cacheVenues.IndexOf(e.Venue);
+                    if (index > -1)
+                    {
+                        e.Venue.CopyTo(cacheVenues[index]);
+                        e.Venue = cacheVenues[index];
+                    }
+                    else
+                        cacheVenues.Add(e.Venue);
 
-                VenueResult(this, e);
+                    if (e.Venue.Status != null && e.Venue.Status.Mayor != null)
+                    {
+                        index = cacheUsers.IndexOf(e.Venue.Status.Mayor.User);
+                        if (index == -1)
+                            cacheUsers.Add(e.Venue.Status.Mayor.User);
+                        else if (cacheUsers[index].fullData)
+                            e.Venue.Status.Mayor.User = cacheUsers[index];
+                    }
+
+                    VenueResult(this, e);
+                }
             }
         }
 

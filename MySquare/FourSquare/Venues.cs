@@ -32,7 +32,7 @@ namespace MySquare.FourSquare
         }
     }
 
-    delegate void VenueEventHandler(object serder, VenueEventArgs e);
+    delegate void VenueEventHandler(object sender, VenueEventArgs e);
     class VenueEventArgs : EventArgs
     {
         [JsonProperty("venue")]

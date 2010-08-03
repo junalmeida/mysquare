@@ -435,7 +435,7 @@ namespace MySquare.Controller
         }
 
     
-        void Service_VenueResult(object serder, VenueEventArgs e)
+        void Service_VenueResult(object sender, VenueEventArgs e)
         {
             this.Venue = e.Venue;
             LoadExtraInfo();

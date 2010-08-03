@@ -301,7 +301,7 @@ namespace MySquare.Controller
         }
 
 
-        void Service_VenueResult(object serder, VenueEventArgs e)
+        void Service_VenueResult(object sender, VenueEventArgs e)
         {
             createdVenue = e.Venue;
             WaitThread.Set();
