@@ -8,5 +8,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("Rising Mobility")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyConfiguration("beta")]
+[assembly: AssemblyConfiguration("beta2")]
 
