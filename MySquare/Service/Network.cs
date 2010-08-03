@@ -449,6 +449,37 @@ namespace MySquare.Service
         }
 
         #endregion
+
+        protected static string UrlEncode(string instring)
+        {
+            StringReader strRdr = new StringReader(instring);
+            StringWriter strWtr = new StringWriter();
+            int charValue = strRdr.Read();
+            while (charValue != -1)
+            {
+                if (((charValue >= 48) && (charValue
+        <= 57)) // 0-9
+                || ((charValue >= 65) && (charValue
+        <= 90)) // A-Z
+                || ((charValue >= 97) && (charValue
+        <= 122))) // a-z
+                {
+                    strWtr.Write((char)charValue);
+                }
+                else if (charValue == 32)  // Space
+                {
+                    strWtr.Write("+");
+                }
+                else
+                {
+                    strWtr.Write("%{0:x2}", charValue);
+                }
+                charValue = strRdr.Read();
+            }
+            return strWtr.ToString();
+        }
+
+
     }
 
 

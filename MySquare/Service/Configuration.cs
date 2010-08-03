@@ -54,7 +54,7 @@ namespace MySquare.Service
             service.PremiumArrived += new RisingMobilityEventHandler(service_PremiumArrived);
             service.Error += new ErrorEventHandler(service_Error);
             service.GetPremiumInfo(Login);
-            aEvent.WaitOne();
+            aEvent.WaitOne(5000, false);
         }
 
         static void service_Error(object serder, ErrorEventArgs e)

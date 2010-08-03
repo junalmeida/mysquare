@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using Newtonsoft.Json;
 using System.Reflection;
+using System.IO;
 
 namespace MySquare.Service
 {
@@ -35,8 +36,11 @@ namespace MySquare.Service
         }
 
         internal const string adService = "http://risingmobility.com/admob.ashx";
+#if TESTING
+        internal const string rService = "http://localhost:49618/mysquare/service.ashx";
+#else
         internal const string rService = "http://risingmobility.com/mysquare/service.ashx";
-        //internal const string rService = "http://localhost:49617/mysquare/service.ashx";
+#endif
 
         internal void GetAd(double? latitude, double? longitude, string[] keywords)
         {
@@ -53,6 +57,10 @@ namespace MySquare.Service
             base.Post((int)ServiceKey.Ad, adService, false, null, null, param);
         }
 
+
+
+
+
         internal void GetPremiumInfo(string username)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
@@ -62,7 +70,7 @@ namespace MySquare.Service
             var md5 = System.Security.Cryptography.MD5.Create();
             byte[] crypt = md5.ComputeHash(System.Text.Encoding.ASCII.GetBytes(token));
             token = Convert.ToBase64String(crypt, 0, crypt.Length);
-
+            token = UrlEncode(token);
             param.Add("u", token);
             param.Add("t", ".prm");
 
