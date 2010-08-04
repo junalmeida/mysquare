@@ -184,7 +184,10 @@ namespace MySquare.Controller
                     adMob.AdArrived += new AdEventHandler(adMob_AdArrived);
                 }
                 //todo: check if mainform is activated
-                adMob.GetAd(Program.Location.Latitude, Program.Location.Longitude, lastTags);
+                if (Program.Location.WorldPoint.IsEmpty)
+                    adMob.GetAd(null, null, lastTags);
+                else
+                    adMob.GetAd(Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude, lastTags);
             }
         }
 

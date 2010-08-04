@@ -58,7 +58,7 @@ namespace CompatibilityCheck
             try
             {
                 string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "mysquare.txt");
-                MessageBox.Show("This program will collect some debug data from your device.");
+                MessageBox.Show("This program will collect some debug data from your device. This may take some time and will try to discover your position. Wait for the success message.");
                 using (FileStream file = new FileStream(
                     fileName, FileMode.Create, FileAccess.Write))
                 using (StreamWriter writer = new StreamWriter(file))
@@ -89,6 +89,16 @@ namespace CompatibilityCheck
                         writer.WriteLine(@"  * " + f + ": " + File.Exists(f).ToString());
                     }
                     writer.WriteLine();
+                    try
+                    {
+                        using (var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("System\\State\\Phone"))
+                        {
+                            writer.WriteLine("Operator:");
+                            writer.WriteLine("  * " + key.GetValue("Current Operator Name", string.Empty));
+
+                        }
+                    }
+                    catch { }
                     writer.WriteLine("Device Information:");
                     writer.WriteLine("  * " + Manufacturer + " " + OemInfo);
                     writer.WriteLine("Windows:");
@@ -99,13 +109,45 @@ namespace CompatibilityCheck
                     writer.WriteLine();
                     writer.WriteLine();
                     RIL_Test(writer);
+
+                    writer.WriteLine();
+                    writer.WriteLine("Locating your cellphone:");
+
+                    waithandle.Reset();
+                    pos = new Tenor.Mobile.Location.WorldPosition(true, true);
+                    pos.AlwaysHitLocationChanged = true;
+                    pos.LocationChanged += new EventHandler(pos_LocationChanged);
+                    pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+                    waithandle.WaitOne();
+                    writer.WriteLine();
+                    writer.WriteLine("Done.");
+
                 }
-                MessageBox.Show("Done. Check the file at: " + fileName);
+
+
+                MessageBox.Show("Done.\r\n Check the file at: " + fileName);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        static Tenor.Mobile.Location.WorldPosition pos = null;
+        static int count = 0;
+        static void pos_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
+        {
+            output.WriteLine("  * Error: " + e.Error.Message);
+            waithandle.Set();
+        }
+
+        static void pos_LocationChanged(object sender, EventArgs e)
+        {
+            output.WriteLine("  * Attemp " + (count + 1).ToString() + ": " + 
+                pos.WorldPoint.ToString() + " - " + pos.FixType.ToString() + " - " + pos.WorldPoint.FixTime.ToString());
+            if (count > 4)
+                waithandle.Set();
+            count++;
         }
 
         static StreamWriter output;

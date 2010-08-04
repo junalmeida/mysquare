@@ -122,7 +122,7 @@ namespace MySquare.Controller
         void picMap_Resize(object sender, EventArgs e)
         {
             Size current = ((Control)sender).Size;
-            if (Program.Location.Latitude.HasValue && Program.Location.Longitude.HasValue && !Size.Equals(current, oldSize))
+            if (!Program.Location.WorldPoint.IsEmpty && !Size.Equals(current, oldSize))
                 DownloadMapPosition();
             oldSize = current;
         }
@@ -157,8 +157,8 @@ namespace MySquare.Controller
             t = new Thread(new ThreadStart(delegate()
             {
                 CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
-                double latitude = Program.Location.Latitude.Value;
-                double longitude = Program.Location.Longitude.Value;
+                double latitude = Program.Location.WorldPoint.Latitude;
+                double longitude = Program.Location.WorldPoint.Longitude;
 
                 View.latitudeCenter = latitude;
                 View.longitudeCenter = longitude;
@@ -174,7 +174,16 @@ namespace MySquare.Controller
 
                 this.View.Invoke(new ThreadStart(delegate()
                 {
-                    View.FixType = Program.Location.FixType == FixType.Network ? "Low precision" : "High precision";
+                    string precision = "";
+                    if (Program.Location.FixType == FixType.Gps)
+                        precision = "High precision";
+                    else if (Program.Location.FixType == FixType.GeoIp)
+                        precision = "Low precision";
+                    else if (Program.Location.FixType == FixType.GsmNetwork)
+                        precision = "Average precision";
+                    
+                    View.FixType = precision;
+
                     box.Image = null;
                     if (box.Tag != null && box.Tag is IDisposable)
                         ((IDisposable)box.Tag).Dispose();
@@ -194,7 +203,7 @@ namespace MySquare.Controller
             if (latSel.HasValue && lngSel.HasValue)
                 google.GetGeocoding(latSel.Value, lngSel.Value);
             else
-                google.GetGeocoding(Program.Location.Latitude.Value, Program.Location.Longitude.Value);
+                google.GetGeocoding(Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude);
         }
 
         void Service_GeocodeResult(object serder, GeocodeEventArgs e)
@@ -257,10 +266,10 @@ namespace MySquare.Controller
                 lat = latSel.Value;
                 lng = longSel.Value;
             }
-            else if (Program.Location.Latitude.HasValue)
+            else if (!Program.Location.WorldPoint.IsEmpty)
             {
-                lat = Program.Location.Latitude.Value;
-                lng = Program.Location.Longitude.Value;
+                lat = Program.Location.WorldPoint.Latitude;
+                lng = Program.Location.WorldPoint.Longitude;
             }
 
             createdVenue = null;

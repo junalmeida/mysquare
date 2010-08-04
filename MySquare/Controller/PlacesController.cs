@@ -134,9 +134,10 @@ namespace MySquare.Controller
             Program.Location.LocationChanged -= new EventHandler(position_LocationChanged);
             Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
 
-            if (Program.Location.Latitude.HasValue && Program.Location.Longitude.HasValue)
+            if (!Program.Location.WorldPoint.IsEmpty)
             {
-                Service.SearchNearby(text, Program.Location.Latitude.Value, Program.Location.Longitude.Value);
+                Service.SearchNearby(text, Program.Location.WorldPoint.Latitude, 
+                                           Program.Location.WorldPoint.Longitude);
             }
             else
             {
