@@ -38,9 +38,6 @@ namespace MySquare.Controller
         }
 
 
-
-
-        WorldPosition pos;
         public override void Activate()
         {
             UI.Main form = (Main)View.Parent;
@@ -73,11 +70,10 @@ namespace MySquare.Controller
                 return;
             }
 #endif
-            if (pos != null)
-                pos.Dispose();
-            pos = new WorldPosition(true, true);
-            pos.LocationChanged += new EventHandler(pos_LocationChanged);
-            pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+            Program.Location.LocationChanged += new EventHandler(pos_LocationChanged);
+            Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+            Program.Location.PollLocation = true;
+            Program.Location.Poll();
         }
 
 
@@ -85,9 +81,9 @@ namespace MySquare.Controller
 
         public override void Deactivate()
         {
-            if (pos != null)
-                pos.LocationChanged -= new EventHandler(pos_LocationChanged);
-            pos = null;
+            Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
+            Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+
             View.Visible = false;
         }
 
@@ -95,9 +91,9 @@ namespace MySquare.Controller
         {
             if (Log.RegisterLog(e.Exception))
             {
+                Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
+                Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
                 ShowError("Cannot connect with Google service.");
-                pos.Dispose();
-                pos = null;
             }
         }
 
@@ -106,27 +102,27 @@ namespace MySquare.Controller
         {
             if (Log.RegisterLog(e.Error))
             {
+                Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
+                Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
                 ShowError("Cannot get position from network.");
-                pos.Dispose();
-                pos = null;
             }
 
         }
 
         void pos_LocationChanged(object sender, EventArgs e)
         {
-            if (pos != null)
-            {
-                pos.PollingInterval = 30000;
-                DownloadMapPosition();
-            }
+
+            Program.Location.PollingInterval = 30000;
+            Program.Location.PollLocation = true;
+
+            DownloadMapPosition();
         }
 
         Size oldSize = Size.Empty;
         void picMap_Resize(object sender, EventArgs e)
         {
             Size current = ((Control)sender).Size;
-            if (pos != null && pos.Latitude.HasValue && pos.Longitude.HasValue && !Size.Equals(current, oldSize))
+            if (Program.Location.Latitude.HasValue && Program.Location.Longitude.HasValue && !Size.Equals(current, oldSize))
                 DownloadMapPosition();
             oldSize = current;
         }
@@ -161,22 +157,9 @@ namespace MySquare.Controller
             t = new Thread(new ThreadStart(delegate()
             {
                 CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
-                double latitude, longitude;
-#if DEBUG
-                if (Environment.OSVersion.Platform != PlatformID.WinCE)
-                {
-                    latitude = -22.856025;
-                    longitude = -43.375182;
-                }
-                else
-                {
-                    latitude = pos.Latitude.Value;
-                    longitude = pos.Longitude.Value;
-                }
-#else
-            latitude = pos.Latitude.Value;
-            longitude = pos.Longitude.Value;
-#endif
+                double latitude = Program.Location.Latitude.Value;
+                double longitude = Program.Location.Longitude.Value;
+
                 View.latitudeCenter = latitude;
                 View.longitudeCenter = longitude;
                 View.latitudeSelected = null;
@@ -191,7 +174,7 @@ namespace MySquare.Controller
 
                 this.View.Invoke(new ThreadStart(delegate()
                 {
-                    View.FixType = pos != null && pos.FixType == FixType.Network ? "Low precision" : "High precision";
+                    View.FixType = Program.Location.FixType == FixType.Network ? "Low precision" : "High precision";
                     box.Image = null;
                     if (box.Tag != null && box.Tag is IDisposable)
                         ((IDisposable)box.Tag).Dispose();
@@ -211,7 +194,7 @@ namespace MySquare.Controller
             if (latSel.HasValue && lngSel.HasValue)
                 google.GetGeocoding(latSel.Value, lngSel.Value);
             else
-                google.GetGeocoding(pos.Latitude.Value, pos.Longitude.Value);
+                google.GetGeocoding(Program.Location.Latitude.Value, Program.Location.Longitude.Value);
         }
 
         void Service_GeocodeResult(object serder, GeocodeEventArgs e)
@@ -274,10 +257,10 @@ namespace MySquare.Controller
                 lat = latSel.Value;
                 lng = longSel.Value;
             }
-            else if (pos != null && pos.Latitude.HasValue)
+            else if (Program.Location.Latitude.HasValue)
             {
-                lat = pos.Latitude.Value;
-                lng = pos.Longitude.Value;
+                lat = Program.Location.Latitude.Value;
+                lng = Program.Location.Longitude.Value;
             }
 
             createdVenue = null;
@@ -312,8 +295,6 @@ namespace MySquare.Controller
         {
             if (google != null)
                 google.Dispose();
-            if (pos != null)
-                pos.Dispose();
 
             if (t != null)
                 t.Abort();

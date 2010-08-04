@@ -56,7 +56,6 @@ namespace MySquare.Controller
             LoadFriends();
         }
 
-        WorldPosition position;
         private void LoadFriends()
         {
             Cursor.Current = Cursors.WaitCursor;
@@ -64,52 +63,36 @@ namespace MySquare.Controller
             View.listBox.Visible = false;
             View.ImageList = new Dictionary<string, byte[]>();
             View.listBox.Clear();
-#if DEBUG
-            if (Environment.OSVersion.Platform != PlatformID.WinCE || Tenor.Mobile.Device.Device.OemInfo.IndexOf("Emulator") > -1)
-            {
-                lastLatitude = 40.769362;
-                lastLongitude = -73.971033;
-                Service.GetFriendsCheckins(lastLatitude.Value, lastLongitude.Value);
-                return;
-            }
-#endif
-            if (position != null)
-                position.Dispose();
-            position = new WorldPosition(true, true);
-            position.LocationChanged += new EventHandler(position_LocationChanged);
-            position.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
-            position.Poll();
+
+            Program.Location.LocationChanged += new EventHandler(position_LocationChanged);
+            Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+            Program.Location.PollLocation = true;
+            Program.Location.Poll();
         }
 
         void position_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
+            Program.Location.LocationChanged -= new EventHandler(position_LocationChanged);
+            Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
             ShowError("Could not get your location, try again later.");
             Log.RegisterLog(e.Error);
-            if (position != null)
-            {
-                position.Dispose();
-                position = null;
-            }
+ 
         }
 
         void position_LocationChanged(object sender, EventArgs e)
         {
-            if (position != null && position.Latitude.HasValue && position.Longitude.HasValue)
+            Program.Location.LocationChanged -= new EventHandler(position_LocationChanged);
+            Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+            if (Program.Location.Latitude.HasValue && Program.Location.Longitude.HasValue)
             {
-                lastLatitude = position.Latitude;
-                lastLongitude = position.Longitude;
-                Service.GetFriendsCheckins(position.Latitude.Value, position.Longitude.Value);
+                Service.GetFriendsCheckins(Program.Location.Latitude.Value, Program.Location.Longitude.Value);
             }
             else
             {
                 ShowError("Could not get your location, try again later.");
                 Log.RegisterLog(new Exception("Unknown error from location service."));
             }
-            if (position != null)
-            {
-                position.Dispose();
-                position = null;
-            }
+          
         }
 
         void Service_CheckInsResult(object serder, MySquare.FourSquare.CheckInsEventArgs e)

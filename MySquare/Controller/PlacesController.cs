@@ -86,7 +86,6 @@ namespace MySquare.Controller
             }
         }
 
-        WorldPosition position;
         private void Search()
         {
             Search(null);
@@ -112,50 +111,38 @@ namespace MySquare.Controller
             Service.SearchNearby(text, 37.535364,-77.509575);
             return;
 #endif
-#if DEBUG
-            if (Environment.OSVersion.Platform == PlatformID.WinCE && Tenor.Mobile.Device.Device.OemInfo.IndexOf("Emulator") > -1)
-            {
-                //search on new york, near broadway
-                lastLatitude = 40.769362;
-                lastLongitude = -73.971033;
-                Service.SearchNearby(text, lastLatitude.Value, lastLongitude.Value);
-                return;
-            }
-#endif
-            if (position != null)
-                position.Dispose();
-            position = new WorldPosition(true, true);
 
-            position.LocationChanged += new EventHandler(position_LocationChanged);
-            position.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+            Program.Location.LocationChanged += new EventHandler(position_LocationChanged);
+            Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
 
-            position.Poll();
+            Program.Location.PollLocation = true;
+            Program.Location.Poll();
         }
 
 
         void position_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
-            position.Dispose();
-            position = null;
+            Program.Location.LocationChanged -= new EventHandler(position_LocationChanged);
+            Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+
             ShowError("Could not get your location, try again later.");
             Log.RegisterLog(e.Error);
         }
 
         void position_LocationChanged(object sender, EventArgs e)
         {
-            if (position != null && position.Latitude.HasValue && position.Longitude.HasValue)
+            Program.Location.LocationChanged -= new EventHandler(position_LocationChanged);
+            Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+
+            if (Program.Location.Latitude.HasValue && Program.Location.Longitude.HasValue)
             {
-                lastLatitude = position.Latitude;
-                lastLongitude = position.Longitude;
-                Service.SearchNearby(text, lastLatitude.Value, lastLongitude.Value);
+                Service.SearchNearby(text, Program.Location.Latitude.Value, Program.Location.Longitude.Value);
             }
             else
             {
                 ShowError("Could not get your location, try again later.");
                 Log.RegisterLog(new Exception("Unknown error from location service."));
             }
-            position.Dispose();
-            position = null;
         }
 
         void Service_SearchArrives(object serder, MySquare.FourSquare.SearchEventArgs e)
@@ -228,12 +215,6 @@ namespace MySquare.Controller
             Cursor.Current = Cursors.Default;
             Cursor.Show();
         }
-
-        public override void Dispose()
-        {
-            if (position != null)
-                position.Dispose();
-            base.Dispose();
-        }
+    
     }
 }

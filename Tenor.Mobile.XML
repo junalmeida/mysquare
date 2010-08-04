@@ -1156,6 +1156,11 @@
             Determines whether to use gps to get latitude and longitude
             </summary>
         </member>
+        <member name="P:Tenor.Mobile.Location.WorldPosition.AlwaysHitLocationChanged">
+            <summary>
+            Determines whether to call LocationChanged.
+            </summary>
+        </member>
         <member name="F:Tenor.Mobile.Location.FixType.Network">
             <summary>
             The last position cames from the internet.

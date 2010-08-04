@@ -74,8 +74,6 @@ namespace MySquare.Controller
         protected static IList<BaseController> Controllers = new List<BaseController>();
         protected static int CurrentController = -1;
 
-        protected static double? lastLatitude;
-        protected static double? lastLongitude;
         protected static string[] lastTags;
 
         internal static void Terminate()

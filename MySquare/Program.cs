@@ -16,6 +16,9 @@ namespace MySquare
 {
     public static class Program
     {
+        internal static WorldPosition Location
+        { get; private set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -28,6 +31,9 @@ namespace MySquare
                 try
                 {
 #endif
+                    Location = new WorldPosition(true, true, 30000);
+                    Location.AlwaysHitLocationChanged = true;
+                    Location.LocationChanged += new EventHandler(Location_LocationChanged);
                     Application.Run(mainForm);
 #if !DEBUG
                 }
@@ -40,6 +46,10 @@ namespace MySquare
                     MessageBox.Show("Unknown error.\r\n" + ex.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                     Terminate();
                 }
+                finally
+                {
+                    Location.Dispose();
+                }
                 try
                 {
                     mainForm.Close();
@@ -49,6 +59,13 @@ namespace MySquare
 #endif
             }
             Application.Exit();
+        }
+
+        static void Location_LocationChanged(object sender, EventArgs e)
+        {
+            if (Location != null)
+                Location.PollLocation = false;
+
         }
 
         internal static void Terminate()
