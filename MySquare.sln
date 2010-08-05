@@ -38,8 +38,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompatibilityCheck", "CompatibilityCheck\CompatibilityCheck.csproj", "{9D68D834-3C02-4927-8B1D-D541A3B8A95F}"
 EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = MySquare2.vsmdi
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,7 +73,6 @@ Global
 		{16B51630-2C6E-48D9-8772-E8D0801849C9}.Testing|Any CPU.Deploy.0 = Release|Any CPU
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Release|Any CPU.Deploy.0 = Release|Any CPU
@@ -86,9 +86,5 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2A7C32F4-5D22-4DFC-9665-D60C07D0758B} = {05FA69D7-6B40-4F57-8B8F-6643525B37F8}
 		{FEE3DF99-755C-4A85-9BB7-B7C1339B080A} = {05FA69D7-6B40-4F57-8B8F-6643525B37F8}
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

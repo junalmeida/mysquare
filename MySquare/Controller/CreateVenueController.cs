@@ -208,41 +208,45 @@ namespace MySquare.Controller
 
         void Service_GeocodeResult(object serder, GeocodeEventArgs e)
         {
-            View.Invoke(new ThreadStart(delegate()
+            try
             {
-                if (View.Visible)
+                View.Invoke(new ThreadStart(delegate()
                 {
-                    string number = string.Empty;
-                    foreach (Geocode geocode in e.Geocodes)
+                    if (View.Visible)
                     {
-                        if (Array.IndexOf(geocode.Types, "street_address") > -1 ||
-                            Array.IndexOf(geocode.Types, "route") > -1)
+                        string number = string.Empty;
+                        foreach (Geocode geocode in e.Geocodes)
                         {
-                            foreach (AddressComponent addr in geocode.AddressComponents)
+                            if (Array.IndexOf(geocode.Types, "street_address") > -1 ||
+                                Array.IndexOf(geocode.Types, "route") > -1)
                             {
-                                if (Array.IndexOf(addr.Types, "route") > -1)
-                                    View.txtAddress.Text = addr.LongName;
-                                if (Array.IndexOf(addr.Types, "street_number") > -1)
-                                    number = addr.LongName;
-                                if (Array.IndexOf(addr.Types, "locality") > -1)
-                                    View.txtCity.Text = addr.LongName;
-                                if (Array.IndexOf(addr.Types, "administrative_area_level_1") > -1)
-                                    View.txtState.Text = addr.ShortName;
-                                if (Array.IndexOf(addr.Types, "postal_code") > -1)
-                                    View.txtZip.Text = addr.ShortName;
+                                foreach (AddressComponent addr in geocode.AddressComponents)
+                                {
+                                    if (Array.IndexOf(addr.Types, "route") > -1)
+                                        View.txtAddress.Text = addr.LongName;
+                                    if (Array.IndexOf(addr.Types, "street_number") > -1)
+                                        number = addr.LongName;
+                                    if (Array.IndexOf(addr.Types, "locality") > -1)
+                                        View.txtCity.Text = addr.LongName;
+                                    if (Array.IndexOf(addr.Types, "administrative_area_level_1") > -1)
+                                        View.txtState.Text = addr.ShortName;
+                                    if (Array.IndexOf(addr.Types, "postal_code") > -1)
+                                        View.txtZip.Text = addr.ShortName;
+                                }
+                                break;
                             }
-                            break;
+                        }
+                        if (!string.IsNullOrEmpty(View.txtAddress.Text) && !string.IsNullOrEmpty(number))
+                        {
+                            int i = number.IndexOf("-");
+                            if (i > -1)
+                                number = number.Substring(0, i);
+                            View.txtAddress.Text += ", " + number;
                         }
                     }
-                    if (!string.IsNullOrEmpty(View.txtAddress.Text) && !string.IsNullOrEmpty(number))
-                    {
-                        int i = number.IndexOf("-");
-                        if (i > -1)
-                            number = number.Substring(0, i);
-                        View.txtAddress.Text += ", " + number;
-                    }
-                }
-            }));
+                }));
+            }
+            catch (ObjectDisposedException) { }
         }
         #endregion
 

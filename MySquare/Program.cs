@@ -25,6 +25,7 @@ namespace MySquare
         [MTAThread]
         public static void Main()
         {
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             using (UI.Main mainForm = new UI.Main())
             {
 #if !DEBUG
@@ -59,6 +60,12 @@ namespace MySquare
 #endif
             }
             Application.Exit();
+        }
+
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e != null && e.ExceptionObject is Exception)
+                Service.Log.RegisterLog(e.ExceptionObject as Exception);
         }
 
         static void Location_LocationChanged(object sender, EventArgs e)
