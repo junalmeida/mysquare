@@ -123,7 +123,9 @@ namespace CompatibilityCheck
                     writer.WriteLine("Done.");
 
                 }
-
+                pos.LocationChanged -= new EventHandler(pos_LocationChanged);
+                pos.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+                pos.Dispose();
 
                 MessageBox.Show("Done.\r\n Check the file at: " + fileName);
             }
