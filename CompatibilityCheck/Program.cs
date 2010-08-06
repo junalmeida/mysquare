@@ -130,7 +130,7 @@ namespace CompatibilityCheck
                     pos = new Tenor.Mobile.Location.WorldPosition(true, true);
                     pos.PollHit += new EventHandler(pos_LocationChanged);
                     pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
-                    if (!waithandle.WaitOne(60000 * 5, false))
+                    if (!waithandle.WaitOne(60000 * 2, false))
                         writer.Write("Gps give up. ");
                     writer.WriteLine("Done.");
                 }
@@ -170,47 +170,51 @@ namespace CompatibilityCheck
         static void RIL_Test(StreamWriter output)
         {
             Program.output = output;
-            IntPtr hRil = IntPtr.Zero;
-            try
+            for (uint i = 1; i <= 4; i++)
             {
-                output.WriteLine("Testing RIL functions:");
-                IntPtr hRes = IntPtr.Zero;
+                output.WriteLine();
+                output.WriteLine(string.Format("Testing RIL functions on RIL{0}:", i));
+                IntPtr hRil = IntPtr.Zero;
+                try
+                {
+                    IntPtr hRes = IntPtr.Zero;
 
-                // initialise RIL
-                hRes = RIL_Initialize(1,                      // RIL port 1
-                    new RILRESULTCALLBACK(rilResultCallback), // function to call with result
-                    null,                                     // function to call with notify
-                    0,                                        // classes of notification to enable
-                    0,                                        // RIL parameters
-                    out hRil);                                // RIL handle returned
-                output.WriteLine("RIL:" + hRes.ToString());
+                    // initialise RIL
+                    hRes = RIL_Initialize(i,                      // RIL port 1
+                        new RILRESULTCALLBACK(rilResultCallback), // function to call with result
+                        null,                                     // function to call with notify
+                        0,                                        // classes of notification to enable
+                        0,                                        // RIL parameters
+                        out hRil);                                // RIL handle returned
+                    output.WriteLine("RIL:" + hRes.ToString());
 
-                // initialised successfully
+                    // initialised successfully
 
-                // use RIL to get cell tower info with the RIL handle just created
-                hRes = RIL_GetCellTowerInfo(hRil);
+                    // use RIL to get cell tower info with the RIL handle just created
+                    hRes = RIL_GetCellTowerInfo(hRil);
 
-                // wait for cell tower info to be returned
-                output.Write("Waiting 5 secs...");
-                DateTime d1 = DateTime.Now;
-                waithandle.WaitOne(5000, false);
+                    // wait for cell tower info to be returned
+                    output.Write("Waiting 5 secs...");
+                    DateTime d1 = DateTime.Now;
+                    waithandle.WaitOne(5000, false);
 
-                // finished - release the RIL handle
-                output.WriteLine(" Done." + (DateTime.Now - d1).TotalMilliseconds.ToString());
+                    // finished - release the RIL handle
+                    output.WriteLine(" Done." + (DateTime.Now - d1).TotalMilliseconds.ToString());
 
 
-                //celltower info finished
-            }
-            catch (Exception ex)
-            {
-                output.WriteLine("  ** ERROR: " + ex.Message);
-            }
-            finally
-            {
-                output.WriteLine("Freeing RIL...");
-                if (hRil != IntPtr.Zero)
-                    RIL_Deinitialize(hRil);
+                    //celltower info finished
+                }
+                catch (Exception ex)
+                {
+                    output.WriteLine("  ** ERROR: " + ex.Message);
+                }
+                finally
+                {
+                    output.WriteLine("Freeing RIL...");
+                    if (hRil != IntPtr.Zero)
+                        RIL_Deinitialize(hRil);
 
+                }
             }
 
         }
