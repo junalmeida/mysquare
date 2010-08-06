@@ -110,8 +110,21 @@ namespace CompatibilityCheck
                     writer.WriteLine();
                     RIL_Test(writer);
 
+#if XPS
                     writer.WriteLine();
                     writer.WriteLine("Locating your cellphone:");
+                    writer.WriteLine();
+                    writer.Write(" * WPS:");
+
+                    double lat, lng;
+                    if (Tenor.Mobile.Location.Xps.WPSLocation("risingmobility", "junalmeida", out lat, out lng) == Tenor.Mobile.Location.WPS_ReturnCode.WPS_OK)
+                    {
+                        writer.WriteLine(lat.ToString() + " - " + lng.ToString());
+                    }
+                    else
+                        writer.WriteLine("Error");
+#endif
+
 
                     waithandle.Reset();
                     pos = new Tenor.Mobile.Location.WorldPosition(true, true);

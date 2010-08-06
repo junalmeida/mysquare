@@ -121,6 +121,7 @@ namespace MySquare.Controller
                 Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
 
                 Program.Location.UseNetwork = true;
+                Program.Location.UseGps = true;
                 Program.Location.Poll();
             }
         }

@@ -49,7 +49,7 @@
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="Tenor.Mobile, Version=0.1.3868.17446, Culture=neutral, PublicKeyToken=104fb1972ff14a0a, processorArchitecture=MSIL">
+    <Reference Include="Tenor.Mobile, Version=0.1.3870.17700, Culture=neutral, PublicKeyToken=104fb1972ff14a0a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Tenor.Mobile.dll</HintPath>
     </Reference>
@@ -57,6 +57,11 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="wpsapi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

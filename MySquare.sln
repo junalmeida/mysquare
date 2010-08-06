@@ -27,7 +27,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{FEE3DF99-7
 		Newtonsoft.Json.Compact.dll = Newtonsoft.Json.Compact.dll
 		Newtonsoft.Json.Compact.xml = Newtonsoft.Json.Compact.xml
 		Tenor.Mobile.dll = Tenor.Mobile.dll
-		Tenor.Mobile.XML = Tenor.Mobile.XML
 	EndProjectSection
 EndProject
 Project("{B900F1C2-3D47-4FEC-85B3-04AAF18C3634}") = "MySquare.Setup", "MySquare.Setup\MySquare.Setup.vddproj", "{CA8AD679-A1ED-45D3-A73B-17720A8623EB}"

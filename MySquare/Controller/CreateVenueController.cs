@@ -71,14 +71,18 @@ namespace MySquare.Controller
             }
 #endif
             Program.KeepGpsOpened = true;
+
+            Program.Location.LocationChanged += new EventHandler(pos_LocationChanged);
+            Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+
             if (!Program.Location.WorldPoint.IsEmpty)
                 pos_LocationChanged(null, null);
-
-            Program.Location.PollHit += new EventHandler(pos_LocationChanged);
-            Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
-            Program.Location.UseGps = true;
-            Program.Location.UseNetwork = true;
-            Program.Location.Poll();
+            else
+            {
+                Program.Location.UseGps = true;
+                Program.Location.UseNetwork = true;
+                Program.Location.Poll();
+            }
         }
 
 
@@ -86,7 +90,7 @@ namespace MySquare.Controller
 
         public override void Deactivate()
         {
-            Program.Location.PollHit -= new EventHandler(pos_LocationChanged);
+            Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
             Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
             Program.KeepGpsOpened = false;
 
@@ -97,7 +101,7 @@ namespace MySquare.Controller
         {
             if (Log.RegisterLog(e.Exception))
             {
-                Program.Location.PollHit -= new EventHandler(pos_LocationChanged);
+                Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
                 Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
                 ShowError("Cannot connect with Google service.");
             }
@@ -108,7 +112,7 @@ namespace MySquare.Controller
         {
             if (Log.RegisterLog(e.Error))
             {
-                Program.Location.PollHit -= new EventHandler(pos_LocationChanged);
+                Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
                 Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
                 ShowError("Cannot get position from network.");
             }
@@ -178,6 +182,7 @@ namespace MySquare.Controller
                     latitude.ToString(culture),
                     longitude.ToString(culture));
                 byte[] buffer = Service.DownloadImageSync(googleMapsUrl, false);
+                t = null;
 
                 this.View.Invoke(new ThreadStart(delegate()
                 {
@@ -188,7 +193,7 @@ namespace MySquare.Controller
                         precision = "Low precision";
                     else if (Program.Location.FixType == FixType.GsmNetwork)
                         precision = "Average precision";
-                    
+
                     View.FixType = precision;
 
                     box.Image = null;
