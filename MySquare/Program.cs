@@ -32,9 +32,9 @@ namespace MySquare
                 try
                 {
 #endif
-                    Location = new WorldPosition(true, true, 30000);
-                    Location.AlwaysHitLocationChanged = true;
-                    Location.LocationChanged += new EventHandler(Location_LocationChanged);
+                    Location = new WorldPosition(true, true, 15000);
+                    Location.PollHit += new EventHandler(Location_PollHit);
+                    Location.Poll();
                     Application.Run(mainForm);
 #if !DEBUG
                 }
@@ -62,18 +62,24 @@ namespace MySquare
             Application.Exit();
         }
 
+        static void Location_PollHit(object sender, EventArgs e)
+        {
+            if (Location != null)
+            {
+                if (Location.FixType == FixType.GsmNetwork)
+                    Location.UseNetwork = false;
+                if (!KeepGpsOpened && Location.FixType == FixType.Gps)
+                    Location.UseGps = false;
+            }
+        }
+
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             if (e != null && e.ExceptionObject is Exception)
                 Service.Log.RegisterLog(e.ExceptionObject as Exception);
         }
 
-        static void Location_LocationChanged(object sender, EventArgs e)
-        {
-            if (Location != null)
-                Location.PollLocation = false;
-
-        }
+        internal static bool KeepGpsOpened { get; set; }
 
         internal static void Terminate()
         {

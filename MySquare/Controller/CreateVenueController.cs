@@ -70,9 +70,14 @@ namespace MySquare.Controller
                 return;
             }
 #endif
-            Program.Location.LocationChanged += new EventHandler(pos_LocationChanged);
+            Program.KeepGpsOpened = true;
+            if (!Program.Location.WorldPoint.IsEmpty)
+                pos_LocationChanged(null, null);
+
+            Program.Location.PollHit += new EventHandler(pos_LocationChanged);
             Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
-            Program.Location.PollLocation = true;
+            Program.Location.UseGps = true;
+            Program.Location.UseNetwork = true;
             Program.Location.Poll();
         }
 
@@ -81,8 +86,9 @@ namespace MySquare.Controller
 
         public override void Deactivate()
         {
-            Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
+            Program.Location.PollHit -= new EventHandler(pos_LocationChanged);
             Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+            Program.KeepGpsOpened = false;
 
             View.Visible = false;
         }
@@ -91,7 +97,7 @@ namespace MySquare.Controller
         {
             if (Log.RegisterLog(e.Exception))
             {
-                Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
+                Program.Location.PollHit -= new EventHandler(pos_LocationChanged);
                 Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
                 ShowError("Cannot connect with Google service.");
             }
@@ -102,7 +108,7 @@ namespace MySquare.Controller
         {
             if (Log.RegisterLog(e.Error))
             {
-                Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
+                Program.Location.PollHit -= new EventHandler(pos_LocationChanged);
                 Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
                 ShowError("Cannot get position from network.");
             }
@@ -113,7 +119,8 @@ namespace MySquare.Controller
         {
 
             Program.Location.PollingInterval = 30000;
-            Program.Location.PollLocation = true;
+            Program.Location.UseNetwork = true;
+            Program.Location.UseGps = true;
 
             DownloadMapPosition();
         }

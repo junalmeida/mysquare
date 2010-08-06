@@ -115,15 +115,13 @@ namespace CompatibilityCheck
 
                     waithandle.Reset();
                     pos = new Tenor.Mobile.Location.WorldPosition(true, true);
-                    pos.AlwaysHitLocationChanged = true;
-                    pos.LocationChanged += new EventHandler(pos_LocationChanged);
+                    pos.PollHit += new EventHandler(pos_LocationChanged);
                     pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
-                    waithandle.WaitOne();
-                    writer.WriteLine();
+                    if (!waithandle.WaitOne(60000 * 5, false))
+                        writer.Write("Gps give up. ");
                     writer.WriteLine("Done.");
-
                 }
-                pos.LocationChanged -= new EventHandler(pos_LocationChanged);
+                pos.PollHit -= new EventHandler(pos_LocationChanged);
                 pos.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
                 pos.Dispose();
 
@@ -137,6 +135,7 @@ namespace CompatibilityCheck
 
         static Tenor.Mobile.Location.WorldPosition pos = null;
         static int count = 0;
+        static int gpsCount = 0;
         static void pos_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
             output.WriteLine("  * Error: " + e.Error.Message);
@@ -147,7 +146,9 @@ namespace CompatibilityCheck
         {
             output.WriteLine("  * Attemp " + (count + 1).ToString() + ": " + 
                 pos.WorldPoint.ToString() + " - " + pos.FixType.ToString() + " - " + pos.WorldPoint.FixTime.ToString());
-            if (count > 4)
+            if (pos.FixType == Tenor.Mobile.Location.FixType.Gps)
+                gpsCount++;
+            if (gpsCount > 4)
                 waithandle.Set();
             count++;
         }

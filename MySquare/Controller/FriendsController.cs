@@ -64,15 +64,22 @@ namespace MySquare.Controller
             View.ImageList = new Dictionary<string, byte[]>();
             View.listBox.Clear();
 
-            Program.Location.LocationChanged += new EventHandler(position_LocationChanged);
-            Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
-            Program.Location.PollLocation = true;
-            Program.Location.Poll();
+            if (Program.Location.FixType == FixType.Gps)
+            {
+                position_LocationChanged(null, null);
+            }
+            else
+            {
+                Program.Location.PollHit += new EventHandler(position_LocationChanged);
+                Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+                Program.Location.UseNetwork = true;
+                Program.Location.Poll();
+            }
         }
 
         void position_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
-            Program.Location.LocationChanged -= new EventHandler(position_LocationChanged);
+            Program.Location.PollHit -= new EventHandler(position_LocationChanged);
             Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
             ShowError("Could not get your location, try again later.");
             Log.RegisterLog(e.Error);
@@ -81,7 +88,7 @@ namespace MySquare.Controller
 
         void position_LocationChanged(object sender, EventArgs e)
         {
-            Program.Location.LocationChanged -= new EventHandler(position_LocationChanged);
+            Program.Location.PollHit -= new EventHandler(position_LocationChanged);
             Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
             if (!Program.Location.WorldPoint.IsEmpty)
             {
