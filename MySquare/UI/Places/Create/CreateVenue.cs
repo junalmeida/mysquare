@@ -81,7 +81,7 @@ namespace MySquare.UI.Places.Create
                         pin.Draw(e.Graphics, rect);
                     }
                 }
-                catch (Exception ex) { MySquare.Service.Log.RegisterLog(ex); }
+                catch (Exception ex) { MySquare.Service.Log.RegisterLog("gdi", ex); }
             }
             else if (!ellipse.IsEmpty)
             {

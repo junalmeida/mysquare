@@ -161,7 +161,7 @@ namespace CompatibilityCheck
         static int gpsCount = 0;
         static void pos_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
-            Debug.WriteLine("  * Error: " + e.Error.Message);
+            Debug.WriteLine("  * " + e.Error.GetType().FullName + ": " + e.Error.Message);
             waithandle.Set();
         }
 

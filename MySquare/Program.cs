@@ -32,9 +32,11 @@ namespace MySquare
                 try
                 {
 #endif
+
                     Location = new WorldPosition(true, true, 15000);
                     Location.PollHit += new EventHandler(Location_PollHit);
                     Location.Poll();
+
                     Application.Run(mainForm);
 #if !DEBUG
                 }

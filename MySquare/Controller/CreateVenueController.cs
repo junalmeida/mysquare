@@ -73,6 +73,7 @@ namespace MySquare.Controller
             Program.KeepGpsOpened = true;
 
             Program.Location.LocationChanged += new EventHandler(pos_LocationChanged);
+            Program.Location.PollHit += new EventHandler(Location_PollHit);
             Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
 
             if (!Program.Location.WorldPoint.IsEmpty)
@@ -88,21 +89,28 @@ namespace MySquare.Controller
 
 
 
+
         public override void Deactivate()
         {
             Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
+            Program.Location.PollHit -= new EventHandler(Location_PollHit);
             Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
             Program.KeepGpsOpened = false;
 
-            View.Visible = false;
+            if (View.InvokeRequired)
+                View.Invoke(new ThreadStart(delegate()
+                {
+                    View.Visible = false;
+                }));
+            else
+                View.Visible = false;
         }
 
         void google_Error(object serder, MySquare.Service.ErrorEventArgs e)
         {
-            if (Log.RegisterLog(e.Exception))
+            if (Log.RegisterLog("geocode", e.Exception))
             {
-                Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
-                Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+                Deactivate();
                 ShowError("Cannot connect with Google service.");
             }
         }
@@ -110,13 +118,34 @@ namespace MySquare.Controller
 
         void pos_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
-            if (Log.RegisterLog(e.Error))
+            if (Log.RegisterLog("lbs", e.Error))
             {
-                Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
-                Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+                Deactivate();
                 ShowError("Cannot get position from network.");
             }
 
+        }
+
+
+        void Location_PollHit(object sender, EventArgs e)
+        {
+            Log.RegisterLog("lbs-info", new Exception(
+                string.Format(@"
+id: {0}
+mcc: {1}
+mnc: {2}
+lac: {3}
+fix: {4}
+location: {5}
+service: {6}",
+         Program.Location.Id,
+         Program.Location.CountryCode,
+         Program.Location.NetworkCode,
+         Program.Location.AreaCode,
+         Program.Location.FixType,
+         Program.Location.WorldPoint,
+         Program.Location.FixService)
+                ));
         }
 
         void pos_LocationChanged(object sender, EventArgs e)
@@ -125,6 +154,7 @@ namespace MySquare.Controller
             Program.Location.PollingInterval = 30000;
             Program.Location.UseNetwork = true;
             Program.Location.UseGps = true;
+
 
             DownloadMapPosition();
         }

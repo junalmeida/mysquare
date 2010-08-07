@@ -133,7 +133,7 @@ namespace MySquare.UI.Friends
                 catch (Exception ex)
                 {
                     imageListBuffer.Remove(userUrl);
-                    Log.RegisterLog(ex);
+                    Log.RegisterLog("gdi", ex);
                 }
             }
         }

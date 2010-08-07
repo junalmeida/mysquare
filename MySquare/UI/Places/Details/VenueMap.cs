@@ -55,7 +55,7 @@ namespace MySquare.UI.Places.Details
                 {
                     image.Draw(e.Graphics, picMapRect);
                 }
-                catch (Exception ex) { Log.RegisterLog(ex); picMap.Tag = null; }
+                catch (Exception ex) { Log.RegisterLog("gdi", ex); picMap.Tag = null; }
             }
             else if (!ellipse.IsEmpty)
             {

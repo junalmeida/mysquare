@@ -28,11 +28,7 @@ namespace MySquare.Test
             HttpWebRequest.DefaultWebProxy.Credentials = new NetworkCredential("y3tr", "htc9377J");
 #endif
 
-            using (UI.Main mainForm = new UI.Main())
-            using (MySquare.Controller.MainController mainController = new MySquare.Controller.MainController(mainForm))
-            {
-                Application.Run(mainForm);
-            }
+            Program.Main();
         }
     }
 }

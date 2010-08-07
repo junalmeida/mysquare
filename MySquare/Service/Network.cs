@@ -62,9 +62,10 @@ namespace MySquare.Service
                     var request = requests[service];
                     RequestAbortException ex = new RequestAbortException(request.Address.ToString(), null);
 
-                    Tenor.Mobile.Network.WebRequest.Abort(request);
                     requests.Remove(service);
-                    OnError(new ErrorEventArgs(ex));
+                    //request.Abort();
+                    //Tenor.Mobile.Network.WebRequest.Abort(request);
+                    //OnError(new ErrorEventArgs(ex));
                 }
             }
         }
@@ -103,6 +104,7 @@ namespace MySquare.Service
                 request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "GET";
             }
+
 
             lock (this)
             {
@@ -272,8 +274,6 @@ namespace MySquare.Service
                         {
                             StreamReader networkReader = new StreamReader(stream);
                             responseTxt = networkReader.ReadToEnd();
-                            System.Diagnostics.Trace.WriteLine(request.Address.ToString());
-                            System.Diagnostics.Trace.WriteLine(responseTxt);
 
                             Type type = GetJsonType(service);
                             if (type == null)
@@ -294,7 +294,7 @@ namespace MySquare.Service
 
                             if (this.GetType() != typeof(RisingMobility))
                             {
-                                Log.RegisterLog(new Exception(
+                                Log.RegisterLog("data", new Exception(
                                     "Request address: " + request.Address.ToString() + "\r\n" +
                                     "Request output: " + responseTxt));
                             }

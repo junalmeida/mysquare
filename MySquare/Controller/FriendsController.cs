@@ -83,7 +83,7 @@ namespace MySquare.Controller
             Program.Location.PollHit -= new EventHandler(position_LocationChanged);
             Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
             ShowError("Could not get your location, try again later.");
-            Log.RegisterLog(e.Error);
+            Log.RegisterLog("lbs", e.Error);
  
         }
 
@@ -98,7 +98,7 @@ namespace MySquare.Controller
             else
             {
                 ShowError("Could not get your location, try again later.");
-                Log.RegisterLog(new Exception("Unknown error from location service."));
+                Log.RegisterLog("lbs", new Exception("Unknown error from location service."));
             }
           
         }

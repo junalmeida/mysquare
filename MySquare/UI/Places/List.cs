@@ -124,7 +124,7 @@ namespace MySquare.UI.Places
                     catch (Exception ex)
                     {
                         imageListBuffer.Remove(iconUrl);
-                        Log.RegisterLog(ex);
+                        Log.RegisterLog("gdi", ex);
                     }
                 }
 
@@ -141,7 +141,7 @@ namespace MySquare.UI.Places
                     }
                     catch (Exception ex)
                     {
-                        Log.RegisterLog(ex);
+                        Log.RegisterLog("gdi", ex);
                     }
                 }
 
