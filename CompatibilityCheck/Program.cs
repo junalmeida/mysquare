@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace CompatibilityCheck
 {
@@ -53,87 +54,92 @@ namespace CompatibilityCheck
 
         };
 
+        private static StreamWriter Debug;
+
         static void Main(string[] args)
         {
+            string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "mysquare.txt");
+            FileStream file = new FileStream(
+                           fileName, FileMode.Create, FileAccess.Write);
+            Debug = new StreamWriter(file);
+            Debug.AutoFlush = true;
+
             try
             {
-                string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "mysquare.txt");
                 MessageBox.Show("This program will collect some debug data from your device. This may take some time and will try to discover your position. Wait for the success message.");
-                using (FileStream file = new FileStream(
-                    fileName, FileMode.Create, FileAccess.Write))
-                using (StreamWriter writer = new StreamWriter(file))
+
+                Debug.WriteLine("MySquare Compatibility Check");
+                Debug.WriteLine(DateTime.Now.ToString());
+                Debug.WriteLine(DateTime.UtcNow.ToString());
+                Debug.WriteLine("========================");
+                Debug.WriteLine(".NET Framework version: ");
+
+                using (var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey
+                    (@"Software\Microsoft\.NETCompactFramework"))
                 {
-                    writer.WriteLine("MySquare Compatibility Check");
-                    writer.WriteLine(DateTime.Now.ToString());
-                    writer.WriteLine(DateTime.UtcNow.ToString());
-                    writer.WriteLine("============================");
-                    writer.WriteLine(".NET Framework version: ");
-
-                    using (var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey
-                        (@"Software\Microsoft\.NETCompactFramework"))
+                    foreach (var valueName in key.GetValueNames())
                     {
-                        foreach (var valueName in key.GetValueNames())
+                        try
                         {
-                            try
-                            {
-                                if ((int)key.GetValue(valueName, 0) == 1)
-                                    writer.WriteLine("  * " + valueName);
-                            }
-                            catch { }
+                            if ((int)key.GetValue(valueName, 0) == 1)
+                                Debug.WriteLine("  * " + valueName);
                         }
-                        writer.WriteLine();
+                        catch { }
                     }
-                    writer.WriteLine("Native Libraries:");
-                    foreach (string f in files)
+                    Debug.WriteLine(string.Empty);
+                }
+                Debug.WriteLine("Native Libraries:");
+                foreach (string f in files)
+                {
+                    Debug.WriteLine(@"  * " + f + ": " + File.Exists(f).ToString());
+                }
+                Debug.WriteLine(string.Empty);
+                try
+                {
+                    using (var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("System\\State\\Phone"))
                     {
-                        writer.WriteLine(@"  * " + f + ": " + File.Exists(f).ToString());
-                    }
-                    writer.WriteLine();
-                    try
-                    {
-                        using (var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("System\\State\\Phone"))
-                        {
-                            writer.WriteLine("Operator:");
-                            writer.WriteLine("  * " + key.GetValue("Current Operator Name", string.Empty));
+                        Debug.WriteLine("Operator:");
+                        Debug.WriteLine("  * " + key.GetValue("Current Operator Name", string.Empty));
 
-                        }
                     }
-                    catch { }
-                    writer.WriteLine("Device Information:");
-                    writer.WriteLine("  * " + Manufacturer + " " + OemInfo);
-                    writer.WriteLine("Windows:");
-                    writer.WriteLine("  * " + Environment.OSVersion.ToString());
-                    writer.WriteLine("Platform:");
-                    writer.WriteLine("  * " + Environment.Version.ToString());
+                }
+                catch { }
+                Debug.WriteLine("Device Information:");
+                Debug.WriteLine("  * " + Manufacturer + " " + OemInfo);
+                Debug.WriteLine("Windows:");
+                Debug.WriteLine("  * " + Environment.OSVersion.ToString());
+                Debug.WriteLine("Platform:");
+                Debug.WriteLine("  * " + Environment.Version.ToString());
 
-                    writer.WriteLine();
-                    writer.WriteLine();
-                    RIL_Test(writer);
+                Debug.WriteLine(string.Empty);
+                Debug.WriteLine(string.Empty);
+                RIL_Test();
 
 #if XPS
-                    writer.WriteLine();
-                    writer.WriteLine("Locating your cellphone:");
-                    writer.WriteLine();
-                    writer.Write(" * WPS:");
+                    Debug.WriteLine();
+                    Debug.WriteLine("Locating your cellphone:");
+                    Debug.WriteLine();
+                    Debug.Write(" * WPS:");
 
                     double lat, lng;
                     if (Tenor.Mobile.Location.Xps.WPSLocation("risingmobility", "junalmeida", out lat, out lng) == Tenor.Mobile.Location.WPS_ReturnCode.WPS_OK)
                     {
-                        writer.WriteLine(lat.ToString() + " - " + lng.ToString());
+                        Debug.WriteLine(lat.ToString() + " - " + lng.ToString());
                     }
                     else
-                        writer.WriteLine("Error");
+                        Debug.WriteLine("Error");
 #endif
 
 
-                    waithandle.Reset();
-                    pos = new Tenor.Mobile.Location.WorldPosition(true, true);
-                    pos.PollHit += new EventHandler(pos_LocationChanged);
-                    pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
-                    if (!waithandle.WaitOne(60000 * 2, false))
-                        writer.Write("Gps give up. ");
-                    writer.WriteLine("Done.");
-                }
+                waithandle.Reset();
+
+                pos = new Tenor.Mobile.Location.WorldPosition(true, true);
+                pos.PollHit += new EventHandler(pos_LocationChanged);
+                pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+                if (!waithandle.WaitOne(60000 * 1, false))
+                    Debug.Write("Gps give up. ");
+                Debug.WriteLine("Done.");
+
                 pos.PollHit -= new EventHandler(pos_LocationChanged);
                 pos.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
                 pos.Dispose();
@@ -144,6 +150,10 @@ namespace CompatibilityCheck
             {
                 MessageBox.Show(ex.Message);
             }
+            finally
+            {
+                Debug.Close();
+            }
         }
 
         static Tenor.Mobile.Location.WorldPosition pos = null;
@@ -151,14 +161,17 @@ namespace CompatibilityCheck
         static int gpsCount = 0;
         static void pos_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
         {
-            output.WriteLine("  * Error: " + e.Error.Message);
+            Debug.WriteLine("  * Error: " + e.Error.Message);
             waithandle.Set();
         }
 
         static void pos_LocationChanged(object sender, EventArgs e)
         {
-            output.WriteLine("  * Attemp " + (count + 1).ToString() + ": " + 
+            Debug.WriteLine("  * Attemp " + (count + 1).ToString() + ": " +
+                pos.ToString() + " - " + 
                 pos.WorldPoint.ToString() + " - " + pos.FixType.ToString() + " - " + pos.WorldPoint.FixTime.ToString());
+            Debug.WriteLine(string.Empty);
+            Debug.WriteLine(string.Empty);
             if (pos.FixType == Tenor.Mobile.Location.FixType.Gps)
                 gpsCount++;
             if (gpsCount > 4)
@@ -166,14 +179,12 @@ namespace CompatibilityCheck
             count++;
         }
 
-        static StreamWriter output;
-        static void RIL_Test(StreamWriter output)
+        static void RIL_Test()
         {
-            Program.output = output;
             for (uint i = 1; i <= 4; i++)
             {
-                output.WriteLine();
-                output.WriteLine(string.Format("Testing RIL functions on RIL{0}:", i));
+                Debug.WriteLine(string.Empty);
+                Debug.WriteLine(string.Format("Testing RIL functions on RIL{0}:", i));
                 IntPtr hRil = IntPtr.Zero;
                 try
                 {
@@ -186,7 +197,7 @@ namespace CompatibilityCheck
                         0,                                        // classes of notification to enable
                         0,                                        // RIL parameters
                         out hRil);                                // RIL handle returned
-                    output.WriteLine("RIL:" + hRes.ToString());
+                    Debug.WriteLine("RIL:" + hRes.ToString());
 
                     // initialised successfully
 
@@ -194,23 +205,23 @@ namespace CompatibilityCheck
                     hRes = RIL_GetCellTowerInfo(hRil);
 
                     // wait for cell tower info to be returned
-                    output.Write("Waiting 5 secs...");
+                    Debug.Write("Waiting 5 secs...");
                     DateTime d1 = DateTime.Now;
                     waithandle.WaitOne(5000, false);
 
                     // finished - release the RIL handle
-                    output.WriteLine(" Done." + (DateTime.Now - d1).TotalMilliseconds.ToString());
+                    Debug.WriteLine(" Done." + (DateTime.Now - d1).TotalMilliseconds.ToString());
 
 
                     //celltower info finished
                 }
                 catch (Exception ex)
                 {
-                    output.WriteLine("  ** ERROR: " + ex.Message);
+                    Debug.WriteLine("  ** ERROR: " + ex.Message);
                 }
                 finally
                 {
-                    output.WriteLine("Freeing RIL...");
+                    Debug.WriteLine("Freeing RIL...");
                     if (hRil != IntPtr.Zero)
                         RIL_Deinitialize(hRil);
 
@@ -231,23 +242,23 @@ namespace CompatibilityCheck
         {
             try
             {
-                output.WriteLine("rilResultCallback");
+                Debug.WriteLine("rilResultCallback");
                 // create empty structure to store cell tower info in
                 RILCELLTOWERINFO rilCellTowerInfo = new RILCELLTOWERINFO();
 
                 // copy result returned from RIL into structure
                 Marshal.PtrToStructure(lpData, rilCellTowerInfo);
-                output.WriteLine("struct recieved");
+                Debug.WriteLine("struct recieved");
 
                 // get the bits out of the RIL cell tower response that we want
-                output.WriteLine("CellId: " + rilCellTowerInfo.dwCellID.ToString());
-                output.WriteLine("AreaCode: " + rilCellTowerInfo.dwLocationAreaCode.ToString());
-                output.WriteLine("CountryCode: " + rilCellTowerInfo.dwMobileCountryCode.ToString());
-                output.WriteLine("NetworkCode: " + rilCellTowerInfo.dwMobileNetworkCode.ToString());
+                Debug.WriteLine("CellId: " + rilCellTowerInfo.dwCellID.ToString());
+                Debug.WriteLine("AreaCode: " + rilCellTowerInfo.dwLocationAreaCode.ToString());
+                Debug.WriteLine("CountryCode: " + rilCellTowerInfo.dwMobileCountryCode.ToString());
+                Debug.WriteLine("NetworkCode: " + rilCellTowerInfo.dwMobileNetworkCode.ToString());
             }
             catch (Exception ex)
             {
-                output.WriteLine("Exception: " + ex.Message);
+                Debug.WriteLine("Exception: " + ex.Message);
             }
             // notify caller function that we have a result
             waithandle.Set();
