@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using MySquare.Service;
 using System.IO;
+using System.Diagnostics;
 
 namespace MySquare.Controller
 {
@@ -117,6 +118,7 @@ namespace MySquare.Controller
             }
             else
             {
+                Program.Location.Stop();
                 Program.Location.PollHit += new EventHandler(position_LocationChanged);
                 Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
 
@@ -138,6 +140,7 @@ namespace MySquare.Controller
 
         void position_LocationChanged(object sender, EventArgs e)
         {
+            Debug.WriteLine("== Passei ==" + DateTime.Now.ToString());
             Program.Location.PollHit -= new EventHandler(position_LocationChanged);
             Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
 

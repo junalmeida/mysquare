@@ -63,13 +63,6 @@ namespace MySquare.Controller
             View.FixType = null;
             View.picMap.Tag = null;
 
-#if DEBUG
-            if (Environment.OSVersion.Platform != PlatformID.WinCE)
-            {
-                DownloadMapPosition();
-                return;
-            }
-#endif
             Program.KeepGpsOpened = true;
 
             Program.Location.LocationChanged += new EventHandler(pos_LocationChanged);
@@ -185,6 +178,12 @@ service: {6}",
         Thread t;
         void DownloadMapPosition()
         {
+            int zoom = 16;
+            if (Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height < 2)
+                zoom = 15;
+
+            View.zoom = zoom;
+
             PictureBox box = this.View.picMap;
 
             Size size = new Size();
@@ -210,7 +209,8 @@ service: {6}",
                 string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
                     size.Width, size.Height,
                     latitude.ToString(culture),
-                    longitude.ToString(culture));
+                    longitude.ToString(culture),
+                    zoom);
                 byte[] buffer = Service.DownloadImageSync(googleMapsUrl, false);
                 t = null;
 

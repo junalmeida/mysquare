@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Win32;
 using System.Threading;
 using MySquare.FourSquare;
+using System.Diagnostics;
 
 namespace MySquare.Service
 {
@@ -90,6 +91,7 @@ namespace MySquare.Service
 
         internal void SearchNearby(string search, double lat, double lgn)
         {
+            Debug.WriteLine("++ Passei ++");
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("geolat", lat.ToString(culture));
             parameters.Add("geolong", lgn.ToString(culture));

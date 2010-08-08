@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
+using System.Reflection;
 using System.Xml;
 using Newtonsoft.Json;
-using System.Reflection;
-using System.IO;
 
 namespace MySquare.Service
 {

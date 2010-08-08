@@ -155,7 +155,9 @@ namespace MySquare.Service
         public static string GetVersion()
         {
             var a = typeof(Configuration).Assembly;
-            string version = a.GetName().Version.ToString();
+            Version versionObj = a.GetName().Version;
+            string version = string.Format("{0}.{1}", versionObj.Major, versionObj.Minor);
+
             string suffix = null;
             object[] atts = a.GetCustomAttributes(typeof(System.Reflection.AssemblyConfigurationAttribute), true);
             foreach (var at in atts)

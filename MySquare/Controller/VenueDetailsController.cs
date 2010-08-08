@@ -447,6 +447,10 @@ namespace MySquare.Controller
 
         void DownloadMapPosition()
         {
+            int zoom = 16;
+            if (Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height < 2)
+                zoom = 15;
+            
             ((Main)this.View.Parent).inputPanel.Enabled = false;
 
             PictureBox box = this.View.venueMap1.picMap;
@@ -461,7 +465,7 @@ namespace MySquare.Controller
                     string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
                         size.Width, size.Height,
                         Venue.Latitude.ToString(culture),
-                        Venue.Longitude.ToString(culture));
+                        Venue.Longitude.ToString(culture), zoom);
 
                     byte[] buffer = Service.DownloadImageSync(googleMapsUrl, false);
 

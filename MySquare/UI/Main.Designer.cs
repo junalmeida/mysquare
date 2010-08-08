@@ -48,6 +48,7 @@
             this.contextHelp1 = new MySquare.UI.ContextHelp();
             this.timerTutorial = new System.Windows.Forms.Timer();
             this.timerAds = new System.Windows.Forms.Timer();
+            this.picGps = new System.Windows.Forms.PictureBox();
             this.picAd.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -187,11 +188,20 @@
             this.timerAds.Interval = 10000;
             this.timerAds.Tick += new System.EventHandler(this.timerAds_Tick);
             // 
+            // picGps
+            // 
+            this.picGps.BackColor = System.Drawing.Color.Black;
+            this.picGps.Location = new System.Drawing.Point(210, 24);
+            this.picGps.Name = "picGps";
+            this.picGps.Size = new System.Drawing.Size(27, 25);
+            this.picGps.Paint += new System.Windows.Forms.PaintEventHandler(this.picGps_Paint);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(240, 268);
+            this.Controls.Add(this.picGps);
             this.Controls.Add(this.contextHelp1);
             this.Controls.Add(this.help1);
             this.Controls.Add(this.venueDetails1);
@@ -231,6 +241,7 @@
         internal System.Windows.Forms.Panel picAd;
         private System.Windows.Forms.LinkLabel lnkTextLink;
         internal Help help1;
+        private System.Windows.Forms.PictureBox picGps;
     }
 }
 

@@ -142,12 +142,11 @@ namespace MySquare.UI.Places.Create
         internal Point selectedPoint = Point.Empty;
         internal double? latitudeSelected;
         internal double? longitudeSelected;
-
+        internal int zoom;
         private void picMap_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && latitudeCenter.HasValue && longitudeCenter.HasValue)
             {
-                int zoom = 16;
                 selectedPoint = new Point(e.X, e.Y);
 
                 // Retirer les pixels du centre de l'image 

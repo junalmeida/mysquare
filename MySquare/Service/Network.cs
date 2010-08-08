@@ -5,6 +5,7 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Threading;
+using System.Diagnostics;
 
 namespace MySquare.Service
 {
@@ -60,10 +61,11 @@ namespace MySquare.Service
                 if (requests.ContainsKey(service))
                 {
                     var request = requests[service];
-                    RequestAbortException ex = new RequestAbortException(request.Address.ToString(), null);
+                    Debug.WriteLine("Aborting " + request.Address.ToString());
+                    //RequestAbortException ex = new RequestAbortException(request.Address.ToString(), null);
 
                     requests.Remove(service);
-                    //request.Abort();
+                    request.Abort();
                     //Tenor.Mobile.Network.WebRequest.Abort(request);
                     //OnError(new ErrorEventArgs(ex));
                 }
@@ -153,11 +155,11 @@ namespace MySquare.Service
 
                 request.BeginGetRequestStream(
                     new AsyncCallback(WriteRequest),
-                    new object[] { service, memData });
+                    new object[] { request, service, memData });
             }
             else
             {
-                request.BeginGetResponse(new AsyncCallback(ParseResponse), service);
+                request.BeginGetResponse(new AsyncCallback(ParseResponse), new object[] { request, service });
             }
 
         }
@@ -203,29 +205,21 @@ namespace MySquare.Service
         private void WriteRequest(IAsyncResult r)
         {
             object[] data = (object[])r.AsyncState;
-            int service = (int)data[0];
-            MemoryStream memData = (MemoryStream)data[1];
+            HttpWebRequest request = (HttpWebRequest)data[0]; 
+            int service = (int)data[1];
+            MemoryStream memData = (MemoryStream)data[2];
 
             try
             {
-                HttpWebRequest request = null;
                 Stream postData = null;
-                lock (this)
-                {
-                    if (requests.ContainsKey(service))
-                        request = requests[service];
-                    if (request == null)
-                        return;
-                    else
-                        postData = request.EndGetRequestStream(r);
-                }
+                postData = request.EndGetRequestStream(r);
+
 
                 memData.Seek(0, SeekOrigin.Begin);
                 memData.WriteTo(postData);
                 postData.Close();
 
-                request.BeginGetResponse(new AsyncCallback(ParseResponse), service);
-
+                request.BeginGetResponse(new AsyncCallback(ParseResponse), new object[] { request, service });
             }
             catch (Exception ex)
             {
@@ -246,13 +240,10 @@ namespace MySquare.Service
 
         private void ParseResponse(IAsyncResult r)
         {
-            int service = (int)r.AsyncState;
-            HttpWebRequest request = null;
-            lock (this)
-            {
-                if (requests.ContainsKey(service))
-                    request = requests[service];
-            }
+            object[] data = (object[])r.AsyncState;
+
+            HttpWebRequest request = (HttpWebRequest)data[0];
+            int service = (int)data[1];
             if (request != null)
             {
                 HttpWebResponse response = null;
@@ -264,8 +255,9 @@ namespace MySquare.Service
                     {
                         response = (HttpWebResponse)request.EndGetResponse(r);
                     }
-                    catch (ArgumentException)
+                    catch (ArgumentException ex)
                     {
+                        Log.RegisterLog(ex);
                         return;
                     }
                     if (response.StatusCode == HttpStatusCode.OK)
@@ -320,15 +312,21 @@ namespace MySquare.Service
                 finally
                 {
                     if (response != null)
+                    {
+                        response.Close();
                         (response as IDisposable).Dispose();
+                    }
                     response = null;
 
-                    request = null;
                     lock (this)
                     {
                         if (requests.ContainsKey(service))
-                            requests.Remove(service);
+                        {
+                            if (requests[service] == request)
+                                requests.Remove(service);
+                        }
                     }
+                    request = null;
                 }
 
                 if (result != null)
@@ -348,12 +346,12 @@ namespace MySquare.Service
         }
         internal byte[] DownloadImageSync(string url, bool cache)
         {
-            System.Diagnostics.Debug.WriteLine(url, "ImageDownload");
             byte[] result = null;
             if (cache)
                 result = GetFromCache(url);
             if (result == null)
             {
+                System.Diagnostics.Debug.WriteLine(url, "ImageDownload");
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 try
                 {

@@ -11,6 +11,7 @@ using Tenor.Mobile.UI;
 using Tenor.Mobile.Drawing;
 using MySquare.Service;
 using System.IO;
+using System.Diagnostics;
 
 namespace MySquare.UI
 {
@@ -137,6 +138,14 @@ namespace MySquare.UI
             base.OnActivated(e);
             AdjustInputPanel();
 
+            if (timerGps == null)
+            {
+                timerGps = new Timer();
+                timerGps.Tick += new EventHandler(timerGps_Tick);
+                timerGps.Interval = 2000;
+            }
+            timerGps.Enabled = true;
+
 #if DEBUG
             timerAds.Enabled = true;
             return;
@@ -145,6 +154,15 @@ namespace MySquare.UI
                 timerTutorial.Enabled = true;
             else
                 timerAds.Enabled = true;
+        }
+
+        protected override void OnDeactivate(EventArgs e)
+        {
+            base.OnDeactivate(e);
+            if (timerGps != null)
+            {
+                timerGps.Enabled = false;
+            }
         }
 
         private void AdjustInputPanel()
@@ -309,6 +327,49 @@ namespace MySquare.UI
             }
         }
         #endregion
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            Application.DoEvents();
+            Size size = new Size(11 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width, 11 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height);
+            Point point = new Point(this.Width - size.Width, header.Height - size.Height - (2 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
+            picGps.Location = point;
+            picGps.Size = size;
+        }
+
+        bool showGps = false;
+        AlphaImage gps;
+        Timer timerGps = null;
+        private void picGps_Paint(object sender, PaintEventArgs e)
+        {
+            try
+            {
+ 
+                if (showGps)
+                {
+                    if (gps == null)
+                        gps = new AlphaImage(Resources.Gps);
+
+                    gps.Draw(e.Graphics, new Rectangle(0, 0, picGps.Width, picGps.Height));
+                }
+                else
+                    e.Graphics.Clear(Color.Black);
+            }
+            catch (Exception ex)
+            {
+                Log.RegisterLog("gdi", ex);
+            }
+        }
+
+        void timerGps_Tick(object sender, EventArgs e)
+        {
+            if (Program.Location.FixType == Tenor.Mobile.Location.FixType.Gps)
+                showGps = !showGps;
+            else
+                showGps = false;
+            picGps.Invalidate();
+        }
 
     }
 }

@@ -129,7 +129,7 @@ namespace MySquare.Controller
         }
 
         internal const string googleMapsUrl =
-            "http://maps.google.com/maps/api/staticmap?zoom=16&sensor=false&mobile=true&format=jpeg&size={0}x{1}&markers=color:blue|{2},{3}";
+            "http://maps.google.com/maps/api/staticmap?zoom={4}&sensor=false&mobile=true&format=jpeg&size={0}x{1}&markers=color:blue|{2},{3}";
 
         public virtual void Dispose()
         {
