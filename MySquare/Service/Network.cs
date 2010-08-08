@@ -368,7 +368,11 @@ namespace MySquare.Service
                         }
                     }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    ex = new Exception("Cannot download " + url, ex);
+                    Log.RegisterLog("image-service", ex);
+                }
             }
             return result;
         }

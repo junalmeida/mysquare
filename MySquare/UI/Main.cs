@@ -255,26 +255,30 @@ namespace MySquare.UI
         #region AdSense
         private void timerAds_Tick(object sender, EventArgs e)
         {
-            if (!inputPanel.Enabled && !picAd.Visible && picAd.Tag != null && Configuration.ShowAds)
+            try
             {
-                picAd.Height = 1;
-                picAd.Visible = true;
-
-                int finalHeight = 30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height;
-                double i = 1;
-                do
+                if (!inputPanel.Enabled && !picAd.Visible && picAd.Tag != null && Configuration.ShowAds)
                 {
-                    if (i > finalHeight)
-                    {
-                        picAd.Height = finalHeight;
-                        break;
-                    }
-                    picAd.Height = Convert.ToInt32(i);
-                    Application.DoEvents();
-                    i *= (Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height + .7);
-                } while (true);
+                    picAd.Height = 1;
+                    picAd.Visible = true;
 
+                    int finalHeight = 30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height;
+                    double i = 1;
+                    do
+                    {
+                        if (i > finalHeight)
+                        {
+                            picAd.Height = finalHeight;
+                            break;
+                        }
+                        picAd.Height = Convert.ToInt32(i);
+                        Application.DoEvents();
+                        i *= (Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height + .7);
+                    } while (true);
+
+                }
             }
+            catch (ObjectDisposedException) { }
         }
 
         private void picAd_Paint(object sender, PaintEventArgs e)
@@ -365,6 +369,8 @@ namespace MySquare.UI
         void timerGps_Tick(object sender, EventArgs e)
         {
             if (Program.Location.FixType == Tenor.Mobile.Location.FixType.Gps)
+                showGps = true;
+            else if (Program.Location.IsGpsOpen)
                 showGps = !showGps;
             else
                 showGps = false;

@@ -112,20 +112,14 @@ namespace MySquare.Controller
             Service.SearchNearby(text, 37.535364,-77.509575);
             return;
 #endif
-            if (Program.Location.FixType == FixType.Gps)
-            {
-                position_LocationChanged(null, null);
-            }
-            else
-            {
-                Program.Location.Stop();
-                Program.Location.PollHit += new EventHandler(position_LocationChanged);
-                Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
 
-                Program.Location.UseNetwork = true;
-                Program.Location.UseGps = true;
-                Program.Location.Poll();
-            }
+            Program.Location.Stop();
+            Program.Location.PollHit += new EventHandler(position_LocationChanged);
+            Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+
+            Program.Location.UseNetwork = true;
+            Program.Location.UseGps = Configuration.UseGps;
+            Program.Location.Poll();
         }
 
 

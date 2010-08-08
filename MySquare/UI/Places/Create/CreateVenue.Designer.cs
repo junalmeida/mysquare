@@ -250,7 +250,7 @@
             this.txtZip.SelectedText = "";
             this.txtZip.SelectionLength = 0;
             this.txtZip.SelectionStart = 0;
-            this.txtZip.Size = new System.Drawing.Size(81, 21);
+            this.txtZip.Size = new System.Drawing.Size(80, 21);
             this.txtZip.TabIndex = 15;
             this.txtZip.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtZip.WordWrap = true;

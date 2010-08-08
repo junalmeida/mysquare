@@ -10,6 +10,7 @@ using Tenor.Mobile.Location;
 using System.Threading;
 using MySquare.Controller;
 using System.Drawing;
+using MySquare.Service;
 
 [assembly: System.Reflection.Obfuscation(Feature = "Apply to MySquare.FourSquare.*: all", Exclude = true, ApplyToMembers = true)]
 namespace MySquare
@@ -33,7 +34,8 @@ namespace MySquare
                 {
 #endif
 
-                    Location = new WorldPosition(true, true, 15000);
+                    Location = new WorldPosition(true, Configuration.UseGps, 15000);
+                    Location.LocationChanged += new EventHandler(Location_LocationChanged);
                     Location.PollHit += new EventHandler(Location_PollHit);
                     Location.Poll();
 
@@ -64,14 +66,39 @@ namespace MySquare
             Application.Exit();
         }
 
+        static void Location_LocationChanged(object sender, EventArgs e)
+        {
+            Log.RegisterLog("lbs-info", new Exception(
+                string.Format(@"
+bid: {0}
+cid: {1}
+mcc: {2}
+mnc: {3}
+lac: {4}
+fix: {5}
+location: {6}
+service: {7}",
+         Program.Location.BaseStationId,
+         Program.Location.CellId,
+         Program.Location.CountryCode,
+         Program.Location.NetworkCode,
+         Program.Location.AreaCode,
+         Program.Location.FixType,
+         Program.Location.WorldPoint,
+         Program.Location.FixService)
+                ));
+        }
+
         static void Location_PollHit(object sender, EventArgs e)
         {
             if (Location != null)
             {
                 if (Location.FixType == FixType.GsmNetwork)
                     Location.UseNetwork = false;
-                if (!KeepGpsOpened && Location.FixType == FixType.Gps)
-                    Location.UseGps = false;
+                if (KeepGpsOpened)
+                    Location.UseGps = true;
+                else
+                    Location.UseGps = Configuration.UseGps;
             }
         }
 

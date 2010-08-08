@@ -126,6 +126,23 @@ namespace MySquare.Service
             }
         }
 
+        public static bool UseGps
+        {
+            get
+            {
+                try
+                {
+                    return Convert.ToBoolean(key.GetValue("UseGps", true));
+                }
+                catch { return true; }
+
+            }
+            set
+            {
+                key.SetValue("UseGps", value);
+            }
+        }
+
         public static string Cookie
         {
             get

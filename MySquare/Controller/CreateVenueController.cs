@@ -42,7 +42,7 @@ namespace MySquare.Controller
         {
             UI.Main form = (Main)View.Parent;
             form.ChangePlacesName("Create Place");
-            
+
             form.Reset();
             View.Dock = System.Windows.Forms.DockStyle.Fill;
             View.BringToFront();
@@ -66,17 +66,14 @@ namespace MySquare.Controller
             Program.KeepGpsOpened = true;
 
             Program.Location.LocationChanged += new EventHandler(pos_LocationChanged);
-            Program.Location.PollHit += new EventHandler(Location_PollHit);
             Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
 
+            Program.Location.UseGps = true;
+            Program.Location.UseNetwork = true;
             if (!Program.Location.WorldPoint.IsEmpty)
                 pos_LocationChanged(null, null);
             else
-            {
-                Program.Location.UseGps = true;
-                Program.Location.UseNetwork = true;
                 Program.Location.Poll();
-            }
         }
 
 
@@ -86,7 +83,6 @@ namespace MySquare.Controller
         public override void Deactivate()
         {
             Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
-            Program.Location.PollHit -= new EventHandler(Location_PollHit);
             Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
             Program.KeepGpsOpened = false;
 
@@ -120,26 +116,6 @@ namespace MySquare.Controller
         }
 
 
-        void Location_PollHit(object sender, EventArgs e)
-        {
-            Log.RegisterLog("lbs-info", new Exception(
-                string.Format(@"
-id: {0}
-mcc: {1}
-mnc: {2}
-lac: {3}
-fix: {4}
-location: {5}
-service: {6}",
-         Program.Location.Id,
-         Program.Location.CountryCode,
-         Program.Location.NetworkCode,
-         Program.Location.AreaCode,
-         Program.Location.FixType,
-         Program.Location.WorldPoint,
-         Program.Location.FixService)
-                ));
-        }
 
         void pos_LocationChanged(object sender, EventArgs e)
         {
@@ -200,11 +176,6 @@ service: {6}",
                 double latitude = Program.Location.WorldPoint.Latitude;
                 double longitude = Program.Location.WorldPoint.Longitude;
 
-                View.latitudeCenter = latitude;
-                View.longitudeCenter = longitude;
-                View.latitudeSelected = null;
-                View.longitudeSelected = null;
-                View.selectedPoint = Point.Empty;
 
                 string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
                     size.Width, size.Height,
@@ -213,26 +184,34 @@ service: {6}",
                     zoom);
                 byte[] buffer = Service.DownloadImageSync(googleMapsUrl, false);
                 t = null;
-
-                this.View.Invoke(new ThreadStart(delegate()
+                if (buffer != null && buffer.Length > 0)
                 {
-                    string precision = "";
-                    if (Program.Location.FixType == FixType.Gps)
-                        precision = "High precision";
-                    else if (Program.Location.FixType == FixType.GeoIp)
-                        precision = "Low precision";
-                    else if (Program.Location.FixType == FixType.GsmNetwork)
-                        precision = "Average precision";
+                    View.latitudeCenter = latitude;
+                    View.longitudeCenter = longitude;
+                    View.latitudeSelected = null;
+                    View.longitudeSelected = null;
+                    View.selectedPoint = Point.Empty;
 
-                    View.FixType = precision;
+                    this.View.Invoke(new ThreadStart(delegate()
+                    {
+                        string precision = "";
+                        if (Program.Location.FixType == FixType.Gps)
+                            precision = "High precision";
+                        else if (Program.Location.FixType == FixType.GeoIp)
+                            precision = "Low precision";
+                        else if (Program.Location.FixType == FixType.GsmNetwork)
+                            precision = "Average precision";
 
-                    box.Image = null;
-                    if (box.Tag != null && box.Tag is IDisposable)
-                        ((IDisposable)box.Tag).Dispose();
-                    box.Tag = buffer;
-                    box.Invalidate();
+                        View.FixType = precision;
 
-                }));
+                        box.Image = null;
+                        if (box.Tag != null && box.Tag is IDisposable)
+                            ((IDisposable)box.Tag).Dispose();
+                        box.Tag = buffer;
+                        box.Invalidate();
+
+                    }));
+                }
             }));
             t.Start();
         }

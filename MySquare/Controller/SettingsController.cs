@@ -40,6 +40,7 @@ namespace MySquare.Controller
             View.txtPassword.Text = string.Empty;
             View.pnlPremium.Enabled = MySquare.Service.Configuration.IsPremium;
             View.chkShowAds.Checked = MySquare.Service.Configuration.ShowAds;
+            View.chkUseGps.Checked = MySquare.Service.Configuration.UseGps;
         }
 
         public override void OnLeftSoftButtonClick()
@@ -59,6 +60,7 @@ namespace MySquare.Controller
                 MySquare.Service.Configuration.Password = View.txtPassword.Text;
 
             MySquare.Service.Configuration.ShowAds = View.chkShowAds.Checked;
+            MySquare.Service.Configuration.UseGps = View.chkUseGps.Checked;
 
             MessageBox.Show("Settings saved.", "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
         }

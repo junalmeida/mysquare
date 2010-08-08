@@ -34,9 +34,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pnlPremium = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
             this.chkShowAds = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.chkUseGps = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.pnlPremium.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -126,15 +130,6 @@
             this.pnlPremium.Size = new System.Drawing.Size(249, 57);
             this.pnlPremium.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
-            // label4
-            // 
-            this.label4.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(2, 6);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(121, 15);
-            this.label4.Text = "Premium Options:";
-            // 
             // chkShowAds
             // 
             this.chkShowAds.ForeColor = System.Drawing.Color.White;
@@ -144,11 +139,51 @@
             this.chkShowAds.TabIndex = 11;
             this.chkShowAds.Text = "Show Ads";
             // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(2, 6);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(121, 15);
+            this.label4.Text = "Premium Options:";
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(this.chkUseGps);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Location = new System.Drawing.Point(0, 179);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(249, 57);
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // chkUseGps
+            // 
+            this.chkUseGps.ForeColor = System.Drawing.Color.White;
+            this.chkUseGps.Location = new System.Drawing.Point(10, 28);
+            this.chkUseGps.Name = "chkUseGps";
+            this.chkUseGps.Size = new System.Drawing.Size(152, 20);
+            this.chkUseGps.TabIndex = 11;
+            this.chkUseGps.Text = "Use Gps if available";
+            // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(2, 6);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(88, 15);
+            this.label5.Text = "Localization:";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlPremium);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtPassword);
@@ -157,8 +192,9 @@
             this.Controls.Add(this.label1);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "Settings";
-            this.Size = new System.Drawing.Size(252, 204);
+            this.Size = new System.Drawing.Size(252, 280);
             this.pnlPremium.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -173,5 +209,8 @@
         private System.Windows.Forms.Label label4;
         internal System.Windows.Forms.CheckBox chkShowAds;
         internal System.Windows.Forms.Panel pnlPremium;
+        internal System.Windows.Forms.CheckBox chkUseGps;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel panel1;
     }
 }
