@@ -9,15 +9,22 @@ namespace MySquare.Service
 {
     internal static class Log
     {
+        private static string current = null;
         private static string GetLogPath(string key)
         {
             string appPath = Network.GetAppPath();
             string path = System.IO.Path.Combine(appPath, "debug");
             if (!System.IO.Directory.Exists(path))
                 return null;
+            else if (current == null)
+            {
+                current = "d" + DateTime.Now.ToString("yyyyMMdd_hhmmss");
+                System.IO.Directory.CreateDirectory(Path.Combine(path, current));
+            }
+            path = Path.Combine(path, current);
             DateTime date = DateTime.Now;
 
-            string filePath = string.Format("{0}.txt", key + "_" + date.Ticks);
+            string filePath = string.Format("{0}_{1}.txt", date.Ticks, key);
             filePath = System.IO.Path.Combine(path, filePath);
             return filePath;
         }
