@@ -214,7 +214,12 @@ namespace MySquare.UI
                 new Point(35 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
                     30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
 
-            helpText.Add("And here you will see your friends. Enjoy.");
+            helpText.Add("An icon will be shown here when you get a GPS fix.");
+            helpWidget.Add(
+                new Point(this.Width - (17 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width),
+                    47 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
+
+            helpText.Add("Here you will see your friends. Enjoy.");
             helpWidget.Add(
                 new Point(85 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
                     30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
