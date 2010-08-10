@@ -46,7 +46,7 @@
             // label1
             // 
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(13, 27);
+            this.label1.Location = new System.Drawing.Point(13, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 15);
             this.label1.Text = "E-mail:";
@@ -85,7 +85,7 @@
             this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtPassword.HideSelection = true;
             this.txtPassword.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
-            this.txtPassword.Location = new System.Drawing.Point(13, 93);
+            this.txtPassword.Location = new System.Drawing.Point(13, 86);
             this.txtPassword.MaxLength = 32767;
             this.txtPassword.Modified = false;
             this.txtPassword.Multiline = false;
@@ -104,7 +104,7 @@
             // label2
             // 
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(13, 75);
+            this.label2.Location = new System.Drawing.Point(13, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 15);
             this.label2.Text = "Password:";
@@ -125,9 +125,9 @@
             this.pnlPremium.BackColor = System.Drawing.Color.Black;
             this.pnlPremium.Controls.Add(this.chkShowAds);
             this.pnlPremium.Controls.Add(this.label4);
-            this.pnlPremium.Location = new System.Drawing.Point(0, 120);
+            this.pnlPremium.Location = new System.Drawing.Point(0, 112);
             this.pnlPremium.Name = "pnlPremium";
-            this.pnlPremium.Size = new System.Drawing.Size(249, 57);
+            this.pnlPremium.Size = new System.Drawing.Size(249, 49);
             this.pnlPremium.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // chkShowAds
@@ -155,9 +155,9 @@
             this.panel1.BackColor = System.Drawing.Color.Black;
             this.panel1.Controls.Add(this.chkUseGps);
             this.panel1.Controls.Add(this.label5);
-            this.panel1.Location = new System.Drawing.Point(0, 179);
+            this.panel1.Location = new System.Drawing.Point(0, 163);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(249, 57);
+            this.panel1.Size = new System.Drawing.Size(249, 50);
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // chkUseGps
@@ -182,6 +182,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlPremium);

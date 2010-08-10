@@ -37,33 +37,39 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompatibilityCheck", "CompatibilityCheck\CompatibilityCheck.csproj", "{9D68D834-3C02-4927-8B1D-D541A3B8A95F}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = MySquare6.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Alpha|Any CPU = Alpha|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 		Testing|Any CPU = Testing|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Alpha|Any CPU.ActiveCfg = Alpha|Any CPU
+		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Alpha|Any CPU.Build.0 = Alpha|Any CPU
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
 		{FD4AA98B-154D-480A-901A-0B9154C8CFE9}.Testing|Any CPU.Build.0 = Testing|Any CPU
+		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Alpha|Any CPU.ActiveCfg = Release|Any CPU
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Testing|Any CPU.Build.0 = Debug|Any CPU
+		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Alpha|Any CPU.ActiveCfg = Release
+		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Alpha|Any CPU.Build.0 = Release
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Debug|Any CPU.ActiveCfg = Debug
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Release|Any CPU.ActiveCfg = Release
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Release|Any CPU.Build.0 = Release
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Testing|Any CPU.ActiveCfg = Debug
+		{16B51630-2C6E-48D9-8772-E8D0801849C9}.Alpha|Any CPU.ActiveCfg = Release|Any CPU
+		{16B51630-2C6E-48D9-8772-E8D0801849C9}.Alpha|Any CPU.Build.0 = Release|Any CPU
+		{16B51630-2C6E-48D9-8772-E8D0801849C9}.Alpha|Any CPU.Deploy.0 = Release|Any CPU
 		{16B51630-2C6E-48D9-8772-E8D0801849C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16B51630-2C6E-48D9-8772-E8D0801849C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16B51630-2C6E-48D9-8772-E8D0801849C9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
@@ -73,11 +79,9 @@ Global
 		{16B51630-2C6E-48D9-8772-E8D0801849C9}.Testing|Any CPU.ActiveCfg = Release|Any CPU
 		{16B51630-2C6E-48D9-8772-E8D0801849C9}.Testing|Any CPU.Build.0 = Release|Any CPU
 		{16B51630-2C6E-48D9-8772-E8D0801849C9}.Testing|Any CPU.Deploy.0 = Release|Any CPU
+		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Alpha|Any CPU.ActiveCfg = Release|Any CPU
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Testing|Any CPU.ActiveCfg = Release|Any CPU
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Testing|Any CPU.Build.0 = Release|Any CPU
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Testing|Any CPU.Deploy.0 = Release|Any CPU
@@ -88,5 +92,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2A7C32F4-5D22-4DFC-9665-D60C07D0758B} = {05FA69D7-6B40-4F57-8B8F-6643525B37F8}
 		{FEE3DF99-755C-4A85-9BB7-B7C1339B080A} = {05FA69D7-6B40-4F57-8B8F-6643525B37F8}
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

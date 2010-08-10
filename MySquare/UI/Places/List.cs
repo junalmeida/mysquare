@@ -75,7 +75,7 @@ namespace MySquare.UI.Places
                 SizeF measuring = e.Graphics.MeasureString(venue.Name, Font);
 
                 RectangleF rect = new RectangleF(e.Bounds.Height, e.Bounds.Y + itemPadding, measuring.Width, measuring.Height);
-                e.Graphics.DrawString(venue.Name.Replace("&", "&&"), this.Font, textBrush, rect, format);
+                e.Graphics.DrawString(venue.Name, this.Font, textBrush, rect, format);
 
                 string secondText = null;
                 if (!string.IsNullOrEmpty(venue.Address))
@@ -86,7 +86,6 @@ namespace MySquare.UI.Places
                     secondText = venue.State;
                 if (secondText != null)
                 {
-                    secondText = secondText.Replace("&", "&&");
                     measuring = e.Graphics.MeasureString(secondText, Font);
                     rect = new RectangleF(rect.X, rect.Bottom + itemPadding, measuring.Width, measuring.Height);
                     if (secondFont == null)
