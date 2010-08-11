@@ -68,7 +68,7 @@ namespace MySquare.FourSquare
         { get; set; }
 
 
-        [JsonProperty("scoring")]
+        [JsonProperty("scores")]
         public Score[] Scoring
         { get; set; }
 

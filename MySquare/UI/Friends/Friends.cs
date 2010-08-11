@@ -48,20 +48,27 @@ namespace MySquare.UI.Friends
             FormatFlags = StringFormatFlags.NoWrap
         };
         Font secondFont = null;
+        Font smallFont;
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
         {
             string text = null;
             string secondText = null;
             string userUrl = null;
 
+            Font font = this.Font;
+            float thisLeft = e.Bounds.Height;
+
             if (e.Item.Value == null)
             {
+                if (smallFont == null)
+                    smallFont = new Font(this.Font.Name, this.Font.Size - 1, this.Font.Style);
+                font = smallFont;
                 text = e.Item.Text;
                 Color color = Tenor.Mobile.UI.Skin.Current.ControlBackColor;
                 if (e.Item.YIndex % 2 == 0)
                     color = Tenor.Mobile.UI.Skin.Current.AlternateBackColor;
                 e.Graphics.FillRectangle(new SolidBrush(color), e.Bounds);
-
+                thisLeft = itemPadding;
                 if (e.Item.YIndex > 0)
                 {
                     Program.DrawSeparator(e.Graphics, e.Bounds, color);
@@ -99,8 +106,8 @@ namespace MySquare.UI.Friends
             Brush textBrush = (e.Item.Selected ? brushS : brush);
             SizeF measuring = e.Graphics.MeasureString(text, Font);
 
-            RectangleF rect = new RectangleF(e.Bounds.Height, e.Bounds.Y + itemPadding, measuring.Width, measuring.Height);
-            e.Graphics.DrawString(text, this.Font, textBrush, rect, format);
+            RectangleF rect = new RectangleF(thisLeft, e.Bounds.Y + itemPadding, measuring.Width, measuring.Height);
+            e.Graphics.DrawString(text, font, textBrush, rect, format);
 
             if (!string.IsNullOrEmpty(secondText))
             {

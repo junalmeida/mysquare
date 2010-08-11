@@ -32,7 +32,7 @@
                 description:'Congrats on your first checkin!'
             }
         ],
-        scoring:[
+        scores:[
                 {
                     points:1,
                     icon:'http://foursquare.com/img/scoring/2.png',

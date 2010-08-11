@@ -130,6 +130,11 @@ namespace MySquare.FourSquare
         public string[] Tags
         { get; set; }
 
+
+        [JsonProperty("checkins")]
+        public CheckIn[] CheckIns
+        { get; set; }
+
         public override string ToString()
         {
             return Name;

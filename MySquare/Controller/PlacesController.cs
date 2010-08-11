@@ -21,7 +21,9 @@ namespace MySquare.Controller
         {
             Service.SearchArrives += new MySquare.FourSquare.SearchEventHandler(Service_SearchArrives);
             Service.Error += new MySquare.Service.ErrorEventHandler(MainController.Service_Error);
+            View.list1.Search += new EventHandler(list1_Search);
         }
+
 
 
         public override void Activate()
@@ -72,6 +74,12 @@ namespace MySquare.Controller
         {
             SearchVenue();
         }
+
+        void list1_Search(object sender, EventArgs e)
+        {
+            SearchVenue();
+        }
+
 
         private void SearchVenue()
         {
@@ -179,7 +187,7 @@ namespace MySquare.Controller
                     View.list1.listBox.AddItem(venue.Name, venue);
                 }
             }
-            View.list1.listBox.AddItem("Create a new place", null);
+            View.list1.listBox.AddItem("Create a new place\r\nIf you cannot find a venue, tap here.", null);
             ShowList();
 
 

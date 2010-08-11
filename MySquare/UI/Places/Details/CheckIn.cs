@@ -9,6 +9,7 @@ using System.Threading;
 using Tenor.Mobile.Drawing;
 using MySquare.FourSquare;
 using MySquare.Properties;
+using MySquare.Service;
 
 namespace MySquare.UI.Places.Details
 {
@@ -52,6 +53,7 @@ namespace MySquare.UI.Places.Details
 
         internal string message;
         internal string mayorship;
+        internal bool showCrown;
         internal Badge[] badges;
         internal Score[] scoring;
         internal Special[] specials;
@@ -126,10 +128,16 @@ namespace MySquare.UI.Places.Details
 
                     if (measure.Height < stampSize)
                         measure.Height = stampSize;
-
-                    image.Draw(e.Graphics, new Rectangle(
-                        lastRectangle.Right - stampSize - padding,
-                        lastRectangle.Top + ((measure.Height / 2) - (stampSize / 2)), stampSize, stampSize));
+                    try
+                    {
+                        image.Draw(e.Graphics, new Rectangle(
+                            lastRectangle.Right - stampSize - padding,
+                            lastRectangle.Top + ((measure.Height / 2) - (stampSize / 2)), stampSize, stampSize));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.RegisterLog("gdi", ex);
+                    }
 
                     lastRectangle.Height = measure.Height + padding;
                 }
@@ -140,7 +148,9 @@ namespace MySquare.UI.Places.Details
 
             if (!string.IsNullOrEmpty(mayorship))
             {
-                int crownSize = 31 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
+                int crownSize = 0;
+                if (showCrown)
+                    crownSize = 31 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
 
                 DrawSeparator(e, padding, ref rectF, ref lastRectangle);
 
@@ -153,12 +163,21 @@ namespace MySquare.UI.Places.Details
 
                 if (measure.Height < crownSize)
                     measure.Height = crownSize;
-                
-                AlphaImage image = new AlphaImage(Resources.Crown);
-                image.Draw(e.Graphics, new Rectangle(
-                    lastRectangle.Right - crownSize - padding,
-                    lastRectangle.Top + ((measure.Height / 2) - (crownSize / 2)), crownSize, crownSize));
 
+                if (showCrown)
+                {
+                    try
+                    {
+                        AlphaImage image = new AlphaImage(Resources.Crown);
+                        image.Draw(e.Graphics, new Rectangle(
+                            lastRectangle.Right - crownSize - padding,
+                            lastRectangle.Top + ((measure.Height / 2) - (crownSize / 2)), crownSize, crownSize));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.RegisterLog("gdi", ex);
+                    }
+                }
                 lastRectangle.Height = measure.Height + padding;
             }
 
@@ -187,11 +206,17 @@ namespace MySquare.UI.Places.Details
 
                     if (badgeImageList != null && badgeImageList.ContainsKey(badge.ImageUrl))
                     {
-
-                        AlphaImage image = new AlphaImage(badgeImageList[badge.ImageUrl]);
-                        image.Draw(e.Graphics, new Rectangle(
-                            lastRectangle.Right - stampSize - padding,
-                            lastRectangle.Top + ((measure.Height / 2) - (stampSize / 2)), stampSize, stampSize));
+                        try
+                        {
+                            AlphaImage image = new AlphaImage(badgeImageList[badge.ImageUrl]);
+                            image.Draw(e.Graphics, new Rectangle(
+                                lastRectangle.Right - stampSize - padding,
+                                lastRectangle.Top + ((measure.Height / 2) - (stampSize / 2)), stampSize, stampSize));
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.RegisterLog("gdi", ex);
+                        }
                     }
 
                     lastRectangle.Height = measure.Height + padding;
@@ -223,10 +248,17 @@ namespace MySquare.UI.Places.Details
 
                     if (scoreImageList != null && scoreImageList.ContainsKey(score.ImageUrl))
                     {
-                        AlphaImage image = new AlphaImage(scoreImageList[score.ImageUrl]);
-                        image.Draw(e.Graphics, new Rectangle(
-                            lastRectangle.Right - stampSize - padding,
-                            lastRectangle.Top + ((measure.Height / 2) - (stampSize / 2)), stampSize, stampSize));
+                        try
+                        {
+                            AlphaImage image = new AlphaImage(scoreImageList[score.ImageUrl]);
+                            image.Draw(e.Graphics, new Rectangle(
+                                lastRectangle.Right - stampSize - padding,
+                                lastRectangle.Top + ((measure.Height / 2) - (stampSize / 2)), stampSize, stampSize));
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.RegisterLog("gdi", ex);
+                        }
                     }
 
                     lastRectangle.Height = measure.Height + padding;

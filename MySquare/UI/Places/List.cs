@@ -49,6 +49,7 @@ namespace MySquare.UI.Places
         internal Dictionary<string, AlphaImage> imageListBuffer;
 
         float itemPadding;
+        Font smallFont;
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
         {
 
@@ -56,9 +57,36 @@ namespace MySquare.UI.Places
             Brush textBrush = (e.Item.Selected ? brushS : brush);
             if (venue == null)
             {
+                if (smallFont == null)
+                    smallFont = new Font(this.Font.Name, this.Font.Size - 1, this.Font.Style);
+
+                Font thisFont;
+                float thisLeft;
+
+
+                if (e.Item.YIndex < listBox.Count - 1)
+                {
+                    thisLeft = itemPadding;
+                    thisFont = smallFont;
+                }
+                else
+                {
+                    thisLeft = e.Bounds.Height;
+                    thisFont = Font;
+                }
+
                 string text = e.Item.Text;
-                SizeF measuring = e.Graphics.MeasureString(text, Font);
-                RectangleF rect = new RectangleF(e.Bounds.Height, e.Bounds.Y + itemPadding, measuring.Width, measuring.Height);
+                string secondText = null;
+
+                if (text.IndexOf("\r\n") > -1)
+                {
+                    string[] textS = text.Split('\r', '\n');
+                    text = textS[0];
+                    secondText = textS[2];
+                }
+
+                SizeF measuring = e.Graphics.MeasureString(text, thisFont);
+                RectangleF rect = new RectangleF(thisLeft, e.Bounds.Y + itemPadding, measuring.Width, measuring.Height);
 
                 Color color = Tenor.Mobile.UI.Skin.Current.ControlBackColor;
                 if (e.Item.YIndex % 2 == 0)
@@ -67,7 +95,16 @@ namespace MySquare.UI.Places
                     e.Graphics.FillRectangle(new SolidBrush(color), e.Bounds);
                 if (e.Item.YIndex > 0)
                     Program.DrawSeparator(e.Graphics, e.Bounds, color);
-                e.Graphics.DrawString(text, this.Font, textBrush, rect, format);
+
+                e.Graphics.DrawString(text, thisFont, textBrush, rect, format);
+                if (secondText != null)
+                {
+                    if (secondFont == null)
+                        secondFont = new Font(Font.Name, Font.Size - 1, Font.Style);
+                    measuring = e.Graphics.MeasureString(secondText, secondFont);
+                    rect = new RectangleF(rect.X, rect.Bottom + itemPadding, measuring.Width, measuring.Height);
+                    e.Graphics.DrawString(secondText, secondFont, secondBrush, rect, format);
+                }
             }
             else
             {
@@ -86,10 +123,10 @@ namespace MySquare.UI.Places
                     secondText = venue.State;
                 if (secondText != null)
                 {
-                    measuring = e.Graphics.MeasureString(secondText, Font);
-                    rect = new RectangleF(rect.X, rect.Bottom + itemPadding, measuring.Width, measuring.Height);
                     if (secondFont == null)
                         secondFont = new Font(Font.Name, Font.Size - 1, Font.Style);
+                    measuring = e.Graphics.MeasureString(secondText, secondFont);
+                    rect = new RectangleF(rect.X, rect.Bottom + itemPadding, measuring.Width, measuring.Height);
                     e.Graphics.DrawString(secondText, secondFont, secondBrush, rect, format);
                 }
                 if (
@@ -185,25 +222,24 @@ namespace MySquare.UI.Places
                     return null;
             }
         }
-
-        //private void pnlSearch_Paint(object sender, PaintEventArgs e)
-        //{
-            //Rectangle rect2 = new Rectangle(
-            //   0, 0, pnlSearch.Width / 3, 1);
-            //Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, this.BackColor, Color.WhiteSmoke, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
-            //rect2.X += rect2.Width;
-            //Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.WhiteSmoke, Color.WhiteSmoke, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
-            //rect2.X += rect2.Width;
-            //Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.WhiteSmoke, this.BackColor, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
-
-        //}
-
-        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+  
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 e.Handled = true;
+                if (Search != null)
+                    Search(this, e);
             }
         }
+
+        private void txtSearch_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\r' || e.KeyChar == '\n')
+                e.Handled = true;
+        }
+
+        internal event EventHandler Search;
+
     }
 }

@@ -268,10 +268,11 @@ namespace MySquare.Controller
                 View.checkIn1.pnlCheckInResult.Visible = true;
 
                 View.checkIn1.message = checkInResult.Message;
-                if (checkInResult.Mayor != null && checkInResult.Mayor.Type != MayorType.nochange)
+                if (checkInResult.Mayor != null)
+                {
                     View.checkIn1.mayorship = checkInResult.Mayor.Message;
-                else
-                    View.checkIn1.mayorship = null;
+                    View.checkIn1.showCrown = checkInResult.Mayor.Type != MayorType.nochange;
+                }
 
                 if (checkInResult.Badges != null && checkInResult.Badges.Length > 0)
                     View.checkIn1.badges = checkInResult.Badges;
