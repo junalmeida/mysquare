@@ -35,7 +35,8 @@ namespace MySquare.Service
             Friends, 
             PendingFriends,
             AcceptFriend,
-            RejectFriend
+            RejectFriend,
+            RequestFriend
         }
         
 
@@ -87,6 +88,15 @@ namespace MySquare.Service
             parameters.Add("geolong", longitude.ToString(culture));
 
             Post(ServiceResource.CheckIns, parameters);
+        }
+
+
+        internal void RequestFriend(int uid)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            if (uid > 0)
+                parameters.Add("uid", uid.ToString());
+            Post(ServiceResource.RequestFriend, parameters);
         }
 
         internal void SearchNearby(string search, double lat, double lgn)
@@ -163,7 +173,7 @@ namespace MySquare.Service
 
 
 
-        #region Events     
+        #region Events
         internal event PendingFriendsEventHandler PendingFriendsResult;
         private void OnPendingFriendsResult(PendingFriendsEventArgs e)
         {
@@ -379,6 +389,10 @@ namespace MySquare.Service
                     url = "http://api.foursquare.com/v1/friend/deny.json";
                     auth = true; post = true;
                     break;
+                case ServiceResource.RequestFriend:
+                    url = "http://api.foursquare.com/v1/friend/sendrequest.json";
+                    auth = true; post = true;
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -427,6 +441,7 @@ namespace MySquare.Service
                     break;
                 case ServiceResource.RejectFriend:
                 case ServiceResource.AcceptFriend:
+                case ServiceResource.RequestFriend:
                     type = typeof(UserEventArgs);
                     break;
                 default:
@@ -453,7 +468,7 @@ namespace MySquare.Service
                 UserEventArgs userResult = (UserEventArgs)result;
                 if (service == ServiceResource.AcceptFriend)
                     userResult.Accepted = true;
-                else if (service == ServiceResource.RejectFriend)
+                else if (service == ServiceResource.RejectFriend || service == ServiceResource.RequestFriend)
                     userResult.Accepted = false;
 
                 OnUserResult(userResult);

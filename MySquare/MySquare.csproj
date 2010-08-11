@@ -84,6 +84,7 @@
     </Reference>
     <Reference Include="System, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL" />
     <Reference Include="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Forms, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
@@ -132,6 +133,12 @@
     </Compile>
     <Compile Include="UI\Friends\Friends.Designer.cs">
       <DependentUpon>Friends.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Friends\UserBadges.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Friends\UserBadges.Designer.cs">
+      <DependentUpon>UserBadges.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Friends\UserDetail.cs">
       <SubType>UserControl</SubType>
@@ -349,6 +356,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Service\checkinTest.txt" />
+    <EmbeddedResource Include="UI\Friends\UserBadges.resx">
+      <DependentUpon>UserBadges.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Service\venuesTest.txt" />

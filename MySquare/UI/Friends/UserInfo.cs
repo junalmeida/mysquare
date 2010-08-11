@@ -101,65 +101,7 @@ namespace MySquare.UI.Friends
 
         }
 
-        internal Dictionary<string, byte[]> imageList;
-        Badge[] badges;
 
-        internal Badge[] Badges
-        {
-            get { return badges; }
-            set
-            {
-                badges = value;
-                pnlBadges.Visible = value != null && value.Length > 0;
-                pnlBadges.Height = 32;
-                pnlBadges.Invalidate();
-                lblBadgesT.Visible = pnlBadges.Visible;
-
-            }
-        }
-
-
-        Size ellipse = new Size(
-            8 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width, 8 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height);
-        private void pnlBadges_Paint(object sender, PaintEventArgs e)
-        {
-            
-            int stampSize = 28 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
-            int padding = 4 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
-            int separator = padding * 3;
-            Rectangle rect = new Rectangle(
-                padding, padding,
-                ((stampSize + separator) * Convert.ToInt32((pnlBadges.Width - padding) / (stampSize + separator))) - padding, 
-                pnlBadges.Height - (padding * 2));
-
-            rect.X = (pnlBadges.Width / 2) - (rect.Width / 2);
-
-            RoundedRectangle.Fill(e.Graphics, new Pen(Color.Gray), new SolidBrush(Color.White), rect, ellipse);
-
-
-            int left = rect.Left + padding;
-            int top = padding * 2;
-            int i = 0;
-            foreach (Badge b in Badges)
-            {
-                if (imageList.ContainsKey(b.ImageUrl))
-                {
-                    AlphaImage image = new AlphaImage(imageList[b.ImageUrl]);
-                    image.Draw(e.Graphics, new Rectangle(left, top, stampSize, stampSize));
-
-                    left += stampSize + separator;
-                    if (left + stampSize > rect.Right && i < Badges.Length - 1)
-                    {
-                        left = rect.Left + padding;
-                        top += stampSize + separator;
-                    }
-                }
-                i++;
-            }
-
-            if (pnlBadges.Height != top + stampSize + (padding * 2))
-                pnlBadges.Height = top + stampSize + (padding * 2);
-        }
 
 
         #region Scroll Control

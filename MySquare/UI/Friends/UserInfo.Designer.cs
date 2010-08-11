@@ -36,8 +36,6 @@
             this.lblShoutT = new System.Windows.Forms.Label();
             this.lblLastSeenT = new System.Windows.Forms.Label();
             this.lblLastSeen = new System.Windows.Forms.LinkLabel();
-            this.lblBadgesT = new System.Windows.Forms.Label();
-            this.pnlBadges = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,36 +131,12 @@
             this.lblLastSeen.TextChanged += new System.EventHandler(this.lblLastSeen_TextChanged);
             this.lblLastSeen.Click += new System.EventHandler(this.lblLastSeen_Click);
             // 
-            // lblBadgesT
-            // 
-            this.lblBadgesT.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblBadgesT.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.lblBadgesT.ForeColor = System.Drawing.Color.Black;
-            this.lblBadgesT.Location = new System.Drawing.Point(0, 165);
-            this.lblBadgesT.Name = "lblBadgesT";
-            this.lblBadgesT.Size = new System.Drawing.Size(208, 16);
-            this.lblBadgesT.Text = "Badges:";
-            this.lblBadgesT.Visible = false;
-            // 
-            // pnlBadges
-            // 
-            this.pnlBadges.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
-            this.pnlBadges.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlBadges.Location = new System.Drawing.Point(0, 181);
-            this.pnlBadges.Name = "pnlBadges";
-            this.pnlBadges.Size = new System.Drawing.Size(208, 33);
-            this.pnlBadges.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlBadges_Paint);
-            this.pnlBadges.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseMove);
-            this.pnlBadges.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseDown);
-            // 
             // UserInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
-            this.Controls.Add(this.pnlBadges);
-            this.Controls.Add(this.lblBadgesT);
             this.Controls.Add(this.lblLastSeen);
             this.Controls.Add(this.lblLastSeenT);
             this.Controls.Add(this.lblShout);
@@ -187,7 +161,5 @@
         internal System.Windows.Forms.Label lblShout;
         private System.Windows.Forms.Label lblLastSeenT;
         internal System.Windows.Forms.LinkLabel lblLastSeen;
-        private System.Windows.Forms.Label lblBadgesT;
-        internal System.Windows.Forms.Panel pnlBadges;
     }
 }

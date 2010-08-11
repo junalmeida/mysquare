@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using MySquare.FourSquare;
+using MySquare.Service;
 
 namespace MySquare.UI.Friends
 {
@@ -65,7 +66,7 @@ namespace MySquare.UI.Friends
                         e.Graphics.DrawImage(image, imgRect, new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
                         //image.Draw(e.Graphics, imgRect);
                     }
-                    catch { }
+                    catch (Exception ex) { Log.RegisterLog("gdi", ex); }
                 }
 
                 rect.Y += 2 * factor.Height;

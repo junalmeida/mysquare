@@ -35,6 +35,7 @@
             this.tabStrip = new MySquare.UI.TabStrip();
             this.userInfo1 = new MySquare.UI.Friends.UserInfo();
             this.userFriends1 = new MySquare.UI.Friends.UserFriends();
+            this.userBadges1 = new MySquare.UI.Friends.UserBadges();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -105,11 +106,20 @@
             this.userFriends1.TabIndex = 3;
             this.userFriends1.Visible = false;
             // 
+            // userBadges1
+            // 
+            this.userBadges1.Location = new System.Drawing.Point(99, 86);
+            this.userBadges1.Name = "userBadges1";
+            this.userBadges1.Size = new System.Drawing.Size(150, 150);
+            this.userBadges1.TabIndex = 5;
+            this.userBadges1.Visible = false;
+            // 
             // UserDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.userBadges1);
             this.Controls.Add(this.userFriends1);
             this.Controls.Add(this.userInfo1);
             this.Controls.Add(this.panel1);
@@ -130,5 +140,6 @@
         internal UserInfo userInfo1;
         internal System.Windows.Forms.Label lblFriendStatus;
         internal UserFriends userFriends1;
+        internal UserBadges userBadges1;
     }
 }

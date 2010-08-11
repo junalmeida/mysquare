@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Tenor.Mobile.Drawing;
+using MySquare.Service;
 
 namespace MySquare.UI.Friends
 {
@@ -13,7 +14,7 @@ namespace MySquare.UI.Friends
             InitializeComponent();
             tabStrip.Tabs.Add("Info");
             tabStrip.Tabs.Add("Friends");
-            //tabStrip.Tabs.Add("Badges");
+            tabStrip.Tabs.Add("Badges");
         }
 
         SizeF factor;
@@ -63,7 +64,7 @@ namespace MySquare.UI.Friends
                 }
 
             }
-            catch { }
+            catch (Exception ex) { Log.RegisterLog("gdi", ex); }
         }
 
         private void tabStrip_SelectedIndexChanged(object sender, EventArgs e)
@@ -75,6 +76,7 @@ namespace MySquare.UI.Friends
         {
             userInfo1.Visible = false;
             userFriends1.Visible = false;
+            userBadges1.Visible = false;
             tabStrip.SelectedIndex = section;
             switch (section)
             {
@@ -89,6 +91,9 @@ namespace MySquare.UI.Friends
                     userFriends1.Visible = true;
                     break;
                 case 2:
+                    userBadges1.BringToFront();
+                    userBadges1.Dock = DockStyle.Fill;
+                    userBadges1.Visible = true;
                     break;
             }
         }

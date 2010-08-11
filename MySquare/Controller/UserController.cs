@@ -9,6 +9,7 @@ using System.Threading;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
+using MySquare.Service;
 
 namespace MySquare.Controller
 {
@@ -162,7 +163,6 @@ namespace MySquare.Controller
                 }
             }
 
-            View.userInfo1.Badges = user.Badges;
 
             LeftSoftButtonEnabled = false;
             LeftSoftButtonText = string.Empty;
@@ -175,30 +175,44 @@ namespace MySquare.Controller
                             View.lblFriendStatus.Text = "is your friend";
                             break;
                         case FriendStatus.pendingyou:
-                            View.lblFriendStatus.Text = "is waiting you to accept";
-                            LeftSoftButtonEnabled = true;
-                            LeftSoftButtonText = "&Actions";
-                            MenuItem item = new MenuItem()
                             {
-                                Text = "&Accept"
-                            };
-                            item.Click += new EventHandler(AcceptUser_Click);
-                            AddLeftSubMenu(item);
-                            item = new MenuItem()
-                            {
-                                Text = "&Reject"
-                            };
-                            item.Click += new EventHandler(RejectUser_Click);
-                            AddLeftSubMenu(item);
+                                View.lblFriendStatus.Text = "is waiting you to accept";
+                                LeftSoftButtonEnabled = true;
+                                LeftSoftButtonText = "&Actions";
+                                MenuItem item = new MenuItem()
+                                {
+                                    Text = "&Accept"
+                                };
+                                item.Click += new EventHandler(AcceptUser_Click);
+                                AddLeftSubMenu(item);
+                                item = new MenuItem()
+                                {
+                                    Text = "&Reject"
+                                };
+                                item.Click += new EventHandler(RejectUser_Click);
+                                AddLeftSubMenu(item);
+                            }
                             break;
                         case FriendStatus.pendingthem:
                             View.lblFriendStatus.Text = "have not answered yet";
                             break;
                         default:
+                            View.lblFriendStatus.Text = string.Empty;
                             break;
                     }
                 else
+                {
                     View.lblFriendStatus.Text = string.Empty;
+                    LeftSoftButtonEnabled = true;
+                    LeftSoftButtonText = "&Actions";
+
+                    MenuItem item = new MenuItem()
+                    {
+                        Text = "&Add as Friend"
+                    };
+                    item.Click += new EventHandler(AddUser_Click);
+                    AddLeftSubMenu(item);
+                }
             }
 
 
@@ -220,10 +234,15 @@ namespace MySquare.Controller
             Service.AcceptFriend(user.Id);
         }
 
+        void AddUser_Click(object sender, EventArgs e)
+        {
+            Service.RequestFriend(user.Id);
+        }
+
 
         private void LoadBadges(Badge[] badges)
         {
-            View.userInfo1.imageList = new Dictionary<string, byte[]>();
+            View.userBadges1.Badges = badges;
             if (badges != null)
             {
                 Thread t = new Thread(new ThreadStart(delegate()
@@ -236,18 +255,19 @@ namespace MySquare.Controller
                             {
                                 byte[] image = Service.DownloadImageSync(b.ImageUrl);
 
-                                if (!View.userInfo1.imageList.ContainsKey(b.ImageUrl))
+                                if (!View.userBadges1.imageList.ContainsKey(b.ImageUrl))
                                 {
-                                    View.userInfo1.imageList.Add(b.ImageUrl, image);
-                                    View.Invoke(new ThreadStart(delegate() { View.userInfo1.pnlBadges.Invalidate(); }));
+                                    View.userBadges1.imageList.Add(b.ImageUrl, image);
+                                    View.Invoke(new ThreadStart(delegate() { View.userBadges1.listBox.Invalidate(); }));
                                 }
                             }
-                            catch { }
+                            catch (Exception ex) { Log.RegisterLog("image", ex); }
                         }
                     }
                 }));
                 t.Start();
             }
+
         }
 
 
