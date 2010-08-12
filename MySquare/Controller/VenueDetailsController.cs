@@ -72,7 +72,8 @@ namespace MySquare.Controller
             CheckIn,
             Info, 
             Map,
-            Tips
+            Tips,
+            People
         }
 
         void OpenSection(VenueSection section)
@@ -85,22 +86,20 @@ namespace MySquare.Controller
             RightSoftButtonEnabled = true;
 
             LeftSoftButtonText = "&Check In";
-            switch (section)
-            {
-                case VenueSection.CheckIn:
+
                     View.venueInfo1.Visible = false;
                     View.venueMap1.Visible = false;
                     View.venueTips1.Visible = false;
+                    View.peopleHere.Visible = false;
+                    View.checkIn1.Visible = false;
 
+            switch (section)
+            {
+                case VenueSection.CheckIn:
                     View.checkIn1.Activate();
-
-
                     LeftSoftButtonEnabled = View.checkIn1.pnlShout.Visible;
                     break;
                 case VenueSection.Info:
-                    View.checkIn1.Visible = false;
-                    View.venueMap1.Visible = false;
-                    View.venueTips1.Visible = false;
                     View.venueInfo1.Activate();
 
                     LoadExtraInfo();
@@ -110,9 +109,6 @@ namespace MySquare.Controller
                 case VenueSection.Map:
                     if (Configuration.IsPremium)
                     {
-                        View.venueInfo1.Visible = false;
-                        View.checkIn1.Visible = false;
-                        View.venueTips1.Visible = false;
                         View.venueMap1.Activate();
 
                         LeftSoftButtonEnabled = false;
@@ -127,14 +123,18 @@ namespace MySquare.Controller
                     }
                     break;
                 case VenueSection.Tips:
-                    View.venueInfo1.Visible = false;
-                    View.venueMap1.Visible = false;
-                    View.checkIn1.Visible = false;
                     View.venueTips1.Activate();
 
                     LoadExtraInfo();
                     LeftSoftButtonText = "&Comment";
                     LeftSoftButtonEnabled = true;
+                    break;
+                case VenueSection.People:
+                    View.peopleHere.Activate();
+
+                    LoadExtraInfo();
+                    LeftSoftButtonText = string.Empty;
+                    LeftSoftButtonEnabled = false;
                     break;
             }
             Cursor.Current = Cursors.Default;
@@ -407,6 +407,7 @@ namespace MySquare.Controller
                 View.venueInfo1.lblSpecials.Text = txtSpecials.ToString();
 
                 LoadTips();
+                LoadPeople();
 
                 Thread t = new Thread(new ThreadStart(delegate()
                 {
@@ -434,6 +435,7 @@ namespace MySquare.Controller
                 t.Start();
             }
         }
+
 
     
         void Service_VenueResult(object sender, VenueEventArgs e)
@@ -572,6 +574,54 @@ namespace MySquare.Controller
                 Venue.fullData = false;
                 LoadExtraInfo();
                 tipResult = null;
+            }
+        }
+
+        #endregion
+
+        #region People
+        private void LoadPeople()
+        {
+            if (View.InvokeRequired)
+            {
+                View.Invoke(new ThreadStart(LoadPeople));
+                return;
+            }
+
+            View.peopleHere.listBox.Clear();
+            if (Venue != null && Venue.CheckIns != null && Venue.CheckIns.Length > 0)
+            {
+                foreach (var chkin in Venue.CheckIns)
+                {
+                    View.peopleHere.listBox.AddItem(null, chkin.User);
+                }
+
+
+                Thread t = new Thread(new ThreadStart(delegate()
+                {
+                    foreach (var chkin in Venue.CheckIns)
+                    {
+                        User u = chkin.User;
+                        if (!string.IsNullOrEmpty(u.ImageUrl))
+                        {
+                            try
+                            {
+
+                                using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(u.ImageUrl)))
+                                {
+                                    Bitmap bmp = new Bitmap(mem);
+                                    if (!View.peopleHere.imageList.ContainsKey(u.ImageUrl))
+                                    {
+                                        View.peopleHere.imageList.Add(u.ImageUrl, bmp);
+                                        View.Invoke(new ThreadStart(delegate() { View.peopleHere.listBox.Invalidate(); }));
+                                    }
+                                }
+                            }
+                            catch { }
+                        }
+                    }
+                }));
+                t.Start();
             }
         }
 

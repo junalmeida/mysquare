@@ -36,6 +36,7 @@
             this.venueInfo1 = new MySquare.UI.Places.Details.VenueInfo();
             this.venueMap1 = new MySquare.UI.Places.Details.VenueMap();
             this.venueTips1 = new MySquare.UI.Places.Details.VenueTips();
+            this.peopleHere = new MySquare.UI.Friends.UserFriends();
             this.panelTabs.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,10 +114,19 @@
             this.venueTips1.TabIndex = 9;
             this.venueTips1.Visible = false;
             // 
+            // peopleHere
+            // 
+            this.peopleHere.Location = new System.Drawing.Point(116, 68);
+            this.peopleHere.Name = "peopleHere";
+            this.peopleHere.Size = new System.Drawing.Size(150, 150);
+            this.peopleHere.TabIndex = 11;
+            this.peopleHere.Visible = false;
+            // 
             // VenueDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.peopleHere);
             this.Controls.Add(this.venueTips1);
             this.Controls.Add(this.venueMap1);
             this.Controls.Add(this.venueInfo1);
@@ -141,6 +151,7 @@
         internal MySquare.UI.Places.Details.VenueInfo venueInfo1;
         internal MySquare.UI.Places.Details.VenueMap venueMap1;
         internal MySquare.UI.Places.Details.VenueTips venueTips1;
+        internal MySquare.UI.Friends.UserFriends peopleHere;
 
     }
 }

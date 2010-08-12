@@ -21,6 +21,14 @@ namespace MySquare.UI.Friends
 
         }
 
+
+        internal void Activate()
+        {
+            Dock = DockStyle.Fill;
+            BringToFront();
+            Visible = true;
+        }
+
         internal Dictionary<string, Bitmap> imageList = new Dictionary<string, Bitmap>();
         StringFormat format = new StringFormat()
         {
