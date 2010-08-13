@@ -50,7 +50,7 @@ namespace MySquare.Service
                 return;
             }
             aEvent = new AutoResetEvent(false);
-            RisingMobility service = new RisingMobility();
+            RisingMobilityService service = new RisingMobilityService();
             service.PremiumArrived += new RisingMobilityEventHandler(service_PremiumArrived);
             service.Error += new ErrorEventHandler(service_Error);
             service.GetPremiumInfo(Login);

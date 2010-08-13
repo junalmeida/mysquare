@@ -45,6 +45,7 @@
             this.picAvatar.Name = "picAvatar";
             this.picAvatar.Size = new System.Drawing.Size(48, 48);
             this.picAvatar.Paint += new System.Windows.Forms.PaintEventHandler(this.picAvatar_Paint);
+            this.picAvatar.Click += new System.EventHandler(picAvatar_Click);
             // 
             // lblUserName
             // 
@@ -131,6 +132,7 @@
             this.ResumeLayout(false);
 
         }
+
 
         #endregion
 

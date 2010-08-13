@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace MySquare.Service
 {
-    class RisingMobility : Service.Network
+    class RisingMobilityService : Service.Network
     {
         enum ServiceKey
         {

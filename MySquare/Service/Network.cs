@@ -6,6 +6,8 @@ using System.Net;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
+using Newtonsoft.Json;
+using System.Reflection;
 
 namespace MySquare.Service
 {
@@ -278,13 +280,23 @@ namespace MySquare.Service
                             }
                             else
                             {
+                                if (responseTxt.StartsWith("{ \"error\""))
+                                {
+                                    type = typeof(ErrorEventArgs);
+                                }
+
                                 Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
                                 //Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
                                 Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
                                 result = serializer.Deserialize(reader, type);
+
+                                if (responseTxt.StartsWith("{ \"error\""))
+                                {
+                                    ((ErrorEventArgs)result).Exception = new Exception(((ErrorEventArgs)result).Message);
+                                }
                             }
 
-                            if (this.GetType() != typeof(RisingMobility))
+                            if (this.GetType() != typeof(RisingMobilityService))
                             {
                                 Log.RegisterLog("data", new Exception(
                                     "Request address: " + request.Address.ToString() + "\r\n" +
@@ -397,7 +409,7 @@ namespace MySquare.Service
 
         #region Cache
 
-        protected static string GetCachePath(string url)
+        internal static string GetCachePath(string url)
         {
             string appPath = GetAppPath();
             string path = System.IO.Path.Combine(appPath, "cache");
@@ -506,17 +518,31 @@ namespace MySquare.Service
     }
 
     delegate void ErrorEventHandler(object serder, ErrorEventArgs e);
+    [Obfuscation(Exclude = true, ApplyToMembers = true)]
     class ErrorEventArgs : EventArgs
     {
-        internal ErrorEventArgs(Exception ex)
+        public ErrorEventArgs()
+        {
+        }
+
+        public ErrorEventArgs(Exception ex)
         {
             this.Exception = ex;
         }
 
+        Exception exception;
         internal Exception Exception
         {
-            get;
-            private set;
+            get { return exception; }
+            set
+            {
+                exception = value;
+                Message = value.Message;
+            }
         }
+
+        [JsonProperty("error")]
+        internal string Message
+        { get; set; }
     }
 }

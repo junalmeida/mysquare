@@ -50,6 +50,11 @@ namespace MySquare.FourSquare
         public Venue[] Venues
         { get; set; }
 
+        public override string ToString()
+        {
+            return Type;
+        }
+
     }
 
     class Venue
@@ -162,6 +167,7 @@ namespace MySquare.FourSquare
             venue.Categories = Categories;
             venue.Specials = Specials;
             venue.Tags = Tags;
+            venue.CheckIns = CheckIns;
         }
 
         public override bool Equals(object obj)

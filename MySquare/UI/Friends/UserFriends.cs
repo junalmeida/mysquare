@@ -39,7 +39,7 @@ namespace MySquare.UI.Friends
             {
                 listBox.Clear();
                 imageList = value;
-                Program.ClearImageList(imageListBuffer);
+                imageListBuffer.ClearImageList();
                 imageListBuffer = new Dictionary<string, AlphaImage>();
             }
         }
@@ -64,6 +64,8 @@ namespace MySquare.UI.Friends
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
         {
             User user = (User)e.Item.Value;
+
+
 
             Size factor = Tenor.Mobile.UI.Skin.Current.ScaleFactor;
             if (!string.IsNullOrEmpty(user.ToString()))
@@ -110,10 +112,14 @@ namespace MySquare.UI.Friends
                 if (user.CheckIn != null)
                 {
                     string text = string.Empty;
+
                     if (user.CheckIn.Venue != null)
                         text = "@ " + user.CheckIn.Venue.Name;
-                    else
+                    else if (!string.IsNullOrEmpty(user.CheckIn.Shout))
                         text = user.CheckIn.Shout;
+                    else if (user.CheckIn.Created > DateTime.MinValue)
+                        text = user.CheckIn.Created.ToHumanTime();
+
 
                     rect.Y += size.Height + (3 * factor.Height);
                     e.Graphics.DrawString(
@@ -137,7 +143,10 @@ namespace MySquare.UI.Friends
         private void listBox_SelectedItemClicked(object sender, EventArgs e)
         {
             User user = listBox.SelectedItem.Value as User;
-            (MySquare.Controller.BaseController.OpenController(this.Parent as UserDetail) as MySquare.Controller.UserController).LoadUser(user);
+            UserDetail form = this.Parent as UserDetail;
+            if (form == null)
+                form = (this.Parent.Parent as Main).userDetail1;
+            (MySquare.Controller.BaseController.OpenController(form) as MySquare.Controller.UserController).LoadUser(user);
         }
 
 

@@ -102,9 +102,15 @@ namespace MySquare.Controller
             
             View.lblUserName.Text = string.Format("{0} {1}", user.FirstName, user.LastName);
             if (!string.IsNullOrEmpty(user.ImageUrl))
+            {
                 View.Avatar = Service.DownloadImageSync(user.ImageUrl);
+                View.AvatarCachePath = Network.GetCachePath(user.ImageUrl);
+            }
             else
+            {
                 View.Avatar = null;
+                View.AvatarCachePath = null;
+            }
 
             if (!string.IsNullOrEmpty(user.Email))
             {

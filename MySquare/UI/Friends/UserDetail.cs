@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using Tenor.Mobile.Drawing;
 using MySquare.Service;
+using System.Diagnostics;
 
 namespace MySquare.UI.Friends
 {
@@ -46,6 +47,12 @@ namespace MySquare.UI.Friends
                 }
                 picAvatar.Invalidate();
             }
+        }
+
+        internal string AvatarCachePath
+        {
+            get;
+            set;
         }
 
         private void picAvatar_Paint(object sender, PaintEventArgs e)
@@ -97,5 +104,20 @@ namespace MySquare.UI.Friends
                     break;
             }
         }
+
+        void picAvatar_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(AvatarCachePath) && AvatarCachePath.IndexOf("blank_") == -1 && File.Exists(AvatarCachePath))
+                {
+                    ProcessStartInfo psi =
+                       new ProcessStartInfo(AvatarCachePath, string.Empty);
+                    Process.Start(psi);
+                }
+            }
+            catch { }
+        }
+
     }
 }

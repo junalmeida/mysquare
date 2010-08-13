@@ -11,11 +11,11 @@ namespace MySquare.Controller
 {
     class HelpController : BaseController<MySquare.UI.Help>
     {
-        RisingMobility service;
+        RisingMobilityService service;
         public HelpController(MySquare.UI.Help view)
             : base(view)
         {
-            service = new RisingMobility();
+            service = new RisingMobilityService();
             service.Error += new ErrorEventHandler(service_Error);
             service.VersionArrived += new VersionInfoEventHandler(service_VersionArrived);
         }

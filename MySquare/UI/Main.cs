@@ -373,7 +373,7 @@ namespace MySquare.UI
 
         void timerGps_Tick(object sender, EventArgs e)
         {
-            if (Program.Location.FixType == Tenor.Mobile.Location.FixType.Gps)
+            if (Program.Location.FixType == RisingMobility.Mobile.Location.FixType.Gps)
                 showGps = true;
             else if (Program.Location.IsGpsOpen)
                 showGps = !showGps;

@@ -101,7 +101,6 @@ namespace MySquare.Service
 
         internal void SearchNearby(string search, double lat, double lgn)
         {
-            Debug.WriteLine("++ Passei ++");
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("geolat", lat.ToString(culture));
             parameters.Add("geolong", lgn.ToString(culture));
@@ -236,26 +235,31 @@ namespace MySquare.Service
         {
             if (CheckInsResult != null)
             {
-                foreach (var chkIn in e.CheckIns)
-                {
-                    int index = cacheVenues.IndexOf(chkIn.Venue);
-                    if (index == -1)
-                        cacheVenues.Add(chkIn.Venue);
-                    else
-                        chkIn.Venue = cacheVenues[index];
-
-                    index = cacheUsers.IndexOf(chkIn.User);
-                    if (index == -1)
-                    {
-                        cacheUsers.Add(chkIn.User);
-                        if (chkIn.User.CheckIn == null)
-                            chkIn.User.CheckIn = chkIn;
-                    }
-                    else
-                        chkIn.User = cacheUsers[index];
-
-                }
+                ManageCheckInsCache(e.CheckIns);
                 CheckInsResult(this, e);
+            }
+        }
+
+        private static void ManageCheckInsCache(CheckIn[] checkIns)
+        {
+            foreach (var chkIn in checkIns)
+            {
+                int index = cacheVenues.IndexOf(chkIn.Venue);
+                if (index == -1)
+                    cacheVenues.Add(chkIn.Venue);
+                else
+                    chkIn.Venue = cacheVenues[index];
+
+                index = cacheUsers.IndexOf(chkIn.User);
+                if (index == -1)
+                {
+                    cacheUsers.Add(chkIn.User);
+                    if (chkIn.User.CheckIn == null)
+                        chkIn.User.CheckIn = chkIn;
+                }
+                else
+                    chkIn.User = cacheUsers[index];
+
             }
         }
 
@@ -298,6 +302,12 @@ namespace MySquare.Service
                         else if (cacheUsers[index].fullData)
                             e.Venue.Status.Mayor.User = cacheUsers[index];
                     }
+
+                    if (e.Venue.CheckIns != null && e.Venue.CheckIns.Length > 0)
+                    {
+                        ManageCheckInsCache(e.Venue.CheckIns);
+                    }
+
 
                     VenueResult(this, e);
                 }
@@ -452,6 +462,7 @@ namespace MySquare.Service
 
         protected override void OnResult(object result, int key)
         {
+
             if (result is SearchEventArgs)
                 OnSearchArrives((SearchEventArgs)result);
             else if (result is CheckInEventArgs)
@@ -477,6 +488,8 @@ namespace MySquare.Service
                 OnFriendsResult((FriendsEventArgs)result);
             else if (result is PendingFriendsEventArgs)
                 OnPendingFriendsResult((PendingFriendsEventArgs)result);
+            else if (result is ErrorEventArgs)
+                OnError((ErrorEventArgs)result);
             else
                 throw new NotImplementedException();
 

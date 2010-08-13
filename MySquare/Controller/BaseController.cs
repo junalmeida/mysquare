@@ -22,7 +22,7 @@ namespace MySquare.Controller
             if (Navigation.Count > 0)
             {
                 object[] last = Navigation.Peek();
-                if (last[0] == this && last[1] == value)
+                if (last[0] == this && object.Equals(last[1], value))
                     return;
             }
             Navigation.Push(new object[] { this, value });

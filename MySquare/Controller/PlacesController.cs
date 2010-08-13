@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
-using Tenor.Mobile.Location;
+using RisingMobility.Mobile.Location;
 using System.Threading;
 using MySquare.FourSquare;
 using System.Windows.Forms;
@@ -123,7 +123,7 @@ namespace MySquare.Controller
 
             Program.Location.Stop();
             Program.Location.PollHit += new EventHandler(position_LocationChanged);
-            Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+            Program.Location.Error += new RisingMobility.Mobile.Location.ErrorEventHandler(position_Error);
 
             Program.Location.UseNetwork = true;
             Program.Location.UseGps = Configuration.UseGps;
@@ -131,10 +131,10 @@ namespace MySquare.Controller
         }
 
 
-        void position_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
+        void position_Error(object sender, RisingMobility.Mobile.Location.ErrorEventArgs e)
         {
             Program.Location.PollHit -= new EventHandler(position_LocationChanged);
-            Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+            Program.Location.Error -= new RisingMobility.Mobile.Location.ErrorEventHandler(position_Error);
 
             ShowError("Could not get your location, try again later.");
             Log.RegisterLog("lbs", e.Error);
@@ -142,14 +142,17 @@ namespace MySquare.Controller
 
         void position_LocationChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine("== Passei ==" + DateTime.Now.ToString());
             Program.Location.PollHit -= new EventHandler(position_LocationChanged);
-            Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+            Program.Location.Error -= new RisingMobility.Mobile.Location.ErrorEventHandler(position_Error);
 
             if (!Program.Location.WorldPoint.IsEmpty)
             {
+                View.list1.Address = null;
                 Service.SearchNearby(text, Program.Location.WorldPoint.Latitude, 
                                            Program.Location.WorldPoint.Longitude);
+                var geo = Program.Location.GetGeoLocation();
+                if (geo != null)
+                    View.list1.Address = geo;
             }
             else
             {

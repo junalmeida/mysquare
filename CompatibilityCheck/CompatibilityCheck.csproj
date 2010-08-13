@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9D68D834-3C02-4927-8B1D-D541A3B8A95F}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -55,6 +55,42 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Geolocation.cs">
+      <Link>Location\Geolocation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\DegreesMinutesSeconds.cs">
+      <Link>Location\Gps\DegreesMinutesSeconds.cs</Link>
+    </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\DeviceStateChangedEventArgs.cs">
+      <Link>Location\Gps\DeviceStateChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\GPS.cs">
+      <Link>Location\Gps\GPS.cs</Link>
+    </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\GpsDeviceState.cs">
+      <Link>Location\Gps\GpsDeviceState.cs</Link>
+    </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\GpsPosition.cs">
+      <Link>Location\Gps\GpsPosition.cs</Link>
+    </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\LocationChangedEventArgs.cs">
+      <Link>Location\Gps\LocationChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\Utils.cs">
+      <Link>Location\Gps\Utils.cs</Link>
+    </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\WorldPoint.cs">
+      <Link>Location\WorldPoint.cs</Link>
+    </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\WorldPosition.cs">
+      <Link>Location\WorldPosition.cs</Link>
+    </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Xps.cs">
+      <Link>Location\Xps.cs</Link>
+    </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Obfuscation.cs">
+      <Link>Obfuscation.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -133,16 +133,16 @@ namespace CompatibilityCheck
 
                 waithandle.Reset();
 
-                pos = new Tenor.Mobile.Location.WorldPosition(true, true);
-                pos.PollHit += new EventHandler(pos_LocationChanged);
-                pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
-                if (!waithandle.WaitOne(60000 * 1, false))
-                    Debug.Write("Gps give up. ");
-                Debug.WriteLine("Done.");
+                //pos = new Tenor.Mobile.Location.WorldPosition(true, true);
+                //pos.PollHit += new EventHandler(pos_LocationChanged);
+                //pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+                //if (!waithandle.WaitOne(60000 * 1, false))
+                //    Debug.Write("Gps give up. ");
+                //Debug.WriteLine("Done.");
 
-                pos.PollHit -= new EventHandler(pos_LocationChanged);
-                pos.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
-                pos.Dispose();
+                //pos.PollHit -= new EventHandler(pos_LocationChanged);
+                //pos.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+                //pos.Dispose();
 
                 MessageBox.Show("Done.\r\n Check the file at: " + fileName);
             }
@@ -156,32 +156,32 @@ namespace CompatibilityCheck
             }
         }
 
-        static Tenor.Mobile.Location.WorldPosition pos = null;
-        static int count = 0;
-        static int gpsCount = 0;
-        static void pos_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
-        {
-            Debug.WriteLine("  * " + e.Error.GetType().FullName + ": " + e.Error.Message);
-            waithandle.Set();
-        }
+        //static Tenor.Mobile.Location.WorldPosition pos = null;
+        //static int count = 0;
+        //static int gpsCount = 0;
+        //static void pos_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
+        //{
+        //    Debug.WriteLine("  * " + e.Error.GetType().FullName + ": " + e.Error.Message);
+        //    waithandle.Set();
+        //}
 
-        static void pos_LocationChanged(object sender, EventArgs e)
-        {
-            Debug.WriteLine("  * Attemp " + (count + 1).ToString() + ": " +
-                pos.ToString() + " - " + 
-                pos.WorldPoint.ToString() + " - " + pos.FixType.ToString() + " - " + pos.WorldPoint.FixTime.ToString());
-            Debug.WriteLine(string.Empty);
-            Debug.WriteLine(string.Empty);
-            if (pos.FixType == Tenor.Mobile.Location.FixType.Gps)
-                gpsCount++;
-            if (gpsCount > 4)
-                waithandle.Set();
-            count++;
-        }
+        //static void pos_LocationChanged(object sender, EventArgs e)
+        //{
+        //    Debug.WriteLine("  * Attemp " + (count + 1).ToString() + ": " +
+        //        pos.ToString() + " - " + 
+        //        pos.WorldPoint.ToString() + " - " + pos.FixType.ToString() + " - " + pos.WorldPoint.FixTime.ToString());
+        //    Debug.WriteLine(string.Empty);
+        //    Debug.WriteLine(string.Empty);
+        //    if (pos.FixType == Tenor.Mobile.Location.FixType.Gps)
+        //        gpsCount++;
+        //    if (gpsCount > 4)
+        //        waithandle.Set();
+        //    count++;
+        //}
 
         static void RIL_Test()
         {
-            for (uint i = 1; i <= 4; i++)
+            for (uint i = 1; i <= 1; i++)
             {
                 Debug.WriteLine(string.Empty);
                 Debug.WriteLine(string.Format("Testing RIL functions on RIL{0}:", i));

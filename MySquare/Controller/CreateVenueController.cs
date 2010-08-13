@@ -5,7 +5,7 @@ using System.Text;
 using MySquare.UI;
 using MySquare.UI.Places.Create;
 using MySquare.UI.Places;
-using Tenor.Mobile.Location;
+using RisingMobility.Mobile.Location;
 using System.Windows.Forms;
 using System.Globalization;
 using System.Threading;
@@ -18,16 +18,12 @@ namespace MySquare.Controller
 {
     class CreateVenueController : BaseController<CreateVenue>
     {
-        Service.Google google;
 
         public CreateVenueController(CreateVenue view)
             : base(view)
         {
             Service.VenueResult += new VenueEventHandler(Service_VenueResult);
             Service.Error += new MySquare.Service.ErrorEventHandler(Service_Error);
-            google = new Google();
-            google.GeocodeResult += new GeocodeEventHandler(Service_GeocodeResult);
-            google.Error += new MySquare.Service.ErrorEventHandler(google_Error);
             View.picMap.Click += new EventHandler(picMap_Click);
             View.picMap.Resize += new EventHandler(picMap_Resize);
         }
@@ -66,7 +62,7 @@ namespace MySquare.Controller
             Program.KeepGpsOpened = true;
 
             Program.Location.LocationChanged += new EventHandler(pos_LocationChanged);
-            Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+            Program.Location.Error += new RisingMobility.Mobile.Location.ErrorEventHandler(pos_Error);
 
             Program.Location.UseGps = true;
             Program.Location.UseNetwork = true;
@@ -83,7 +79,7 @@ namespace MySquare.Controller
         public override void Deactivate()
         {
             Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
-            Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
+            Program.Location.Error -= new RisingMobility.Mobile.Location.ErrorEventHandler(pos_Error);
             Program.KeepGpsOpened = false;
 
             if (View.InvokeRequired)
@@ -95,17 +91,10 @@ namespace MySquare.Controller
                 View.Visible = false;
         }
 
-        void google_Error(object serder, MySquare.Service.ErrorEventArgs e)
-        {
-            if (Log.RegisterLog("geocode", e.Exception))
-            {
-                Deactivate();
-                ShowError("Cannot connect with Google service.");
-            }
-        }
+  
 
 
-        void pos_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
+        void pos_Error(object sender, RisingMobility.Mobile.Location.ErrorEventArgs e)
         {
             if (Log.RegisterLog("lbs", e.Error))
             {
@@ -127,6 +116,7 @@ namespace MySquare.Controller
 
             DownloadMapPosition();
         }
+
 
         Size oldSize = Size.Empty;
         void picMap_Resize(object sender, EventArgs e)
@@ -221,13 +211,27 @@ namespace MySquare.Controller
         {
             double? latSel = View.latitudeSelected;
             double? lngSel = View.longitudeSelected;
-            if (latSel.HasValue && lngSel.HasValue)
-                google.GetGeocoding(latSel.Value, lngSel.Value);
-            else
-                google.GetGeocoding(Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude);
+
+            Thread t = new Thread(new ThreadStart(delegate()
+            {
+                try
+                {
+                    if (latSel.HasValue && lngSel.HasValue)
+                    {
+                        Geolocation geo = Geolocation.Get(latSel.Value, lngSel.Value);
+                        if (geo != null)
+                            Service_GeocodeResult(geo);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.RegisterLog("geolocation", ex);
+                }
+            }));
+            t.Start();
         }
 
-        void Service_GeocodeResult(object serder, GeocodeEventArgs e)
+        void Service_GeocodeResult(Geolocation geo)
         {
             try
             {
@@ -236,27 +240,14 @@ namespace MySquare.Controller
                     if (View.Visible)
                     {
                         string number = string.Empty;
-                        foreach (Geocode geocode in e.Geocodes)
-                        {
-                            if (Array.IndexOf(geocode.Types, "street_address") > -1 ||
-                                Array.IndexOf(geocode.Types, "route") > -1)
-                            {
-                                foreach (AddressComponent addr in geocode.AddressComponents)
-                                {
-                                    if (Array.IndexOf(addr.Types, "route") > -1)
-                                        View.txtAddress.Text = addr.LongName;
-                                    if (Array.IndexOf(addr.Types, "street_number") > -1)
-                                        number = addr.LongName;
-                                    if (Array.IndexOf(addr.Types, "locality") > -1)
-                                        View.txtCity.Text = addr.LongName;
-                                    if (Array.IndexOf(addr.Types, "administrative_area_level_1") > -1)
-                                        View.txtState.Text = addr.ShortName;
-                                    if (Array.IndexOf(addr.Types, "postal_code") > -1)
-                                        View.txtZip.Text = addr.ShortName;
-                                }
-                                break;
-                            }
-                        }
+
+                        View.txtAddress.Text = geo.Route;
+                        number = geo.StreetNumber;
+
+                        View.txtCity.Text = geo.City;
+                        View.txtState.Text = geo.Province;
+                        View.txtZip.Text = geo.ZipCode;
+
                         if (!string.IsNullOrEmpty(View.txtAddress.Text) && !string.IsNullOrEmpty(number))
                         {
                             int i = number.IndexOf("-");
@@ -327,9 +318,6 @@ namespace MySquare.Controller
 
         public override void Dispose()
         {
-            if (google != null)
-                google.Dispose();
-
             if (t != null)
                 t.Abort();
 

@@ -34,7 +34,7 @@ namespace MySquare.UI.Friends
             {
                 badges = value;
                 imageList = new Dictionary<string, byte[]>();
-                Program.ClearImageList(imageListA);
+                imageListA.ClearImageList();
                 imageListA = new Dictionary<string, AlphaImage>();
                 listBox.Clear();
                 if (badges != null)

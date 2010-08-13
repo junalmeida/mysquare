@@ -18,7 +18,7 @@ namespace MySquare.Service
                 return null;
             else if (current == null)
             {
-                current = "d" + DateTime.Now.ToString("yyyyMMdd_hhmmss");
+                current = "d" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
                 System.IO.Directory.CreateDirectory(Path.Combine(path, current));
             }
             path = Path.Combine(path, current);

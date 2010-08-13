@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using MySquare.Properties;
 using MySquare.FourSquare;
 using System.Threading;
-using Tenor.Mobile.Location;
+using RisingMobility.Mobile.Location;
 using System.IO;
 using Tenor.Mobile.Drawing;
 using MySquare.Service;
@@ -53,10 +53,12 @@ namespace MySquare.UI.Places
             set
             {
                 imageList = value;
-                Program.ClearImageList(imageListBuffer);
+                imageListBuffer.ClearImageList();
                 imageListBuffer = new Dictionary<string, AlphaImage>();
             }
         }
+
+        internal Geolocation Address;
 
         float itemPadding;
         Font smallFont;
@@ -86,6 +88,32 @@ namespace MySquare.UI.Places
                 }
 
                 string text = e.Item.Text;
+                if (text == "Nearby" && Address != null)
+                {
+                    StringBuilder geo = new StringBuilder();
+                    if (!string.IsNullOrEmpty(Address.Neighborhood))
+                    {
+                        geo.Append(", ");
+                        geo.Append(Address.Neighborhood);
+                    }
+                    if (!string.IsNullOrEmpty(Address.City))
+                    {
+                        geo.Append(", ");
+                        geo.Append(Address.City);
+                    }
+                    if (!string.IsNullOrEmpty(Address.Province))
+                    {
+                        geo.Append(", ");
+                        geo.Append(Address.Province);
+                    }
+                    if (geo.Length > 0)
+                    {
+                        geo = geo.Remove(0, 2);
+                        text += " " + geo.ToString();
+                    }
+                }
+
+
                 string secondText = null;
 
                 if (text.IndexOf("\r\n") > -1)
@@ -104,7 +132,7 @@ namespace MySquare.UI.Places
                 if (e.Item.YIndex < listBox.Count - 1)
                     e.Graphics.FillRectangle(new SolidBrush(color), e.Bounds);
                 if (e.Item.YIndex > 0)
-                    Program.DrawSeparator(e.Graphics, e.Bounds, color);
+                    e.Graphics.DrawSeparator(e.Bounds, color);
 
                 e.Graphics.DrawString(text, thisFont, textBrush, rect, format);
                 if (secondText != null)

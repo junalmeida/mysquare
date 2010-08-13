@@ -38,7 +38,7 @@ namespace MySquare.UI.Friends
             set
             {
                 imageList = value;
-                Program.ClearImageList(imageListBuffer);
+                imageListBuffer.ClearImageList();
                 imageListBuffer = new Dictionary<string, AlphaImage>();
             }
         }
@@ -76,7 +76,7 @@ namespace MySquare.UI.Friends
                 thisLeft = itemPadding;
                 if (e.Item.YIndex > 0)
                 {
-                    Program.DrawSeparator(e.Graphics, e.Bounds, color);
+                    e.Graphics.DrawSeparator(e.Bounds, color);
                 }
             }
             else if (e.Item.Value != null && e.Item.Value is CheckIn)
@@ -88,15 +88,8 @@ namespace MySquare.UI.Friends
                 if (checkIn.User != null)
                     userUrl = checkIn.User.ImageUrl;
 
-                TimeSpan time = DateTime.Now - checkIn.Created;
-                if (time.TotalMinutes < 60)
-                    secondText = string.Format("{0} minutes ago.", time.Minutes);
-                else if (time.TotalHours < 24)
-                    secondText = string.Format("{0} hours ago.", time.Hours);
-                else if (time.TotalDays < 5)
-                    secondText = string.Format("{0} days ago.", time.Days);
-                else
-                    secondText = checkIn.Created.ToShortDateString() + "  " + checkIn.Created.ToShortTimeString();
+
+                secondText = checkIn.Created.ToHumanTime();
 
             }
             else if (e.Item.Value != null && e.Item.Value is User)
@@ -150,6 +143,7 @@ namespace MySquare.UI.Friends
             }
         }
 
+ 
 
 
         ~Friends()

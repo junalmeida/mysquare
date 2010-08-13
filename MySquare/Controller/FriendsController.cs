@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
-using Tenor.Mobile.Location;
+using RisingMobility.Mobile.Location;
 using MySquare.FourSquare;
 using System.Threading;
 using System.Drawing;
@@ -67,16 +67,16 @@ namespace MySquare.Controller
 
             Program.Location.Stop();
             Program.Location.PollHit += new EventHandler(position_LocationChanged);
-            Program.Location.Error += new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+            Program.Location.Error += new RisingMobility.Mobile.Location.ErrorEventHandler(position_Error);
             Program.Location.UseNetwork = true;
             Program.Location.UseGps = Configuration.UseGps;
             Program.Location.Poll();
         }
 
-        void position_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
+        void position_Error(object sender, RisingMobility.Mobile.Location.ErrorEventArgs e)
         {
             Program.Location.PollHit -= new EventHandler(position_LocationChanged);
-            Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+            Program.Location.Error -= new RisingMobility.Mobile.Location.ErrorEventHandler(position_Error);
             ShowError("Could not get your location, try again later.");
             Log.RegisterLog("lbs", e.Error);
  
@@ -85,7 +85,7 @@ namespace MySquare.Controller
         void position_LocationChanged(object sender, EventArgs e)
         {
             Program.Location.PollHit -= new EventHandler(position_LocationChanged);
-            Program.Location.Error -= new Tenor.Mobile.Location.ErrorEventHandler(position_Error);
+            Program.Location.Error -= new RisingMobility.Mobile.Location.ErrorEventHandler(position_Error);
             if (!Program.Location.WorldPoint.IsEmpty)
             {
                 Service.GetFriendsCheckins(Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude);
