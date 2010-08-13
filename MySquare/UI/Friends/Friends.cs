@@ -35,7 +35,12 @@ namespace MySquare.UI.Friends
         internal Dictionary<string, byte[]> ImageList
         {
             get { return imageList; }
-            set { imageList = value; imageListBuffer = new Dictionary<string, AlphaImage>(); }
+            set
+            {
+                imageList = value;
+                Program.ClearImageList(imageListBuffer);
+                imageListBuffer = new Dictionary<string, AlphaImage>();
+            }
         }
 
         Brush brush = new SolidBrush(Tenor.Mobile.UI.Skin.Current.TextForeColor);

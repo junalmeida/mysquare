@@ -173,8 +173,7 @@ namespace MySquare.Controller
 
         void LoadVenues(Group[] groups)
         {
-            View.list1.imageList = new Dictionary<string, byte[]>();
-            View.list1.imageListBuffer = new Dictionary<string, Tenor.Mobile.Drawing.AlphaImage>();
+            View.list1.ImageList = new Dictionary<string, byte[]>();
 
             View.list1.listBox.Clear();
 
@@ -200,14 +199,14 @@ namespace MySquare.Controller
                         string url = string.Empty;
                         if (venue.PrimaryCategory != null)
                             url = venue.PrimaryCategory.IconUrl;
-                        if (!View.list1.imageList.ContainsKey(url))
+                        if (!View.list1.ImageList.ContainsKey(url))
                         {
                             byte[] buffer = Service.DownloadImageSync
                                 (string.IsNullOrEmpty(url) ? "http://foursquare.com/img/categories/none.png" : url);
 
                             if (buffer != null)
                             {
-                                View.list1.imageList[url] = buffer;
+                                View.list1.ImageList[url] = buffer;
                                 View.list1.listBox.Invoke(new ThreadStart(delegate()
                                 {
                                     View.list1.listBox.Invalidate();

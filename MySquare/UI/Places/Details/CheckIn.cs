@@ -57,8 +57,8 @@ namespace MySquare.UI.Places.Details
         internal Badge[] badges;
         internal Score[] scoring;
         internal Special[] specials;
-        internal Dictionary<string, Image> badgeImageList;
-        internal Dictionary<string, Image> scoreImageList;
+        internal Dictionary<string, Bitmap> badgeImageList;
+        internal Dictionary<string, Bitmap> scoreImageList;
 
         SolidBrush textBrush = new SolidBrush(Color.Black);
         StringFormat format = new StringFormat()

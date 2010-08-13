@@ -159,7 +159,7 @@ namespace MySquare.Service
             }
         }
 
-        static int limit = 20;
+        static int limit = 25;
         public static int ResultsLimit
         {
             get

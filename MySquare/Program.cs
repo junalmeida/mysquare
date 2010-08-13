@@ -11,6 +11,7 @@ using System.Threading;
 using MySquare.Controller;
 using System.Drawing;
 using MySquare.Service;
+using Tenor.Mobile.Drawing;
 
 [assembly: System.Reflection.Obfuscation(Feature = "Apply to MySquare.FourSquare.*: all", Exclude = true, ApplyToMembers = true)]
 namespace MySquare
@@ -128,6 +129,38 @@ service: {7}",
             Tenor.Mobile.Drawing.GradientFill.Fill(g, rect2, Color.LightGray, Color.LightGray, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
             rect2.X += rect2.Width;
             Tenor.Mobile.Drawing.GradientFill.Fill(g, rect2, Color.LightGray, color, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+        }
+
+
+        internal static void ClearImageList(Dictionary<string, Bitmap> imageList)
+        {
+            if (imageList == null)
+                return;
+            else
+                lock (imageList)
+                {
+                    foreach (string key in imageList.Keys.ToArray())
+                    {
+                        if (imageList[key] != null)
+                            imageList[key].Dispose();
+                        imageList.Remove(key);
+                    }
+                }
+        }
+        internal static void ClearImageList(Dictionary<string, AlphaImage> imageList)
+        {
+            if (imageList == null)
+                return;
+            else
+                lock (imageList)
+                {
+                    foreach (string key in imageList.Keys.ToArray())
+                    {
+                        if (imageList[key] != null)
+                            imageList[key].Dispose();
+                        imageList.Remove(key);
+                    }
+                }
         }
     }
 }

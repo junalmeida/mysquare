@@ -45,8 +45,18 @@ namespace MySquare.UI.Places
         }
 
 
-        internal Dictionary<string, byte[]> imageList;
-        internal Dictionary<string, AlphaImage> imageListBuffer;
+        Dictionary<string, byte[]> imageList;
+        Dictionary<string, AlphaImage> imageListBuffer;
+        internal Dictionary<string, byte[]> ImageList
+        {
+            get { return imageList; }
+            set
+            {
+                imageList = value;
+                Program.ClearImageList(imageListBuffer);
+                imageListBuffer = new Dictionary<string, AlphaImage>();
+            }
+        }
 
         float itemPadding;
         Font smallFont;

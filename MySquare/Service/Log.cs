@@ -43,13 +43,20 @@ namespace MySquare.Service
                 return false;
 
             string fileName = GetLogPath(key);
-            if (!string.IsNullOrEmpty(fileName))
+            lock (fileName)
             {
-                using (FileStream file = new FileStream(fileName, FileMode.Create))
-                using (StreamWriter writer = new StreamWriter(file))
+                try
                 {
-                    RegisterLog(writer, ex);
+                    if (!string.IsNullOrEmpty(fileName))
+                    {
+                        using (FileStream file = new FileStream(fileName, FileMode.Create))
+                        using (StreamWriter writer = new StreamWriter(file))
+                        {
+                            RegisterLog(writer, ex);
+                        }
+                    }
                 }
+                catch { }
             }
             return true;
         }

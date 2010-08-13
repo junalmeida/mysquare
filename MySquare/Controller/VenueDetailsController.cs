@@ -294,7 +294,8 @@ namespace MySquare.Controller
 
             Thread t = new Thread(new ThreadStart(delegate()
             {
-                View.checkIn1.badgeImageList = new Dictionary<string, Image>();
+                Program.ClearImageList(View.checkIn1.badgeImageList);
+                View.checkIn1.badgeImageList = new Dictionary<string, Bitmap>();
                 if (checkInResult.Badges != null)
                     foreach (var badge in checkInResult.Badges)
                     {
@@ -310,7 +311,8 @@ namespace MySquare.Controller
                         }
                         catch { }
                     }
-                View.checkIn1.scoreImageList = new Dictionary<string, Image>();
+                Program.ClearImageList(View.checkIn1.scoreImageList);
+                View.checkIn1.scoreImageList = new Dictionary<string, Bitmap>();
                 if (checkInResult.Scoring != null)
                     foreach (var score in checkInResult.Scoring)
                     {
@@ -489,6 +491,8 @@ namespace MySquare.Controller
         private void LoadTips()
         {
             View.venueTips1.listBox.Clear();
+            Program.ClearImageList(View.venueTips1.imageList);
+            View.venueTips1.imageList = new Dictionary<string, Bitmap>();
             if (Venue.Tips != null)
             {
                 foreach (Tip tip in Venue.Tips)
@@ -530,7 +534,6 @@ namespace MySquare.Controller
             t.Start();
 
         }
-
 
         private Tip tipResult;
         private void Comment()
@@ -587,8 +590,11 @@ namespace MySquare.Controller
                 View.Invoke(new ThreadStart(LoadPeople));
                 return;
             }
+            if (!View.peopleHere.Visible)
+                return;
+            View.peopleHere.lblError.Visible = false;
+            View.peopleHere.ImageList = new Dictionary<string, byte[]>();
 
-            View.peopleHere.listBox.Clear();
             if (Venue != null && Venue.CheckIns != null && Venue.CheckIns.Length > 0)
             {
                 foreach (var chkin in Venue.CheckIns)
@@ -607,14 +613,12 @@ namespace MySquare.Controller
                             try
                             {
 
-                                using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(u.ImageUrl)))
+                                byte[] image = Service.DownloadImageSync(u.ImageUrl);
+
+                                if (!View.peopleHere.ImageList.ContainsKey(u.ImageUrl))
                                 {
-                                    Bitmap bmp = new Bitmap(mem);
-                                    if (!View.peopleHere.imageList.ContainsKey(u.ImageUrl))
-                                    {
-                                        View.peopleHere.imageList.Add(u.ImageUrl, bmp);
-                                        View.Invoke(new ThreadStart(delegate() { View.peopleHere.listBox.Invalidate(); }));
-                                    }
+                                    View.peopleHere.ImageList.Add(u.ImageUrl, image);
+                                    View.Invoke(new ThreadStart(delegate() { View.peopleHere.listBox.Invalidate(); }));
                                 }
                             }
                             catch { }
@@ -622,6 +626,10 @@ namespace MySquare.Controller
                     }
                 }));
                 t.Start();
+            }
+            else
+            {
+                View.peopleHere.lblError.Visible = true;
             }
         }
 

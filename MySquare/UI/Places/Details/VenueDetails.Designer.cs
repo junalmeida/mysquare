@@ -83,6 +83,7 @@
             // tabStrip1
             // 
             this.tabStrip1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabStrip1.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
             this.tabStrip1.Location = new System.Drawing.Point(0, 37);
             this.tabStrip1.Name = "tabStrip1";
             this.tabStrip1.Size = new System.Drawing.Size(269, 25);

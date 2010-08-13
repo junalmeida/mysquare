@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using MySquare.FourSquare;
 using MySquare.Service;
+using Tenor.Mobile.Drawing;
 
 namespace MySquare.UI.Friends
 {
@@ -29,17 +30,37 @@ namespace MySquare.UI.Friends
             Visible = true;
         }
 
-        internal Dictionary<string, Bitmap> imageList = new Dictionary<string, Bitmap>();
+        Dictionary<string, byte[]> imageList;
+        Dictionary<string, AlphaImage> imageListBuffer;
+        internal Dictionary<string, byte[]> ImageList
+        {
+            get { return imageList; }
+            set
+            {
+                listBox.Clear();
+                imageList = value;
+                Program.ClearImageList(imageListBuffer);
+                imageListBuffer = new Dictionary<string, AlphaImage>();
+            }
+        }
         StringFormat format = new StringFormat()
         {
             Alignment = StringAlignment.Near,
-            LineAlignment = StringAlignment.Near
+            LineAlignment = StringAlignment.Near,
+            FormatFlags = StringFormatFlags.NoWrap
         }; 
         SolidBrush selectedBrush = new SolidBrush(Color.PaleGoldenrod);
         Pen borderPen = new Pen(Color.White);
         Font font;
         Font fontBold;
         SolidBrush brush = new SolidBrush(Color.Black);
+
+        SizeF factorF;
+        protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
+        {
+            factorF = factor;
+            base.ScaleControl(factor, specified);
+        }
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
         {
             User user = (User)e.Item.Value;
@@ -64,15 +85,19 @@ namespace MySquare.UI.Friends
 
                 if (imageList != null && imageList.ContainsKey(user.ImageUrl))
                 {
-                    Bitmap image = imageList[user.ImageUrl];
+                    if (!imageListBuffer.ContainsKey(user.ImageUrl))
+                    {
+                        imageListBuffer.Add(user.ImageUrl, new AlphaImage(Main.CreateRoundedAvatar(imageList[user.ImageUrl], imageSize, factorF)));
+                    }
+                    AlphaImage image = imageListBuffer[user.ImageUrl];
 
                     Rectangle imgRect =
                         new Rectangle(0 + Convert.ToInt32(padding),
                            Convert.ToInt32(rect.Y + (rect.Height / 2) - (imageSize / 2)), imageSize, imageSize);
                     try
                     {
-                        e.Graphics.DrawImage(image, imgRect, new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
-                        //image.Draw(e.Graphics, imgRect);
+                        //e.Graphics.DrawImage(image, imgRect, new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
+                        image.Draw(e.Graphics, imgRect);
                     }
                     catch (Exception ex) { Log.RegisterLog("gdi", ex); }
                 }

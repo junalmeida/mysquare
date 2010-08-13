@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.listBox = new Tenor.Mobile.UI.KListControl();
+            this.lblError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBox
@@ -47,11 +48,24 @@
             this.listBox.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.listBox_DrawItem);
             this.listBox.SelectedItemClicked += new System.EventHandler(this.listBox_SelectedItemClicked);
             // 
+            // lblError
+            // 
+            this.lblError.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblError.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            this.lblError.ForeColor = System.Drawing.Color.Black;
+            this.lblError.Location = new System.Drawing.Point(75, 105);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(121, 15);
+            this.lblError.Text = "Nobody here.";
+            this.lblError.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblError.Visible = false;
+            // 
             // UserFriends
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
+            this.Controls.Add(this.lblError);
             this.Controls.Add(this.listBox);
             this.Name = "UserFriends";
             this.Size = new System.Drawing.Size(270, 225);
@@ -62,5 +76,6 @@
         #endregion
 
         internal Tenor.Mobile.UI.KListControl listBox;
+        internal System.Windows.Forms.Label lblError;
     }
 }

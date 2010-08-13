@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Collections;
 using MySquare.UI;
 using MySquare.Service;
+using System.Drawing;
 
 namespace MySquare.Controller
 {
@@ -282,5 +283,6 @@ namespace MySquare.Controller
             base.Dispose();
             waitThread = null;
         }
+
     }
 }

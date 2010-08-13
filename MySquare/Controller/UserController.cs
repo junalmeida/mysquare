@@ -287,7 +287,7 @@ namespace MySquare.Controller
                 return;
             }
 
-            View.userFriends1.listBox.Clear();
+            View.userFriends1.ImageList = new Dictionary<string, byte[]>();
             if (users != null)
             {
                 foreach (var user in users)
@@ -304,15 +304,12 @@ namespace MySquare.Controller
                         {
                             try
                             {
+                                byte[] image = Service.DownloadImageSync(u.ImageUrl);
 
-                                using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(u.ImageUrl)))
+                                if (!View.userFriends1.ImageList.ContainsKey(u.ImageUrl))
                                 {
-                                    Bitmap bmp = new Bitmap(mem);
-                                    if (!View.userFriends1.imageList.ContainsKey(u.ImageUrl))
-                                    {
-                                        View.userFriends1.imageList.Add(u.ImageUrl, bmp);
-                                        View.Invoke(new ThreadStart(delegate() { View.userFriends1.listBox.Invalidate(); }));
-                                    }
+                                    View.userFriends1.ImageList.Add(u.ImageUrl, image);
+                                    View.Invoke(new ThreadStart(delegate() { View.userFriends1.listBox.Invalidate(); }));
                                 }
                             }
                             catch { }
