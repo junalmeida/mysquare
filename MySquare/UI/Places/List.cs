@@ -58,7 +58,12 @@ namespace MySquare.UI.Places
             }
         }
 
-        internal Geolocation Address;
+        Geolocation address;
+        internal Geolocation Address
+        {
+            get { return address; }
+            set { address = value; this.Invoke(new ThreadStart(this.listBox.Invalidate)); }
+        }
 
         float itemPadding;
         Font smallFont;
@@ -101,11 +106,20 @@ namespace MySquare.UI.Places
                         geo.Append(", ");
                         geo.Append(Address.City);
                     }
-                    if (!string.IsNullOrEmpty(Address.Province))
+                    if (string.IsNullOrEmpty(Address.Neighborhood) && string.IsNullOrEmpty(Address.City))
                     {
-                        geo.Append(", ");
-                        geo.Append(Address.Province);
+                        if (!string.IsNullOrEmpty(Address.Province))
+                        {
+                            geo.Append(", ");
+                            geo.Append(Address.Province);
+                        }
+                        if (!string.IsNullOrEmpty(Address.Country))
+                        {
+                            geo.Append(", ");
+                            geo.Append(Address.Country);
+                        }
                     }
+
                     if (geo.Length > 0)
                     {
                         geo = geo.Remove(0, 2);

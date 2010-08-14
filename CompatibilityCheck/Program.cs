@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
+using RisingMobility.Mobile.Location;
 
 namespace CompatibilityCheck
 {
@@ -130,19 +131,30 @@ namespace CompatibilityCheck
                         Debug.WriteLine("Error");
 #endif
 
-
+                var culture = System.Globalization.CultureInfo.GetCultureInfo("en-us");
                 waithandle.Reset();
 
-                //pos = new Tenor.Mobile.Location.WorldPosition(true, true);
-                //pos.PollHit += new EventHandler(pos_LocationChanged);
-                //pos.Error += new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
-                //if (!waithandle.WaitOne(60000 * 1, false))
-                //    Debug.Write("Gps give up. ");
-                //Debug.WriteLine("Done.");
+                Debug.WriteLine();
+                Debug.Write("Testing WPS: ");
+                DateTime startPoint = DateTime.Now;
+                WorldPoint point = XpsProxy.GetLocation();
 
-                //pos.PollHit -= new EventHandler(pos_LocationChanged);
-                //pos.Error -= new Tenor.Mobile.Location.ErrorEventHandler(pos_Error);
-                //pos.Dispose();
+                Debug.Write(point.ToString());
+                Debug.WriteLine(" ; " + (DateTime.Now - startPoint).TotalSeconds.ToString(culture) + " seconds.");
+                Debug.WriteLine();
+
+
+                Debug.WriteLine("Testing GPS, GSM, GeoIp: ");
+                pos = new RisingMobility.Mobile.Location.WorldPosition(true, true);
+                pos.PollHit += new EventHandler(pos_LocationChanged);
+                pos.Error += new RisingMobility.Mobile.Location.ErrorEventHandler(pos_Error);
+                Debug.WriteLine("GPS Hardware: " + pos.IsGpsOpen.ToString());
+                if (!waithandle.WaitOne(60000 * 1, false))
+                    Debug.Write("Gps give up. ");
+                Debug.WriteLine("Done.");
+
+                pos.PollHit -= new EventHandler(pos_LocationChanged);
+                pos.Error -= new RisingMobility.Mobile.Location.ErrorEventHandler(pos_Error);
 
                 MessageBox.Show("Done.\r\n Check the file at: " + fileName);
             }
@@ -152,32 +164,33 @@ namespace CompatibilityCheck
             }
             finally
             {
+                if (pos != null)
+                    pos.Dispose();
                 Debug.Close();
             }
         }
 
-        //static Tenor.Mobile.Location.WorldPosition pos = null;
-        //static int count = 0;
-        //static int gpsCount = 0;
-        //static void pos_Error(object sender, Tenor.Mobile.Location.ErrorEventArgs e)
-        //{
-        //    Debug.WriteLine("  * " + e.Error.GetType().FullName + ": " + e.Error.Message);
-        //    waithandle.Set();
-        //}
+        static RisingMobility.Mobile.Location.WorldPosition pos = null;
+        static int count = 0;
+        static int gpsCount = 0;
+        static void pos_Error(object sender, RisingMobility.Mobile.Location.ErrorEventArgs e)
+        {
+            Debug.WriteLine("  * " + e.Error.GetType().FullName + ": " + e.Error.Message);
+            waithandle.Set();
+        }
 
-        //static void pos_LocationChanged(object sender, EventArgs e)
-        //{
-        //    Debug.WriteLine("  * Attemp " + (count + 1).ToString() + ": " +
-        //        pos.ToString() + " - " + 
-        //        pos.WorldPoint.ToString() + " - " + pos.FixType.ToString() + " - " + pos.WorldPoint.FixTime.ToString());
-        //    Debug.WriteLine(string.Empty);
-        //    Debug.WriteLine(string.Empty);
-        //    if (pos.FixType == Tenor.Mobile.Location.FixType.Gps)
-        //        gpsCount++;
-        //    if (gpsCount > 4)
-        //        waithandle.Set();
-        //    count++;
-        //}
+        static void pos_LocationChanged(object sender, EventArgs e)
+        {
+            Debug.WriteLine("  * Attemp " + (count + 1).ToString() + ": " +
+                pos.ToString() + "; " +
+                pos.WorldPoint.ToString() + "; " + pos.FixType.ToString() + "; " + pos.WorldPoint.FixTime.ToString());
+            Debug.WriteLine(string.Empty);
+            if (pos.FixType == RisingMobility.Mobile.Location.FixType.Gps)
+                gpsCount++;
+            if (gpsCount > 4)
+                waithandle.Set();
+            count++;
+        }
 
         static void RIL_Test()
         {
