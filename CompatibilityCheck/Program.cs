@@ -51,7 +51,8 @@ namespace CompatibilityCheck
             @"\WINDOWS\gpsapi.dll",
             @"\WINDOWS\ril.dll",
             @"\WINDOWS\cellcore.dll",
-            @"\WINDOWS\aygshell.dll"
+            @"\WINDOWS\aygshell.dll",
+            @"\WINDOWS\wzcsapi.dll"
 
         };
 
@@ -133,7 +134,7 @@ namespace CompatibilityCheck
 
                 var culture = System.Globalization.CultureInfo.GetCultureInfo("en-us");
                 waithandle.Reset();
-
+          
                 Debug.WriteLine();
                 Debug.Write("Testing WPS: ");
                 DateTime startPoint = DateTime.Now;
@@ -144,7 +145,7 @@ namespace CompatibilityCheck
                 Debug.WriteLine();
 
 
-                Debug.WriteLine("Testing GPS, GSM, GeoIp: ");
+                Debug.WriteLine("Testing GPS, WPS, GSM, GeoIp: ");
                 pos = new RisingMobility.Mobile.Location.WorldPosition(true, true);
                 pos.PollHit += new EventHandler(pos_LocationChanged);
                 pos.Error += new RisingMobility.Mobile.Location.ErrorEventHandler(pos_Error);
