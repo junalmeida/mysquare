@@ -91,7 +91,7 @@
       <Link>Location\WorldPosition.cs</Link>
     </Compile>
     <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Xps.cs">
-      <Link>Location\Xps.cs</Link>
+      <Link>Location\Wifi\Xps.cs</Link>
     </Compile>
     <Compile Include="..\..\StaticLinkedComponents\Mobile\Obfuscation.cs">
       <Link>Obfuscation.cs</Link>
