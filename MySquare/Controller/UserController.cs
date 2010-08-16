@@ -10,6 +10,7 @@ using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
 using MySquare.Service;
+using System.Diagnostics;
 
 namespace MySquare.Controller
 {
@@ -22,8 +23,10 @@ namespace MySquare.Controller
             Service.UserResult += new UserEventHandler(Service_UserResult);
             Service.FriendsResult += new FriendsEventHandler(Service_FriendsResult);
             Service.Error += new MySquare.Service.ErrorEventHandler(Service_Error);
+            View.picAvatar.Click += new EventHandler(picAvatar_Click);
         }
-        
+
+
         public override void Activate()
         {
             View.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -104,12 +107,10 @@ namespace MySquare.Controller
             if (!string.IsNullOrEmpty(user.ImageUrl))
             {
                 View.Avatar = Service.DownloadImageSync(user.ImageUrl);
-                View.AvatarCachePath = Network.GetCachePath(user.ImageUrl);
             }
             else
             {
                 View.Avatar = null;
-                View.AvatarCachePath = null;
             }
 
             if (!string.IsNullOrEmpty(user.Email))
@@ -229,6 +230,36 @@ namespace MySquare.Controller
 
             LoadBadges(user.Badges);
         }
+
+        void picAvatar_Click(object sender, EventArgs e)
+        {
+            if (user != null && user.ImageUrl != null && user.ImageUrl.IndexOf("blank_") == -1)
+            {
+                try
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    string path = user.ImageUrl.Replace("_thumbs", string.Empty);
+                    byte[] file = Service.DownloadImageSync(path);
+                    path = Network.GetCachePath(path);
+                    file = null;
+
+
+                    ProcessStartInfo psi =
+                       new ProcessStartInfo(path, string.Empty);
+                    Process.Start(psi);
+
+                }
+                catch (Exception ex)
+                {
+                    Log.RegisterLog("avatar", ex);
+                }
+                finally
+                {
+                    Cursor.Current = Cursors.Default;
+                }
+            }
+        }
+        
 
         void RejectUser_Click(object sender, EventArgs e)
         {

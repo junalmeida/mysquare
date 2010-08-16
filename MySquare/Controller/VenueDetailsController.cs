@@ -133,8 +133,8 @@ namespace MySquare.Controller
                     View.peopleHere.Activate();
 
                     LoadExtraInfo();
-                    LeftSoftButtonText = string.Empty;
-                    LeftSoftButtonEnabled = false;
+                    LeftSoftButtonText = "&Refresh";
+                    LeftSoftButtonEnabled = true;
                     break;
             }
             Cursor.Current = Cursors.Default;
@@ -172,6 +172,14 @@ namespace MySquare.Controller
                 DoCheckIn();
             else if (View.venueTips1.Visible)
                 Comment();
+            else if (View.peopleHere.Visible)
+                Refresh();
+        }
+
+        private void Refresh()
+        {
+            Venue.fullData = false;
+            LoadExtraInfo();
         }
 
 

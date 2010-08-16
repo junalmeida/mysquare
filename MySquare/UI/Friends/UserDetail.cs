@@ -36,6 +36,7 @@ namespace MySquare.UI.Friends
         {
             set
             {
+
                 if (value != null)
                     using (MemoryStream mem = new MemoryStream(value))
                     using (Bitmap bmp = new Bitmap(mem))
@@ -49,11 +50,6 @@ namespace MySquare.UI.Friends
             }
         }
 
-        internal string AvatarCachePath
-        {
-            get;
-            set;
-        }
 
         private void picAvatar_Paint(object sender, PaintEventArgs e)
         {
@@ -105,19 +101,6 @@ namespace MySquare.UI.Friends
             }
         }
 
-        void picAvatar_Click(object sender, System.EventArgs e)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(AvatarCachePath) && AvatarCachePath.IndexOf("blank_") == -1 && File.Exists(AvatarCachePath))
-                {
-                    ProcessStartInfo psi =
-                       new ProcessStartInfo(AvatarCachePath, string.Empty);
-                    Process.Start(psi);
-                }
-            }
-            catch { }
-        }
 
     }
 }

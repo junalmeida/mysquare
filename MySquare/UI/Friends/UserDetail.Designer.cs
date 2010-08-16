@@ -45,7 +45,6 @@
             this.picAvatar.Name = "picAvatar";
             this.picAvatar.Size = new System.Drawing.Size(48, 48);
             this.picAvatar.Paint += new System.Windows.Forms.PaintEventHandler(this.picAvatar_Paint);
-            this.picAvatar.Click += new System.EventHandler(picAvatar_Click);
             // 
             // lblUserName
             // 
@@ -136,7 +135,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox picAvatar;
+        internal System.Windows.Forms.PictureBox picAvatar;
         private System.Windows.Forms.Panel panel1;
         internal TabStrip tabStrip;
         internal System.Windows.Forms.Label lblUserName;
