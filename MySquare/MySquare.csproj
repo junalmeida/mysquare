@@ -19,7 +19,8 @@
     <FormFactorID>
     </FormFactorID>
     <DeployDirPrefix>%25CSIDL_PROGRAM_FILES%25</DeployDirPrefix>
-    <ApplicationIcon>Resources\mySquare.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
     <StartupObject>
     </StartupObject>
@@ -138,6 +139,7 @@
     <Compile Include="Controller\FriendsController.cs" />
     <Compile Include="Controller\HelpController.cs" />
     <Compile Include="Controller\MainController.cs" />
+    <Compile Include="Controller\NotificationsController.cs" />
     <Compile Include="Controller\PlacesController.cs" />
     <Compile Include="Controller\SettingsController.cs" />
     <Compile Include="Controller\UserController.cs" />
@@ -367,9 +369,6 @@
     <None Include="Resources\hourglass-select-remain_16x16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\mySquare.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\clock_48x48.png" />
   </ItemGroup>
   <ItemGroup>
@@ -426,6 +425,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\gps.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mySquare.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

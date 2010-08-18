@@ -13,7 +13,7 @@ using System.IO;
 
 namespace MySquare.UI.Friends
 {
-    public partial class UserBadges : UserControl
+    internal partial class UserBadges : UserControl
     {
         public UserBadges()
         {

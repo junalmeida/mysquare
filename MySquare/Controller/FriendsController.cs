@@ -117,6 +117,8 @@ namespace MySquare.Controller
             pendingFriends = null;
             this.checkIns = checkIns;
 
+            if (checkIns.Length > 0)
+                Configuration.LastCheckIn = checkIns[0].Id;
 
             Thread t = new Thread(new ThreadStart(delegate()
             {

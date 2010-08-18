@@ -122,7 +122,10 @@ namespace MySquare.Controller
 
             var ctors = type.GetConstructors();
             BaseController newController = (BaseController)ctors[0].Invoke(new object[] { view });
-            Controllers.Add(newController);
+            if (type == typeof(MainController))
+                Controllers.Insert(0, newController);
+            else
+                Controllers.Add(newController);
             CurrentController = Controllers.Count - 1;
             newController.Activate();
 

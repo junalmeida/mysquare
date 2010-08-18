@@ -14,11 +14,11 @@ namespace MySquare
             string value;
             TimeSpan time = DateTime.Now - register;
             if (time.TotalMinutes < 60)
-                value = string.Format("{0} minutes ago.", time.Minutes);
+                value = string.Format("{0} minute(s) ago.", time.Minutes);
             else if (time.TotalHours < 24)
-                value = string.Format("{0} hours ago.", time.Hours);
+                value = string.Format("{0} hour(s) ago.", time.Hours);
             else if (time.TotalDays < 5)
-                value = string.Format("{0} days ago.", time.Days);
+                value = string.Format("{0} day(s) ago.", time.Days);
             else
                 value = register.ToShortDateString() + "  " + register.ToShortTimeString();
             return value;

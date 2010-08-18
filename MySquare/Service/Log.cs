@@ -12,7 +12,7 @@ namespace MySquare.Service
         private static string current = null;
         private static string GetLogPath(string key)
         {
-            string appPath = Network.GetAppPath();
+            string appPath = Configuration.GetAppPath();
             string path = System.IO.Path.Combine(appPath, "debug");
             if (!System.IO.Directory.Exists(path))
                 return null;

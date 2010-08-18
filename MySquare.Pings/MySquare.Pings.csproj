@@ -4,11 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{16B51630-2C6E-48D9-8772-E8D0801849C9}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MySquare.Launcher</RootNamespace>
-    <AssemblyName>MySquare.Launcher</AssemblyName>
+    <RootNamespace>MySquare.Pings</RootNamespace>
+    <AssemblyName>MySquare.Pings</AssemblyName>
     <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PlatformFamilyName>PocketPC</PlatformFamilyName>
     <PlatformID>b2c48bd2-963d-4549-9169-1fa021dce484</PlatformID>
@@ -18,9 +18,10 @@
     <NativePlatformName>Windows Mobile 6 Professional SDK</NativePlatformName>
     <FormFactorID>
     </FormFactorID>
-    <ApplicationIcon>mySquare.ico</ApplicationIcon>
-    <StartupObject>MySquare.Launcher.Program</StartupObject>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <ApplicationIcon>..\MySquare\Resources\mySquare.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,9 +53,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs">
-      <Link>GlobalAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -68,24 +66,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\wpsapi.dll">
-      <Link>wpsapi.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\XpsProxy.dll">
-      <Link>XpsProxy.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="mySquare.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MySquare\MySquare.csproj">
       <Project>{FD4AA98B-154D-480A-901A-0B9154C8CFE9}</Project>
       <Name>MySquare</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Content Include="..\MySquare\Resources\mySquare.ico">
+      <Link>mySquare.ico</Link>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

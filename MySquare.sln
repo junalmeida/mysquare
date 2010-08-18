@@ -36,6 +36,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySquare.Launcher", "MySqua
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompatibilityCheck", "CompatibilityCheck\CompatibilityCheck.csproj", "{9D68D834-3C02-4927-8B1D-D541A3B8A95F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySquare.Pings", "MySquare.Pings\MySquare.Pings.csproj", "{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = MySquare5.vsmdi
@@ -85,6 +87,18 @@ Global
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Testing|Any CPU.ActiveCfg = Release|Any CPU
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Testing|Any CPU.Build.0 = Release|Any CPU
 		{9D68D834-3C02-4927-8B1D-D541A3B8A95F}.Testing|Any CPU.Deploy.0 = Release|Any CPU
+		{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}.Alpha|Any CPU.ActiveCfg = Release|Any CPU
+		{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}.Alpha|Any CPU.Build.0 = Release|Any CPU
+		{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}.Alpha|Any CPU.Deploy.0 = Release|Any CPU
+		{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}.Testing|Any CPU.ActiveCfg = Release|Any CPU
+		{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}.Testing|Any CPU.Build.0 = Release|Any CPU
+		{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}.Testing|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

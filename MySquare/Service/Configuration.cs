@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Win32;
 using System.Threading;
+using System.Runtime.InteropServices;
 
 namespace MySquare.Service
 {
@@ -21,8 +22,10 @@ namespace MySquare.Service
                 key = Registry.CurrentUser.CreateSubKey(keyPath);
 
         }
-        private static bool? isPremium = null;
-        public static bool IsPremium
+
+        #region Premium Info
+        internal static bool? isPremium = null;
+        internal static bool IsPremium
         {
             get
             {
@@ -38,6 +41,20 @@ namespace MySquare.Service
                         return isPremium.Value;
                 }
             }
+        }
+
+        static string _appPath;
+        internal static string GetAppPath()
+        {
+            if (string.IsNullOrEmpty(_appPath))
+            {
+                _appPath = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
+                if (_appPath.StartsWith("file://"))
+                    _appPath = _appPath.Substring(8).Replace(System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar);
+                _appPath = System.IO.Path.GetDirectoryName(_appPath);
+
+            }
+            return _appPath;
         }
 
 
@@ -76,7 +93,7 @@ namespace MySquare.Service
             }
             aEvent.Set();
         }
-
+        #endregion
 
         private static RegistryKey key;
         public static string Login
@@ -125,6 +142,47 @@ namespace MySquare.Service
                 key.SetValue("ShowAds", value);
             }
         }
+
+        public const int DefaultPingInterval = 15;
+        public static int PingInterval
+        {
+            get
+            {
+                if (!IsPremium)
+                    return 0;
+                else
+                {
+                    try
+                    {
+                        return Convert.ToInt32(key.GetValue("PingInterval", DefaultPingInterval));
+                    }
+                    catch { return 0; }
+                }
+            }
+            set
+            {
+                key.SetValue("PingInterval", value);
+            }
+        }
+
+
+        public static int LastCheckIn
+        {
+            get
+            {
+                try
+                {
+                    return Convert.ToInt32(key.GetValue("LastCheckIn", 0));
+                }
+                catch { return 0; }
+            }
+            set
+            {
+                key.SetValue("LastCheckIn", value);
+            }
+        }
+
+
 
         public static bool UseGps
         {
@@ -188,6 +246,27 @@ namespace MySquare.Service
             if (!string.IsNullOrEmpty(suffix))
                 version += "." + suffix;
             return version;
+        }
+
+
+
+        public static Guid GetAppGuid()
+        {
+            var a = typeof(Configuration).Assembly;
+            object[] atts = a.GetCustomAttributes(typeof(GuidAttribute), true);
+            string guid = null;
+            foreach (var at in atts)
+            {
+                if (at is GuidAttribute)
+                {
+                    guid = (at as GuidAttribute).Value;
+                    break;
+                }
+            }
+            if (!string.IsNullOrEmpty(guid))
+                return new Guid(guid);
+            else
+                throw new InvalidOperationException();
         }
 
         public static bool IsFirstTime()

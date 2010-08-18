@@ -36,6 +36,7 @@
             this.pnlPremium = new System.Windows.Forms.Panel();
             this.chkShowAds = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.chkNotifications = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.chkUseGps = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -125,6 +126,7 @@
             this.pnlPremium.BackColor = System.Drawing.Color.Black;
             this.pnlPremium.Controls.Add(this.chkShowAds);
             this.pnlPremium.Controls.Add(this.label4);
+            this.pnlPremium.Controls.Add(this.chkNotifications);
             this.pnlPremium.Location = new System.Drawing.Point(0, 112);
             this.pnlPremium.Name = "pnlPremium";
             this.pnlPremium.Size = new System.Drawing.Size(249, 49);
@@ -147,6 +149,16 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(121, 15);
             this.label4.Text = "Premium Options:";
+            // 
+            // chkNotifications
+            // 
+            this.chkNotifications.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkNotifications.ForeColor = System.Drawing.Color.White;
+            this.chkNotifications.Location = new System.Drawing.Point(146, 28);
+            this.chkNotifications.Name = "chkNotifications";
+            this.chkNotifications.Size = new System.Drawing.Size(100, 20);
+            this.chkNotifications.TabIndex = 13;
+            this.chkNotifications.Text = "Enable Pings";
             // 
             // panel1
             // 
@@ -211,6 +223,7 @@
         internal System.Windows.Forms.CheckBox chkShowAds;
         internal System.Windows.Forms.Panel pnlPremium;
         internal System.Windows.Forms.CheckBox chkUseGps;
+        internal System.Windows.Forms.CheckBox chkNotifications;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel1;
     }

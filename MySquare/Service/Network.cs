@@ -391,27 +391,13 @@ namespace MySquare.Service
 
         #endregion
 
-        static string _appPath;
-        //TODO: Move this to somewhere else
-        internal static string GetAppPath()
-        {
-            if (string.IsNullOrEmpty(_appPath))
-            {
-                _appPath = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
-                if (_appPath.StartsWith("file://"))
-                    _appPath = _appPath.Substring(8).Replace(System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar);
-                _appPath = System.IO.Path.GetDirectoryName(_appPath);
-
-            }
-            return _appPath;
-        }
 
 
         #region Cache
 
         internal static string GetCachePath(string url)
         {
-            string appPath = GetAppPath();
+            string appPath = Configuration.GetAppPath();
             string path = System.IO.Path.Combine(appPath, "cache");
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);

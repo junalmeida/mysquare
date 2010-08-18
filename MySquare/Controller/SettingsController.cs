@@ -41,6 +41,7 @@ namespace MySquare.Controller
             View.pnlPremium.Enabled = MySquare.Service.Configuration.IsPremium;
             View.chkShowAds.Checked = MySquare.Service.Configuration.ShowAds;
             View.chkUseGps.Checked = MySquare.Service.Configuration.UseGps;
+            View.chkNotifications.Checked = MySquare.Service.Configuration.PingInterval > 0;
         }
 
         public override void OnLeftSoftButtonClick()
@@ -61,7 +62,11 @@ namespace MySquare.Controller
 
             MySquare.Service.Configuration.ShowAds = View.chkShowAds.Checked;
             MySquare.Service.Configuration.UseGps = View.chkUseGps.Checked;
+            MySquare.Service.Configuration.PingInterval = 
+                View.chkNotifications.Checked ?
+                MySquare.Service.Configuration.DefaultPingInterval : 0;
 
+            NotificationsController.Check();
             MessageBox.Show("Settings saved.", "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
         }
 
