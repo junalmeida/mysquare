@@ -478,7 +478,7 @@ namespace MySquare.Controller
                     string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
                         size.Width, size.Height,
                         Venue.Latitude.ToString(culture),
-                        Venue.Longitude.ToString(culture), zoom);
+                        Venue.Longitude.ToString(culture), zoom, Configuration.MapType.ToString().ToLower());
 
                     byte[] buffer = Service.DownloadImageSync(googleMapsUrl, false);
 

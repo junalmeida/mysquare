@@ -1,4 +1,4 @@
-﻿//#define PROXY
+﻿#define PROXY
 
 using System;
 using System.Text;
@@ -28,7 +28,7 @@ namespace MySquare.Test
             HttpWebRequest.DefaultWebProxy.Credentials = new NetworkCredential("y3tr", "htc9377J");
 #endif
 
-            Program.Main();
+            Application.Run(new Form1());
         }
     }
 }

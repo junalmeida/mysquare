@@ -42,6 +42,14 @@ namespace MySquare.Controller
             View.chkShowAds.Checked = MySquare.Service.Configuration.ShowAds;
             View.chkUseGps.Checked = MySquare.Service.Configuration.UseGps;
             View.chkNotifications.Checked = MySquare.Service.Configuration.PingInterval > 0;
+
+
+            View.cboMapType.Items.Clear();
+            View.cboMapType.Items.Add(MySquare.Service.MapType.Roadmap);
+            View.cboMapType.Items.Add(MySquare.Service.MapType.Satellite);
+            View.cboMapType.Items.Add(MySquare.Service.MapType.Hybrid);
+            View.cboMapType.Items.Add(MySquare.Service.MapType.Terrain);
+            View.cboMapType.SelectedIndex = View.cboMapType.Items.IndexOf(MySquare.Service.Configuration.MapType);
         }
 
         public override void OnLeftSoftButtonClick()
@@ -62,9 +70,11 @@ namespace MySquare.Controller
 
             MySquare.Service.Configuration.ShowAds = View.chkShowAds.Checked;
             MySquare.Service.Configuration.UseGps = View.chkUseGps.Checked;
-            MySquare.Service.Configuration.PingInterval = 
+            MySquare.Service.Configuration.PingInterval =
                 View.chkNotifications.Checked ?
                 MySquare.Service.Configuration.DefaultPingInterval : 0;
+
+            MySquare.Service.Configuration.MapType = (MySquare.Service.MapType)View.cboMapType.Items[View.cboMapType.SelectedIndex];
 
             MySquare.Service.Configuration.CheckNotifications();
             MessageBox.Show("Settings saved.", "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);

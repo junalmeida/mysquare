@@ -6,6 +6,7 @@ using Microsoft.Win32;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace MySquare.Service
 {
@@ -159,6 +160,26 @@ namespace MySquare.Service
                 key.SetValue("ShowAds", value);
             }
         }
+
+
+        public static MapType MapType
+        {
+            get
+            {
+
+                try
+                {
+                    return (MapType)Enum.Parse(typeof(MapType), key.GetValue("MapType", MapType.Roadmap.ToString()).ToString(), true);
+                }
+                catch { return MapType.Roadmap; }
+          
+            }
+            set
+            {
+                key.SetValue("MapType", value.ToString());
+            }
+        }
+
 
         public const int DefaultPingInterval = 15;
         public static int PingInterval
@@ -349,4 +370,14 @@ namespace MySquare.Service
 
 
     }
+
+    [Obfuscation(Exclude=true, ApplyToMembers=true)]
+    enum MapType
+    {
+        Roadmap = 0,
+        Satellite = 1,
+        Hybrid = 2,
+        Terrain = 3
+    }
+
 }

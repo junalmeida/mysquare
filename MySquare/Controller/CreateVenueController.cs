@@ -171,7 +171,7 @@ namespace MySquare.Controller
                     size.Width, size.Height,
                     latitude.ToString(culture),
                     longitude.ToString(culture),
-                    zoom);
+                    zoom, Configuration.MapType.ToString().ToLower());
                 byte[] buffer = Service.DownloadImageSync(googleMapsUrl, false);
                 t = null;
                 if (buffer != null && buffer.Length > 0)

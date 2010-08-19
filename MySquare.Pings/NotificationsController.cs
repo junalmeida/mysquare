@@ -43,12 +43,12 @@ namespace MySquare.Pings
             {
                 Service.GetFriendsCheckins(Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude);
                 waitThread.WaitOne();
-                if (!error)
+                if (!error && checkIns != null)
                 {
                     List<CheckIn> checkInsToAlert = new List<CheckIn>();
                     for (int i = 0; i < checkIns.Length; i++)
                     {
-                        if ((DateTime.Now - checkIns[i].Created).TotalHours < 24 &&
+                        if ((DateTime.Now - checkIns[i].Created).TotalHours < 15 &&
                             (checkIns[i].Shout != null || checkIns[i].Venue != null))
                         {
                             if (checkIns[i].Id == Configuration.LastCheckIn)
@@ -60,14 +60,16 @@ namespace MySquare.Pings
                     if (checkInsToAlert.Count > 0)
                     {
                         Configuration.LastCheckIn = checkInsToAlert[0].Id;
+                        message.Append("<ul style=\"padding: 0 0 0 10px; margin: 0 0 0 5px;list-style-type: square;\">");
                         foreach (var chkin in checkInsToAlert)
                         {
-                            if (message.Length > 0)
-                                message.Append("<br />");
-                            message.Append(checkInsToAlert[0].Display);
+                            message.Append("<li style=\"padding:0;margin-bottom:4px;\">");
+                            message.Append(chkin.Display);
                             message.Append(", ");
-                            message.Append(checkInsToAlert[0].Created.ToHumanTime());
+                            message.Append(chkin.Created.ToHumanTime());
+                            message.Append("</li>");
                         }
+                        message.Append("</ul>");
                         //if (checkInsToAlert.Count == 1)
                         //{
                         //    message = checkInsToAlert[0].Display + ", " + checkInsToAlert[0].Created.ToHumanTime();
@@ -89,11 +91,8 @@ namespace MySquare.Pings
                             {
                                 notConfig.Options = Tenor.Mobile.Device.NotificationOptions.DisplayBubble | Tenor.Mobile.Device.NotificationOptions.Sound;
                                 notConfig.Wave = file;
+                                notConfig.Duration = 1;
                             }
-                        }
-                        else
-                        {
-                            var notConfig = new Tenor.Mobile.Device.Notification(guid);
                         }
 
                         Tenor.Mobile.UI.NotificationWithSoftKeys.Show(guid,
