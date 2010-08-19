@@ -66,7 +66,7 @@ namespace MySquare.Controller
                 View.chkNotifications.Checked ?
                 MySquare.Service.Configuration.DefaultPingInterval : 0;
 
-            NotificationsController.Check();
+            MySquare.Service.Configuration.CheckNotifications();
             MessageBox.Show("Settings saved.", "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
         }
 

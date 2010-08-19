@@ -79,6 +79,11 @@ namespace MySquare.Controller
 
         internal static void Terminate()
         {
+            if (Configuration.PingInterval > 0)
+            {
+                Configuration.RetrievePings = (MessageBox.Show("Keep recieveing check-in notifications after closing MySquare?", "MySquare", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes);
+            }
+
             foreach (var ct in Controllers)
                 ct.Dispose();
             Controllers.Clear();

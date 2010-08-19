@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Win32;
 using System.Threading;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace MySquare.Service
 {
@@ -92,6 +93,7 @@ namespace MySquare.Service
                 isPremium = crypt.SequenceEqual(e.Result);
             }
             aEvent.Set();
+            CheckNotifications();
         }
         #endregion
 
@@ -114,11 +116,26 @@ namespace MySquare.Service
         {
             get
             {
-                return (string)key.GetValue("password", null);
+                string password = (string)key.GetValue("password", null);
+                if (string.IsNullOrEmpty(password))
+                    return password;
+                else
+                {
+                    try
+                    {
+                        byte[] passB = Convert.FromBase64String(password);
+                        password = Encoding.UTF8.GetString(passB, 0, passB.Length);
+                    }
+                    catch
+                    {
+                        Password = password;
+                    }
+                    return password;
+                }
             }
             set
             {
-                key.SetValue("password", value);
+                key.SetValue("password", Convert.ToBase64String(Encoding.UTF8.GetBytes(value)));
             }
         }
 
@@ -162,6 +179,22 @@ namespace MySquare.Service
             set
             {
                 key.SetValue("PingInterval", value);
+            }
+        }
+
+        public static bool RetrievePings
+        {
+            get
+            {
+                try
+                {
+                    return Convert.ToBoolean(key.GetValue("RetrievePings", false));
+                }
+                catch { return false; }
+            }
+            set
+            {
+                key.SetValue("RetrievePings", Convert.ToInt32(value));
             }
         }
 
@@ -281,6 +314,39 @@ namespace MySquare.Service
             else
                 return false;
         }
+
+        internal static void CheckNotifications()
+        {
+            Thread t = new Thread(new ThreadStart(delegate()
+            {
+                try
+                {
+                    bool doOpen = Configuration.PingInterval > 0;
+                    if (doOpen)
+                    {
+                        Tenor.Mobile.Diagnostics.Process process = null;
+                        foreach (var p in Tenor.Mobile.Diagnostics.Process.GetProcesses())
+                        {
+                            if (System.IO.Path.GetFileNameWithoutExtension(p.FileName) == "MySquare.Pings")
+                            {
+                                process = p;
+                                break;
+                            }
+                        }
+                        RetrievePings = true;
+                        if (process == null)
+                        {
+                            string path = Configuration.GetAppPath();
+                            Process.Start(System.IO.Path.Combine(path, "MySquare.Pings.exe"), string.Empty);
+                        }
+                    }
+                }
+                catch { }
+            }));
+
+            t.Start();
+        }
+
 
     }
 }

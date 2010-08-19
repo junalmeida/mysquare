@@ -5,54 +5,31 @@ using System.Text;
 using System.Threading;
 using MySquare.Service;
 using MySquare.FourSquare;
-using MySquare.Properties;
 using System.Diagnostics;
+using MySquare.Pings.Properties;
 
-namespace MySquare.Controller
+namespace MySquare.Pings
 {
-    class NotificationsController : BaseController
+    class NotificationsController 
     {
         #region Generic Initialization
+        AutoResetEvent waitThread = new AutoResetEvent(false);
+        MySquare.Service.FourSquare Service;
+            
         public NotificationsController()
         {
-            Controllers.Add(this);
-            Initialize();
+            Service = new MySquare.Service.FourSquare();
             Service.CheckInsResult += new MySquare.FourSquare.CheckInsEventHandler(Service_CheckInsResult);
             Service.Error += new ErrorEventHandler(Service_Error);
         }
-
-
-        private AutoResetEvent waitThread = new AutoResetEvent(false);
-        public override AutoResetEvent WaitThread { get { return waitThread; } }
         #endregion
 
-        Timer timer;
-        private void Initialize()
-        {
-            timer = new Timer(new TimerCallback(Ping), null, 1000 * 60, Timeout.Infinite);
-        }
 
 
-        private void Ping(object state)
-        {
-            try
-            {
-                int interval = Configuration.PingInterval;
-                if (interval <= 0)
-                {
-                    timer.Change(1000 * 60, Timeout.Infinite);
-                }
-                else
-                {
-                    GetCheckIns();
-                    timer.Change(interval * 1000 * 60, Timeout.Infinite);
-                }
-            }
-            catch (ObjectDisposedException) { }
-        }
+
 
         bool error;
-        private void GetCheckIns()
+        public void GetCheckIns()
         {
             Program.Location.Stop();
             Program.Location.PollHit += new EventHandler(Location_PollHit);
@@ -147,36 +124,6 @@ namespace MySquare.Controller
             waitThread.Set();
         }
 
-        internal static void Check()
-        {
-            Thread t = new Thread(new ThreadStart(delegate()
-            {
-                try
-                {
-                    bool doOpen = Configuration.PingInterval > 0;
-                    if (doOpen)
-                    {
-                        Tenor.Mobile.Diagnostics.Process process = null;
-                        foreach (var p in Tenor.Mobile.Diagnostics.Process.GetProcesses())
-                        {
-                            if (System.IO.Path.GetFileNameWithoutExtension(p.FileName) == "MySquare.Pings")
-                            {
-                                process = p;
-                                break;
-                            }
-                        }
-                        if (process == null)
-                        {
-                            string path = Configuration.GetAppPath();
-                            Process.Start(System.IO.Path.Combine(path, "MySquare.Pings.exe"), string.Empty);
-                        }
-                    }
-                }
-                catch { }
-            }));
-
-            t.Start();
-        }
     }
 
 

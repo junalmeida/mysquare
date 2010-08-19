@@ -34,7 +34,6 @@ namespace MySquare
                 try
                 {
 #endif
-                NotificationsController.Check();
 
                 Location = new WorldPosition(true, Configuration.UseGps, 15000);
                 Location.LocationChanged += new EventHandler(Location_LocationChanged);
@@ -63,6 +62,8 @@ namespace MySquare
                     mainForm.Dispose();
                 }
                 catch (ObjectDisposedException) { }
+#else
+                Location.Dispose();
 #endif
             }
             Application.Exit();
@@ -122,40 +123,6 @@ service: {7}",
         }
 
 
-        #region Pings 
-        static System.Threading.Timer pings;
-        static AutoResetEvent pingsLoop;
-        public static void Pings(AutoResetEvent reset)
-        {
-            Location = new WorldPosition(true, Configuration.UseGps, 15000);
-            Location.LocationChanged += new EventHandler(Location_LocationChanged);
-            Location.PollHit += new EventHandler(Location_PollHit);
-            Location.Poll();
-
-            new NotificationsController();
-            pingsLoop = reset;
-            pings = new System.Threading.Timer(new TimerCallback(Pings_Tick), null, 1000 * 30, Timeout.Infinite);
-            Cursor.Current = Cursors.Default;
-        }
-
-        static void Pings_Tick(object state)
-        {
-            try
-            {
-
-                if (Configuration.PingInterval <= 0 && Configuration.isPremium.HasValue)
-                {
-                    pings.Dispose();
-                    pingsLoop.Set();
-                }
-                else
-                {
-                    pings.Change(Configuration.PingInterval * 60 * 1000, Timeout.Infinite);
-                }
-            }
-            catch (ObjectDisposedException) { }
-        }
-        #endregion
     }
 }
 
