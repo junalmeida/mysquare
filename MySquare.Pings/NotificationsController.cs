@@ -62,11 +62,11 @@ namespace MySquare.Pings
                         Configuration.LastCheckIn = checkInsToAlert[0].Id;
                         foreach (var chkin in checkInsToAlert)
                         {
-                            if (text.Length > 0)
-                                text.Append("<br />");
-                            text.Append(checkInsToAlert[0].Display);
-                            text.Append(", ");
-                            text.Append(checkInsToAlert[0].Created.ToHumanTime());
+                            if (message.Length > 0)
+                                message.Append("<br />");
+                            message.Append(checkInsToAlert[0].Display);
+                            message.Append(", ");
+                            message.Append(checkInsToAlert[0].Created.ToHumanTime());
                         }
                         //if (checkInsToAlert.Count == 1)
                         //{
