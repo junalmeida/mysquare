@@ -56,20 +56,28 @@ namespace MySquare.Pings
                             checkInsToAlert.Add(checkIns[i]);
                         }
                     }
-                    string message = null;
+                    StringBuilder message = new StringBuilder();
                     if (checkInsToAlert.Count > 0)
                     {
                         Configuration.LastCheckIn = checkInsToAlert[0].Id;
-                        if (checkInsToAlert.Count == 1)
+                        foreach (var chkin in checkInsToAlert)
                         {
-                            message = checkInsToAlert[0].Display + ", " + checkInsToAlert[0].Created.ToHumanTime();
+                            if (text.Length > 0)
+                                text.Append("<br />");
+                            text.Append(checkInsToAlert[0].Display);
+                            text.Append(", ");
+                            text.Append(checkInsToAlert[0].Created.ToHumanTime());
                         }
-                        else
-                        {
-                            message = string.Format("{0} friends have checked-in.", checkInsToAlert.Count);
-                        }
+                        //if (checkInsToAlert.Count == 1)
+                        //{
+                        //    message = checkInsToAlert[0].Display + ", " + checkInsToAlert[0].Created.ToHumanTime();
+                        //}
+                        //else
+                        //{
+                        //    message = string.Format("{0} friends have checked-in.", checkInsToAlert.Count);
+                        //}
                     }
-                    if (!string.IsNullOrEmpty(message))
+                    if (message.Length > 0)
                     {
                         Guid guid = Configuration.GetAppGuid();
                         if (!Tenor.Mobile.Device.Notification.Exists(guid))
@@ -89,8 +97,9 @@ namespace MySquare.Pings
                         }
 
                         Tenor.Mobile.UI.NotificationWithSoftKeys.Show(guid,
-                            "MySquare", message, false, Resources.mySquare);
+                            "MySquare", message.ToString(), false, Resources.mySquare);
                     }
+                    message = null;
    
                 }
             }
