@@ -141,6 +141,7 @@
             this.chkShowAds.Size = new System.Drawing.Size(100, 20);
             this.chkShowAds.TabIndex = 11;
             this.chkShowAds.Text = "Show Ads";
+            this.chkShowAds.ForeColor = System.Drawing.Color.White;
             // 
             // label4
             // 
@@ -197,6 +198,8 @@
             this.cboMapType.Name = "cboMapType";
             this.cboMapType.Size = new System.Drawing.Size(224, 22);
             this.cboMapType.TabIndex = 12;
+            this.cboMapType.ForeColor = System.Drawing.Color.White;
+            this.cboMapType.BackColor = System.Drawing.Color.Black;
             // 
             // label5
             // 

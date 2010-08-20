@@ -48,8 +48,8 @@ namespace MySquare.Pings
                     List<CheckIn> checkInsToAlert = new List<CheckIn>();
                     for (int i = 0; i < checkIns.Length; i++)
                     {
-                        if ((DateTime.Now - checkIns[i].Created).TotalHours < 15 &&
-                            (checkIns[i].Shout != null || checkIns[i].Venue != null))
+                        if ((DateTime.Now - checkIns[i].Created).TotalHours < 10 &&
+                            (checkIns[i].Shout != null || checkIns[i].Venue != null) && (checkIns[i].User.Email != Configuration.Login))
                         {
                             if (checkIns[i].Id == Configuration.LastCheckIn)
                                 break;
@@ -61,23 +61,25 @@ namespace MySquare.Pings
                     {
                         Configuration.LastCheckIn = checkInsToAlert[0].Id;
                         message.Append("<ul style=\"padding: 0 0 0 10px; margin: 0 0 0 5px;list-style-type: square;\">");
-                        foreach (var chkin in checkInsToAlert)
+                        for (int i = 0; i < checkInsToAlert.Count && i < 3; i++)
                         {
+                            var chkin = checkInsToAlert[i];
                             message.Append("<li style=\"padding:0;margin-bottom:4px;\">");
                             message.Append(chkin.Display);
                             message.Append(", ");
                             message.Append(chkin.Created.ToHumanTime());
                             message.Append("</li>");
+
+                            if (i == 2 && checkInsToAlert.Count > 3)
+                            {
+                                message.Append("<li style=\"padding:0;margin-bottom:4px;\">");
+                                message.Append(string.Format("More {0} friend(s) have checked-in.", checkInsToAlert.Count - 3));
+                                message.Append("</li>");
+                            }
                         }
+                        
                         message.Append("</ul>");
-                        //if (checkInsToAlert.Count == 1)
-                        //{
-                        //    message = checkInsToAlert[0].Display + ", " + checkInsToAlert[0].Created.ToHumanTime();
-                        //}
-                        //else
-                        //{
-                        //    message = string.Format("{0} friends have checked-in.", checkInsToAlert.Count);
-                        //}
+
                     }
                     if (message.Length > 0)
                     {
