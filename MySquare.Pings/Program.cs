@@ -19,19 +19,17 @@ namespace MySquare.Pings
             pingsLoop = new AutoResetEvent(false);
             Pings();
             pingsLoop.WaitOne();
-            Location.Dispose();
         }
 
+        static System.Threading.Timer control;
         static System.Threading.Timer pings;
         static AutoResetEvent pingsLoop;
-        internal static WorldPosition Location;
         public static void Pings()
         {
             controller = new NotificationsController();
-            Location = new WorldPosition(true, Configuration.UseGps, 15000);
-            Location.Poll();
 
             pings = new System.Threading.Timer(new TimerCallback(Pings_Tick), null, 1000 * 30, Timeout.Infinite);
+            control = new System.Threading.Timer(new TimerCallback(Control_Tick), null, 1000 * 30, 1000 * 60);
             Cursor.Current = Cursors.Default;
         }
 
@@ -39,19 +37,39 @@ namespace MySquare.Pings
         {
             try
             {
-                if ((!Configuration.RetrievePings || Configuration.PingInterval <= 0) && Configuration.isPremium.HasValue)
+                if (!Configuration.RetrievePings || (Configuration.PingInterval <= 0 && 
+                    Configuration.isPremium.HasValue))
                 {
-                    pings.Dispose();
-                    pingsLoop.Set();
+                    Quit();
                 }
                 else
                 {
                     if (Configuration.IsPremium)
                         controller.GetCheckIns();
-                    pings.Change(Configuration.PingInterval * 60 * 1000, Timeout.Infinite);
+                    pings.Change(Configuration.PingInterval * (60 * 1000), Timeout.Infinite);
                 }
             }
             catch (ObjectDisposedException) { pingsLoop.Set(); }
+        }
+
+        static void Control_Tick(object state)
+        {
+            try
+            {
+                if (!Configuration.RetrievePings || (Configuration.PingInterval <= 0 &&
+                    Configuration.isPremium.HasValue))
+                {
+                    Quit();
+                }
+            }
+            catch (ObjectDisposedException) { }
+        }
+
+        private static void Quit()
+        {
+            control.Dispose();
+            pings.Dispose();
+            pingsLoop.Set();
         }
 
     }

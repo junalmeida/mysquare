@@ -34,6 +34,7 @@ namespace MySquare
                 try
                 {
 #endif
+                Configuration.CheckNotifications();
 
                 Location = new WorldPosition(true, Configuration.UseGps, 15000);
                 Location.LocationChanged += new EventHandler(Location_LocationChanged);
@@ -41,6 +42,11 @@ namespace MySquare
                 Location.Poll();
 
                 Application.Run(mainForm);
+                Configuration.abortCheck = true;
+                if (Configuration.PingInterval > 0)
+                {
+                    Configuration.RetrievePings = (MessageBox.Show("Keep recieveing check-in notifications after closing MySquare?", "MySquare", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes);
+                }
 #if !DEBUG
                 }
                 catch (ObjectDisposedException)

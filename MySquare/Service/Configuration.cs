@@ -94,7 +94,6 @@ namespace MySquare.Service
                 isPremium = crypt.SequenceEqual(e.Result);
             }
             aEvent.Set();
-            CheckNotifications();
         }
         #endregion
 
@@ -209,7 +208,7 @@ namespace MySquare.Service
             {
                 try
                 {
-                    return Convert.ToBoolean(key.GetValue("RetrievePings", false));
+                    return Convert.ToInt32(key.GetValue("RetrievePings", 0)) != 0;
                 }
                 catch { return false; }
             }
@@ -336,30 +335,47 @@ namespace MySquare.Service
                 return false;
         }
 
+        internal static bool abortCheck = false;
         internal static void CheckNotifications()
         {
             Thread t = new Thread(new ThreadStart(delegate()
             {
                 try
                 {
-                    bool doOpen = Configuration.PingInterval > 0;
-                    if (doOpen)
+                    while (true)
                     {
-                        Tenor.Mobile.Diagnostics.Process process = null;
-                        foreach (var p in Tenor.Mobile.Diagnostics.Process.GetProcesses())
+                        bool doOpen = Configuration.PingInterval > 0;
+                        if (doOpen)
                         {
-                            if (System.IO.Path.GetFileNameWithoutExtension(p.FileName) == "MySquare.Pings")
+                            Tenor.Mobile.Diagnostics.Process process = null;
+                            foreach (var p in Tenor.Mobile.Diagnostics.Process.GetProcesses())
                             {
-                                process = p;
-                                break;
+                                if (System.IO.Path.GetFileNameWithoutExtension(p.FileName) == "MySquare.Pings")
+                                {
+                                    process = p;
+                                    break;
+                                }
+                            }
+                            RetrievePings = true;
+                            if (process == null)
+                            {
+                                string path = Configuration.GetAppPath();
+                                Process.Start(System.IO.Path.Combine(path, "MySquare.Pings.exe"), string.Empty);
                             }
                         }
-                        RetrievePings = true;
-                        if (process == null)
+                        else if (!isPremium.HasValue)
                         {
-                            string path = Configuration.GetAppPath();
-                            Process.Start(System.IO.Path.Combine(path, "MySquare.Pings.exe"), string.Empty);
+                            Thread.Sleep(15000);
+                            if (abortCheck)
+                                break;
+                            else
+                                continue;
                         }
+                        else
+                        {
+                            RetrievePings = false;
+                        }
+                        break;
                     }
                 }
                 catch { }

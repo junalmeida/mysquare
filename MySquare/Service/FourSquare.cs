@@ -81,12 +81,14 @@ namespace MySquare.Service
             Post(ServiceResource.RejectFriend, parameters);
         }
 
-        internal void GetFriendsCheckins(double latitude, double longitude)
+        internal void GetFriendsCheckins(double? latitude, double? longitude)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("geolat", latitude.ToString(culture));
-            parameters.Add("geolong", longitude.ToString(culture));
-
+            if (latitude.HasValue && longitude.HasValue)
+            {
+                parameters.Add("geolat", latitude.Value.ToString(culture));
+                parameters.Add("geolong", longitude.Value.ToString(culture));
+            }
             Post(ServiceResource.CheckIns, parameters);
         }
 

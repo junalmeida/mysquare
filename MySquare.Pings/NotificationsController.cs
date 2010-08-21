@@ -31,78 +31,67 @@ namespace MySquare.Pings
         bool error;
         public void GetCheckIns()
         {
-            Program.Location.Stop();
-            Program.Location.PollHit += new EventHandler(Location_PollHit);
-            Program.Location.Error += new RisingMobility.Mobile.Location.ErrorEventHandler(Location_Error);
-            Program.Location.UseNetwork = true;
-            Program.Location.UseGps = Configuration.UseGps;
-            error = false;
-            Program.Location.Poll();
+            checkIns = null;
+            Service.GetFriendsCheckins(null, null);
             waitThread.WaitOne();
-            if (!error)
+            if (!error && checkIns != null)
             {
-                Service.GetFriendsCheckins(Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude);
-                waitThread.WaitOne();
-                if (!error && checkIns != null)
+                List<CheckIn> checkInsToAlert = new List<CheckIn>();
+                for (int i = 0; i < checkIns.Length; i++)
                 {
-                    List<CheckIn> checkInsToAlert = new List<CheckIn>();
-                    for (int i = 0; i < checkIns.Length; i++)
+                    if ((DateTime.Now - checkIns[i].Created).TotalHours < 10 &&
+                        (checkIns[i].Shout != null || checkIns[i].Venue != null) && (checkIns[i].User.Email != Configuration.Login))
                     {
-                        if ((DateTime.Now - checkIns[i].Created).TotalHours < 10 &&
-                            (checkIns[i].Shout != null || checkIns[i].Venue != null) && (checkIns[i].User.Email != Configuration.Login))
-                        {
-                            if (checkIns[i].Id == Configuration.LastCheckIn)
-                                break;
-                            checkInsToAlert.Add(checkIns[i]);
-                        }
+                        if (checkIns[i].Id == Configuration.LastCheckIn)
+                            break;
+                        checkInsToAlert.Add(checkIns[i]);
                     }
-                    StringBuilder message = new StringBuilder();
-                    if (checkInsToAlert.Count > 0)
-                    {
-                        Configuration.LastCheckIn = checkInsToAlert[0].Id;
-                        message.Append("<ul style=\"padding: 0 0 0 10px; margin: 0 0 0 5px;list-style-type: square;\">");
-                        for (int i = 0; i < checkInsToAlert.Count && i < 3; i++)
-                        {
-                            var chkin = checkInsToAlert[i];
-                            message.Append("<li style=\"padding:0;margin-bottom:4px;\">");
-                            message.Append(chkin.Display);
-                            message.Append(", ");
-                            message.Append(chkin.Created.ToHumanTime());
-                            message.Append("</li>");
-
-                            if (i == 2 && checkInsToAlert.Count > 3)
-                            {
-                                message.Append("<li style=\"padding:0;margin-bottom:4px;\">");
-                                message.Append(string.Format("More {0} friend(s) have checked-in.", checkInsToAlert.Count - 3));
-                                message.Append("</li>");
-                            }
-                        }
-                        
-                        message.Append("</ul>");
-
-                    }
-                    if (message.Length > 0)
-                    {
-                        Guid guid = Configuration.GetAppGuid();
-                        if (!Tenor.Mobile.Device.Notification.Exists(guid))
-                        {
-                            var notConfig = Tenor.Mobile.Device.Notification.Create(guid);
-                            notConfig.Text = "MySquare: Recent check-in";
-                            string file = "\\Windows\\Alarm1.wma";
-                            if (System.IO.File.Exists(file))
-                            {
-                                notConfig.Options = Tenor.Mobile.Device.NotificationOptions.DisplayBubble | Tenor.Mobile.Device.NotificationOptions.Sound;
-                                notConfig.Wave = file;
-                                notConfig.Duration = 1;
-                            }
-                        }
-
-                        Tenor.Mobile.UI.NotificationWithSoftKeys.Show(guid,
-                            "MySquare", message.ToString(), false, Resources.mySquare);
-                    }
-                    message = null;
-   
                 }
+                StringBuilder message = new StringBuilder();
+                if (checkInsToAlert.Count > 0)
+                {
+                    Configuration.LastCheckIn = checkInsToAlert[0].Id;
+                    message.Append("<ul style=\"padding: 0 0 0 10px; margin: 0 0 0 5px;list-style-type: square;\">");
+                    for (int i = 0; i < checkInsToAlert.Count && i < 3; i++)
+                    {
+                        var chkin = checkInsToAlert[i];
+                        message.Append("<li style=\"padding:0;margin-bottom:4px;\">");
+                        message.Append(chkin.Display);
+                        message.Append(", ");
+                        message.Append(chkin.Created.ToHumanTime());
+                        message.Append("</li>");
+
+                        if (i == 2 && checkInsToAlert.Count > 3)
+                        {
+                            message.Append("<li style=\"padding:0;margin-bottom:4px;\">");
+                            message.Append(string.Format("More {0} friend(s) have checked-in.", checkInsToAlert.Count - 3));
+                            message.Append("</li>");
+                        }
+                    }
+
+                    message.Append("</ul>");
+
+                }
+                if (message.Length > 0)
+                {
+                    Guid guid = Configuration.GetAppGuid();
+                    if (!Tenor.Mobile.Device.Notification.Exists(guid))
+                    {
+                        var notConfig = Tenor.Mobile.Device.Notification.Create(guid);
+                        notConfig.Text = "MySquare: Recent check-in";
+                        string file = "\\Windows\\Alarm1.wma";
+                        if (System.IO.File.Exists(file))
+                        {
+                            notConfig.Options = Tenor.Mobile.Device.NotificationOptions.DisplayBubble | Tenor.Mobile.Device.NotificationOptions.Sound;
+                            notConfig.Wave = file;
+                            notConfig.Duration = 1;
+                        }
+                    }
+
+                    Tenor.Mobile.UI.NotificationWithSoftKeys.Show(guid,
+                        "MySquare", message.ToString(), false, Resources.mySquare);
+                }
+                message = null;
             }
         }
 

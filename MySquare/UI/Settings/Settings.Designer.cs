@@ -38,10 +38,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.chkNotifications = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
             this.chkUseGps = new System.Windows.Forms.CheckBox();
             this.cboMapType = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.pnlPremium.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -136,12 +136,12 @@
             // 
             // chkShowAds
             // 
-            this.chkShowAds.Location = new System.Drawing.Point(10, 28);
+            this.chkShowAds.ForeColor = System.Drawing.Color.White;
+            this.chkShowAds.Location = new System.Drawing.Point(15, 28);
             this.chkShowAds.Name = "chkShowAds";
             this.chkShowAds.Size = new System.Drawing.Size(100, 20);
             this.chkShowAds.TabIndex = 11;
             this.chkShowAds.Text = "Show Ads";
-            this.chkShowAds.ForeColor = System.Drawing.Color.White;
             // 
             // label4
             // 
@@ -176,10 +176,18 @@
             this.panel1.Size = new System.Drawing.Size(249, 90);
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
+            // label6
+            // 
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(12, 24);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(100, 15);
+            this.label6.Text = "Map Type:";
+            // 
             // chkUseGps
             // 
             this.chkUseGps.ForeColor = System.Drawing.Color.White;
-            this.chkUseGps.Location = new System.Drawing.Point(9, 69);
+            this.chkUseGps.Location = new System.Drawing.Point(14, 69);
             this.chkUseGps.Name = "chkUseGps";
             this.chkUseGps.Size = new System.Drawing.Size(141, 20);
             this.chkUseGps.TabIndex = 11;
@@ -189,17 +197,16 @@
             // 
             this.cboMapType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboMapType.ForeColor = System.Drawing.Color.White;
+            this.cboMapType.BackColor = System.Drawing.Color.White;
+            this.cboMapType.ForeColor = System.Drawing.Color.Black;
             this.cboMapType.Items.Add("Roadmap");
             this.cboMapType.Items.Add("Satellite");
             this.cboMapType.Items.Add("Hybrid");
             this.cboMapType.Items.Add("Terrain");
-            this.cboMapType.Location = new System.Drawing.Point(13, 39);
+            this.cboMapType.Location = new System.Drawing.Point(13, 43);
             this.cboMapType.Name = "cboMapType";
             this.cboMapType.Size = new System.Drawing.Size(224, 22);
             this.cboMapType.TabIndex = 12;
-            this.cboMapType.ForeColor = System.Drawing.Color.White;
-            this.cboMapType.BackColor = System.Drawing.Color.Black;
             // 
             // label5
             // 
@@ -209,14 +216,6 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(137, 15);
             this.label5.Text = "Localization && Maps:";
-            // 
-            // label6
-            // 
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(13, 24);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(100, 15);
-            this.label6.Text = "Map Type:";
             // 
             // Settings
             // 
