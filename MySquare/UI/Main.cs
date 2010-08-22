@@ -341,29 +341,94 @@ namespace MySquare.UI
         {
             base.OnResize(e);
             Application.DoEvents();
-            Size size = new Size(11 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width, 11 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height);
+            Size size = new Size(26 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width, 11 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height);
             Point point = new Point(this.Width - size.Width, header.Height - size.Height - (2 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
             picGps.Location = point;
             picGps.Size = size;
+            backBuffer = new Bitmap(size.Width, size.Height);
+            backBufferG = Graphics.FromImage(backBuffer);
         }
 
         bool showGps = false;
         AlphaImage gps;
         Timer timerGps = null;
+        Bitmap backBuffer;
+        Graphics backBufferG;
         private void picGps_Paint(object sender, PaintEventArgs e)
         {
             try
             {
- 
+                if (backBufferG == null)
+                    return;
+                e.Graphics.DrawImage(backBuffer, 0, 0);
+                backBufferG.Clear(Color.Black);
+                Rectangle size;
+
+                size= new Rectangle(0, 0, picGps.Height, picGps.Height);
+
                 if (showGps)
                 {
                     if (gps == null)
                         gps = new AlphaImage(Resources.Gps);
 
-                    gps.Draw(e.Graphics, new Rectangle(0, 0, picGps.Width, picGps.Height));
+                    gps.Draw(backBufferG, size);
                 }
-                else
-                    e.Graphics.Clear(Color.Black);
+
+                size = new Rectangle(
+                    size.Width, 0,
+                    14 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
+                    11 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height);
+                if (Program.Location.IsGpsOpen)
+                {
+                    Debug.Write(Program.Location.Sattelites.ToString());
+                    int strength = 0;
+                    if (Program.Location.Sattelites.Total > 0)
+                    {
+                        float active = Program.Location.Sattelites.Active;
+                        float total = Program.Location.Sattelites.Total;
+                        if (active > 0 && active <= 2)
+                            active = 1;
+                        else
+                            active -= 2;
+                        if (total > 4)
+                            total = 4;
+
+                        float strengthPercent =
+                            (active / total) * 100F;
+
+                        strength = Convert.ToInt32(Math.Floor(4F * strengthPercent / 100F));
+                        if (strength > 4)
+                            strength = 4;
+
+                        Debug.WriteLine(": " + strengthPercent.ToString() + ": " + strength.ToString());
+                    }
+                    Image image = null;
+                    switch (strength)
+                    {
+                        case 1:
+                            image = Resources.Gps_1;
+                            break;
+                        case 2:
+                            image = Resources.Gps_2;
+                            break;
+                        case 3:
+                            image = Resources.Gps_3;
+                            break;
+                        case 4:
+                            image = Resources.Gps_4;
+                            break;
+                        default:
+                            image = Resources.Gps_0;
+                            break;
+                    }
+
+                    backBufferG.DrawImage(image,
+                        size,
+                        new Rectangle(0, 0, image.Width, image.Height),
+                        GraphicsUnit.Pixel);
+                }
+
+                e.Graphics.DrawImage(backBuffer, 0, 0);
             }
             catch (Exception ex)
             {

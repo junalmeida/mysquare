@@ -191,9 +191,9 @@
             // picGps
             // 
             this.picGps.BackColor = System.Drawing.Color.Black;
-            this.picGps.Location = new System.Drawing.Point(210, 24);
+            this.picGps.Location = new System.Drawing.Point(191, 24);
             this.picGps.Name = "picGps";
-            this.picGps.Size = new System.Drawing.Size(27, 25);
+            this.picGps.Size = new System.Drawing.Size(46, 25);
             this.picGps.Paint += new System.Windows.Forms.PaintEventHandler(this.picGps_Paint);
             // 
             // Main

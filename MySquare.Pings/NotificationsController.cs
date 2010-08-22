@@ -40,7 +40,8 @@ namespace MySquare.Pings
                 for (int i = 0; i < checkIns.Length; i++)
                 {
                     if ((DateTime.Now - checkIns[i].Created).TotalHours < 10 &&
-                        (checkIns[i].Shout != null || checkIns[i].Venue != null) && (checkIns[i].User.Email != Configuration.Login))
+                        (checkIns[i].Shout != null || checkIns[i].Venue != null) &&
+                        (checkIns[i].User.FriendStatus != FriendStatus.self))
                     {
                         if (checkIns[i].Id == Configuration.LastCheckIn)
                             break;

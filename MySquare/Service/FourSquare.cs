@@ -244,25 +244,26 @@ namespace MySquare.Service
 
         private static void ManageCheckInsCache(CheckIn[] checkIns)
         {
-            foreach (var chkIn in checkIns)
-            {
-                int index = cacheVenues.IndexOf(chkIn.Venue);
-                if (index == -1)
-                    cacheVenues.Add(chkIn.Venue);
-                else
-                    chkIn.Venue = cacheVenues[index];
-
-                index = cacheUsers.IndexOf(chkIn.User);
-                if (index == -1)
+            if (checkIns != null)
+                foreach (var chkIn in checkIns)
                 {
-                    cacheUsers.Add(chkIn.User);
-                    if (chkIn.User.CheckIn == null)
-                        chkIn.User.CheckIn = chkIn;
-                }
-                else
-                    chkIn.User = cacheUsers[index];
+                    int index = cacheVenues.IndexOf(chkIn.Venue);
+                    if (index == -1)
+                        cacheVenues.Add(chkIn.Venue);
+                    else
+                        chkIn.Venue = cacheVenues[index];
 
-            }
+                    index = cacheUsers.IndexOf(chkIn.User);
+                    if (index == -1)
+                    {
+                        cacheUsers.Add(chkIn.User);
+                        if (chkIn.User.CheckIn == null)
+                            chkIn.User.CheckIn = chkIn;
+                    }
+                    else
+                        chkIn.User = cacheUsers[index];
+
+                }
         }
 
 

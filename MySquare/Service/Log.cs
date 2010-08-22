@@ -63,7 +63,9 @@ namespace MySquare.Service
 
         private static void RegisterLog(StreamWriter writer, Exception ex)
         {
-            writer.WriteLine(ex.GetType().FullName);
+            string title = ex.GetType().FullName;
+            if (title != "System.Exception")
+                writer.WriteLine(ex.GetType().FullName);
             writer.WriteLine(ex.Message);
             try
             {

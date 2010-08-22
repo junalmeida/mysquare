@@ -86,7 +86,8 @@ mnc: {3}
 lac: {4}
 fix: {5}
 location: {6}
-service: {7}",
+service: {7},
+sattelites: {8}",
          Program.Location.BaseStationId,
          Program.Location.CellId,
          Program.Location.CountryCode,
@@ -94,8 +95,8 @@ service: {7}",
          Program.Location.AreaCode,
          Program.Location.FixType,
          Program.Location.WorldPoint,
-         Program.Location.FixService)
-                ));
+         Program.Location.FixService,
+         Program.Location.Sattelites.ToString())));
         }
 
         static void Location_PollHit(object sender, EventArgs e)

@@ -67,7 +67,7 @@
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <OutputPath>bin\Alpha\</OutputPath>
+    <OutputPath>..\Release\</OutputPath>
     <DefineConstants>TRACE;PocketPC; ALPHA</DefineConstants>
     <Optimize>true</Optimize>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -431,6 +431,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\mySquare.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gps-0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gps-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gps-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gps-3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gps-4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>
