@@ -67,8 +67,8 @@ namespace MySquare.UI.Friends
                 Rectangle rect = new Rectangle
                         (0,
                          0,
-                         listBox.Width - listBox.DefaultItemHeight - (5 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width),
-                         listBox.Height);
+                         this.Parent.Width - listBox.DefaultItemHeight - (5 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width),
+                         this.Parent.Height);
                 Size size1 = Tenor.Mobile.Drawing.Strings.Measure(g, badge.Name, fontBold, rect);
                 Size size2 = Tenor.Mobile.Drawing.Strings.Measure(g, badge.Description, font, rect);
 

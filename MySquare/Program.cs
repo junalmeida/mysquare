@@ -35,6 +35,7 @@ namespace MySquare
                 {
 #endif
                 Configuration.CheckNotifications();
+                Network.CheckCacheFiles();
 
                 Location = new WorldPosition(true, Configuration.UseGps, 15000);
                 Location.LocationChanged += new EventHandler(Location_LocationChanged);

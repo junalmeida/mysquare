@@ -394,6 +394,29 @@ namespace MySquare.Service
 
 
         #region Cache
+        internal static void CheckCacheFiles()
+        {
+            if (Configuration.IsFirstTime())
+            {
+                string appPath = Configuration.GetAppPath();
+                string path = System.IO.Path.Combine(appPath, "cache");
+                if (System.IO.Directory.Exists(path))
+                {
+                    foreach (string ext in new string[] { "*.jpg", "*.png", "*.gif" })
+                    {
+                        string[] files = System.IO.Directory.GetFiles(path, ext);
+                        if (files != null && files.Length > 0)
+                        {
+                            foreach (string file in files)
+                            {
+                                System.IO.File.Move(file, file + ".cache");
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
 
         internal static string GetCachePath(string url)
         {
@@ -404,6 +427,7 @@ namespace MySquare.Service
 
             string filePath = url.Substring(url.IndexOf(".com/") + 5).Replace("/", "_");
             filePath = System.IO.Path.Combine(path, filePath);
+            filePath += ".cache";
             return filePath;
         }
 
