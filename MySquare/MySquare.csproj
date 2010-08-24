@@ -152,6 +152,7 @@
     <Compile Include="FourSquare\Geocoding.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FourSquare\LeaderBoard.cs" />
     <Compile Include="FourSquare\Mayor.cs" />
     <Compile Include="Service\RisingMobility.cs" />
     <Compile Include="Service\Configuration.cs" />

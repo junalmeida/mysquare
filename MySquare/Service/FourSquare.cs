@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using System.Threading;
 using MySquare.FourSquare;
 using System.Diagnostics;
+using System.Xml;
 
 namespace MySquare.Service
 {
@@ -36,7 +37,31 @@ namespace MySquare.Service
             PendingFriends,
             AcceptFriend,
             RejectFriend,
-            RequestFriend
+            RequestFriend,
+            Leaderboard
+        }
+
+        enum Scope
+        {
+            Friends,
+            All
+        }
+
+        internal void GetLeaderBoard(double lat, double lng, Scope scope)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            //if (uid > 0)
+                //parameters.Add("uid", uid.ToString());
+            parameters.Add("geolat", lat.ToString(culture));
+            parameters.Add("geolong", lng.ToString(culture));
+            parameters.Add("view", "all");
+            if (scope == Scope.All)
+                parameters.Add("scope", "all");
+            else
+                parameters.Add("scope", "friends");
+
+
+            Post(ServiceResource.Leaderboard, parameters);
         }
         
 
@@ -406,6 +431,10 @@ namespace MySquare.Service
                     url = "http://api.foursquare.com/v1/friend/sendrequest.json";
                     auth = true; post = true;
                     break;
+                case ServiceResource.Leaderboard:
+                    url = "http://api.foursquare.com/iphone/me";
+                    auth = true; post = false;
+
                 default:
                     throw new NotImplementedException();
             }
@@ -414,7 +443,7 @@ namespace MySquare.Service
                 string.IsNullOrEmpty(MySquare.Service.Configuration.Login))
                 OnError(new ErrorEventArgs(new UnauthorizedAccessException()));
             else 
-                base.Post((int)service, url, post, 
+                base.Post((int)service, url, post,  
                     (auth ? MySquare.Service.Configuration.Login : null),
                     (auth ? MySquare.Service.Configuration.Password : null), parameters);
         }
@@ -457,6 +486,10 @@ namespace MySquare.Service
                 case ServiceResource.RequestFriend:
                     type = typeof(UserEventArgs);
                     break;
+                case ServiceResource.Leaderboard:
+                    type = null;
+                    //will get the raw response.
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -466,6 +499,7 @@ namespace MySquare.Service
         protected override void OnResult(object result, int key)
         {
 
+            ServiceResource service = (ServiceResource)key;
             if (result is SearchEventArgs)
                 OnSearchArrives((SearchEventArgs)result);
             else if (result is CheckInEventArgs)
@@ -478,7 +512,6 @@ namespace MySquare.Service
                 OnCheckInsResult((CheckInsEventArgs)result);
             else if (result is UserEventArgs)
             {
-                ServiceResource service = (ServiceResource)key;
                 UserEventArgs userResult = (UserEventArgs)result;
                 if (service == ServiceResource.AcceptFriend)
                     userResult.Accepted = true;
@@ -493,9 +526,25 @@ namespace MySquare.Service
                 OnPendingFriendsResult((PendingFriendsEventArgs)result);
             else if (result is ErrorEventArgs)
                 OnError((ErrorEventArgs)result);
+            else if (service == ServiceResource.Leaderboard)
+            {
+                ParseLeaderBoard(result as string);
+            }
             else
                 throw new NotImplementedException();
 
+        }
+
+        private void ParseLeaderBoard(string xml)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+
+            foreach (var item in doc.DocumentElement.SelectNodes("/html/body/table/tr"))
+            {
+            }
+
+            throw new NotImplementedException();
         }
 
     }

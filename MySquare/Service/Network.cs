@@ -74,7 +74,7 @@ namespace MySquare.Service
             }
         }
 
-        protected void Post(int service, string url, bool post, string Login, string Password, Dictionary<string, string> parameters)
+        protected void Post(int service, string url, bool isPost, string Login, string Password, Dictionary<string, string> parameters)
         {
             bool auth = !string.IsNullOrEmpty(Login);
 
@@ -95,7 +95,7 @@ namespace MySquare.Service
 
 
             HttpWebRequest request;
-            if (post)
+            if (isPost)
             {
                 request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "POST";
@@ -144,7 +144,7 @@ namespace MySquare.Service
                 return;
             }
 #endif
-            if (post)
+            if (isPost)
             {
                 MemoryStream memData = new MemoryStream();
                 StreamWriter writer = new StreamWriter(memData);

@@ -1,0 +1,66 @@
+﻿{ "user" : { "badges" : [ { "description" : "Congrats on your first check-in!",
+            "icon" : "http://foursquare.com/img/badge/newbie.png",
+            "id" : 1,
+            "name" : "Newbie"
+          },
+          { "description" : "You've checked into 10 different venues!",
+            "icon" : "http://foursquare.com/img/badge/adventurer.png",
+            "id" : 2,
+            "name" : "Adventurer"
+          },
+          { "description" : "You've checked into 25 different venues!",
+            "icon" : "http://foursquare.com/img/badge/explorer.png",
+            "id" : 3,
+            "name" : "Explorer"
+          },
+          { "description" : "That's 4+ nights in a row for you!",
+            "icon" : "http://foursquare.com/img/badge/bender.png",
+            "id" : 5,
+            "name" : "Bender"
+          },
+          { "description" : "You've been at the same place 3x in one week!",
+            "icon" : "http://foursquare.com/img/badge/local.png",
+            "id" : 7,
+            "name" : "Local"
+          },
+          { "description" : "That's 30 checkins in a month for you!",
+            "icon" : "http://foursquare.com/img/badge/superuser.png",
+            "id" : 8,
+            "name" : "Super User"
+          }
+        ],
+      "checkin" : { "created" : "Tue, 24 Aug 10 10:39:41 +0000",
+          "display" : "Marcos J. @ Petrobras",
+          "id" : 143550179,
+          "ismayor" : "true",
+          "timezone" : "America/Sao_Paulo",
+          "venue" : { "address" : "Av. República do Chile, 65",
+              "city" : "Rio de Janeiro",
+              "geolat" : -22.908670999999998,
+              "geolong" : -43.178412700000003,
+              "id" : 660375,
+              "name" : "Petrobras",
+              "primarycategory" : { "fullpathname" : "Home / Work / Other:Corporate / Office",
+                  "iconurl" : "http://foursquare.com/img/categories/building/default.png",
+                  "id" : 79115,
+                  "nodename" : "Corporate / Office"
+                },
+              "state" : "Rio de Janeiro"
+            }
+        },
+      "email" : "junalmeida@gmail.com",
+      "facebook" : "709317084",
+      "firstname" : "Marcos",
+      "friendstatus" : "self",
+      "gender" : "male",
+      "homecity" : "Rio de Janeiro, RJ",
+      "id" : 451417,
+      "lastname" : "Junior",
+      "photo" : "http://playfoursquare.s3.amazonaws.com/userpix_thumbs/2ZPFOXUER1AC3DUE.jpg",
+      "settings" : { "pings" : "off",
+          "sendtofacebook" : true,
+          "sendtotwitter" : false
+        },
+      "status" : { "friendrequests" : "0" },
+      "twitter" : "junalmeida"
+    } }
