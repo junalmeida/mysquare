@@ -244,13 +244,26 @@ namespace MySquare.Controller
                     file = null;
 
 
-                    ProcessStartInfo psi =
-                       new ProcessStartInfo(path, string.Empty);
-                    Process.Start(psi);
+                    using (var key = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey("jpegimage\\Shell\\Open\\Command"))
+                    {
+                        string viewer = key.GetValue(string.Empty) as string;
 
+                        viewer = viewer.Replace("%1", "").Trim();
+                        viewer = viewer.Replace("\"", "").Trim();
+
+                        ProcessStartInfo psi =
+                           new ProcessStartInfo();
+
+                        psi.UseShellExecute = true;
+                        psi.FileName = viewer;
+                        psi.Arguments = "\"" + path + "\"";
+
+                        Process.Start(psi);
+                    }
                 }
                 catch (Exception ex)
                 {
+                    MessageBox.Show("Cannot open picture viewer.");
                     Log.RegisterLog("avatar", ex);
                 }
                 finally
