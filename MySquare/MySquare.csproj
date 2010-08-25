@@ -294,6 +294,12 @@
     <Compile Include="UI\MapControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\More\MoreActions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\More\MoreActions.Designer.cs">
+      <DependentUpon>MoreActions.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Panel.cs" />
     <Compile Include="UI\Places\Create\CreateVenue.cs">
       <SubType>UserControl</SubType>
@@ -456,6 +462,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Service\friendsTest.txt" />
+    <EmbeddedResource Include="UI\More\MoreActions.resx">
+      <DependentUpon>MoreActions.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\Common\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>
