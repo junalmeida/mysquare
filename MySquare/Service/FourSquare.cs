@@ -14,7 +14,7 @@ namespace MySquare.Service
     class FourSquare : Network
     {
 
-        #region Data Cache 
+        #region Data Cache
 
         static List<User> cacheUsers = new List<User>();
         static List<Venue> cacheVenues = new List<Venue>();
@@ -33,7 +33,7 @@ namespace MySquare.Service
             AddVenue,
             CheckIns,
             User,
-            Friends, 
+            Friends,
             PendingFriends,
             AcceptFriend,
             RejectFriend,
@@ -41,17 +41,12 @@ namespace MySquare.Service
             Leaderboard
         }
 
-        enum Scope
-        {
-            Friends,
-            All
-        }
 
         internal void GetLeaderBoard(double lat, double lng, Scope scope)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             //if (uid > 0)
-                //parameters.Add("uid", uid.ToString());
+            //parameters.Add("uid", uid.ToString());
             parameters.Add("geolat", lat.ToString(culture));
             parameters.Add("geolong", lng.ToString(culture));
             parameters.Add("view", "all");
@@ -63,7 +58,7 @@ namespace MySquare.Service
 
             Post(ServiceResource.Leaderboard, parameters);
         }
-        
+
 
         internal void GetUser(int uid)
         {
@@ -301,7 +296,7 @@ namespace MySquare.Service
             }
         }
 
-   
+
 
         internal event VenueEventHandler VenueResult;
         private void OnVenueResult(VenueEventArgs e)
@@ -434,7 +429,7 @@ namespace MySquare.Service
                 case ServiceResource.Leaderboard:
                     url = "http://api.foursquare.com/iphone/me";
                     auth = true; post = false;
-
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -442,8 +437,8 @@ namespace MySquare.Service
             if (auth &&
                 string.IsNullOrEmpty(MySquare.Service.Configuration.Login))
                 OnError(new ErrorEventArgs(new UnauthorizedAccessException()));
-            else 
-                base.Post((int)service, url, post,  
+            else
+                base.Post((int)service, url, post,
                     (auth ? MySquare.Service.Configuration.Login : null),
                     (auth ? MySquare.Service.Configuration.Password : null), parameters);
         }
@@ -548,7 +543,10 @@ namespace MySquare.Service
         }
 
     }
-    
 
-
+    enum Scope
+    {
+        Friends,
+        All
+    }
 }

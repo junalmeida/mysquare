@@ -14,6 +14,8 @@ namespace MySquare.UI.More
         public MoreActions()
         {
             InitializeComponent();
+
+            listBox.AddItem("The Leaderboard\r\nSee the weekely ranking.", null);
         }
 
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)

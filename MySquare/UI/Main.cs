@@ -136,6 +136,8 @@ namespace MySquare.UI
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
+            Program.ResetGps();
+
             AdjustInputPanel();
 
             if (timerGps == null)
@@ -156,14 +158,18 @@ namespace MySquare.UI
                 timerAds.Enabled = true;
         }
 
+
         protected override void OnDeactivate(EventArgs e)
         {
             base.OnDeactivate(e);
+            Program.TurnGpsOff();
+
             if (timerGps != null)
             {
                 timerGps.Enabled = false;
             }
         }
+
 
         private void AdjustInputPanel()
         {

@@ -61,7 +61,7 @@ namespace MySquare
                 }
                 finally
                 {
-                    Location.Dispose();
+                    DisposeThings();
                 }
                 try
                 {
@@ -70,10 +70,24 @@ namespace MySquare
                 }
                 catch (ObjectDisposedException) { }
 #else
-                Location.Dispose();
+                DisposeThings();
 #endif
             }
             Application.Exit();
+        }
+
+        private static void DisposeThings()
+        {
+            if (Location != null)
+            {
+                Location.Dispose();
+                Location = null;
+            }
+            if (timerGpsOff != null)
+            {
+                timerGpsOff.Dispose();
+                timerGpsOff = null;
+            }
         }
 
         static void Location_LocationChanged(object sender, EventArgs e)
@@ -112,6 +126,46 @@ sattelites: {8}",
                     Location.UseGps = Configuration.UseGps;
             }
         }
+
+
+        internal static void ResetGps()
+        {
+            if (Program.Location != null)
+            {
+                //reset gps
+                Program.Location.UseGps = Configuration.UseGps;
+                Program.Location.Poll();
+                if (timerGpsOff != null)
+                {
+                    timerGpsOff.Dispose();
+                    timerGpsOff = null;
+                }
+            }
+        }
+        internal static void TurnGpsOff()
+        {
+            if (Program.Location != null)
+            {
+                if (timerGpsOff != null)
+                    timerGpsOff.Dispose();
+                //turn polling off after five minutes on background
+                timerGpsOff = new System.Threading.Timer(new System.Threading.TimerCallback(TimerGpsOff_Tick), null,
+                    5 * (60 * 1000) 
+                    , System.Threading.Timeout.Infinite);
+
+            }
+        }
+        static void TimerGpsOff_Tick(object state)
+        {
+            if (Program.Location != null)
+            {
+                Program.Location.Stop();
+                Program.Location.UseGps = false;
+            }
+        }
+
+        static System.Threading.Timer timerGpsOff = null;
+
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {

@@ -60,14 +60,45 @@ namespace MySquare.UI.Places.Details
         internal Dictionary<string, Bitmap> badgeImageList;
         internal Dictionary<string, Bitmap> scoreImageList;
 
+
+
+
         SolidBrush textBrush = new SolidBrush(Color.Black);
         StringFormat format = new StringFormat()
         {
             Alignment = StringAlignment.Near,
             LineAlignment = StringAlignment.Near
         };
+
+        Bitmap backBuffer = null;
+        Graphics backBufferG = null;
+
+        private void pnlCheckInResult_Resize(object sender, EventArgs e)
+        {
+            ResetBackBuffer();
+        }
+
+        private void ResetBackBuffer()
+        {
+            if (backBuffer != null)
+                backBuffer.Dispose();
+            if (backBufferG != null)
+                backBufferG.Dispose();
+
+            backBuffer = new Bitmap(pnlCheckInResult.Width, pnlCheckInResult.Height);
+            backBufferG = Graphics.FromImage(backBuffer);
+            backBufferG.Clear(pnlCheckInResult.BackColor);
+        }
+
         private void pnlCheckInResult_Paint(object sender, PaintEventArgs e)
         {
+            if (backBuffer == null)
+                ResetBackBuffer();
+
+            e.Graphics.DrawImage(backBuffer, 0, 0);
+
+            Graphics graphics = backBufferG;
+            graphics.Clear(pnlCheckInResult.BackColor);
 
             int padding = 4 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
             RectangleF rectF =
@@ -83,7 +114,7 @@ namespace MySquare.UI.Places.Details
             int leftWithPadding = rect.X + padding;
             int widthWithPadding = Convert.ToInt32(rect.Width - (padding * 2.5));
 
-            RoundedRectangle.Fill(e.Graphics, new Pen(Color.Gray), new SolidBrush(Color.White),
+            RoundedRectangle.Fill(graphics, new Pen(Color.Gray), new SolidBrush(Color.White),
                 rect, new Size(8 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width, 8 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
 
             Rectangle lastRectangle;
@@ -92,8 +123,8 @@ namespace MySquare.UI.Places.Details
             lastRectangle = new Rectangle(
                 leftWithPadding, rect.Y + padding, widthWithPadding, this.Height);
 
-            Size measure = Tenor.Mobile.Drawing.Strings.Measure(e.Graphics, message, Font, lastRectangle);
-            e.Graphics.DrawString(message, Font, textBrush, new RectangleF(lastRectangle.X, lastRectangle.Y, lastRectangle.Width, lastRectangle.Height), format);
+            Size measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, message, Font, lastRectangle);
+            graphics.DrawString(message, Font, textBrush, new RectangleF(lastRectangle.X, lastRectangle.Y, lastRectangle.Width, lastRectangle.Height), format);
 
             lastRectangle.Height = measure.Height + padding;
             // --
@@ -102,10 +133,12 @@ namespace MySquare.UI.Places.Details
             {
                 foreach (var special in specials)
                 {
+                    if (special.Kind == SpecialKind.nearby)
+                        continue; //TODO: Show specials nearby on check ins.
 
                     int stampSize = 31 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
 
-                    DrawSeparator(e, padding, ref rectF, ref lastRectangle);
+                    DrawSeparator(graphics, padding, ref rectF, ref lastRectangle);
 
                     AlphaImage image;
                     if (special.Kind == SpecialKind.here)
@@ -122,15 +155,15 @@ namespace MySquare.UI.Places.Details
                             lastRectangle.Top, 
                             lastRectangle.Width - stampSize - (padding * 2), this.Height);
 
-                    measure = Tenor.Mobile.Drawing.Strings.Measure(e.Graphics, special.Message, Font, textRectangle);
-                    e.Graphics.DrawString(special.Message, Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
+                    measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, special.Message, Font, textRectangle);
+                    graphics.DrawString(special.Message, Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
 
 
                     if (measure.Height < stampSize)
                         measure.Height = stampSize;
                     try
                     {
-                        image.Draw(e.Graphics, new Rectangle(
+                        image.Draw(graphics, new Rectangle(
                             lastRectangle.Right - stampSize - padding,
                             lastRectangle.Top + ((measure.Height / 2) - (stampSize / 2)), stampSize, stampSize));
                     }
@@ -152,14 +185,14 @@ namespace MySquare.UI.Places.Details
                 if (showCrown)
                     crownSize = 31 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
 
-                DrawSeparator(e, padding, ref rectF, ref lastRectangle);
+                DrawSeparator(graphics, padding, ref rectF, ref lastRectangle);
 
 
                 Rectangle textRectangle = new Rectangle(
                     lastRectangle.Left, lastRectangle.Top, lastRectangle.Width - crownSize - (padding * 2), this.Height);
 
-                measure = Tenor.Mobile.Drawing.Strings.Measure(e.Graphics, mayorship, Font, textRectangle);
-                e.Graphics.DrawString(mayorship, Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
+                measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, mayorship, Font, textRectangle);
+                graphics.DrawString(mayorship, Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
 
                 if (measure.Height < crownSize)
                     measure.Height = crownSize;
@@ -169,7 +202,7 @@ namespace MySquare.UI.Places.Details
                     try
                     {
                         AlphaImage image = new AlphaImage(Resources.Crown);
-                        image.Draw(e.Graphics, new Rectangle(
+                        image.Draw(graphics, new Rectangle(
                             lastRectangle.Right - crownSize - padding,
                             lastRectangle.Top + ((measure.Height / 2) - (crownSize / 2)), crownSize, crownSize));
                     }
@@ -189,7 +222,7 @@ namespace MySquare.UI.Places.Details
 
                     int stampSize = 31 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
 
-                    DrawSeparator(e, padding, ref rectF, ref lastRectangle);
+                    DrawSeparator(graphics, padding, ref rectF, ref lastRectangle);
 
 
                     Rectangle textRectangle =
@@ -198,8 +231,8 @@ namespace MySquare.UI.Places.Details
                             lastRectangle.Top,
                             lastRectangle.Width - stampSize - (padding * 2), this.Height);
 
-                    measure = Tenor.Mobile.Drawing.Strings.Measure(e.Graphics, badge.ToString(), Font, textRectangle);
-                    e.Graphics.DrawString(badge.ToString(), Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
+                    measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, badge.ToString(), Font, textRectangle);
+                    graphics.DrawString(badge.ToString(), Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
 
                     if (measure.Height < stampSize)
                         measure.Height = stampSize;
@@ -209,7 +242,7 @@ namespace MySquare.UI.Places.Details
                         try
                         {
                             AlphaImage image = new AlphaImage(badgeImageList[badge.ImageUrl]);
-                            image.Draw(e.Graphics, new Rectangle(
+                            image.Draw(graphics, new Rectangle(
                                 lastRectangle.Right - stampSize - padding,
                                 lastRectangle.Top + ((measure.Height / 2) - (stampSize / 2)), stampSize, stampSize));
                         }
@@ -232,7 +265,7 @@ namespace MySquare.UI.Places.Details
 
                     int stampSize = 16 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
 
-                    DrawSeparator(e, padding, ref rectF, ref lastRectangle);
+                    DrawSeparator(graphics, padding, ref rectF, ref lastRectangle);
 
                     Rectangle textRectangle =
                         new Rectangle(
@@ -240,8 +273,8 @@ namespace MySquare.UI.Places.Details
                             lastRectangle.Top,
                             lastRectangle.Width - stampSize - (padding * 2), this.Height);
 
-                    measure = Tenor.Mobile.Drawing.Strings.Measure(e.Graphics, score.ToString(), Font, textRectangle);
-                    e.Graphics.DrawString(score.ToString(), Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
+                    measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, score.ToString(), Font, textRectangle);
+                    graphics.DrawString(score.ToString(), Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
 
                     if (measure.Height < stampSize)
                         measure.Height = stampSize;
@@ -251,7 +284,7 @@ namespace MySquare.UI.Places.Details
                         try
                         {
                             AlphaImage image = new AlphaImage(scoreImageList[score.ImageUrl]);
-                            image.Draw(e.Graphics, new Rectangle(
+                            image.Draw(graphics, new Rectangle(
                                 lastRectangle.Right - stampSize - padding,
                                 lastRectangle.Top + ((measure.Height / 2) - (stampSize / 2)), stampSize, stampSize));
                         }
@@ -265,21 +298,21 @@ namespace MySquare.UI.Places.Details
                 }
             }
 
+            e.Graphics.DrawImage(backBuffer, 0, 0);
 
             if (pnlCheckInResult.Height != lastRectangle.Bottom + padding)
             {
                 pnlCheckInResult.Height = lastRectangle.Bottom + padding;
                 pnlCheckInResult.Invalidate();
             }
-
         }
 
-        private void DrawSeparator(PaintEventArgs e, int padding, ref RectangleF rectF, ref Rectangle lastRectangle)
+        private void DrawSeparator(Graphics graphics, int padding, ref RectangleF rectF, ref Rectangle lastRectangle)
         {
             lastRectangle = new Rectangle(
                 lastRectangle.Left, lastRectangle.Bottom, lastRectangle.Width, this.Height);
 
-            e.Graphics.DrawLine(new Pen(Color.Gray),
+            graphics.DrawLine(new Pen(Color.Gray),
                 Convert.ToInt32(rectF.X), lastRectangle.Top, Convert.ToInt32(rectF.Right) - 1, lastRectangle.Top);
 
             lastRectangle.Y += padding;
@@ -306,6 +339,8 @@ namespace MySquare.UI.Places.Details
             }
         }
         #endregion
+
+
 
     }
 }

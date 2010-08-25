@@ -123,6 +123,7 @@
             this.pnlCheckInResult.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlCheckInResult_Paint);
             this.pnlCheckInResult.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseMove);
             this.pnlCheckInResult.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseDown);
+            this.pnlCheckInResult.Resize += new System.EventHandler(this.pnlCheckInResult_Resize);
             // 
             // CheckIn
             // 
