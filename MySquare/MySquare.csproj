@@ -215,7 +215,6 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="UI\AnimatedGif.resx">
@@ -294,6 +293,12 @@
     </Compile>
     <Compile Include="UI\MapControl.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\More\Leaderboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\More\Leaderboard.Designer.cs">
+      <DependentUpon>Leaderboard.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\More\MoreActions.cs">
       <SubType>UserControl</SubType>
