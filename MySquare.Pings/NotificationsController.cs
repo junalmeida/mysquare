@@ -29,7 +29,7 @@ namespace MySquare.Pings
 
 
         bool error;
-        public void GetCheckIns()
+        public bool GetCheckIns()
         {
             checkIns = null;
             Service.GetFriendsCheckins(null, null);
@@ -93,7 +93,10 @@ namespace MySquare.Pings
                         "MySquare", message.ToString(), false, Resources.mySquare);
                 }
                 message = null;
+                return true;
             }
+            else
+                return false;
         }
 
         void Location_Error(object sender, RisingMobility.Mobile.Location.ErrorEventArgs e)

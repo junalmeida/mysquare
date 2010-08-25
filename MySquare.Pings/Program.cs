@@ -37,16 +37,20 @@ namespace MySquare.Pings
         {
             try
             {
-                if (!Configuration.RetrievePings || (Configuration.PingInterval <= 0 && 
+                if (!Configuration.RetrievePings || (Configuration.PingInterval <= 0 &&
                     Configuration.isPremium.HasValue))
                 {
                     Quit();
                 }
                 else
                 {
+                    bool ret = false;
                     if (Configuration.IsPremium)
-                        controller.GetCheckIns();
-                    pings.Change(Configuration.PingInterval * (60 * 1000), Timeout.Infinite);
+                        ret = controller.GetCheckIns();
+                    if (ret)
+                        pings.Change(Configuration.PingInterval * (60 * 1000), Timeout.Infinite);
+                    else
+                        pings.Change((30 * 1000), Timeout.Infinite);
                 }
             }
             catch (ObjectDisposedException) { pingsLoop.Set(); }
