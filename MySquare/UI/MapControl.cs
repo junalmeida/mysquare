@@ -98,24 +98,23 @@ namespace RisingMobility.Mobile.UI
                 tiles = new List<MapTile>();
         }
 
-        //WorldPoint mapCenter;
-
-        //public WorldPoint MapCenter
-        //{ get { return mapCenter; } set { mapCenter = value; ClearTiles(); Invalidate(); } }
+        WorldPoint mapCenter;
+        public WorldPoint MapCenter
+        { get { return mapCenter; } set { mapCenter = value; ClearTiles(); Invalidate(); } }
            
 
         private static int TileSize = 100;
         private List<MapTile> tiles = null;
         private MapTile GetMapAtPoint(Point point)
         {
-            int x = Convert.ToInt32(Math.Round((decimal)point.X / (decimal)TileSize));
-            int y = Convert.ToInt32(Math.Round((decimal)point.Y / (decimal)TileSize));
+            int x = Convert.ToInt32(Math.Floor((double)point.X / (double)TileSize));
+            int y = Convert.ToInt32(Math.Floor((double)point.Y / (double)TileSize));
             foreach (MapTile tile in tiles)
             {
                 if (tile.X == x && tile.Y == y)
                     return tile;
             }
-            var t = new MapTile(x, y);
+            var t = new MapTile(this, x, y);
             tiles.Add(t);
             return t;
         }
@@ -134,12 +133,12 @@ namespace RisingMobility.Mobile.UI
             {
                 m_backBuffer.FillRectangle(bgBrush, 0, 0, m_backBufferBitmap.Width, m_backBufferBitmap.Height);
                 base.OnPaint(new PaintEventArgs(m_backBuffer, e.ClipRectangle));
-                for (int x = 0; x < this.Width; x += TileSize)
-                    for (int y = 0; y < this.Height; y += TileSize)
+                for (int y = 0; y < this.Height; y += TileSize)
+                    for (int x = 0; x < this.Width; x += TileSize)
                     {
                         MapTile tile = GetMapAtPoint(new Point(x, y));
                         if (tile.Bitmap != null)
-                            m_backBuffer.DrawImage(tile.Bitmap, x, y);
+                            m_backBuffer.DrawImage(tile.Bitmap, x + offset.X, y + offset.Y);
                     }
 
                 e.Graphics.DrawImage(m_backBufferBitmap, 0, 0);
@@ -151,7 +150,7 @@ namespace RisingMobility.Mobile.UI
         }
 
 
-        //private WorldPoint ToWorldPoint(Point selectedPoint)
+        //private static WorldPoint ToWorldPoint(Point selectedPoint)
         //{
 
         //    // Retirer les pixels du centre de l'image 
@@ -182,8 +181,9 @@ namespace RisingMobility.Mobile.UI
         //}
 
 
-        const string googleMapsUrl = "http://maps.google.com/maps/api/staticmap?zoom={2}&sensor=false&mobile=true&format=jpeg&size={0}x{1}&center={3}";
-        const string markers = "&markers=color:blue|{2},{3}";
+        const string googleMapsUrl =
+            "http://maps.google.com/maps/api/staticmap?zoom={2}&sensor=false&mobile=true&format=jpeg&size={0}x{1}&center={3}";
+
         private class MapTile : IDisposable
         {
             MapControl control;
@@ -198,6 +198,10 @@ namespace RisingMobility.Mobile.UI
             }
 
             bool downloading = false;
+            /// <summary>
+            /// Gets or sets the value of the User-agent HTTP header.
+            /// </summary>
+            const string UserAgent = "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.7) Gecko/20091221 Firefox/3.5.7";
 
             private void Download()
             {
@@ -206,37 +210,51 @@ namespace RisingMobility.Mobile.UI
                 downloading = true;
                 Thread t = new Thread(delegate()
                 {
-    //                string url = string.Format(googleMapsUrl,
-    //TileSize, TileSize, control.Zoom,
-    //relative.Latitude.ToString());
+                    string url = string.Format(
+                        googleMapsUrl,
+                        TileSize, TileSize + 22, control.Zoom,
+                        control.MapCenter.ToString()
+                    );
+                    int count = 0;
+                    while (true)
+                    {
 
 
-    //                HttpWebResponse response = null;
-    //                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-    //                try
-    //                {
-    //                    response = (HttpWebResponse)request.GetResponse();
-    //                    if (response.StatusCode == HttpStatusCode.OK)
-    //                    {
-    //                        Bitmap = new Bitmap(response.GetResponseStream());
-    //                    }
-    //                }
-    //                catch
-    //                {
-    //                    //Bitmap = new Bitmap(TileSize, TileSize);
+                        HttpWebResponse response = null;
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                        request.UserAgent = UserAgent;
+                        try
+                        {
+                            response = (HttpWebResponse)request.GetResponse();
+                            if (response.StatusCode == HttpStatusCode.OK)
+                            {
+                                Bitmap = new Bitmap(response.GetResponseStream());
+                            }
+                        }
+                        catch
+                        {
+                            count++;
+                            if (count >= 3)
+                            {
+                                //error logo
+                                Bitmap = Resources.Gps;
+                            }
+                            else
+                            {
+                                if (response != null)
+                                    response.Close();
+                                continue;
+                            }
+                        }
+                        finally
+                        {
+                            if (response != null)
+                                response.Close();
+                        }
 
-
-    //                }
-    //                finally
-    //                {
-    //                    if (response != null)
-    //                        response.Close();
-    //                    downloading = false;
-    //                }
-
-                    Thread.Sleep(2000);
-                    Bitmap = Resources.SpecialHere;
-                    downloading = false;
+                        downloading = false;
+                        break;
+                    }
                 });
                 t.Start();
             }
@@ -265,6 +283,49 @@ namespace RisingMobility.Mobile.UI
             }
         }
 
+
+#region Moving tiles
+        Point offset = Point.Empty;
+        Point startingPoint;
+        Point startingOffset;
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                startingPoint = new Point(e.X, e.Y);
+                startingOffset = offset;
+            }
+            base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                UpdateOffset(e);
+            }
+            base.OnMouseMove(e);
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                UpdateOffset(e);
+            }
+            base.OnMouseUp(e);
+        }
+
+        private void UpdateOffset(MouseEventArgs e)
+        {
+            offset = new Point(
+                startingOffset.X + ((startingPoint.X - e.X) * -1),
+                startingOffset.Y + ((startingPoint.Y - e.Y) * -1)
+            );
+            this.Invalidate();
+        }
+
+#endregion
 
         #region ISupportInitialize Members
 
