@@ -15,6 +15,7 @@ namespace RisingMobility.Mobile.UI
     class MapControl : Control,System.ComponentModel.ISupportInitialize
     {
 
+
         public MapControl()
         {
             Zoom = 16;
@@ -65,30 +66,60 @@ namespace RisingMobility.Mobile.UI
                 m_backBuffer = Graphics.FromImage(m_backBufferBitmap);
             }
 
-            if (matrix != null)
-            {
-                for (int i = 0; i < matrix.GetUpperBound(0); i++)
-                    for (int j = 0; j < matrix.GetUpperBound(1); j++)
-                        if (matrix[i, j] != null)
-                            matrix[i, j].Dispose();
-            }
-            DownloadTiles();
+
         }
         #endregion
 
 
         int zoom;
         public int Zoom
-        { get { return zoom; } set { zoom = value; Invalidate(); } }
+        {
+            get { return zoom; }
+            set
+            {
+                zoom = value;
+                ClearTiles();
+                Invalidate();
+            }
+        }
 
-        WorldPoint mapCenter;
+        private void ClearTiles()
+        {
+            if (tiles != null && tiles.Count > 0)
+            {
+                for (int i = tiles.Count; i >= 0; i--)
+                {
+                    if (tiles[i].Bitmap != null)
+                        tiles[i].Bitmap.Dispose();
+                    tiles.RemoveAt(i);
+                }
+            }
+            else
+                tiles = new List<MapTile>();
+        }
 
-        public WorldPoint MapCenter
-        { get { return mapCenter; } set { mapCenter = value; Invalidate(); } }
+        //WorldPoint mapCenter;
+
+        //public WorldPoint MapCenter
+        //{ get { return mapCenter; } set { mapCenter = value; ClearTiles(); Invalidate(); } }
            
 
         private static int TileSize = 100;
-        private MapTile[,] matrix;
+        private List<MapTile> tiles = null;
+        private MapTile GetMapAtPoint(Point point)
+        {
+            int x = Convert.ToInt32(Math.Round((decimal)point.X / (decimal)TileSize));
+            int y = Convert.ToInt32(Math.Round((decimal)point.Y / (decimal)TileSize));
+            foreach (MapTile tile in tiles)
+            {
+                if (tile.X == x && tile.Y == y)
+                    return tile;
+            }
+            var t = new MapTile(x, y);
+            tiles.Add(t);
+            return t;
+        }
+
             
         protected override void OnPaintBackground(PaintEventArgs e)
         {
@@ -103,15 +134,13 @@ namespace RisingMobility.Mobile.UI
             {
                 m_backBuffer.FillRectangle(bgBrush, 0, 0, m_backBufferBitmap.Width, m_backBufferBitmap.Height);
                 base.OnPaint(new PaintEventArgs(m_backBuffer, e.ClipRectangle));
-
-                if (matrix != null)
-                    for (int i = 0; i < matrix.GetUpperBound(0); i++)
-                        for (int j = 0; j < matrix.GetUpperBound(1); j++)
-                        {
-                            if (matrix[i, j].Bitmap != null)
-                                m_backBuffer.DrawImage(matrix[i, j].Bitmap, i * TileSize, j * TileSize);
-
-                        }
+                for (int x = 0; x < this.Width; x += TileSize)
+                    for (int y = 0; y < this.Height; y += TileSize)
+                    {
+                        MapTile tile = GetMapAtPoint(new Point(x, y));
+                        if (tile.Bitmap != null)
+                            m_backBuffer.DrawImage(tile.Bitmap, x, y);
+                    }
 
                 e.Graphics.DrawImage(m_backBufferBitmap, 0, 0);
             }
@@ -121,65 +150,54 @@ namespace RisingMobility.Mobile.UI
             }
         }
 
-        private void DownloadTiles()
-        {
-            int xCount = Convert.ToInt32(Math.Floor(this.Width / TileSize)) + 1;
-            int yCount = Convert.ToInt32(Math.Floor(this.Height / TileSize)) + 1;
-            matrix = new MapTile[xCount, yCount];
-            for (int i = 0; i < matrix.GetUpperBound(0); i++)
-                for (int j = 0; j < matrix.GetUpperBound(1); j++)
-                {
-                    matrix[i, j] = new MapTile(MapCenter, Zoom);
-                }
-        }
 
+        //private WorldPoint ToWorldPoint(Point selectedPoint)
+        //{
 
-        private WorldPoint ToWorldPoint(Point selectedPoint)
-        {
+        //    // Retirer les pixels du centre de l'image 
+        //    // à partir le lati longi de la localisation courante 
+        //    double sinLatitudeCenter = Math.Sin(MapCenter.Latitude * Math.PI / 180);
+        //    double pixelXCenter = ((MapCenter.Longitude + 180) / 360) * 256 * Math.Pow(2, zoom);
+        //    double pixelYCenter = (0.5 - Math.Log((1 + sinLatitudeCenter) / (1 - sinLatitudeCenter)) / (4 * Math.PI)) * 256 * Math.Pow(2, zoom);
 
-            // Retirer les pixels du centre de l'image 
-            // à partir le lati longi de la localisation courante 
-            double sinLatitudeCenter = Math.Sin(MapCenter.Latitude * Math.PI / 180);
-            double pixelXCenter = ((MapCenter.Longitude + 180) / 360) * 256 * Math.Pow(2, zoom);
-            double pixelYCenter = (0.5 - Math.Log((1 + sinLatitudeCenter) / (1 - sinLatitudeCenter)) / (4 * Math.PI)) * 256 * Math.Pow(2, zoom);
+        //    //Calculer les coordonnées pixel du coin haut gauche de la carte
+        //    double topLeftPixelX = pixelXCenter - (this.Width / 2);
+        //    double topLeftPixelY = pixelYCenter - (this.Height / 2);
+        //    Point topLeftCorner = new Point((int)topLeftPixelX, (int)topLeftPixelY);
 
-            //Calculer les coordonnées pixel du coin haut gauche de la carte
-            double topLeftPixelX = pixelXCenter - (this.Width / 2);
-            double topLeftPixelY = pixelYCenter - (this.Height / 2);
-            Point topLeftCorner = new Point((int)topLeftPixelX, (int)topLeftPixelY);
+        //    // Le deplacement à partir du coin haut gauche
+        //    int x = topLeftCorner.X + selectedPoint.X;
+        //    int y = topLeftCorner.Y + selectedPoint.Y;
 
-            // Le deplacement à partir du coin haut gauche
-            int x = topLeftCorner.X + selectedPoint.X;
-            int y = topLeftCorner.Y + selectedPoint.Y;
+        //    // Convertion au coordonnées Geo
+        //    double longitudeSelected = (((double)x * 360) / (256 * Math.Pow(2, zoom))) - 180;
+        //    double efactor = Math.Exp((0.5 - (double)y / 256 / Math.Pow(2, zoom)) * 4 * Math.PI);
+        //    double latitudeSelected = Math.Asin((efactor - 1) / (efactor + 1)) * 180 / Math.PI;
 
-            // Convertion au coordonnées Geo
-            double longitudeSelected = (((double)x * 360) / (256 * Math.Pow(2, zoom))) - 180;
-            double efactor = Math.Exp((0.5 - (double)y / 256 / Math.Pow(2, zoom)) * 4 * Math.PI);
-            double latitudeSelected = Math.Asin((efactor - 1) / (efactor + 1)) * 180 / Math.PI;
-
-            return new WorldPoint()
-            {
-                Latitude = latitudeSelected,
-                Longitude = longitudeSelected
-            };
-        }
+        //    return new WorldPoint()
+        //    {
+        //        Latitude = latitudeSelected,
+        //        Longitude = longitudeSelected
+        //    };
+        //}
 
 
         const string googleMapsUrl = "http://maps.google.com/maps/api/staticmap?zoom={2}&sensor=false&mobile=true&format=jpeg&size={0}x{1}&center={3}";
         const string markers = "&markers=color:blue|{2},{3}";
         private class MapTile : IDisposable
         {
-            WorldPoint relative;
-            int zoom;
-            public MapTile(WorldPoint relative, int zoom)
+            MapControl control;
+            //int zoom;
+            public MapTile(MapControl control, int x, int y)//int zoom)
             {
-                this.relative = relative;
-                this.zoom = zoom;
-                Download();
+                this.control = control;
+                X = x;
+                Y = y;
+                //this.zoom = zoom;
+                //Download();
             }
 
             bool downloading = false;
-            const string EmptyTileText = "We are sorry, but we don't\nhave imagery at this zoom\nlevel for this region.";
 
             private void Download()
             {
@@ -188,49 +206,64 @@ namespace RisingMobility.Mobile.UI
                 downloading = true;
                 Thread t = new Thread(delegate()
                 {
-                    string url = string.Format(googleMapsUrl,
-    TileSize, TileSize, zoom,
-    relative.Latitude.ToString());
+    //                string url = string.Format(googleMapsUrl,
+    //TileSize, TileSize, control.Zoom,
+    //relative.Latitude.ToString());
 
 
-                    HttpWebResponse response = null;
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                    try
-                    {
-                        response = (HttpWebResponse)request.GetResponse();
-                        if (response.StatusCode == HttpStatusCode.OK)
-                        {
-                            Bitmap = new Bitmap(response.GetResponseStream());
-                        }
-                    }
-                    catch
-                    {
-                        //Bitmap = new Bitmap(TileSize, TileSize);
+    //                HttpWebResponse response = null;
+    //                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+    //                try
+    //                {
+    //                    response = (HttpWebResponse)request.GetResponse();
+    //                    if (response.StatusCode == HttpStatusCode.OK)
+    //                    {
+    //                        Bitmap = new Bitmap(response.GetResponseStream());
+    //                    }
+    //                }
+    //                catch
+    //                {
+    //                    //Bitmap = new Bitmap(TileSize, TileSize);
 
 
-                    }
-                    finally
-                    {
-                        if (response != null)
-                            response.Close();
-                        downloading = false;
-                    }
+    //                }
+    //                finally
+    //                {
+    //                    if (response != null)
+    //                        response.Close();
+    //                    downloading = false;
+    //                }
+
+                    Thread.Sleep(2000);
+                    Bitmap = Resources.SpecialHere;
+                    downloading = false;
                 });
                 t.Start();
             }
 
-            public Bitmap Bitmap { get; private set; }
+            public int X { get; private set; }
+            public int Y { get; private set; }
+            private Bitmap bitmap;
+            public Bitmap Bitmap
+            {
+                get
+                {
+                    if (bitmap == null)
+                        Download();
+                    return bitmap;
+                }
+                private set
+                {
+                    bitmap = value; control.Invoke(new ThreadStart(control.Invalidate));
+                }
+            }
 
             public void Dispose()
             {
                 if (Bitmap != null)
                     Bitmap.Dispose();
             }
-
         }
-
-
-
 
 
         #region ISupportInitialize Members
@@ -245,4 +278,6 @@ namespace RisingMobility.Mobile.UI
 
         #endregion
     }
+
+
 }

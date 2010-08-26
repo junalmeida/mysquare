@@ -27,8 +27,8 @@ namespace MySquare.Test
             (HttpWebRequest.DefaultWebProxy as WebProxy).BypassProxyOnLocal = true;
             HttpWebRequest.DefaultWebProxy.Credentials = new NetworkCredential("y3tr", "htc9377K");
 #endif
-            MySquare.Program.Main();
-            //Application.Run(new Form1());
+            //MySquare.Program.Main();
+            Application.Run(new Form1());
         }
     }
 }
