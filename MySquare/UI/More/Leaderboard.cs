@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace MySquare.UI.More
 {
-    public partial class Leaderboard : UserControl
+    partial class Leaderboard : UserControl, IView
     {
         public Leaderboard()
         {

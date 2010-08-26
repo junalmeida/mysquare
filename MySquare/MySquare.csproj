@@ -141,6 +141,7 @@
     <Compile Include="Controller\CreateVenueController.cs" />
     <Compile Include="Controller\FriendsController.cs" />
     <Compile Include="Controller\HelpController.cs" />
+    <Compile Include="Controller\LeaderboardController.cs" />
     <Compile Include="Controller\MainController.cs" />
     <Compile Include="Controller\PlacesController.cs" />
     <Compile Include="Controller\SettingsController.cs" />
@@ -468,6 +469,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Service\friendsTest.txt" />
+    <EmbeddedResource Include="UI\More\Leaderboard.resx">
+      <DependentUpon>Leaderboard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\More\MoreActions.resx">
       <DependentUpon>MoreActions.cs</DependentUpon>
     </EmbeddedResource>

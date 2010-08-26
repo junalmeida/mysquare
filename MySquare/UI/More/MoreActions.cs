@@ -15,11 +15,13 @@ namespace MySquare.UI.More
         {
             InitializeComponent();
 
+            listBox.AddItem("Shout\r\nBroadcast a message to your friends.", null);
             listBox.AddItem("The Leaderboard\r\nSee the weekely ranking.", null);
         }
 
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
         {
+
         }
 
         private void listBox_SelectedItemClicked(object sender, EventArgs e)

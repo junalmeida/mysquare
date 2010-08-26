@@ -34,6 +34,7 @@ namespace MySquare.UI.Places.Details
             base.ScaleControl(factor, specified);
         }
 
+
         private void picMap_Paint(object sender, PaintEventArgs e)
         {
             if (picMap.Tag != null && picMap.Tag is byte[])
@@ -42,8 +43,9 @@ namespace MySquare.UI.Places.Details
                 {
                     picMap.Tag = new AlphaImage(Main.CreateRoundedAvatar((byte[])picMap.Tag, picMap.Size, factor));
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Log.RegisterLog("gdi", ex);
                     GC.Collect();
                 }
             }
@@ -59,9 +61,15 @@ namespace MySquare.UI.Places.Details
             }
             else if (!ellipse.IsEmpty)
             {
-                Rectangle picMapRect = new Rectangle(0, 0, picMap.Width, picMap.Height);
-                TextureBrush brush = new TextureBrush(Resources.MapBg);
-                Tenor.Mobile.Drawing.RoundedRectangle.Fill(e.Graphics, new Pen(Color.Gray), brush, picMapRect, ellipse);
+                try
+                {
+                    Rectangle picMapRect = new Rectangle(0, 0, picMap.Width, picMap.Height);
+                    TextureBrush brush = new TextureBrush(Resources.MapBg);
+                    Tenor.Mobile.Drawing.RoundedRectangle.Fill(e.Graphics, new Pen(Color.Gray), brush, picMapRect, ellipse);
+                }
+                catch
+                {
+                }
             }
         }
     }
