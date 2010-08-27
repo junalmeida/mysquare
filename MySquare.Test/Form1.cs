@@ -14,7 +14,6 @@ namespace MySquare.Test
         public Form1()
         {
             InitializeComponent();
-
             pictureBox1.MapCenter = new RisingMobility.Mobile.Location.WorldPoint()
             {
                 Latitude = -22.909204,
