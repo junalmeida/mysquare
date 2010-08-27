@@ -9,6 +9,7 @@ using MySquare.Properties;
 using System.Threading;
 using System.Net;
 using System.IO;
+using System.Diagnostics;
 
 namespace RisingMobility.Mobile.UI
 {
@@ -107,8 +108,11 @@ namespace RisingMobility.Mobile.UI
         private List<MapTile> tiles = null;
         private MapTile GetMapAtPoint(Point point)
         {
-            int x = Convert.ToInt32(Math.Floor((double)point.X / (double)TileSize));
-            int y = Convert.ToInt32(Math.Floor((double)point.Y / (double)TileSize));
+            Point currentPoint =
+                new Point(point.X - offset.X, point.Y - offset.Y);
+
+            int x = Convert.ToInt32(Math.Floor((double)currentPoint.X / (double)TileSize));
+            int y = Convert.ToInt32(Math.Floor((double)currentPoint.Y / (double)TileSize));
             foreach (MapTile tile in tiles)
             {
                 if (tile.X == x && tile.Y == y)
@@ -133,12 +137,16 @@ namespace RisingMobility.Mobile.UI
             {
                 m_backBuffer.FillRectangle(bgBrush, 0, 0, m_backBufferBitmap.Width, m_backBufferBitmap.Height);
                 base.OnPaint(new PaintEventArgs(m_backBuffer, e.ClipRectangle));
-                for (int y = 0; y < this.Height; y += TileSize)
-                    for (int x = 0; x < this.Width; x += TileSize)
+                for (int y = 0; y <= (this.Height + TileSize); y += TileSize)
+                    for (int x = 0; x <= (this.Width + TileSize); x += TileSize)
                     {
                         MapTile tile = GetMapAtPoint(new Point(x, y));
                         if (tile.Bitmap != null)
-                            m_backBuffer.DrawImage(tile.Bitmap, x + offset.X, y + offset.Y);
+                        {
+                            m_backBuffer.DrawImage(tile.Bitmap,
+                                tile.X * TileSize + offset.X,
+                                tile.Y * TileSize + offset.Y);
+                        }
                     }
 
                 e.Graphics.DrawImage(m_backBufferBitmap, 0, 0);
@@ -228,7 +236,15 @@ namespace RisingMobility.Mobile.UI
                             response = (HttpWebResponse)request.GetResponse();
                             if (response.StatusCode == HttpStatusCode.OK)
                             {
-                                Bitmap = new Bitmap(response.GetResponseStream());
+
+                                Bitmap = new Bitmap(TileSize, TileSize);
+                                using (Graphics gx = Graphics.FromImage(Bitmap))
+                                {
+                                    gx.DrawImage(new Bitmap(response.GetResponseStream()), 0, 0);
+#if DEBUG
+                                    gx.DrawString(string.Format("{0},{1}", X, Y), control.Font, new SolidBrush(Color.Black), 0, 0);
+#endif
+                                }
                             }
                         }
                         catch
