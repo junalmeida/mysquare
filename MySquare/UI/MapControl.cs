@@ -15,6 +15,14 @@ namespace RisingMobility.Mobile.UI
 {
     class MapControl : Control,System.ComponentModel.ISupportInitialize
     {
+        #region Events
+        public event EventHandler SelectedCoordinateChanged;
+        protected virtual void OnSelectedCoordinateChanged(EventArgs e)
+        {
+            if (SelectedCoordinateChanged != null)
+                SelectedCoordinateChanged(this, e);
+        }
+        #endregion
 
         public MapControl()
         {
@@ -30,12 +38,16 @@ namespace RisingMobility.Mobile.UI
         {
             base.OnResize(e);
             CreateBackBuffer();
+            CenterMap();
+
         }
 
         protected override void OnParentChanged(EventArgs e)
         {
             base.OnParentChanged(e);
             CreateBackBuffer();
+            CenterMap();
+
         }
 
 
@@ -102,18 +114,26 @@ namespace RisingMobility.Mobile.UI
             Invalidate();
         }
 
-        WorldPoint mapCenter;
-        public WorldPoint MapCenter
+        Coordinate mapCenter;
+        public Coordinate MapCenter
         {
             get { return mapCenter; }
             set
             {
                 mapCenter = value;
+
                 if (this.InvokeRequired)
                     this.Invoke(new ThreadStart(this.ClearTiles));
                 else
                     ClearTiles();
+                CenterMap();
             }
+        }
+
+        Coordinate selectedCoordinate;
+        public Coordinate SelectedPoint
+        {
+            get { return selectedCoordinate; }
         }
 
         MapType mapType;
@@ -201,6 +221,22 @@ namespace RisingMobility.Mobile.UI
 
         #endregion
 
+
+        private void CenterMap()
+        {
+            Point p = proj.FromLatLngToPixel(MapCenter.Latitude, MapCenter.Longitude, Zoom);
+            Point tile = proj.FromPixelToTileXY(p);
+            tile = proj.FromTileXYToPixel(tile);
+
+            Offset = new Point(
+                p.X - (p.X - (this.Width / 2) + (p.X - tile.X)),
+                p.Y - (p.Y - (this.Height / 2) + (p.Y - tile.Y))
+                );
+            Debug.WriteLine(Offset.ToString());
+            Invalidate();
+        }
+
+
         //private WorldPoint ToWorldPoint(Point selectedPoint)
         //{
 
@@ -265,9 +301,30 @@ namespace RisingMobility.Mobile.UI
             if (e.Button == MouseButtons.Left)
             {
                 UpdateOffset(e);
+                if (Offset.Equals(startingOffset) || selectedCoordinate.IsEmpty)
+                {
+                    Point center = proj.FromLatLngToPixel(MapCenter.Latitude, MapCenter.Longitude, Zoom);
+                    Point centerTile = 
+                         proj.FromTileXYToPixel(
+                            proj.FromPixelToTileXY(center));
+
+                    Point selectedPixel = new Point(
+                        centerTile.X - Offset.X + e.X,
+                        centerTile.Y - Offset.Y + e.Y
+                        );
+
+                    
+                    Coordinate newCoord = proj.FromPixelToLatLng(selectedPixel.X, selectedPixel.Y, Zoom);
+                    if (!newCoord.Equals(selectedCoordinate))
+                    {
+                        selectedCoordinate = newCoord;
+                        OnSelectedCoordinateChanged(new EventArgs());
+                    }
+                }
             }
             base.OnMouseUp(e);
         }
+
 
         private void UpdateOffset(MouseEventArgs e)
         {
@@ -306,7 +363,7 @@ namespace RisingMobility.Mobile.UI
                 }
                 Thread t = new Thread(delegate()
                 {
-                    WorldPoint point = control.MapCenter;
+                    Coordinate point = control.MapCenter;
                     Point p = control.proj.FromLatLngToPixel(point.Latitude, point.Longitude, control.Zoom);
                     p = control.proj.FromPixelToTileXY(p);
                     p.X += X;

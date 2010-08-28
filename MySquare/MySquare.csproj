@@ -98,6 +98,9 @@
     <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Geolocation.cs">
       <Link>Location\Geolocation.cs</Link>
     </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\GMaps\Imagery.cs">
+      <Link>Location\GMaps\Imagery.cs</Link>
+    </Compile>
     <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\GMaps\Projections\MercatorProjection.cs">
       <Link>Location\GMaps\MercatorProjection.cs</Link>
     </Compile>
@@ -161,7 +164,6 @@
     </Compile>
     <Compile Include="FourSquare\LeaderBoard.cs" />
     <Compile Include="FourSquare\Mayor.cs" />
-    <Compile Include="Location\GMaps\Imagery.cs" />
     <Compile Include="Service\RisingMobility.cs" />
     <Compile Include="Service\Configuration.cs" />
     <Compile Include="Service\FourSquare.cs" />
@@ -487,6 +489,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\poweredby.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\poweredby.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Common\" />
