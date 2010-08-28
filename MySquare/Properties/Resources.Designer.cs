@@ -183,6 +183,13 @@ namespace MySquare.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Placemark {
+            get {
+                object obj = ResourceManager.GetObject("Placemark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap PoweredByGoogle {
             get {
                 object obj = ResourceManager.GetObject("PoweredByGoogle", resourceCulture);

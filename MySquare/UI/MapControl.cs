@@ -83,6 +83,21 @@ namespace RisingMobility.Mobile.UI
         #endregion
 
         #region Map Properties
+        private Bitmap centerMark;
+        public Bitmap CenterMark
+        {
+            get { return centerMark; }
+            set
+            {
+                centerMark = value;
+                if (this.InvokeRequired)
+                    this.Invoke(new ThreadStart(this.Invalidate));
+                else
+                    Invalidate();
+            }
+        }
+
+
         int zoom;
         public int Zoom
         {
@@ -91,9 +106,9 @@ namespace RisingMobility.Mobile.UI
             {
                 zoom = value;
                 if (this.InvokeRequired)
-                    this.Invoke(new ThreadStart(this.ClearTiles));
+                    this.Invoke(new ThreadStart(this.CenterMap));
                 else
-                    ClearTiles();
+                    CenterMap();
             }
         }
 
@@ -115,6 +130,7 @@ namespace RisingMobility.Mobile.UI
         }
 
         Coordinate mapCenter;
+        Point mapCenterWorld;
         public Coordinate MapCenter
         {
             get { return mapCenter; }
@@ -122,13 +138,15 @@ namespace RisingMobility.Mobile.UI
             {
                 mapCenter = value;
 
+
                 if (this.InvokeRequired)
-                    this.Invoke(new ThreadStart(this.ClearTiles));
+                    this.Invoke(new ThreadStart(this.CenterMap));
                 else
-                    ClearTiles();
-                CenterMap();
+                    CenterMap();
             }
         }
+
+
 
         Coordinate selectedCoordinate;
         public Coordinate SelectedPoint
@@ -206,7 +224,7 @@ namespace RisingMobility.Mobile.UI
                                 position.Y);
                         }
                     }
-
+                DrawMarkers();
                 Point p = new Point(0, m_backBufferBitmap.Height - Resources.PoweredByGoogle.Height);
 
                 m_backBuffer.DrawImage(Resources.PoweredByGoogle, p.X, p.Y);
@@ -219,21 +237,36 @@ namespace RisingMobility.Mobile.UI
             }
         }
 
+        private void DrawMarkers()
+        {
+            if (CenterMark != null)
+            {
+                //Point tile = proj.FromPixelToTileXY(mapCenterWorld);
+                //tile = proj.FromTileXYToPixel(tile);
+
+                //Point center = new Point(
+                //    tile.X + (mapCenterWorld.X - tile.X),
+                //    tile.Y + (mapCenterWorld.Y - tile.Y)
+                //);
+            }
+        }
+
         #endregion
 
 
         private void CenterMap()
         {
-            Point p = proj.FromLatLngToPixel(MapCenter.Latitude, MapCenter.Longitude, Zoom);
-            Point tile = proj.FromPixelToTileXY(p);
+            mapCenterWorld = proj.FromLatLngToPixel(mapCenter.Latitude, mapCenter.Longitude, Zoom);
+
+            Point tile = proj.FromPixelToTileXY(mapCenterWorld);
             tile = proj.FromTileXYToPixel(tile);
 
             Offset = new Point(
                 p.X - (p.X - (this.Width / 2) + (p.X - tile.X)),
                 p.Y - (p.Y - (this.Height / 2) + (p.Y - tile.Y))
                 );
-            Debug.WriteLine(Offset.ToString());
-            Invalidate();
+
+            ClearTiles();
         }
 
 

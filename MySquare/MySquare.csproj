@@ -494,6 +494,9 @@
     <None Include="Resources\poweredby.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Placemark.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="UI\Common\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
