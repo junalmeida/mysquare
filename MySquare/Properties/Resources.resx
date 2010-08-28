@@ -187,4 +187,7 @@
   <data name="Gps_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gps-4.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PoweredByGoogle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\poweredby.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

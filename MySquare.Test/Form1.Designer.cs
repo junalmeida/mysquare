@@ -37,8 +37,9 @@ namespace MySquare.Test
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.MapType = RisingMobility.Mobile.UI.MapType.Hybrid;
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(271, 200);
+            this.pictureBox1.Size = new System.Drawing.Size(680, 352);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Zoom = 15;
@@ -47,7 +48,7 @@ namespace MySquare.Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(271, 200);
+            this.ClientSize = new System.Drawing.Size(680, 352);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
             this.Text = "Form1";

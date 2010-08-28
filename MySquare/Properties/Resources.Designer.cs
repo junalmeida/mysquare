@@ -183,6 +183,13 @@ namespace MySquare.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap PoweredByGoogle {
+            get {
+                object obj = ResourceManager.GetObject("PoweredByGoogle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Settings {
             get {
                 object obj = ResourceManager.GetObject("Settings", resourceCulture);
