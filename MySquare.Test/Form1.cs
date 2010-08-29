@@ -22,7 +22,7 @@ namespace MySquare.Test
                 Latitude = -22.909204,
                 Longitude = -43.180563
             };
-
+            numericUpDown1.Value = pictureBox1.Zoom;
         }
 
 
@@ -37,6 +37,11 @@ namespace MySquare.Test
             Clipboard.SetText(pictureBox1.SelectedPoint.ToString());
 
 
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            pictureBox1.Zoom = Convert.ToInt32(numericUpDown1.Value);
         }
     }
 }

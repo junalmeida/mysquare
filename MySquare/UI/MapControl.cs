@@ -110,6 +110,10 @@ namespace RisingMobility.Mobile.UI
             get { return zoom; }
             set
             {
+                if (value > 22)
+                    value = 22;
+                if (value < 1)
+                    value = 1;
                 zoom = value;
                 if (this.InvokeRequired)
                     this.Invoke(new ThreadStart(this.ClearTiles));
