@@ -29,8 +29,11 @@ namespace MySquare.Test
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new RisingMobility.Mobile.UI.MapControl();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,6 +61,12 @@ namespace MySquare.Test
             this.pictureBox1.Zoom = 15;
             this.pictureBox1.SelectedCoordinateChanged += new System.EventHandler(this.pictureBox1_Click);
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Placemark.png");
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -77,5 +86,6 @@ namespace MySquare.Test
 
         private MapControl pictureBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

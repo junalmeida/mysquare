@@ -117,4 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACq
+        AwAAAk1TRnQBSQFMAwEBAAEIAQABCAEAARABAAEQAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
+        ARADAAEBAQABIAYAARAuAAM+AdcDgwH/AzoBWPAAAzEB/wOCAf8DgwH/A4QB/wM+AWDcAAMMARADDAEQ
+        AwwBEAM5Af8DgwH/A4MB/wODAf8DgwH/A4MB/wNLAYgDDAEQAwwBENAAA20B/wODAf8DgwH/A4MB/wOD
+        Af8DgwH/A4MB/wODAf8DgwH/A4MB/wODAf8DgwH/A4oB/8wAA3UB/wMAAf8DAAH/AwAB/wMAAf8DAAH/
+        AwAB/wMAAf8DAAH/AwAB/wMAAf8DQQH/A4sB/8wAA34B/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wMA
+        Af8DAAH/AwAB/wMAAf8DQQH/A4sB/8wAA4sB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wMAAf8DAAH/
+        AwAB/wMAAf8DQQH/A4sB/8wAA5gB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wMA
+        Af8DQgH/A4sB/8wAA6YB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wMAAf8DQwH/
+        A4sB/8wAA7QB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wMAAf8DRQH/A4sB/8wA
+        A8EB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wMAAf8DRwH/A4sB/8wAA84B/wMA
+        Af8DAAH/AwAB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wMAAf8DSAH/A4sB/8wAA9kB/wMAAf8DAAH/
+        AwAB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wMAAf8DSgH/A4sB/8wAA+IB/wNfAf8DXwH/A18B/wNf
+        Af8DXwH/A18B/wNfAf8DXwH/A18B/wNfAf8DewH/A4sB/8wAA08BrwNfAa8DXwGvA18BrwNfAa8DXwGv
+        A18BrwNfAa8DXwGvA18BrwNfAa8DXwGv/wDJAAFCAU0BPgcAAT4DAAEoAwABQAMAARADAAEBAQABAQUA
+        AYAXAAP/AQAB/gE/BgAB/AEfBgABwAEDBgABwAEBBgABwAEBBgABwAEBBgABwAEBBgABwAEBBgABwAEB
+        BgABwAEBBgABwAEBBgABwAEBBgABwAEBBgABwAEBBgABwAEDBgAC/wYACw==
+</value>
+  </data>
 </root>

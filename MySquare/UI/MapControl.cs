@@ -83,17 +83,23 @@ namespace RisingMobility.Mobile.UI
         #endregion
 
         #region Map Properties
-        private Bitmap centerMark;
-        public Bitmap CenterMark
+        private Image centerMark;
+        public Image CenterMark
         {
             get { return centerMark; }
             set
             {
                 centerMark = value;
                 if (this.InvokeRequired)
+                {
+                    this.Invoke(new ThreadStart(this.ClearTiles));
                     this.Invoke(new ThreadStart(this.Invalidate));
+                }
                 else
+                {
+                    ClearTiles();
                     Invalidate();
+                }
             }
         }
 
@@ -106,15 +112,14 @@ namespace RisingMobility.Mobile.UI
             {
                 zoom = value;
                 if (this.InvokeRequired)
-                    this.Invoke(new ThreadStart(this.CenterMap));
+                    this.Invoke(new ThreadStart(this.ClearTiles));
                 else
-                    CenterMap();
+                    ClearTiles();
             }
         }
 
         private void ClearTiles()
         {
-            Offset = Point.Empty;
             if (tiles != null && tiles.Count > 0)
             {
                 for (int i = tiles.Count - 1; i >= 0; i--)
@@ -130,7 +135,6 @@ namespace RisingMobility.Mobile.UI
         }
 
         Coordinate mapCenter;
-        Point mapCenterWorld;
         public Coordinate MapCenter
         {
             get { return mapCenter; }
@@ -146,6 +150,19 @@ namespace RisingMobility.Mobile.UI
             }
         }
 
+        private void CenterMap()
+        {
+            Point mapCenterWorld = proj.FromLatLngToPixel(mapCenter.Latitude, mapCenter.Longitude, Zoom);
+            Point tile = proj.FromPixelToTileXY(mapCenterWorld);
+            tile = proj.FromTileXYToPixel(tile);
+
+            Offset = new Point(
+                mapCenterWorld.X - (mapCenterWorld.X - (this.Width / 2) + (mapCenterWorld.X - tile.X)),
+                mapCenterWorld.Y - (mapCenterWorld.Y - (this.Height / 2) + (mapCenterWorld.Y - tile.Y))
+                );
+
+            Invalidate();
+        }
 
 
         Coordinate selectedCoordinate;
@@ -210,7 +227,6 @@ namespace RisingMobility.Mobile.UI
             if (m_backBuffer != null)
             {
                 m_backBuffer.FillRectangle(bgBrush, 0, 0, m_backBufferBitmap.Width, m_backBufferBitmap.Height);
-                base.OnPaint(new PaintEventArgs(m_backBuffer, e.ClipRectangle));
                 for (int y = 0; y <= (this.Height + TileSize); y += TileSize)
                     for (int x = 0; x <= (this.Width + TileSize); x += TileSize)
                     {
@@ -224,9 +240,10 @@ namespace RisingMobility.Mobile.UI
                                 position.Y);
                         }
                     }
-                DrawMarkers();
+                DrawMarkers(e);
                 Point p = new Point(0, m_backBufferBitmap.Height - Resources.PoweredByGoogle.Height);
 
+                base.OnPaint(new PaintEventArgs(m_backBuffer, e.ClipRectangle));
                 m_backBuffer.DrawImage(Resources.PoweredByGoogle, p.X, p.Y);
 
                 e.Graphics.DrawImage(m_backBufferBitmap, 0, 0);
@@ -237,72 +254,29 @@ namespace RisingMobility.Mobile.UI
             }
         }
 
-        private void DrawMarkers()
+        private void DrawMarkers(PaintEventArgs e)
         {
             if (CenterMark != null)
             {
-                //Point tile = proj.FromPixelToTileXY(mapCenterWorld);
-                //tile = proj.FromTileXYToPixel(tile);
+                Point center = proj.FromLatLngToPixel(MapCenter.Latitude, MapCenter.Longitude, Zoom);
+                Point tile = proj.FromPixelToTileXY(center);
+                tile = proj.FromTileXYToPixel(tile);
 
-                //Point center = new Point(
-                //    tile.X + (mapCenterWorld.X - tile.X),
-                //    tile.Y + (mapCenterWorld.Y - tile.Y)
-                //);
+                Point selectedPixel = new Point(
+                    Offset.X + (center.X - tile.X),
+                    Offset.Y + (center.Y - tile.Y)
+                    );
+                if (e.ClipRectangle.Contains(selectedPixel))
+                {
+                    m_backBuffer.DrawImage(
+                        CenterMark,
+                        selectedPixel.X - (CenterMark.Width / 2),
+                        selectedPixel.Y - CenterMark.Height);
+                }
             }
         }
 
         #endregion
-
-
-        private void CenterMap()
-        {
-            mapCenterWorld = proj.FromLatLngToPixel(mapCenter.Latitude, mapCenter.Longitude, Zoom);
-
-            Point tile = proj.FromPixelToTileXY(mapCenterWorld);
-            tile = proj.FromTileXYToPixel(tile);
-
-            Offset = new Point(
-                p.X - (p.X - (this.Width / 2) + (p.X - tile.X)),
-                p.Y - (p.Y - (this.Height / 2) + (p.Y - tile.Y))
-                );
-
-            ClearTiles();
-        }
-
-
-        //private WorldPoint ToWorldPoint(Point selectedPoint)
-        //{
-
-        //    // Retirer les pixels du centre de l'image 
-        //    // à partir le lati longi de la localisation courante 
-        //    double sinLatitudeCenter = Math.Sin(MapCenter.Latitude * Math.PI / 180);
-        //    double pixelXCenter = ((MapCenter.Longitude + 180) / 360) * 256 * Math.Pow(2, zoom);
-        //    double pixelYCenter = (0.5 - Math.Log((1 + sinLatitudeCenter) / (1 - sinLatitudeCenter)) / (4 * Math.PI)) * 256 * Math.Pow(2, zoom);
-
-        //    //Calculer les coordonnées pixel du coin haut gauche de la carte
-        //    double topLeftPixelX = pixelXCenter - (this.Width / 2);
-        //    double topLeftPixelY = pixelYCenter - (this.Height / 2);
-        //    Point topLeftCorner = new Point((int)topLeftPixelX, (int)topLeftPixelY);
-
-        //    // Le deplacement à partir du coin haut gauche
-        //    int x = topLeftCorner.X + selectedPoint.X;
-        //    int y = topLeftCorner.Y + selectedPoint.Y;
-
-        //    // Convertion au coordonnées Geo
-        //    double longitudeSelected = (((double)x * 360) / (256 * Math.Pow(2, zoom))) - 180;
-        //    double efactor = Math.Exp((0.5 - (double)y / 256 / Math.Pow(2, zoom)) * 4 * Math.PI);
-        //    double latitudeSelected = Math.Asin((efactor - 1) / (efactor + 1)) * 180 / Math.PI;
-
-        //    return new WorldPoint()
-        //    {
-        //        Latitude = latitudeSelected,
-        //        Longitude = longitudeSelected
-        //    };
-        //}
-
-
-
-
 
         #region Moving tiles
         private Point Offset

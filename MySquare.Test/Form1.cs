@@ -16,6 +16,7 @@ namespace MySquare.Test
         {
             InitializeComponent();
             pictureBox1.Zoom = 16;
+            pictureBox1.CenterMark = imageList1.Images[0];
             pictureBox1.MapCenter = new RisingMobility.Mobile.Location.Coordinate()
             {
                 Latitude = -22.909204,
