@@ -17,7 +17,7 @@ namespace MySquare.Test
     [TestClass]
     public class GeocodingTest
     {
-        [TestMethod]
+        //[TestMethod]
         public void Geocoding()
         {
 #if PROXY

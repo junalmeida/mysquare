@@ -91,15 +91,23 @@ namespace RisingMobility.Mobile.UI
             {
                 centerMark = value;
                 if (this.InvokeRequired)
-                {
-                    this.Invoke(new ThreadStart(this.ClearTiles));
                     this.Invoke(new ThreadStart(this.Invalidate));
-                }
                 else
-                {
-                    ClearTiles();
                     Invalidate();
-                }
+            }
+        }
+
+        private Image selectedMark;
+        public Image SelectedMark
+        {
+            get { return selectedMark; }
+            set
+            {
+                selectedMark = value;
+                if (this.InvokeRequired)
+                    this.Invoke(new ThreadStart(this.Invalidate));
+                else
+                    Invalidate();
             }
         }
 
@@ -276,6 +284,25 @@ namespace RisingMobility.Mobile.UI
                         CenterMark,
                         selectedPixel.X - (CenterMark.Width / 2),
                         selectedPixel.Y - CenterMark.Height);
+                }
+            }
+
+            if (SelectedMark != null && !SelectedPoint.IsEmpty)
+            {
+                Point center = proj.FromLatLngToPixel(SelectedPoint.Latitude, SelectedPoint.Longitude, Zoom);
+                Point tile = proj.FromPixelToTileXY(center);
+                tile = proj.FromTileXYToPixel(tile);
+
+                Point selectedPixel = new Point(
+                    Offset.X + (center.X - tile.X),
+                    Offset.Y + (center.Y - tile.Y)
+                    );
+                if (e.ClipRectangle.Contains(selectedPixel))
+                {
+                    m_backBuffer.DrawImage(
+                        SelectedMark,
+                        selectedPixel.X - (SelectedMark.Width / 2),
+                        selectedPixel.Y - SelectedMark.Height);
                 }
             }
         }
