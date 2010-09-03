@@ -76,6 +76,10 @@ namespace MySquare.FourSquare
         public Special[] Specials
         { get; set; }
 
+        [JsonProperty("ping")]
+        public bool Ping
+        { get; set; }
+
         public override string ToString()
         {
             return string.IsNullOrEmpty(Display) ? Shout : Display;

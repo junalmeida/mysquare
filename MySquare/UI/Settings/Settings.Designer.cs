@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.Label label7;
+            System.Windows.Forms.Label label8;
+            System.Windows.Forms.Label label9;
             this.label1 = new System.Windows.Forms.Label();
             this.txtEmail = new Tenor.Mobile.UI.TextControl();
             this.txtPassword = new Tenor.Mobile.UI.TextControl();
@@ -42,14 +45,19 @@
             this.chkUseGps = new System.Windows.Forms.CheckBox();
             this.cboMapType = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            label7 = new System.Windows.Forms.Label();
+            label8 = new System.Windows.Forms.Label();
+            label9 = new System.Windows.Forms.Label();
             this.pnlPremium.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(13, 28);
+            this.label1.Location = new System.Drawing.Point(10, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 15);
             this.label1.Text = "E-mail:";
@@ -63,7 +71,7 @@
             this.txtEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtEmail.HideSelection = true;
             this.txtEmail.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
-            this.txtEmail.Location = new System.Drawing.Point(13, 45);
+            this.txtEmail.Location = new System.Drawing.Point(10, 40);
             this.txtEmail.MaxLength = 32767;
             this.txtEmail.Modified = false;
             this.txtEmail.Multiline = false;
@@ -74,7 +82,7 @@
             this.txtEmail.SelectedText = "";
             this.txtEmail.SelectionLength = 0;
             this.txtEmail.SelectionStart = 0;
-            this.txtEmail.Size = new System.Drawing.Size(224, 21);
+            this.txtEmail.Size = new System.Drawing.Size(214, 21);
             this.txtEmail.TabIndex = 1;
             this.txtEmail.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtEmail.WordWrap = true;
@@ -88,7 +96,7 @@
             this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtPassword.HideSelection = true;
             this.txtPassword.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
-            this.txtPassword.Location = new System.Drawing.Point(13, 86);
+            this.txtPassword.Location = new System.Drawing.Point(10, 81);
             this.txtPassword.MaxLength = 32767;
             this.txtPassword.Modified = false;
             this.txtPassword.Multiline = false;
@@ -99,7 +107,7 @@
             this.txtPassword.SelectedText = "";
             this.txtPassword.SelectionLength = 0;
             this.txtPassword.SelectionStart = 0;
-            this.txtPassword.Size = new System.Drawing.Size(224, 21);
+            this.txtPassword.Size = new System.Drawing.Size(214, 21);
             this.txtPassword.TabIndex = 3;
             this.txtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPassword.WordWrap = true;
@@ -107,7 +115,7 @@
             // label2
             // 
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(13, 69);
+            this.label2.Location = new System.Drawing.Point(10, 64);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 15);
             this.label2.Text = "Password:";
@@ -116,22 +124,23 @@
             // 
             this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(3, 5);
+            this.label3.Location = new System.Drawing.Point(2, 6);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 15);
             this.label3.Text = "Account:";
             // 
             // pnlPremium
             // 
-            this.pnlPremium.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlPremium.BackColor = System.Drawing.Color.Black;
+            this.pnlPremium.Controls.Add(label8);
+            this.pnlPremium.Controls.Add(label7);
             this.pnlPremium.Controls.Add(this.chkShowAds);
             this.pnlPremium.Controls.Add(this.label4);
             this.pnlPremium.Controls.Add(this.chkNotifications);
-            this.pnlPremium.Location = new System.Drawing.Point(0, 112);
+            this.pnlPremium.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlPremium.Location = new System.Drawing.Point(0, 115);
             this.pnlPremium.Name = "pnlPremium";
-            this.pnlPremium.Size = new System.Drawing.Size(249, 49);
+            this.pnlPremium.Size = new System.Drawing.Size(239, 156);
             this.pnlPremium.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // chkShowAds
@@ -156,7 +165,7 @@
             // 
             this.chkNotifications.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkNotifications.ForeColor = System.Drawing.Color.White;
-            this.chkNotifications.Location = new System.Drawing.Point(146, 28);
+            this.chkNotifications.Location = new System.Drawing.Point(2, 74);
             this.chkNotifications.Name = "chkNotifications";
             this.chkNotifications.Size = new System.Drawing.Size(100, 20);
             this.chkNotifications.TabIndex = 13;
@@ -164,16 +173,16 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(label9);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.chkUseGps);
             this.panel1.Controls.Add(this.cboMapType);
             this.panel1.Controls.Add(this.label5);
-            this.panel1.Location = new System.Drawing.Point(0, 163);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 271);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(249, 90);
+            this.panel1.Size = new System.Drawing.Size(239, 125);
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // label6
@@ -205,7 +214,7 @@
             this.cboMapType.Items.Add("Terrain");
             this.cboMapType.Location = new System.Drawing.Point(13, 43);
             this.cboMapType.Name = "cboMapType";
-            this.cboMapType.Size = new System.Drawing.Size(224, 22);
+            this.cboMapType.Size = new System.Drawing.Size(214, 22);
             this.cboMapType.TabIndex = 12;
             // 
             // label5
@@ -217,6 +226,53 @@
             this.label5.Size = new System.Drawing.Size(137, 15);
             this.label5.Text = "Localization && Maps:";
             // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.Black;
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.txtEmail);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.txtPassword);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(239, 115);
+            // 
+            // label7
+            // 
+            label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            label7.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            label7.ForeColor = System.Drawing.Color.Gainsboro;
+            label7.Location = new System.Drawing.Point(21, 48);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(215, 20);
+            label7.Text = "Uncheck to disable the bottom bar of ads.";
+            // 
+            // label8
+            // 
+            label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            label8.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            label8.ForeColor = System.Drawing.Color.Gainsboro;
+            label8.Location = new System.Drawing.Point(21, 94);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(215, 59);
+            label8.Text = "This will show pings from your friends, every 15 min.\r\nGo to your account on four" +
+                "square.com to disable ping for specific friends.";
+            // 
+            // label9
+            // 
+            label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            label9.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            label9.ForeColor = System.Drawing.Color.Gainsboro;
+            label9.Location = new System.Drawing.Point(21, 91);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(215, 34);
+            label9.Text = "Gps will be disabled after 5 min. of inactivity.";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -225,16 +281,13 @@
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlPremium);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.txtEmail);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.panel2);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "Settings";
-            this.Size = new System.Drawing.Size(252, 280);
+            this.Size = new System.Drawing.Size(239, 382);
             this.pnlPremium.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -255,5 +308,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel2;
     }
 }

@@ -41,7 +41,7 @@ namespace MySquare.Pings
                 {
                     if ((DateTime.Now - checkIns[i].Created).TotalHours < 10 &&
                         (checkIns[i].Shout != null || checkIns[i].Venue != null) &&
-                        (checkIns[i].User.FriendStatus != FriendStatus.self))
+                        checkIns[i].Ping)
                     {
                         if (checkIns[i].Id == Configuration.LastCheckIn)
                             break;
@@ -53,16 +53,20 @@ namespace MySquare.Pings
                 {
                     Configuration.LastCheckIn = checkInsToAlert[0].Id;
                     message.Append("<ul style=\"padding: 0 0 0 10px; margin: 0 0 0 5px;list-style-type: square;\">");
-                    for (int i = 0; i < checkInsToAlert.Count && i < 3; i++)
+                    for (int i = 0; i < checkInsToAlert.Count && i < 4; i++)
                     {
                         var chkin = checkInsToAlert[i];
-                        message.Append("<li style=\"padding:0;margin-bottom:4px;\">");
-                        message.Append(chkin.Display);
-                        message.Append(", ");
-                        message.Append(chkin.Created.ToHumanTime());
-                        message.Append("</li>");
 
-                        if (i == 2 && checkInsToAlert.Count > 3)
+                        if (i < 3 || checkInsToAlert.Count == 4)
+                        {
+                            message.Append("<li style=\"padding:0;margin-bottom:4px;\">");
+                            message.Append(chkin.Display);
+                            message.Append(", ");
+                            message.Append(chkin.Created.ToHumanTime());
+                            message.Append("</li>");
+                        }
+
+                        if (i == 2 && checkInsToAlert.Count > 4)
                         {
                             message.Append("<li style=\"padding:0;margin-bottom:4px;\">");
                             message.Append(string.Format("More {0} friend(s) have checked-in.", checkInsToAlert.Count - 3));

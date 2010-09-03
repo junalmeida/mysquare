@@ -48,6 +48,10 @@ namespace MySquare
                 {
                     Configuration.RetrievePings = (MessageBox.Show("Keep recieveing check-in notifications after closing MySquare?", "MySquare", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes);
                 }
+                if (lastException != null)
+                {
+                    MessageBox.Show("Unknkown error: " + lastException.Message + "\r\n");
+                }
 #if !DEBUG
                 }
                 catch (ObjectDisposedException)
@@ -166,11 +170,14 @@ sattelites: {8}",
 
         static System.Threading.Timer timerGpsOff = null;
 
-
+        static Exception lastException;
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             if (e != null && e.ExceptionObject is Exception)
+            {
+                lastException = (Exception)e.ExceptionObject;
                 Service.Log.RegisterLog(e.ExceptionObject as Exception);
+            }
         }
 
         internal static bool KeepGpsOpened { get; set; }

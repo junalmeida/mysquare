@@ -35,6 +35,7 @@ namespace MySquare.Pings
 
         static void Pings_Tick(object state)
         {
+            bool ret = false;
             try
             {
                 if (!Configuration.RetrievePings || (Configuration.PingInterval <= 0 &&
@@ -44,16 +45,22 @@ namespace MySquare.Pings
                 }
                 else
                 {
-                    bool ret = false;
                     if (Configuration.IsPremium)
                         ret = controller.GetCheckIns();
+                }
+            }
+            catch (ObjectDisposedException) { Quit(); }
+            catch (Exception) { }
+            finally
+            {
+                if (pings != null)
+                {
                     if (ret)
                         pings.Change(Configuration.PingInterval * (60 * 1000), Timeout.Infinite);
                     else
                         pings.Change((30 * 1000), Timeout.Infinite);
                 }
             }
-            catch (ObjectDisposedException) { pingsLoop.Set(); }
         }
 
         static void Control_Tick(object state)
@@ -71,9 +78,21 @@ namespace MySquare.Pings
 
         private static void Quit()
         {
-            control.Dispose();
-            pings.Dispose();
-            pingsLoop.Set();
+            if (control != null)
+            {
+                control.Dispose();
+                control = null;
+            }
+            if (pings != null)
+            {
+                pings.Dispose();
+                pings = null;
+            }
+            if (pingsLoop != null)
+            {
+                pingsLoop.Set();
+                pingsLoop = null;
+            }
         }
 
     }
