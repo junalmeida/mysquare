@@ -152,6 +152,7 @@
     <Compile Include="Controller\HelpController.cs" />
     <Compile Include="Controller\LeaderboardController.cs" />
     <Compile Include="Controller\MainController.cs" />
+    <Compile Include="Controller\MoreActionsController.cs" />
     <Compile Include="Controller\PlacesController.cs" />
     <Compile Include="Controller\SettingsController.cs" />
     <Compile Include="Controller\UserController.cs" />
@@ -498,6 +499,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\marker_green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\more-64x64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shout-64x64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Leaderboard_64x64.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Common\" />

@@ -40,25 +40,26 @@
             this.listBox.Location = new System.Drawing.Point(0, 0);
             this.listBox.Name = "listBox";
             this.listBox.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
-            this.listBox.Size = new System.Drawing.Size(150, 150);
+            this.listBox.Size = new System.Drawing.Size(285, 261);
             this.listBox.TabIndex = 1;
             this.listBox.SelectedItemChanged += new System.EventHandler(this.listBox_SelectedItemChanged);
             this.listBox.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.listBox_DrawItem);
-            this.listBox.SelectedItemClicked += new System.EventHandler(this.listBox_SelectedItemClicked);
             // 
             // MoreActions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.listBox);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "MoreActions";
+            this.Size = new System.Drawing.Size(285, 261);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        Tenor.Mobile.UI.KListControl listBox;
+        internal Tenor.Mobile.UI.KListControl listBox;
     }
 }

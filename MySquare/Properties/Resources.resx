@@ -196,4 +196,13 @@
   <data name="Marker" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\marker_green.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="MoreActions" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\more-64x64.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Shout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Shout-64x64.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Leaderboard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Leaderboard_64x64.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

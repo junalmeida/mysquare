@@ -76,12 +76,12 @@ namespace MySquare.UI
             header.Tabs.Add(tabPlaces = new Tenor.Mobile.UI.HeaderTab("Places", Resources.PinMap));
             header.Tabs.Add(tabFriends = new Tenor.Mobile.UI.HeaderTab("Friends", Resources.Friends));
             header.Tabs.Add(tabSettings = new Tenor.Mobile.UI.HeaderTab("Settings", Resources.Settings));
-            header.Tabs.Add(tabAbout = new Tenor.Mobile.UI.HeaderTab("About", Resources.Help));
+            header.Tabs.Add(tabMore = new Tenor.Mobile.UI.HeaderTab("More Actions", Resources.MoreActions));
         }
         HeaderTab tabFriends;
         HeaderTab tabPlaces;
         HeaderTab tabSettings;
-        HeaderTab tabAbout;
+        HeaderTab tabMore;
 
         internal void ChangePlacesName(string text)
         {
@@ -113,8 +113,8 @@ namespace MySquare.UI
                 Controller.BaseController.OpenController(settings1);
             else if (tab == tabFriends)
                 Controller.BaseController.OpenController(friends1);
-            else if (tab == tabAbout)
-                Controller.BaseController.OpenController(help1);
+            else if (tab == tabMore)
+                Controller.BaseController.OpenController(moreActions1);
         }
 
         private void Main_Load(object sender, EventArgs e)

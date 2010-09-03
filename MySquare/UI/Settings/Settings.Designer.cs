@@ -54,6 +54,40 @@
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
+            // label7
+            // 
+            label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            label7.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            label7.ForeColor = System.Drawing.Color.Gainsboro;
+            label7.Location = new System.Drawing.Point(21, 48);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(215, 26);
+            label7.Text = "Uncheck to disable the bottom bar of ads.";
+            // 
+            // label8
+            // 
+            label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            label8.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            label8.ForeColor = System.Drawing.Color.Gainsboro;
+            label8.Location = new System.Drawing.Point(21, 100);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(215, 59);
+            label8.Text = "This will show pings from your friends, for every 15 min.\r\nGo to your account on " +
+                "foursquare.com to disable ping for specific friends.";
+            // 
+            // label9
+            // 
+            label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            label9.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            label9.ForeColor = System.Drawing.Color.Gainsboro;
+            label9.Location = new System.Drawing.Point(21, 91);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(215, 34);
+            label9.Text = "Gps will be disabled after 5 minutes of inactivity.";
+            // 
             // label1
             // 
             this.label1.ForeColor = System.Drawing.Color.White;
@@ -133,15 +167,17 @@
             // 
             this.pnlPremium.BackColor = System.Drawing.Color.Black;
             this.pnlPremium.Controls.Add(label8);
-            this.pnlPremium.Controls.Add(label7);
             this.pnlPremium.Controls.Add(this.chkShowAds);
             this.pnlPremium.Controls.Add(this.label4);
             this.pnlPremium.Controls.Add(this.chkNotifications);
+            this.pnlPremium.Controls.Add(label7);
             this.pnlPremium.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlPremium.Location = new System.Drawing.Point(0, 115);
             this.pnlPremium.Name = "pnlPremium";
-            this.pnlPremium.Size = new System.Drawing.Size(239, 156);
+            this.pnlPremium.Size = new System.Drawing.Size(239, 165);
             this.pnlPremium.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            this.pnlPremium.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
+            this.pnlPremium.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
             // 
             // chkShowAds
             // 
@@ -163,11 +199,10 @@
             // 
             // chkNotifications
             // 
-            this.chkNotifications.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkNotifications.ForeColor = System.Drawing.Color.White;
-            this.chkNotifications.Location = new System.Drawing.Point(2, 74);
+            this.chkNotifications.Location = new System.Drawing.Point(15, 77);
             this.chkNotifications.Name = "chkNotifications";
-            this.chkNotifications.Size = new System.Drawing.Size(100, 20);
+            this.chkNotifications.Size = new System.Drawing.Size(108, 20);
             this.chkNotifications.TabIndex = 13;
             this.chkNotifications.Text = "Enable Pings";
             // 
@@ -180,10 +215,12 @@
             this.panel1.Controls.Add(this.cboMapType);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 271);
+            this.panel1.Location = new System.Drawing.Point(0, 280);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(239, 125);
+            this.panel1.Size = new System.Drawing.Size(239, 129);
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
+            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
             // 
             // label6
             // 
@@ -238,40 +275,8 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(239, 115);
-            // 
-            // label7
-            // 
-            label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            label7.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
-            label7.ForeColor = System.Drawing.Color.Gainsboro;
-            label7.Location = new System.Drawing.Point(21, 48);
-            label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(215, 20);
-            label7.Text = "Uncheck to disable the bottom bar of ads.";
-            // 
-            // label8
-            // 
-            label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            label8.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
-            label8.ForeColor = System.Drawing.Color.Gainsboro;
-            label8.Location = new System.Drawing.Point(21, 94);
-            label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(215, 59);
-            label8.Text = "This will show pings from your friends, every 15 min.\r\nGo to your account on four" +
-                "square.com to disable ping for specific friends.";
-            // 
-            // label9
-            // 
-            label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            label9.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
-            label9.ForeColor = System.Drawing.Color.Gainsboro;
-            label9.Location = new System.Drawing.Point(21, 91);
-            label9.Name = "label9";
-            label9.Size = new System.Drawing.Size(215, 34);
-            label9.Text = "Gps will be disabled after 5 min. of inactivity.";
+            this.panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
+            this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
             // 
             // Settings
             // 
@@ -284,7 +289,7 @@
             this.Controls.Add(this.panel2);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "Settings";
-            this.Size = new System.Drawing.Size(239, 382);
+            this.Size = new System.Drawing.Size(239, 453);
             this.pnlPremium.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

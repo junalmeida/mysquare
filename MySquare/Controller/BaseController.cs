@@ -48,7 +48,7 @@ namespace MySquare.Controller
                 ((UserController)controller).LoadUser((User)last[1]);
             }
             else
-                return false;
+                controller.Activate();
             CurrentController = Controllers.IndexOf(controller);
             return true;
         }
@@ -102,6 +102,8 @@ namespace MySquare.Controller
                 type = typeof(FriendsController);
             else if (view is UI.Friends.UserDetail)
                 type = typeof(UserController);
+            else if (view is UI.More.MoreActions)
+                type = typeof(MoreActionsController);
             else if (view is UI.Help)
                 type = typeof(HelpController);
             else

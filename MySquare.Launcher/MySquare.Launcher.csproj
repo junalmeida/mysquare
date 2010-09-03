@@ -68,6 +68,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Resources\mysquare-app.png">
+      <Link>mysquare-app.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\wpsapi.dll">
       <Link>wpsapi.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

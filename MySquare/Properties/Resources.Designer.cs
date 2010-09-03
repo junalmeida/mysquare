@@ -148,6 +148,13 @@ namespace MySquare.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Leaderboard {
+            get {
+                object obj = ResourceManager.GetObject("Leaderboard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Loader {
             get {
                 object obj = ResourceManager.GetObject("Loader", resourceCulture);
@@ -165,6 +172,13 @@ namespace MySquare.Properties {
         internal static System.Drawing.Bitmap Marker {
             get {
                 object obj = ResourceManager.GetObject("Marker", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap MoreActions {
+            get {
+                object obj = ResourceManager.GetObject("MoreActions", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -207,6 +221,13 @@ namespace MySquare.Properties {
         internal static System.Drawing.Bitmap Settings {
             get {
                 object obj = ResourceManager.GetObject("Settings", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Shout {
+            get {
+                object obj = ResourceManager.GetObject("Shout", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
