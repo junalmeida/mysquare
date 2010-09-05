@@ -27,8 +27,10 @@ namespace MySquare
         [MTAThread]
         public static void Main()
         {
-            Application.Run(new MySquare.UI.MapTest());
-            return;
+#if DEBUG
+           // if (System.Diagnostics.Debugger.IsAttached)
+                //Application.Run(new MySquare.UI.MapTest());
+#endif
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             using (UI.Main mainForm = new UI.Main())
             {
