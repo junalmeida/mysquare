@@ -20,6 +20,7 @@ namespace MySquare.Controller
             service.Error += new ErrorEventHandler(service_Error);
             service.VersionArrived += new VersionInfoEventHandler(service_VersionArrived);
 
+            View.listBox.SelectedItemClicked += new System.EventHandler(this.listBox_SelectedItemClicked);
         }
 
         public override void Activate()
@@ -35,7 +36,6 @@ namespace MySquare.Controller
             RightSoftButtonEnabled = true;
             RightSoftButtonText = "&Exit";
 
-            View.listBox.SelectedItemClicked += new System.EventHandler(this.listBox_SelectedItemClicked);
 
         }
 
@@ -59,17 +59,23 @@ namespace MySquare.Controller
                     break;
                 case 1:
                     //Leaderboard
-                    //BaseController.OpenController((View.Parent as Main).leaderboard);
+                    BaseController.OpenController((View.Parent as Main).leaderboard1);
                     break;
                 case 2:
                     //Updates
-                    service.GetVersionInfo();
+                    CheckUpdates();
                     break;
                 case 3:
                     //About:
                     BaseController.OpenController((View.Parent as Main).help1);
                     break;
             }
+        }
+
+        private void CheckUpdates()
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            service.GetVersionInfo();
         }
 
 
@@ -89,6 +95,8 @@ namespace MySquare.Controller
 
         private void LoadVersion()
         {
+            Cursor.Current = Cursors.Default;
+
             if (Configuration.GetVersion() != version.Version)
             {
                 if (MessageBox.Show("There is a new version available.\r\n\r\nDo you want to upgrade now?", "MySquare", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes)

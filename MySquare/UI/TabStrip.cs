@@ -55,6 +55,8 @@ namespace MySquare.UI
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (Tabs.Count == 0)
+                return;
             float width = this.Width / Tabs.Count;
             for (int i = 0; i < Tabs.Count; i++)
             {

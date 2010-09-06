@@ -106,6 +106,8 @@ namespace MySquare.Controller
                 type = typeof(MoreActionsController);
             else if (view is UI.Help)
                 type = typeof(HelpController);
+            else if (view is UI.More.Leaderboard)
+                type = typeof(LeaderboardController);
             else
                 throw new NotImplementedException();
 
@@ -148,7 +150,8 @@ namespace MySquare.Controller
             }
         }
 
-        
+        internal static int lastController { get; set; }
+
     }
 
     abstract class BaseController<T> : BaseController where T : IView
@@ -259,10 +262,10 @@ namespace MySquare.Controller
         }
         #endregion
 
- 
 
         protected void ShowError(string text)
         {
+            lastController = CurrentController;
             CurrentController = 0;
             MainController.ShowErrorForm(text);
         }

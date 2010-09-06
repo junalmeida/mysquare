@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using MySquare.UI;
 
 namespace MySquare.Controller
 {
@@ -15,7 +16,26 @@ namespace MySquare.Controller
 
         void Service_Error(object serder, MySquare.Service.ErrorEventArgs e)
         {
-            throw new NotImplementedException();
+        }
+
+        public override void Activate()
+        {
+            (View.Parent as Main).Reset();
+            View.BringToFront();
+            View.Dock = System.Windows.Forms.DockStyle.Fill;
+            View.Visible = true;
+
+
+            LeftSoftButtonEnabled = false;
+            LeftSoftButtonText = "";
+            RightSoftButtonEnabled = true;
+            RightSoftButtonText = "&Back";
+
+        }
+
+        public override void OnRightSoftButtonClick()
+        {
+            OpenController((View.Parent as Main).moreActions1);
         }
 
     }

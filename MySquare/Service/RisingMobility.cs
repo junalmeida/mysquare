@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Xml;
 using Newtonsoft.Json;
+using System.Windows.Forms;
 
 namespace MySquare.Service
 {

@@ -55,7 +55,6 @@ namespace MySquare.Controller
             form.header.Tabs[0].Selected = true;
             View.checkIn1.pnlCheckInResult.Visible = false;
             View.checkIn1.pnlShout.Visible = true;
-            View.checkIn1.txtShout.Text = string.Empty;
             View.venueTips1.Enabled = true;
             OpenSection(VenueSection.CheckIn);
 
@@ -148,6 +147,7 @@ namespace MySquare.Controller
             if (venue.Tags != null && venue.Tags.Length > 0)
                 lastTags = venue.Tags;
 
+            View.checkIn1.txtShout.Text = string.Empty;
             View.tabStrip1.SelectedIndex = 0;
             OpenSection(VenueSection.CheckIn);
         }
