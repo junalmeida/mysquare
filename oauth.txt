@@ -1,0 +1,11 @@
+Registered Consumers
+
+Request Token URL: http://foursquare.com/oauth/request_token
+Access Token URL: http://foursquare.com/oauth/access_token
+Authorize URL: http://foursquare.com/oauth/authorize
+
+We currently support hmac-sha1 signed requests
+Application Name: MySquare
+Callback URL: http://risingmobility.com/mysquare/oauth.ashx
+Key: HAS1SHMA5HIZQSJZREGQEXQOHG51X3TZVX1BJCMVDQZT0FBF
+Secret: OPJZHF2G0SUT1DBLWEP2GQAV4LYFKAU005LUPDLS54V3IC3G
