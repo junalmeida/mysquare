@@ -189,7 +189,14 @@ namespace MySquare.Controller
                     View.list1.listBox.AddItem(venue.Name, venue);
                 }
             }
-            View.list1.listBox.AddItem("Create a new place\r\nIf you cannot find a venue, tap here.", null);
+            string newItemText = "Create a new place";
+            if (View.list1.listBox.Count > 0)
+                newItemText += "\r\nIf you cannot find a venue, tap here.";
+            else
+                newItemText += "\r\nNo place found. Tap here to create.";
+
+
+            View.list1.listBox.AddItem(newItemText, null);
             ShowList();
 
 

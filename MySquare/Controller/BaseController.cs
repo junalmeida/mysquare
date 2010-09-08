@@ -279,6 +279,10 @@ namespace MySquare.Controller
             else
             {
                 text = "Cannot connect to foursquare, try again.";
+                if (ex is ServerException)
+                {
+                    text = ex.Message;
+                }
                 Log.RegisterLog(ex);
             }
 

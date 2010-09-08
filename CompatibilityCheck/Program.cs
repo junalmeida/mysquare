@@ -184,7 +184,7 @@ namespace CompatibilityCheck
         {
             Debug.WriteLine("  * Attemp " + (count + 1).ToString() + ": " +
                 pos.ToString() + "; " +
-                pos.WorldPoint.ToString() + "; " + pos.FixType.ToString() + "; " + pos.WorldPoint.FixTime.ToString() + "; " + pos.WorldPoint.HorizontalDistance.ToString() + "m.");
+                pos.WorldPoint.ToString() + "; " + pos.FixType.ToString() + "; " + pos.WorldPoint.FixTime.ToString());
             Debug.WriteLine(string.Empty);
             if (pos.FixType == RisingMobility.Mobile.Location.FixType.Gps)
                 gpsCount++;

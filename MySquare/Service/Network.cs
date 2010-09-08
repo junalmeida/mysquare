@@ -175,13 +175,25 @@ namespace MySquare.Service
             {
                 using (stream)
                 {
+                    StreamReader networkReader = new StreamReader(stream);
+                    string responseTxt = networkReader.ReadToEnd();
 
                     Type type = GetJsonType(service);
+                    if (responseTxt.StartsWith("{ \"error\""))
+                    {
+                        type = typeof(ErrorEventArgs);
+                    }
 
 
                     Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
-                    Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
+                    //Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
+                    Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
                     result = serializer.Deserialize(reader, type);
+
+                    if (responseTxt.StartsWith("{ \"error\""))
+                    {
+                        ((ErrorEventArgs)result).Exception = new ServerException(((ErrorEventArgs)result).Message);
+                    }
 
                 }
 
@@ -292,7 +304,7 @@ namespace MySquare.Service
 
                                 if (responseTxt.StartsWith("{ \"error\""))
                                 {
-                                    ((ErrorEventArgs)result).Exception = new Exception(((ErrorEventArgs)result).Message);
+                                    ((ErrorEventArgs)result).Exception = new ServerException(((ErrorEventArgs)result).Message);
                                 }
                             }
 
@@ -554,5 +566,17 @@ namespace MySquare.Service
         [JsonProperty("error")]
         internal string Message
         { get; set; }
+
+    }
+
+    class ServerException : Exception
+    {
+        public ServerException() : base()
+        {
+        }
+        public ServerException(string message)
+            : base(message)
+        {
+        }
     }
 }
