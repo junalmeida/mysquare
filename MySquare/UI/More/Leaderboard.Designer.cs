@@ -28,33 +28,51 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel = new Tenor.Mobile.UI.KListControl();
+            this.lstFriends = new Tenor.Mobile.UI.KListControl();
+            this.lstAll = new Tenor.Mobile.UI.KListControl();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblFriendStatus = new System.Windows.Forms.Label();
-            this.lblUserName = new System.Windows.Forms.Label();
+            this.lblRefreshTime = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.tabStrip = new MySquare.UI.TabStrip();
             this.picAvatar = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel
+            // lstFriends
             // 
-            this.panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
-            this.panel.DefaultItemHeight = 38;
-            this.panel.DefaultItemWidth = 80;
-            this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel.Layout = Tenor.Mobile.UI.KListLayout.Vertical;
-            this.panel.Location = new System.Drawing.Point(0, 71);
-            this.panel.Name = "panel";
-            this.panel.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
-            this.panel.Size = new System.Drawing.Size(350, 189);
-            this.panel.TabIndex = 0;
+            this.lstFriends.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
+            this.lstFriends.DefaultItemHeight = 30;
+            this.lstFriends.DefaultItemWidth = 80;
+            this.lstFriends.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstFriends.Layout = Tenor.Mobile.UI.KListLayout.Vertical;
+            this.lstFriends.Location = new System.Drawing.Point(0, 71);
+            this.lstFriends.Name = "lstFriends";
+            this.lstFriends.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
+            this.lstFriends.Size = new System.Drawing.Size(350, 189);
+            this.lstFriends.TabIndex = 0;
+            this.lstFriends.Skinnable = false;
+            this.lstFriends.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.lstAll_DrawItem);
+            // 
+            // lstAll
+            // 
+            this.lstAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
+            this.lstAll.DefaultItemHeight = 30;
+            this.lstAll.DefaultItemWidth = 80;
+            this.lstAll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstAll.Layout = Tenor.Mobile.UI.KListLayout.Vertical;
+            this.lstAll.Location = new System.Drawing.Point(0, 71);
+            this.lstAll.Name = "lstAll";
+            this.lstAll.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
+            this.lstAll.Size = new System.Drawing.Size(350, 189);
+            this.lstAll.TabIndex = 0;
+            this.lstAll.Skinnable = false;
+            this.lstAll.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.lstAll_DrawItem);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
-            this.panel1.Controls.Add(this.lblFriendStatus);
-            this.panel1.Controls.Add(this.lblUserName);
+            this.panel1.Controls.Add(this.lblRefreshTime);
+            this.panel1.Controls.Add(this.lblTitle);
             this.panel1.Controls.Add(this.tabStrip);
             this.panel1.Controls.Add(this.picAvatar);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -64,25 +82,25 @@
             // 
             // lblFriendStatus
             // 
-            this.lblFriendStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.lblRefreshTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFriendStatus.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
-            this.lblFriendStatus.ForeColor = System.Drawing.Color.White;
-            this.lblFriendStatus.Location = new System.Drawing.Point(33, 24);
-            this.lblFriendStatus.Name = "lblFriendStatus";
-            this.lblFriendStatus.Size = new System.Drawing.Size(311, 16);
-            this.lblFriendStatus.Text = "Leaderboard resets every Sunday night";
+            this.lblRefreshTime.Font = new System.Drawing.Font("Tahoma", 7F, System.Drawing.FontStyle.Regular);
+            this.lblRefreshTime.ForeColor = System.Drawing.Color.White;
+            this.lblRefreshTime.Location = new System.Drawing.Point(33, 24);
+            this.lblRefreshTime.Name = "lblFriendStatus";
+            this.lblRefreshTime.Size = new System.Drawing.Size(320, 16);
+            this.lblRefreshTime.Text = "Leaderboard resets every Sunday night";
             // 
             // lblUserName
             // 
-            this.lblUserName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblUserName.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.lblUserName.ForeColor = System.Drawing.Color.White;
-            this.lblUserName.Location = new System.Drawing.Point(33, 7);
-            this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(311, 16);
-            this.lblUserName.Text = "The Leaderboard";
+            this.lblTitle.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Location = new System.Drawing.Point(33, 7);
+            this.lblTitle.Name = "lblUserName";
+            this.lblTitle.Size = new System.Drawing.Size(311, 16);
+            this.lblTitle.Text = "The Leaderboard";
             // 
             // tabStrip
             // 
@@ -93,6 +111,7 @@
             this.tabStrip.Size = new System.Drawing.Size(350, 25);
             this.tabStrip.TabIndex = 5;
             this.tabStrip.Text = "tabStrip1";
+            this.tabStrip.SelectedIndexChanged += new System.EventHandler(this.tabStrip_SelectedIndexChanged);
             // 
             // picAvatar
             // 
@@ -105,8 +124,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.Black;
-            this.Controls.Add(this.panel);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
+            this.Controls.Add(this.lstFriends);
+            this.Controls.Add(this.lstAll);
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "Leaderboard";
@@ -119,11 +139,12 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        internal System.Windows.Forms.Label lblFriendStatus;
+        internal System.Windows.Forms.Label lblRefreshTime;
         internal TabStrip tabStrip;
-        internal System.Windows.Forms.Label lblUserName;
+        private System.Windows.Forms.Label lblTitle;
         internal System.Windows.Forms.PictureBox picAvatar;
-        private Tenor.Mobile.UI.KListControl panel;
+        internal Tenor.Mobile.UI.KListControl lstFriends;
+        internal Tenor.Mobile.UI.KListControl lstAll;
 
     }
 }

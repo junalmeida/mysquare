@@ -128,7 +128,7 @@ namespace MySquare.Service
 
 
 #if TESTING
-            string resourceFile = url.Substring(url.LastIndexOf("/") + 1).Replace(".json", "Test.txt");
+            string resourceFile = url.Substring(url.LastIndexOf("/") + 1).Replace(".json", "Test.txt").Replace("me?", "leaderboardTest.txt?");
             int qs = resourceFile.IndexOf("?");
             if (qs > -1)
                 resourceFile = resourceFile.Substring(0, qs);
@@ -183,12 +183,18 @@ namespace MySquare.Service
                     {
                         type = typeof(ErrorEventArgs);
                     }
+                    if (type == null)
+                    {
+                        result = responseTxt;
+                    }
+                    else
+                    {
 
-
-                    Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
-                    //Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
-                    Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
-                    result = serializer.Deserialize(reader, type);
+                        Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+                        //Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
+                        Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
+                        result = serializer.Deserialize(reader, type);
+                    }
 
                     if (responseTxt.StartsWith("{ \"error\""))
                     {

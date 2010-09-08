@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta content="width=320, user-scalable=no" name="viewport" />
+    <style type="text/css">
+      body {
+        font-family: Helvetica, Verdana, Arial, sans-serif;
+        font-size: 14px;
+      }
+      img, table {
+        border: 0;
+      }
+      a {
+        color: black;
+      }
+      tr.header {
+        font-size: 16px;
+      }
+      td.mini {
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+
+      <tr class="header"><td colspan="4"><b>Leaderboard (since Monday)</b></td></tr>
+      
+        <tr class="header"><td colspan="4">Show: <b>My Friends</b> | <a href="/iphone/me?uid=1746121&amp;view=all&amp;geolat=-22.920453&amp;geolong=-43.209229&amp;scope=all">All Rio de Janeiro</a><br /><br /></td></tr>
+      
+      
+        <tr>
+          <td>1.</td>
+          <td>Marcos J.</td>
+
+          <td><img width="95" height="15" src="/img/bar_blue.gif" /></td>
+          <td class="mini">(24 pts, 8x)</td>
+        </tr>
+      
+        <tr>
+          <td>2.</td>
+          <td>Gustavo P.</td>
+          <td><img width="75" height="15" src="/img/bar_blue.gif" /></td>
+
+          <td class="mini">(19 pts, 3x)</td>
+        </tr>
+      
+        <tr>
+          <td>3.</td>
+          <td>Raquel A.</td>
+          <td><img width="23" height="15" src="/img/bar_blue.gif" /></td>
+          <td class="mini">(6 pts, 1x)</td>
+
+        </tr>
+      
+      
+        <tr><td colspan="4" class="mini"><br />Leaderboard resets every Sunday night, 11:59pm</td></tr>
+      
+    </table>
+  </body>
+</html>  
+  

@@ -45,8 +45,17 @@ namespace MySquare.Service
         internal void GetLeaderBoard(double lat, double lng, Scope scope)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            //if (uid > 0)
-            //parameters.Add("uid", uid.ToString());
+            int uid = 0;
+            foreach (var u in cacheUsers)
+            {
+                if (u.FriendStatus.HasValue && u.FriendStatus.Value == FriendStatus.self)
+                {
+                    uid = u.Id;
+                    break;
+                }
+            }
+            if (uid > 0)
+                parameters.Add("uid", uid.ToString());
             parameters.Add("geolat", lat.ToString(culture));
             parameters.Add("geolong", lng.ToString(culture));
             parameters.Add("view", "all");
@@ -298,6 +307,16 @@ namespace MySquare.Service
 
 
 
+        internal event LeaderboardEventHandler LeaderboardResult;
+        private void OnLeaderboardResult(LeaderboardEventArgs e)
+        {
+            if (LeaderboardResult != null)
+            {
+                LeaderboardResult(this, e);
+            }
+        }
+
+
         internal event VenueEventHandler VenueResult;
         private void OnVenueResult(VenueEventArgs e)
         {
@@ -532,14 +551,78 @@ namespace MySquare.Service
 
         private void ParseLeaderBoard(string xml)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-
-            foreach (var item in doc.DocumentElement.SelectNodes("/html/body/table/tr"))
+            List<LeaderboardUser> list = new List<LeaderboardUser>();
+            var eargs = new LeaderboardEventArgs();
+            try
             {
-            }
+                XmlDocument doc = new XmlDocument();
 
-            throw new NotImplementedException();
+                XmlReaderSettings settings = new XmlReaderSettings();
+                settings.CheckCharacters = false;
+                settings.CloseInput = true;
+                settings.ConformanceLevel = ConformanceLevel.Fragment;
+                settings.IgnoreComments = true;
+                settings.IgnoreProcessingInstructions = true;
+                settings.IgnoreWhitespace = true;
+                settings.ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.None;
+                settings.ValidationType = ValidationType.None;
+
+                int pos = xml.IndexOf("<table>");
+                if (pos > -1)
+                    xml = xml.Substring(pos);
+                else
+                    throw new InvalidOperationException();
+
+                pos = xml.IndexOf("</table>");
+
+                if (pos > -1)
+                    xml = xml.Substring(0, pos + 8);
+                else
+                    throw new InvalidOperationException();
+
+
+                using (XmlReader reader = XmlReader.Create(new StringReader(xml), settings))
+                {
+                    doc.Load(reader);
+                }
+
+                foreach (XmlNode item in doc.DocumentElement.SelectNodes("/table/tr"))
+                {
+                    if (item.ChildNodes.Count == 4)
+                    {
+                        LeaderboardUser u = new LeaderboardUser()
+                        {
+                            User = item.ChildNodes[1].InnerText,
+                            Percentage = int.Parse(item.ChildNodes[2].ChildNodes[0].Attributes["width"].Value),
+                            Self = item.ChildNodes[2].ChildNodes[0].Attributes["src"].Value.IndexOf("red") > -1,
+                            Points = item.ChildNodes[3].InnerText
+                        };
+                        u.Points = u.Points.Remove(0, 1);
+                        u.Points = u.Points.Remove(u.Points.Length - 1, 1);
+                        list.Add(u);
+                    }
+                    else if (item.ChildNodes.Count == 1
+                        && item.ChildNodes[0].Attributes["class"] != null
+                        && item.ChildNodes[0].Attributes["class"].Value == "mini")
+                    {
+                        eargs.RefreshTime = item.ChildNodes[0].InnerText.Trim();
+                    }
+                    else if (item.ChildNodes.Count == 1
+                        && item.Attributes["class"] != null && item.Attributes["class"].Value == "header"
+                        && item.ChildNodes[0].InnerText.Contains("All"))
+                    {
+                        eargs.AllText = item.ChildNodes[0].InnerText;
+                        eargs.AllText = eargs.AllText.Substring(eargs.AllText.IndexOf("|") + 1).Trim();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                OnError(new ErrorEventArgs(ex));
+                return;
+            }
+            eargs.Users = list.ToArray();
+            OnLeaderboardResult(eargs);
         }
 
     }
@@ -549,4 +632,6 @@ namespace MySquare.Service
         Friends,
         All
     }
+
+
 }
