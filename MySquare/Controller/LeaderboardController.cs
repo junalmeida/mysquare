@@ -108,7 +108,10 @@ namespace MySquare.Controller
 
             View.lblRefreshTime.Text = refreshTime;
             if (!string.IsNullOrEmpty(allText))
+            {
                 View.tabStrip.Tabs[1] = allText;
+                View.tabStrip.Invalidate();
+            }
             Cursor.Current = Cursors.Default;
         }
 

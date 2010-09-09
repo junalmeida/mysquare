@@ -1,6 +1,6 @@
 ﻿namespace MySquare.UI.More
 {
-    partial class Leaderboard
+    partial class Shout
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,57 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lstFriends = new Tenor.Mobile.UI.KListControl();
-            this.lstAll = new Tenor.Mobile.UI.KListControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblRefreshTime = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.tabStrip = new MySquare.UI.TabStrip();
             this.picAvatar = new System.Windows.Forms.PictureBox();
+            this.checkIn1 = new MySquare.UI.Places.Details.CheckIn();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lstFriends
-            // 
-            this.lstFriends.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
-            this.lstFriends.DefaultItemHeight = 30;
-            this.lstFriends.DefaultItemWidth = 80;
-            this.lstFriends.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstFriends.Layout = Tenor.Mobile.UI.KListLayout.Vertical;
-            this.lstFriends.Location = new System.Drawing.Point(0, 71);
-            this.lstFriends.Name = "lstFriends";
-            this.lstFriends.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
-            this.lstFriends.Size = new System.Drawing.Size(350, 189);
-            this.lstFriends.Skinnable = false;
-            this.lstFriends.TabIndex = 0;
-            this.lstFriends.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.lstAll_DrawItem);
-            // 
-            // lstAll
-            // 
-            this.lstAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
-            this.lstAll.DefaultItemHeight = 30;
-            this.lstAll.DefaultItemWidth = 80;
-            this.lstAll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstAll.Layout = Tenor.Mobile.UI.KListLayout.Vertical;
-            this.lstAll.Location = new System.Drawing.Point(0, 71);
-            this.lstAll.Name = "lstAll";
-            this.lstAll.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
-            this.lstAll.Size = new System.Drawing.Size(350, 189);
-            this.lstAll.Skinnable = false;
-            this.lstAll.TabIndex = 0;
-            this.lstAll.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.lstAll_DrawItem);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
             this.panel1.Controls.Add(this.lblRefreshTime);
             this.panel1.Controls.Add(this.lblTitle);
-            this.panel1.Controls.Add(this.tabStrip);
             this.panel1.Controls.Add(this.picAvatar);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(350, 71);
+            this.panel1.Size = new System.Drawing.Size(350, 45);
             // 
             // lblRefreshTime
             // 
@@ -86,10 +53,10 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblRefreshTime.Font = new System.Drawing.Font("Tahoma", 7F, System.Drawing.FontStyle.Regular);
             this.lblRefreshTime.ForeColor = System.Drawing.Color.White;
-            this.lblRefreshTime.Location = new System.Drawing.Point(33, 24);
+            this.lblRefreshTime.Location = new System.Drawing.Point(41, 24);
             this.lblRefreshTime.Name = "lblRefreshTime";
-            this.lblRefreshTime.Size = new System.Drawing.Size(320, 16);
-            this.lblRefreshTime.Text = "Leaderboard resets every Sunday night";
+            this.lblRefreshTime.Size = new System.Drawing.Size(312, 16);
+            this.lblRefreshTime.Text = "Broadcast a message to your friends.";
             // 
             // lblTitle
             // 
@@ -97,39 +64,35 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTitle.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(33, 7);
+            this.lblTitle.Location = new System.Drawing.Point(41, 7);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(311, 16);
-            this.lblTitle.Text = "The Leaderboard";
-            // 
-            // tabStrip
-            // 
-            this.tabStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabStrip.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
-            this.tabStrip.Location = new System.Drawing.Point(0, 46);
-            this.tabStrip.Name = "tabStrip";
-            this.tabStrip.Size = new System.Drawing.Size(350, 25);
-            this.tabStrip.TabIndex = 5;
-            this.tabStrip.Text = "tabStrip1";
-            this.tabStrip.SelectedIndexChanged += new System.EventHandler(this.tabStrip_SelectedIndexChanged);
+            this.lblTitle.Size = new System.Drawing.Size(303, 16);
+            this.lblTitle.Text = "Shout";
             // 
             // picAvatar
             // 
-            this.picAvatar.Location = new System.Drawing.Point(1, 5);
+            this.picAvatar.Location = new System.Drawing.Point(5, 6);
             this.picAvatar.Name = "picAvatar";
             this.picAvatar.Size = new System.Drawing.Size(32, 32);
             this.picAvatar.Paint += new System.Windows.Forms.PaintEventHandler(this.picAvatar_Paint);
             // 
-            // Leaderboard
+            // checkIn1
+            // 
+            this.checkIn1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkIn1.Location = new System.Drawing.Point(0, 45);
+            this.checkIn1.Name = "checkIn1";
+            this.checkIn1.Size = new System.Drawing.Size(350, 215);
+            this.checkIn1.TabIndex = 1;
+            // 
+            // Shout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
-            this.Controls.Add(this.lstFriends);
-            this.Controls.Add(this.lstAll);
+            this.Controls.Add(this.checkIn1);
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.Color.White;
-            this.Name = "Leaderboard";
+            this.Name = "Shout";
             this.Size = new System.Drawing.Size(350, 260);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -140,11 +103,9 @@
 
         private System.Windows.Forms.Panel panel1;
         internal System.Windows.Forms.Label lblRefreshTime;
-        internal TabStrip tabStrip;
         private System.Windows.Forms.Label lblTitle;
         internal System.Windows.Forms.PictureBox picAvatar;
-        internal Tenor.Mobile.UI.KListControl lstFriends;
-        internal Tenor.Mobile.UI.KListControl lstAll;
+        internal MySquare.UI.Places.Details.CheckIn checkIn1;
 
     }
 }

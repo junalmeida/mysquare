@@ -55,7 +55,7 @@ namespace MySquare.Controller
             {
                 case 0:
                     //shout
-                    //BaseController.OpenController((View.Parent as Main).leaderboard);
+                    BaseController.OpenController((View.Parent as Main).shout1);
                     break;
                 case 1:
                     //Leaderboard

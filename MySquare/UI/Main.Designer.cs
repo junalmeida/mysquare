@@ -51,6 +51,7 @@
             this.picGps = new System.Windows.Forms.PictureBox();
             this.moreActions1 = new MySquare.UI.More.MoreActions();
             this.leaderboard1 = new MySquare.UI.More.Leaderboard();
+            this.shout1 = new MySquare.UI.More.Shout();
             this.picAd.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -214,11 +215,20 @@
             this.leaderboard1.TabIndex = 24;
             this.leaderboard1.Visible = false;
             // 
+            // shout1
+            // 
+            this.shout1.Location = new System.Drawing.Point(63, 55);
+            this.shout1.Name = "shout1";
+            this.shout1.Size = new System.Drawing.Size(150, 150);
+            this.shout1.TabIndex = 28;
+            this.shout1.Visible = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(240, 268);
+            this.Controls.Add(this.shout1);
             this.Controls.Add(this.leaderboard1);
             this.Controls.Add(this.moreActions1);
             this.Controls.Add(this.picGps);
@@ -264,6 +274,7 @@
         private System.Windows.Forms.PictureBox picGps;
         internal MySquare.UI.More.MoreActions moreActions1;
         internal MySquare.UI.More.Leaderboard leaderboard1;
+        internal MySquare.UI.More.Shout shout1;
     }
 }
 

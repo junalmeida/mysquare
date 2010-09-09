@@ -18,6 +18,10 @@ namespace MySquare.UI.Places.Details
         public CheckIn()
         {
             InitializeComponent();
+
+            Color bgColor = Tenor.Mobile.Drawing.Strings.ToColor("#C5CCD4");
+            BackColor = bgColor;
+            txtShout.BackColor = bgColor;
         }
 
         private void txtShout_KeyDown(object sender, KeyEventArgs e)

@@ -108,6 +108,8 @@ namespace MySquare.Controller
                 type = typeof(HelpController);
             else if (view is UI.More.Leaderboard)
                 type = typeof(LeaderboardController);
+            else if (view is UI.More.Shout)
+                type = typeof(ShoutController);
             else
                 throw new NotImplementedException();
 

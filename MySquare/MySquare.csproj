@@ -155,6 +155,7 @@
     <Compile Include="Controller\MoreActionsController.cs" />
     <Compile Include="Controller\PlacesController.cs" />
     <Compile Include="Controller\SettingsController.cs" />
+    <Compile Include="Controller\ShoutController.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Controller\VenueDetailsController.cs" />
     <Compile Include="Extensions.cs" />
@@ -226,7 +227,6 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="UI\AnimatedGif.resx">
@@ -311,6 +311,12 @@
     </Compile>
     <Compile Include="UI\MapTest.Designer.cs">
       <DependentUpon>MapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\More\Shout.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\More\Shout.Designer.cs">
+      <DependentUpon>Shout.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\More\Leaderboard.cs">
       <SubType>UserControl</SubType>
@@ -525,6 +531,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Service\leaderboardTest.txt" />
+    <EmbeddedResource Include="UI\More\Shout.resx">
+      <DependentUpon>Shout.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Common\" />

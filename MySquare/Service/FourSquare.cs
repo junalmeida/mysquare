@@ -141,11 +141,22 @@ namespace MySquare.Service
 
             Post(ServiceResource.SearchNearby, parameters);
         }
-
+        
         internal void CheckIn(Venue venue, string shout, bool tellFriends, bool? facebook, bool? twitter)
         {
+            CheckIn(venue, shout, tellFriends, facebook, twitter, null, null);
+        }
+
+        internal void CheckIn(string shout, bool tellFriends, bool? facebook, bool? twitter, double? lat, double? lng)
+        {
+            CheckIn(null, shout, tellFriends, facebook, twitter, lat, lng);
+        }
+
+        internal void CheckIn(Venue venue, string shout, bool tellFriends, bool? facebook, bool? twitter, double? lat, double? lng)
+        {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("vid", venue.Id.ToString());
+            if (venue != null)
+                parameters.Add("vid", venue.Id.ToString());
             if (!string.IsNullOrEmpty(shout))
                 parameters.Add("shout", shout);
             parameters.Add("private", Convert.ToInt32((!tellFriends)).ToString());
@@ -153,7 +164,10 @@ namespace MySquare.Service
                 parameters.Add("twitter", Convert.ToInt32(twitter.Value).ToString());
             if (facebook.HasValue)
                 parameters.Add("facebook", Convert.ToInt32(facebook.Value).ToString());
-
+            if (lat.HasValue)
+                parameters.Add("geolat", lat.Value.ToString(culture));
+            if (lng.HasValue)
+                parameters.Add("geolong", lat.Value.ToString(culture));
 
             Post(ServiceResource.CheckIn, parameters);
         }
