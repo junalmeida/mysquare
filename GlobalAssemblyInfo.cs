@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.3.*")]
 #if ALPHA
-[assembly: AssemblyConfiguration("alpha1")]
+[assembly: AssemblyConfiguration("alpha2")]
 #elif DEBUG
 [assembly: AssemblyConfiguration("debug")]
 #else

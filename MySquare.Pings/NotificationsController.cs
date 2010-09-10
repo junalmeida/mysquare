@@ -103,12 +103,6 @@ namespace MySquare.Pings
                 return false;
         }
 
-        void Location_Error(object sender, RisingMobility.Mobile.Location.ErrorEventArgs e)
-        {
-            error = true;
-            Log.RegisterLog("lbs", e.Error);
-            waitThread.Set();
-        }
 
         void Service_Error(object serder, ErrorEventArgs e)
         {

@@ -131,14 +131,17 @@
     <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\Utils.cs">
       <Link>Location\Gps\Utils.cs</Link>
     </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Wifi\WPS.cs">
+      <Link>Location\Wifi\WPS.cs</Link>
+    </Compile>
+    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Wifi\WpsProxy.cs">
+      <Link>Location\Wifi\WpsProxy.cs</Link>
+    </Compile>
     <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\WorldPoint.cs">
       <Link>Location\WorldPoint.cs</Link>
     </Compile>
     <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\WorldPosition.cs">
       <Link>Location\WorldPosition.cs</Link>
-    </Compile>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Xps.cs">
-      <Link>Location\Xps.cs</Link>
     </Compile>
     <Compile Include="..\..\StaticLinkedComponents\Mobile\Obfuscation.cs">
       <Link>Obfuscation.cs</Link>
@@ -535,6 +538,14 @@
       <DependentUpon>Shout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\StaticLinkedComponents\Mobile\Location\Wifi\wpsapi.dll">
+      <Link>Location\Wifi\wpsapi.dll</Link>
+    </Content>
+    <Content Include="..\..\StaticLinkedComponents\Mobile\Location\Wifi\WpsProxy.dll">
+      <Link>Location\Wifi\WpsProxy.dll</Link>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Common\" />

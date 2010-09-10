@@ -134,11 +134,12 @@ namespace CompatibilityCheck
 
                 var culture = System.Globalization.CultureInfo.GetCultureInfo("en-us");
                 waithandle.Reset();
+
           
                 Debug.WriteLine();
                 Debug.Write("Testing WPS: ");
                 DateTime startPoint = DateTime.Now;
-                WorldPoint point = XpsProxy.GetLocation();
+                WorldPoint point = RisingMobility.Mobile.Location.WorldPosition.GetWiFiSkyhookLocation();
 
                 Debug.Write(point.ToString());
                 Debug.WriteLine(" ; " + (DateTime.Now - startPoint).TotalSeconds.ToString(culture) + " seconds.");

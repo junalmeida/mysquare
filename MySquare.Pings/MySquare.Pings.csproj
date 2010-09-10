@@ -65,42 +65,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Geolocation.cs">
-      <Link>Location\Geolocation.cs</Link>
-    </Compile>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps.cs">
-      <Link>Location\Gps.cs</Link>
-    </Compile>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\DegreesMinutesSeconds.cs">
-      <Link>Location\Gps\DegreesMinutesSeconds.cs</Link>
-    </Compile>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\DeviceStateChangedEventArgs.cs">
-      <Link>Location\Gps\DeviceStateChangedEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\GPS.cs">
-      <Link>Location\Gps\GPS.cs</Link>
-    </Compile>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\GpsDeviceState.cs">
-      <Link>Location\Gps\GpsDeviceState.cs</Link>
-    </Compile>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\GpsPosition.cs">
-      <Link>Location\Gps\GpsPosition.cs</Link>
-    </Compile>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\LocationChangedEventArgs.cs">
-      <Link>Location\Gps\LocationChangedEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Gps\Utils.cs">
-      <Link>Location\Gps\Utils.cs</Link>
-    </Compile>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\WorldPoint.cs">
-      <Link>Location\WorldPoint.cs</Link>
-    </Compile>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\WorldPosition.cs">
-      <Link>Location\WorldPosition.cs</Link>
-    </Compile>
-    <Compile Include="..\..\StaticLinkedComponents\Mobile\Location\Xps.cs">
-      <Link>Location\Xps.cs</Link>
-    </Compile>
     <Compile Include="..\..\StaticLinkedComponents\Mobile\Obfuscation.cs">
       <Link>Obfuscation.cs</Link>
     </Compile>
