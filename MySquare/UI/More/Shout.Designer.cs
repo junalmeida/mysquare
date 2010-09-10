@@ -71,7 +71,7 @@
             // 
             // picAvatar
             // 
-            this.picAvatar.Location = new System.Drawing.Point(5, 6);
+            this.picAvatar.Location = new System.Drawing.Point(4, 4);
             this.picAvatar.Name = "picAvatar";
             this.picAvatar.Size = new System.Drawing.Size(32, 32);
             this.picAvatar.Paint += new System.Windows.Forms.PaintEventHandler(this.picAvatar_Paint);

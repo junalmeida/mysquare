@@ -95,10 +95,12 @@ namespace MySquare.UI.More
             //            8 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
             //            8 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
             //}
-            e.Graphics.DrawString(
-                user.User.ToString(), fontBold, brush, rect);
 
-            SizeF size = e.Graphics.MeasureString(user.User.ToString(), fontBold);
+            string text = (e.Item.YIndex + 1).ToString() + ". " + user.User.ToString();
+            e.Graphics.DrawString(
+               text, fontBold, brush, rect);
+
+            SizeF size = e.Graphics.MeasureString(text, fontBold);
             rect.X += size.Width + padding;
             e.Graphics.DrawString(
                 user.Points, font, brush, rect, format);

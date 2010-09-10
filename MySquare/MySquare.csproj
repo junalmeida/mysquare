@@ -541,10 +541,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\StaticLinkedComponents\Mobile\Location\Wifi\wpsapi.dll">
-      <Link>Location\Wifi\wpsapi.dll</Link>
+      <Link>wpsapi.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\StaticLinkedComponents\Mobile\Location\Wifi\WpsProxy.dll">
-      <Link>Location\Wifi\WpsProxy.dll</Link>
+      <Link>WpsProxy.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

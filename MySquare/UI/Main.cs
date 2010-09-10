@@ -152,7 +152,7 @@ namespace MySquare.UI
             timerAds.Enabled = true;
             return;
 #endif
-            if (MySquare.Service.Configuration.IsFirstTime())
+            if (MySquare.Service.Configuration.IsFirstTime)
                 timerTutorial.Enabled = true;
             else
                 timerAds.Enabled = true;

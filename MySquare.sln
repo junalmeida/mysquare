@@ -43,10 +43,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySquare.Pings", "MySquare.Pings\MySquare.Pings.csproj", "{9EF154FF-7C32-43B8-9070-0D6B9DBC8BC4}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Alpha|Any CPU = Alpha|Any CPU
 		Debug|Any CPU = Debug|Any CPU
@@ -69,7 +65,6 @@ Global
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
 		{D01F0755-91EF-4DC5-8612-C0698AFB121A}.Testing|Any CPU.Build.0 = Debug|Any CPU
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Alpha|Any CPU.ActiveCfg = Release
-		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Alpha|Any CPU.Build.0 = Release
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Debug|Any CPU.ActiveCfg = Debug
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Release|Any CPU.ActiveCfg = Release
 		{CA8AD679-A1ED-45D3-A73B-17720A8623EB}.Release|Any CPU.Build.0 = Release
@@ -111,5 +106,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2A7C32F4-5D22-4DFC-9665-D60C07D0758B} = {05FA69D7-6B40-4F57-8B8F-6643525B37F8}
 		{FEE3DF99-755C-4A85-9BB7-B7C1339B080A} = {05FA69D7-6B40-4F57-8B8F-6643525B37F8}
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

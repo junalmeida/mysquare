@@ -322,17 +322,26 @@ namespace MySquare.Service
                 throw new InvalidOperationException();
         }
 
-        public static bool IsFirstTime()
+        static bool? isFirstTime = null;
+        public static bool IsFirstTime
         {
-            string version = key.GetValue("Version", string.Empty) as string;
-            string current = GetVersion();
-            if (!string.Equals(version, current))
+            get
             {
-                key.SetValue("Version", current);
-                return true;
+                if (!isFirstTime.HasValue)
+                {
+                    string version = key.GetValue("Version", string.Empty) as string;
+                    string current = GetVersion();
+                    if (!string.Equals(version, current))
+                    {
+                        key.SetValue("Version", current);
+                        isFirstTime = true;
+                    }
+                    else
+                        isFirstTime = false;
+                }
+                return isFirstTime.Value;
+
             }
-            else
-                return false;
         }
 
         internal static bool abortCheck = false;

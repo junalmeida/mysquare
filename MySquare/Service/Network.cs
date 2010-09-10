@@ -414,7 +414,7 @@ namespace MySquare.Service
         #region Cache
         internal static void CheckCacheFiles()
         {
-            if (Configuration.IsFirstTime())
+            if (Configuration.IsFirstTime)
             {
                 string appPath = Configuration.GetAppPath();
                 string path = System.IO.Path.Combine(appPath, "cache");

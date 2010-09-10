@@ -21,7 +21,7 @@
         "Entry"
         {
         "MsmKey" = "8:_20B25D4112C0532A5433C56937A4C83E"
-        "OwnerKey" = "8:_FEDC3465D0CC7C7811D314EFF77E6FA4"
+        "OwnerKey" = "8:_6D9AA8781E57993232C1015C660A63F3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -69,7 +69,7 @@
         "Entry"
         {
         "MsmKey" = "8:_3106B389FC9B706272C7ABCD109FEE26"
-        "OwnerKey" = "8:_FEDC3465D0CC7C7811D314EFF77E6FA4"
+        "OwnerKey" = "8:_6D9AA8781E57993232C1015C660A63F3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -81,7 +81,7 @@
         "Entry"
         {
         "MsmKey" = "8:_31EE3840F6A898828B54EC9199237748"
-        "OwnerKey" = "8:_FEDC3465D0CC7C7811D314EFF77E6FA4"
+        "OwnerKey" = "8:_6D9AA8781E57993232C1015C660A63F3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -117,7 +117,7 @@
         "Entry"
         {
         "MsmKey" = "8:_4A7434B659AB7FC34212EF1B6D2BD902"
-        "OwnerKey" = "8:_FEDC3465D0CC7C7811D314EFF77E6FA4"
+        "OwnerKey" = "8:_6D9AA8781E57993232C1015C660A63F3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -135,7 +135,7 @@
         "Entry"
         {
         "MsmKey" = "8:_64AEEAFA7969C2B1FCF77B085AC99E37"
-        "OwnerKey" = "8:_FEDC3465D0CC7C7811D314EFF77E6FA4"
+        "OwnerKey" = "8:_6D9AA8781E57993232C1015C660A63F3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -207,7 +207,7 @@
         "Entry"
         {
         "MsmKey" = "8:_662D2A9487B73BD7324DB8B91D1C54AF"
-        "OwnerKey" = "8:_FEDC3465D0CC7C7811D314EFF77E6FA4"
+        "OwnerKey" = "8:_6D9AA8781E57993232C1015C660A63F3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -232,6 +232,12 @@
         {
         "MsmKey" = "8:_662D2A9487B73BD7324DB8B91D1C54AF"
         "OwnerKey" = "8:_4C98B488594242149B2B4E14C877C924"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6D9AA8781E57993232C1015C660A63F3"
+        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -261,7 +267,7 @@
         "Entry"
         {
         "MsmKey" = "8:_8E860CA82208C28190DF7D7E605009B6"
-        "OwnerKey" = "8:_FEDC3465D0CC7C7811D314EFF77E6FA4"
+        "OwnerKey" = "8:_6D9AA8781E57993232C1015C660A63F3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -309,7 +315,7 @@
         "Entry"
         {
         "MsmKey" = "8:_B6C5CAF9A5623025DF012FBCDA48A610"
-        "OwnerKey" = "8:_FEDC3465D0CC7C7811D314EFF77E6FA4"
+        "OwnerKey" = "8:_6D9AA8781E57993232C1015C660A63F3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -338,18 +344,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D63CB9105647568085CFC824633E0118"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D63CB9105647568085CFC824633E0118"
-        "OwnerKey" = "8:_FEDC3465D0CC7C7811D314EFF77E6FA4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_D69790CD4CBF5723894A3FCCE7865D8A"
         "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
         "MsmSig" = "8:_UNDEFINED"
@@ -357,19 +351,25 @@
         "Entry"
         {
         "MsmKey" = "8:_D69790CD4CBF5723894A3FCCE7865D8A"
-        "OwnerKey" = "8:_FEDC3465D0CC7C7811D314EFF77E6FA4"
+        "OwnerKey" = "8:_6D9AA8781E57993232C1015C660A63F3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E843BBDA8285E2EA41CCEB22A3C96717"
+        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E843BBDA8285E2EA41CCEB22A3C96717"
+        "OwnerKey" = "8:_6D9AA8781E57993232C1015C660A63F3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FEDC3465D0CC7C7811D314EFF77E6FA4"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -392,7 +392,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:..\\Release\\MySquare.1.3.cab"
+        "OutputFilename" = "8:..\\Setup\\MySquare.1.3.cab"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
         "SignOutput" = "11:FALSE"
@@ -600,6 +600,34 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_6D9AA8781E57993232C1015C660A63F3"
+            {
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MySquare, Version=1.3.3905.20199, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_6D9AA8781E57993232C1015C660A63F3"
+                    {
+                    "Name" = "8:MySquare.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MySquare.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
+            "Condition" = "8:"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "Register" = "3:0"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_6E335CAF528BF692A0F731DD2168F5F8"
             {
             "AssemblyIsInGAC" = "11:FALSE"
@@ -702,34 +730,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_D63CB9105647568085CFC824633E0118"
-            {
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.WindowsMobile.Telephony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
-                "ScatterAssemblies"
-                {
-                    "_D63CB9105647568085CFC824633E0118"
-                    {
-                    "Name" = "8:Microsoft.WindowsMobile.Telephony.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.WindowsMobile.Telephony.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
-            "Condition" = "8:"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "Register" = "3:0"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_D69790CD4CBF5723894A3FCCE7865D8A"
             {
             "AssemblyIsInGAC" = "11:FALSE"
@@ -758,19 +758,19 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_FEDC3465D0CC7C7811D314EFF77E6FA4"
+            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_E843BBDA8285E2EA41CCEB22A3C96717"
             {
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MySquare, Version=1.3.3904.17635, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:Microsoft.WindowsMobile.Telephony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
                 "ScatterAssemblies"
                 {
-                    "_FEDC3465D0CC7C7811D314EFF77E6FA4"
+                    "_E843BBDA8285E2EA41CCEB22A3C96717"
                     {
-                    "Name" = "8:MySquare.dll"
+                    "Name" = "8:Microsoft.WindowsMobile.Telephony.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:MySquare.dll"
+            "SourcePath" = "8:Microsoft.WindowsMobile.Telephony.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
@@ -782,7 +782,7 @@
             "Permanent" = "11:FALSE"
             "SharedLegacy" = "11:FALSE"
             "Register" = "3:0"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -851,7 +851,7 @@
         {
             "{605BE39E-5046-48BD-AEC0-63C3A46626D5}:_4C98B488594242149B2B4E14C877C924"
             {
-            "SourcePath" = "8:..\\MySquare.Pings\\obj\\Release\\MySquare.Pings.exe"
+            "SourcePath" = "8:..\\MySquare.Pings\\obj\\Debug\\MySquare.Pings.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
@@ -877,7 +877,7 @@
             }
             "{605BE39E-5046-48BD-AEC0-63C3A46626D5}:_F04309DFC0E1435EB329602E36056E6D"
             {
-            "SourcePath" = "8:..\\MySquare.Launcher\\obj\\Release\\MySquare.Launcher.exe"
+            "SourcePath" = "8:..\\MySquare.Launcher\\obj\\Debug\\MySquare.Launcher.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
@@ -991,6 +991,13 @@
                                         }
                                         "Values"
                                         {
+                                            "{C3684F64-58E2-4092-8E3C-D7483080DE5A}:_2BC008AEABFD4427B21D735FC84BAE9E"
+                                            {
+                                            "Name" = "8:RetrievePings"
+                                            "Condition" = "8:"
+                                            "ValueTypes" = "3:3"
+                                            "Value" = "3:0"
+                                            }
                                         }
                                     }
                                 }
