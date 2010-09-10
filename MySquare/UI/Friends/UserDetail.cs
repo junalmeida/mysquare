@@ -47,6 +47,24 @@ namespace MySquare.UI.Friends
                     avatar = null;
                 }
                 picAvatar.Invalidate();
+                ShowHelp();
+            }
+        }
+
+        bool alreadyHelp = false;
+        private void ShowHelp()
+        {
+            if (!alreadyHelp && Configuration.IsFirstTime)
+            {
+                alreadyHelp = true;
+                Main main = (Parent as Main);
+                main.contextHelp1.ShowHelp(
+                    new Point(
+                        15 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
+                        95 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height), 
+                        "Tap here to see your friend in full screen!");
+
+                main.helpText = new System.Collections.Generic.List<string>();
             }
         }
 

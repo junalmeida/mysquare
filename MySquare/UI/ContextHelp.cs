@@ -23,8 +23,10 @@ namespace MySquare.UI
         {
             Cursor.Current = Cursors.Default;
             Application.DoEvents();
-            bg = Tenor.Mobile.Drawing.GraphicsEx.CopyFromScreen(Parent.CreateGraphics(), new Rectangle(0, 0, Parent.Width, Parent.Height));
-
+            using (Graphics gx = Parent.CreateGraphics())
+            {
+                bg = Tenor.Mobile.Drawing.GraphicsEx.CopyFromScreen(gx, new Rectangle(0, 0, Parent.Width, Parent.Height));
+            }
             this.BringToFront();
             this.Location = new Point(0, 0);
             this.Size = new Size(Parent.Width, Parent.Height);

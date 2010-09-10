@@ -195,9 +195,9 @@ namespace MySquare.UI
 
         #region Help Tutorial
 
-        List<string> helpText;
+        internal List<string> helpText;
         List<Point> helpWidget;
-        int current = -1;
+        internal int current = -1;
 
         private void LoadHelp()
         {

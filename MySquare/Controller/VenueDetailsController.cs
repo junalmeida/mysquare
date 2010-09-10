@@ -245,11 +245,20 @@ namespace MySquare.Controller
 
             checkInResult = null;
             WaitThread.Reset();
-            Service.CheckIn(Venue,
-                View.checkIn1.txtShout.Text,
-                View.checkIn1.chkTellFriends.Checked, 
-                facebook, twitter);
-
+            if (Program.Location.FixType == RisingMobility.Mobile.Location.FixType.Gps)
+            {
+                Service.CheckIn(Venue,
+                    View.checkIn1.txtShout.Text,
+                    View.checkIn1.chkTellFriends.Checked,
+                    facebook, twitter, Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude);
+            }
+            else
+            {
+                Service.CheckIn(Venue,
+                    View.checkIn1.txtShout.Text,
+                    View.checkIn1.chkTellFriends.Checked,
+                    facebook, twitter);
+            }
             RightSoftButtonText = "&Cancel";
                 
         }

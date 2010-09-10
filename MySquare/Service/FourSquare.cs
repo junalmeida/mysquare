@@ -607,7 +607,7 @@ namespace MySquare.Service
                         LeaderboardUser u = new LeaderboardUser()
                         {
                             User = item.ChildNodes[1].InnerText,
-                            Percentage = int.Parse(item.ChildNodes[2].ChildNodes[0].Attributes["width"].Value),
+                            Percentage = Convert.ToInt32(Math.Round(int.Parse(item.ChildNodes[2].ChildNodes[0].Attributes["width"].Value) * 1.052)),
                             Self = item.ChildNodes[2].ChildNodes[0].Attributes["src"].Value.IndexOf("red") > -1,
                             Points = item.ChildNodes[3].InnerText
                         };

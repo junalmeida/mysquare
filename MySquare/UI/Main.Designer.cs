@@ -264,7 +264,7 @@
         internal MySquare.UI.Places.Create.CreateVenue createVenue1;
         internal MySquare.UI.Places.VenueDetails venueDetails1;
         internal Tenor.Mobile.UI.HeaderStrip header;
-        private ContextHelp contextHelp1;
+        internal ContextHelp contextHelp1;
         private System.Windows.Forms.Timer timerTutorial;
         private System.Windows.Forms.Timer timerAds;
         internal Microsoft.WindowsCE.Forms.InputPanel inputPanel;

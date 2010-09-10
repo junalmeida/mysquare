@@ -53,7 +53,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblRefreshTime.Font = new System.Drawing.Font("Tahoma", 7F, System.Drawing.FontStyle.Regular);
             this.lblRefreshTime.ForeColor = System.Drawing.Color.White;
-            this.lblRefreshTime.Location = new System.Drawing.Point(41, 24);
+            this.lblRefreshTime.Location = new System.Drawing.Point(40, 22);
             this.lblRefreshTime.Name = "lblRefreshTime";
             this.lblRefreshTime.Size = new System.Drawing.Size(312, 16);
             this.lblRefreshTime.Text = "Broadcast a message to your friends.";
@@ -64,14 +64,14 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTitle.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(41, 7);
+            this.lblTitle.Location = new System.Drawing.Point(40, 5);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(303, 16);
             this.lblTitle.Text = "Shout";
             // 
             // picAvatar
             // 
-            this.picAvatar.Location = new System.Drawing.Point(4, 4);
+            this.picAvatar.Location = new System.Drawing.Point(3, 3);
             this.picAvatar.Name = "picAvatar";
             this.picAvatar.Size = new System.Drawing.Size(32, 32);
             this.picAvatar.Paint += new System.Windows.Forms.PaintEventHandler(this.picAvatar_Paint);

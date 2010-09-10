@@ -86,7 +86,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblRefreshTime.Font = new System.Drawing.Font("Tahoma", 7F, System.Drawing.FontStyle.Regular);
             this.lblRefreshTime.ForeColor = System.Drawing.Color.White;
-            this.lblRefreshTime.Location = new System.Drawing.Point(33, 24);
+            this.lblRefreshTime.Location = new System.Drawing.Point(31, 22);
             this.lblRefreshTime.Name = "lblRefreshTime";
             this.lblRefreshTime.Size = new System.Drawing.Size(320, 16);
             this.lblRefreshTime.Text = "Leaderboard resets every Sunday night";
@@ -97,7 +97,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTitle.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(33, 7);
+            this.lblTitle.Location = new System.Drawing.Point(31, 5);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(311, 16);
             this.lblTitle.Text = "The Leaderboard";
@@ -115,7 +115,7 @@
             // 
             // picAvatar
             // 
-            this.picAvatar.Location = new System.Drawing.Point(1, 5);
+            this.picAvatar.Location = new System.Drawing.Point(0, 4);
             this.picAvatar.Name = "picAvatar";
             this.picAvatar.Size = new System.Drawing.Size(32, 32);
             this.picAvatar.Paint += new System.Windows.Forms.PaintEventHandler(this.picAvatar_Paint);
