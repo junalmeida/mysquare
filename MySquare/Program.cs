@@ -45,7 +45,7 @@ namespace MySquare
                 Location.LocationChanged += new EventHandler(Location_LocationChanged);
                 Location.PollHit += new EventHandler(Location_PollHit);
                 Location.Poll();
-
+                
                 Application.Run(mainForm);
                 Configuration.abortCheck = true;
                 if (Configuration.PingInterval > 0)
