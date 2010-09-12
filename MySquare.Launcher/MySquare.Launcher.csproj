@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{16B51630-2C6E-48D9-8772-E8D0801849C9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -68,6 +68,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\StaticLinkedComponents\Mobile\Location\Wifi\wpsapi.dll">
+      <Link>wpsapi.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\StaticLinkedComponents\Mobile\Location\Wifi\WpsProxy.dll">
+      <Link>WpsProxy.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Resources\mysquare-app.png">
       <Link>mysquare-app.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
