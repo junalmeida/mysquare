@@ -68,6 +68,9 @@
     <Compile Include="..\..\StaticLinkedComponents\Mobile\Obfuscation.cs">
       <Link>Obfuscation.cs</Link>
     </Compile>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="..\MySquare\Extensions.cs">
       <Link>Extensions.cs</Link>
     </Compile>

@@ -36,15 +36,16 @@ namespace MySquare.UI.Friends
         {
             set
             {
-
-                if (value != null)
-                    using (MemoryStream mem = new MemoryStream(value))
-                    using (Bitmap bmp = new Bitmap(mem))
-                        avatar = Main.CreateRoundedAvatar(bmp, picAvatar.Width, factor);
-                else if (avatar != null)
+                if (avatar != null)
                 {
                     avatar.Dispose();
                     avatar = null;
+                }
+                if (value != null)
+                {
+                    using (MemoryStream mem = new MemoryStream(value))
+                    using (Bitmap bmp = new Bitmap(mem))
+                        avatar = Main.CreateRoundedAvatar(bmp, picAvatar.Width, factor);
                 }
                 picAvatar.Invalidate();
                 ShowHelp();

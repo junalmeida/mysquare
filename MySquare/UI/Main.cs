@@ -351,6 +351,10 @@ namespace MySquare.UI
             Point point = new Point(this.Width - size.Width, header.Height - size.Height - (2 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
             picGps.Location = point;
             picGps.Size = size;
+            if (backBuffer != null)
+                backBuffer.Dispose();
+            if (backBufferG != null)
+                backBufferG.Dispose();
             backBuffer = new Bitmap(size.Width, size.Height);
             backBufferG = Graphics.FromImage(backBuffer);
         }

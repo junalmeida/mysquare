@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FD4AA98B-154D-480A-901A-0B9154C8CFE9}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -435,14 +435,14 @@
     <None Include="Resources\twitter_48_48x48.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Service\checkinTest.txt" />
+    <None Include="Service\checkinTest.txt" />
     <EmbeddedResource Include="UI\Friends\UserBadges.resx">
       <DependentUpon>UserBadges.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Service\venuesTest.txt" />
+    <None Include="Service\venuesTest.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\crown_50x50.png" />
@@ -464,7 +464,7 @@
     <None Include="Resources\mapbg.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Service\venueTest.txt" />
+    <None Include="Service\venueTest.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\gps.png" />
@@ -488,13 +488,13 @@
     <None Include="Resources\gps-4.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Service\userTest.txt" />
+    <None Include="Service\userTest.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Service\checkinsTest.txt" />
+    <None Include="Service\checkinsTest.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Service\friendsTest.txt" />
+    <None Include="Service\friendsTest.txt" />
     <EmbeddedResource Include="UI\MapTest.resx">
       <DependentUpon>MapTest.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -533,7 +533,7 @@
     <None Include="Resources\Update.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Service\leaderboardTest.txt" />
+    <None Include="Service\leaderboardTest.txt" />
     <EmbeddedResource Include="UI\More\Shout.resx">
       <DependentUpon>Shout.cs</DependentUpon>
       <SubType>Designer</SubType>

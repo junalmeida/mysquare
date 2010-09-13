@@ -29,7 +29,7 @@ namespace MySquare.UI
             if (SelectedIndexChanged != null)
                 SelectedIndexChanged(this, e);
         }
-
+        
         Pen selectedBorder = new Pen(Tenor.Mobile.Drawing.Strings.ToColor("#DFE6EE"));
         SolidBrush selectedColor = new SolidBrush(Tenor.Mobile.Drawing.Strings.ToColor("#C5CCD4"));
 

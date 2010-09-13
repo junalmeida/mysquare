@@ -18,15 +18,19 @@ namespace MySquare.UI
         }
 
         Image bg;
-        
+        Graphics parentGx;
+
         public void ShowHelp(Point target, string text)
         {
+            if (Parent == null)
+                return;
             Cursor.Current = Cursors.Default;
             Application.DoEvents();
-            using (Graphics gx = Parent.CreateGraphics())
-            {
-                bg = Tenor.Mobile.Drawing.GraphicsEx.CopyFromScreen(gx, new Rectangle(0, 0, Parent.Width, Parent.Height));
-            }
+            if (parentGx == null)
+                parentGx = Parent.CreateGraphics();
+            if (bg != null)
+                bg.Dispose();
+            bg = Tenor.Mobile.Drawing.GraphicsEx.CopyFromScreen(parentGx, new Rectangle(0, 0, Parent.Width, Parent.Height));
             this.BringToFront();
             this.Location = new Point(0, 0);
             this.Size = new Size(Parent.Width, Parent.Height);
