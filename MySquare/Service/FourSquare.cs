@@ -27,6 +27,7 @@ namespace MySquare.Service
         enum ServiceResource
         {
             SearchNearby,
+            TipsNearby,
             CheckIn,
             Venue,
             AddTip,
@@ -141,6 +142,19 @@ namespace MySquare.Service
 
             Post(ServiceResource.SearchNearby, parameters);
         }
+
+        internal void GetTipsNearby(double lat, double lgn)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("geolat", lat.ToString(culture));
+            parameters.Add("geolong", lgn.ToString(culture));
+            parameters.Add("l", MySquare.Service.Configuration.ResultsLimit.ToString(culture));
+            parameters.Add("filter", "nearby");
+            parameters.Add("sort", "nearby");
+
+            Post(ServiceResource.TipsNearby, parameters);
+        }
+        
         
         internal void CheckIn(Venue venue, string shout, bool tellFriends, bool? facebook, bool? twitter)
         {
@@ -380,6 +394,16 @@ namespace MySquare.Service
             }
         }
 
+        internal event TipsEventHandler TipsResult;
+        private void OnTipsResult(TipsEventArgs e)
+        {
+            if (TipsResult != null)
+            {
+                TipsResult(this, e);
+            }
+        }
+
+
 
 
         internal event SearchEventHandler SearchArrives;
@@ -413,6 +437,11 @@ namespace MySquare.Service
             {
                 case ServiceResource.SearchNearby:
                     url = "http://api.foursquare.com/v1/venues.json";
+                    auth = !string.IsNullOrEmpty(Configuration.Login);
+                    break;
+                case ServiceResource.TipsNearby:
+                    url = "http://api.foursquare.com/v1/tips.json";
+                    post = false;
                     auth = !string.IsNullOrEmpty(Configuration.Login);
                     break;
                 case ServiceResource.CheckIn:
@@ -485,6 +514,9 @@ namespace MySquare.Service
                 case ServiceResource.SearchNearby:
                     type = typeof(SearchEventArgs);
                     break;
+                case ServiceResource.TipsNearby:
+                    type = typeof(TipsEventArgs);
+                    break;
                 case ServiceResource.CheckIn:
                     type = typeof(CheckInEventArgs);
                     break;
@@ -530,6 +562,8 @@ namespace MySquare.Service
             ServiceResource service = (ServiceResource)key;
             if (result is SearchEventArgs)
                 OnSearchArrives((SearchEventArgs)result);
+            else if (result is TipsEventArgs)
+                OnTipsResult((TipsEventArgs)result);
             else if (result is CheckInEventArgs)
                 OnCheckInResult((CheckInEventArgs)result);
             else if (result is VenueEventArgs)

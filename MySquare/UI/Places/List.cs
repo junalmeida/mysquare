@@ -35,6 +35,11 @@ namespace MySquare.UI.Places
              LineAlignment = StringAlignment.Near,
              FormatFlags = StringFormatFlags.NoWrap
         };
+        StringFormat formatWrap = new StringFormat()
+        {
+            Alignment = StringAlignment.Near,
+            LineAlignment = StringAlignment.Near,
+        };
 
         SizeF factor;
         protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
@@ -69,10 +74,16 @@ namespace MySquare.UI.Places
         Font smallFont;
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
         {
+            object obj = e.Item.Value;
 
-            Venue venue = (Venue)e.Item.Value;
+            Venue venue = e.Item.Value as Venue;
+            Tip tip = e.Item.Value as Tip;
+            if (tip != null)
+                venue = tip.Venue;  
+
+
             Brush textBrush = (e.Item.Selected ? brushS : brush);
-            if (venue == null)
+            if (obj == null)
             {
                 if (smallFont == null)
                     smallFont = new Font(this.Font.Name, this.Font.Size - 1, this.Font.Style);
@@ -93,7 +104,7 @@ namespace MySquare.UI.Places
                 }
 
                 string text = e.Item.Text;
-                if (text == "Nearby" && Address != null)
+                if (text.EndsWith("Nearby") && Address != null)
                 {
                     StringBuilder geo = new StringBuilder();
                     if (!string.IsNullOrEmpty(Address.Neighborhood))
@@ -161,13 +172,23 @@ namespace MySquare.UI.Places
             else
             {
 
-                SizeF measuring = e.Graphics.MeasureString(venue.Name, Font);
+                string title = null;
+                if (tip != null)
+                    title = tip.User.ToString() + " @ " + venue.Name;
+                else
+                    title = venue.Name;
 
-                RectangleF rect = new RectangleF(e.Bounds.Height, e.Bounds.Y + itemPadding, measuring.Width, measuring.Height);
-                e.Graphics.DrawString(venue.Name, this.Font, textBrush, rect, format);
+                SizeF measuring = e.Graphics.MeasureString(title, Font);
+
+                RectangleF rect = new RectangleF(listBox.DefaultItemHeight, e.Bounds.Y + itemPadding, measuring.Width, measuring.Height);
+                if (tip != null)
+                    rect.X = e.Bounds.X + itemPadding;
+                e.Graphics.DrawString(title, this.Font, textBrush, rect, format);
 
                 string secondText = null;
-                if (!string.IsNullOrEmpty(venue.Address))
+                if (tip != null && !string.IsNullOrEmpty(tip.Text))
+                    secondText = tip.Text;
+                else if (!string.IsNullOrEmpty(venue.Address))
                     secondText = venue.Address;
                 else if (!string.IsNullOrEmpty(venue.City))
                     secondText = venue.City;
@@ -178,20 +199,22 @@ namespace MySquare.UI.Places
                     if (secondFont == null)
                         secondFont = new Font(Font.Name, Font.Size - 1, Font.Style);
                     measuring = e.Graphics.MeasureString(secondText, secondFont);
-                    rect = new RectangleF(rect.X, rect.Bottom + itemPadding, measuring.Width, measuring.Height);
-                    e.Graphics.DrawString(secondText, secondFont, secondBrush, rect, format);
+                    rect = new RectangleF(rect.X, rect.Bottom + itemPadding, e.Bounds.Width - rect.X, e.Bounds.Height);
+                    e.Graphics.DrawString(secondText, secondFont, secondBrush, rect, formatWrap);
                 }
                 if (
-                    (venue.PrimaryCategory == null && imageList.ContainsKey(string.Empty)) ||
-                    (venue.PrimaryCategory != null &&
-                    imageList.ContainsKey(venue.PrimaryCategory.IconUrl))
+                        (
+                            (venue.PrimaryCategory == null && imageList.ContainsKey(string.Empty)) ||
+                            (venue.PrimaryCategory != null && imageList.ContainsKey(venue.PrimaryCategory.IconUrl))
+                        )
+                        && tip == null
                     )
                 {
                     string iconUrl = string.Empty;
                     if (venue.PrimaryCategory != null)
                         iconUrl = venue.PrimaryCategory.IconUrl;
 
-                    int imageSize = e.Bounds.Height - Convert.ToInt32(itemPadding * 2);
+                    int imageSize = listBox.DefaultItemHeight - Convert.ToInt32(itemPadding * 2);
 
                     if (!imageListBuffer.ContainsKey(iconUrl))
                     {
@@ -222,7 +245,7 @@ namespace MySquare.UI.Places
                     {
                         int padd = 10 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height;
                         AlphaImage alpha = new AlphaImage(Resources.SpecialHere);
-                        Rectangle rectS = new Rectangle(e.Bounds.Right - e.Bounds.Height - padd, e.Bounds.Y, e.Bounds.Height + padd, e.Bounds.Height + padd);
+                        Rectangle rectS = new Rectangle(e.Bounds.Right - listBox.DefaultItemHeight - padd, e.Bounds.Y, listBox.DefaultItemHeight + padd, listBox.DefaultItemHeight + padd);
                         rectS.Y = rectS.Y - (padd / 2);
 
                         alpha.Draw(e.Graphics, rectS);
@@ -269,7 +292,13 @@ namespace MySquare.UI.Places
             get
             {
                 if (listBox.SelectedItem != null)
-                    return (Venue)listBox.SelectedItem.Value;
+                {
+                    Tip tip = listBox.SelectedItem.Value as Tip;
+                    if (tip != null)
+                        return tip.Venue;
+                    else
+                        return (Venue)listBox.SelectedItem.Value;
+                }
                 else
                     return null;
             }
@@ -293,5 +322,28 @@ namespace MySquare.UI.Places
 
         internal event EventHandler Search;
 
+
+        internal int Measure(Tip tip)
+        {
+#if DEBUG
+            if (Environment.OSVersion.Platform != PlatformID.WinCE)
+                return listBox.DefaultItemHeight + 10;
+#endif
+            using (Graphics g = this.listBox.CreateGraphics())
+            {
+                Rectangle rect = new Rectangle
+                        (0,
+                         0,
+                         listBox.Width - listBox.DefaultItemHeight,
+                         listBox.Height);
+                Size size1 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.Venue.Name, Font, rect);
+                Size size2 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.Text, secondFont, rect);
+
+                int size = size1.Height * 2 + size2.Height;
+                if (size < listBox.DefaultItemHeight)
+                    size = listBox.DefaultItemHeight;
+                return size;
+            }
+        }
     }
 }

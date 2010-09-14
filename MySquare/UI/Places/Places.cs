@@ -26,7 +26,11 @@ namespace MySquare.UI.Places
             }
             else
             {
-                ((VenueDetailsController)BaseController.OpenController(((Main)Parent).venueDetails1)).OpenVenue((Venue)list1.listBox.SelectedItem.Value);
+                Venue venue = list1.listBox.SelectedItem.Value as Venue;
+                if (venue == null)
+                    venue = (list1.listBox.SelectedItem.Value as Tip).Venue;
+
+                ((VenueDetailsController)BaseController.OpenController(((Main)Parent).venueDetails1)).OpenVenue(venue);
             }
         }
 

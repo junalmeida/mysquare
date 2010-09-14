@@ -25,6 +25,10 @@ namespace MySquare.FourSquare
         public User User
         { get; set; }
 
+        [JsonProperty("venue")]
+        public Venue Venue
+        { get; set; }
+
 
     }
 
@@ -38,6 +42,23 @@ namespace MySquare.FourSquare
 
         [JsonProperty("tip")]
         internal Tip Tip
+        {
+            get;
+            private set;
+        }
+    }
+
+
+    delegate void TipsEventHandler(object serder, TipsEventArgs e);
+    class TipsEventArgs : EventArgs
+    {
+        public TipsEventArgs(Tip[] tip)
+        {
+            this.Tips = tip;
+        }
+
+        [JsonProperty("tips")]
+        internal Tip[] Tips
         {
             get;
             private set;
