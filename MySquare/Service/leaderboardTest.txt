@@ -25,39 +25,56 @@
   </head>
   <body>
     <table>
-
       <tr class="header"><td colspan="4"><b>Leaderboard (since Monday)</b></td></tr>
-      
         <tr class="header"><td colspan="4">Show: <b>My Friends</b> | <a href="/iphone/me?uid=1746121&amp;view=all&amp;geolat=-22.920453&amp;geolong=-43.209229&amp;scope=all">All Rio de Janeiro</a><br /><br /></td></tr>
-      
-      
         <tr>
           <td>1.</td>
-          <td>Marcos J.</td>
+          <td>Mary J.</td>
 
-          <td><img width="95" height="15" src="/img/bar_blue.gif" /></td>
-          <td class="mini">(24 pts, 8x)</td>
+        <td><img height="15" width="95" src="/img/bar_blue.gif" /></td> 
+        <td class="mini">(531 pts., 57x)</td> 
         </tr>
-      
         <tr>
           <td>2.</td>
-          <td>Gustavo P.</td>
-          <td><img width="75" height="15" src="/img/bar_blue.gif" /></td>
-
-          <td class="mini">(19 pts, 3x)</td>
+          <td>Anderson P.</td>
+        <td><img height="15" width="14" src="/img/bar_blue.gif" /></td> 
+        <td class="mini">(82 pts., 18x)</td> 
         </tr>
-      
         <tr>
           <td>3.</td>
-          <td>Raquel A.</td>
-          <td><img width="23" height="15" src="/img/bar_blue.gif" /></td>
-          <td class="mini">(6 pts, 1x)</td>
+          <td>Mark J.</td>
+        <td><img height="15" width="7" src="/img/bar_red.gif" /></td> 
+        <td class="mini">(42 pts., 8x)</td> 
 
         </tr>
-      
-      
+        <tr>
+          <td>4.</td>
+          <td>Jeniffer C.</td>
+        <td><img height="15" width="3" src="/img/bar_blue.gif" /></td> 
+        <td class="mini">(19 pts., 3x)</td> 
+
+        </tr>
+        <tr>
+          <td>5.</td>
+          <td>Alex B.</td>
+        <td><img height="15" width="3" src="/img/bar_blue.gif" /></td> 
+        <td class="mini">(19 pts., 3x)</td> 
+
+        </tr>
+        <tr>
+          <td>6.</td>
+          <td>Pablo C.</td>
+        <td><img height="15" width="1" src="/img/bar_blue.gif" /></td> 
+        <td class="mini">(7 pts., 5x)</td> 
+        </tr>
+        <tr>
+          <td>7.</td>
+          <td>Sean T.</td>
+        <td><img height="15" width="0" src="/img/bar_blue.gif" /></td> 
+        <td class="mini">(1 pts., 1x)</td> 
+        </tr>      
+    
         <tr><td colspan="4" class="mini"><br />Leaderboard resets every Sunday night, 11:59pm</td></tr>
-      
     </table>
   </body>
 </html>  

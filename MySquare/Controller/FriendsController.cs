@@ -43,7 +43,7 @@ namespace MySquare.Controller
             View.listBox.Visible = true;
             form.header.Tabs[1].Selected = true;
             if (View.listBox.Count == 0)
-                LoadFriends();
+                GetFriends();
         }
 
         public override void Deactivate()
@@ -53,10 +53,10 @@ namespace MySquare.Controller
 
         public override void OnLeftSoftButtonClick()
         {
-            LoadFriends();
+            GetFriends();
         }
 
-        private void LoadFriends()
+        private void GetFriends()
         {
             Cursor.Current = Cursors.WaitCursor;
             Cursor.Show();
@@ -88,6 +88,9 @@ namespace MySquare.Controller
             Program.Location.Error -= new RisingMobility.Mobile.Location.ErrorEventHandler(position_Error);
             if (!Program.Location.WorldPoint.IsEmpty)
             {
+                friends = null;
+                pendingFriends = null;
+                checkIns = null;
                 Service.GetFriendsCheckins(Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude);
             }
             else
@@ -102,20 +105,18 @@ namespace MySquare.Controller
         {
             View.Invoke(new ThreadStart(delegate()
                 {
-                    LoadCheckIns(e.CheckIns);
+                    checkIns = e.CheckIns;
+                    LoadCheckIns();
                 }));
         }
 
         CheckIn[] checkIns;
         User[] friends;
         User[] pendingFriends;
-        bool alreadyDone;
-        void LoadCheckIns(CheckIn[] checkIns)
+        void LoadCheckIns()
         {
-            alreadyDone = false;
             friends = null;
             pendingFriends = null;
-            this.checkIns = checkIns;
 
             ////don't know if I should do this
             //if (checkIns.Length > 0)
@@ -152,7 +153,7 @@ namespace MySquare.Controller
             this.View.Invoke(new ThreadStart(delegate()
             {
                 friends = e.Friends;
-                LoadFriends(e.Friends);
+                LoadFriends();
             }));
         }
 
@@ -161,16 +162,22 @@ namespace MySquare.Controller
             this.View.Invoke(new ThreadStart(delegate()
             {
                 pendingFriends = e.Friends;
-                LoadFriends(e.Friends);
+                LoadFriends();
             }));
         }
 
-        private void LoadFriends(User[] user)
+        private void LoadFriends()
         {
+            if (pendingFriends == null || checkIns == null || friends == null)
+                return;
+
+            List<User> list = new List<User>();
+            list.AddRange(pendingFriends);
+            list.AddRange(friends);
             List<User> otherUsers = new List<User>();
             List<User> pendingUsers = new List<User>();
 
-            foreach (User u in user)
+            foreach (User u in list)
             {
                 bool found = false;
                 foreach (CheckIn chk in checkIns)
@@ -188,19 +195,7 @@ namespace MySquare.Controller
                 }
             }
 
-            if (pendingUsers.Count > 0)
-            {
-                View.listBox.AddItem("Pending requests", null, View.listBox.DefaultItemHeight / 2);
-                foreach (User u in pendingUsers)
-                    View.listBox.AddItem(null, u);
-            }
 
-            if (otherUsers.Count > 0)
-            {
-                View.listBox.AddItem("Other friends", null, View.listBox.DefaultItemHeight / 2);
-                foreach (User u in otherUsers)
-                    View.listBox.AddItem(null, u);
-            }
 
             Thread t = new Thread(new ThreadStart(delegate()
             {
@@ -222,22 +217,32 @@ namespace MySquare.Controller
             }));
             t.Start();
 
-
-
-
-            if (pendingFriends != null && !alreadyDone)
+            if (pendingUsers.Count > 0)
             {
-                alreadyDone = true;
-
-                View.listBox.AddItem("Check Ins", null, View.listBox.DefaultItemHeight / 2);
-                foreach (CheckIn checkin in checkIns)
-                {
-                    View.listBox.AddItem(null, checkin);
-                }
-                View.listBox.Visible = true;
-                Cursor.Current = Cursors.Default;
-                Cursor.Show();
+                View.listBox.AddItem("Pending requests", null, View.listBox.DefaultItemHeight / 2);
+                foreach (User u in pendingUsers)
+                    View.listBox.AddItem(null, u);
             }
+
+            View.listBox.AddItem("Check Ins", null, View.listBox.DefaultItemHeight / 2);
+            foreach (CheckIn checkin in checkIns)
+            {
+                View.listBox.AddItem(null, checkin);
+            }
+
+
+            if (otherUsers.Count > 0)
+            {
+                View.listBox.AddItem("Other friends", null, View.listBox.DefaultItemHeight / 2);
+                foreach (User u in otherUsers)
+                    View.listBox.AddItem(null, u);
+            }
+
+
+            View.listBox.Visible = true;
+            Cursor.Current = Cursors.Default;
+            Cursor.Show();
+
         }
     }
 }

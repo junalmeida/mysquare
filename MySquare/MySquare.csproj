@@ -435,14 +435,14 @@
     <None Include="Resources\twitter_48_48x48.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service\checkinTest.txt" />
+    <EmbeddedResource Include="Service\checkinTest.txt" />
     <EmbeddedResource Include="UI\Friends\UserBadges.resx">
       <DependentUpon>UserBadges.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service\venuesTest.txt" />
+    <EmbeddedResource Include="Service\venuesTest.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\crown_50x50.png" />
@@ -464,7 +464,7 @@
     <None Include="Resources\mapbg.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service\venueTest.txt" />
+    <EmbeddedResource Include="Service\venueTest.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\gps.png" />
@@ -488,13 +488,13 @@
     <None Include="Resources\gps-4.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service\userTest.txt" />
+    <EmbeddedResource Include="Service\userTest.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service\checkinsTest.txt" />
+    <EmbeddedResource Include="Service\checkinsTest.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service\friendsTest.txt" />
+    <EmbeddedResource Include="Service\friendsTest.txt" />
     <EmbeddedResource Include="UI\MapTest.resx">
       <DependentUpon>MapTest.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -533,7 +533,7 @@
     <None Include="Resources\Update.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service\leaderboardTest.txt" />
+    <EmbeddedResource Include="Service\leaderboardTest.txt" />
     <EmbeddedResource Include="UI\More\Shout.resx">
       <DependentUpon>Shout.cs</DependentUpon>
       <SubType>Designer</SubType>

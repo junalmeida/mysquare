@@ -41,17 +41,15 @@ namespace MySquare.Pings
                 {
                     if ((DateTime.Now - checkIns[i].Created).TotalHours < 10 &&
                         (checkIns[i].Shout != null || checkIns[i].Venue != null) &&
-                        checkIns[i].Ping)
+                        checkIns[i].Ping && checkIns[i].Created > Configuration.LastCheckIn)
                     {
-                        if (checkIns[i].Id == Configuration.LastCheckIn)
-                            break;
                         checkInsToAlert.Add(checkIns[i]);
                     }
                 }
                 StringBuilder message = new StringBuilder();
                 if (checkInsToAlert.Count > 0)
                 {
-                    Configuration.LastCheckIn = checkInsToAlert[0].Id;
+                    Configuration.LastCheckIn = checkInsToAlert[0].Created;
                     message.Append("<ul style=\"padding: 0 0 0 10px; margin: 0 0 0 5px;list-style-type: square;\">");
                     for (int i = 0; i < checkInsToAlert.Count && i < 4; i++)
                     {

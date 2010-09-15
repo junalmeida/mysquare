@@ -219,15 +219,15 @@ namespace MySquare.Service
         }
 
 
-        public static int LastCheckIn
+        public static DateTime LastCheckIn
         {
             get
             {
                 try
                 {
-                    return Convert.ToInt32(key.GetValue("LastCheckIn", 0));
+                    return Convert.ToDateTime(key.GetValue("LastCheckIn", DateTime.MinValue));
                 }
-                catch { return 0; }
+                catch { return DateTime.MinValue; }
             }
             set
             {
