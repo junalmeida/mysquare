@@ -290,6 +290,11 @@ namespace MySquare.Controller
                     View.checkIn1.mayorship = checkInResult.Mayor.Message;
                     View.checkIn1.showCrown = checkInResult.Mayor.Type != MayorType.nochange;
                 }
+                else
+                {
+                    View.checkIn1.mayorship = null;
+                    View.checkIn1.showCrown = false;
+                }
 
                 if (checkInResult.Badges != null && checkInResult.Badges.Length > 0)
                     View.checkIn1.badges = checkInResult.Badges;
