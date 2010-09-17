@@ -48,7 +48,7 @@ namespace MySquare.FourSquare
 
         public override string ToString()
         {
-            return Message;
+            return string.Format("{0} (+{1})", Message, Points);
         }
     }
 
