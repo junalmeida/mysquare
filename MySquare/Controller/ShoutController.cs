@@ -41,6 +41,7 @@ namespace MySquare.Controller
 
             View.checkIn1.pnlShout.Visible = true;
             View.checkIn1.pnlCheckInResult.Visible = false;
+            View.checkIn1.pnlShout.Enabled = true;
 
         }
 
@@ -138,6 +139,7 @@ namespace MySquare.Controller
 
             View.checkIn1.txtShout.Text = string.Empty;
             Cursor.Current = Cursors.Default;
+            LeftSoftButtonEnabled = false;
             RightSoftButtonText = "&Back";
         }
 

@@ -247,4 +247,18 @@ namespace MySquare.FourSquare
         public bool Friends
         { get; set; }
     }
+
+
+
+    delegate void FlagEventHandler(object sender, FlagEventArgs e);
+    class FlagEventArgs : EventArgs
+    {
+        [JsonProperty("response")]
+        private string Result
+        { get; set; }
+
+        public bool Success
+        { get { return Result == "ok"; } }
+    }
+
 }

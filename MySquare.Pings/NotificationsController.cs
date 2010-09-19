@@ -58,7 +58,10 @@ namespace MySquare.Pings
                         if (i < 3 || checkInsToAlert.Count == 4)
                         {
                             message.Append("<li style=\"padding:0;margin-bottom:4px;\">");
-                            message.Append(chkin.Display);
+                            if (chkin.Venue == null && chkin.Shout != null)
+                                message.Append(string.Format("{0}: {1}", chkin.User, chkin.Shout));
+                            else
+                                message.Append(chkin.Display);
                             message.Append(", ");
                             message.Append(chkin.Created.ToHumanTime());
                             message.Append("</li>");

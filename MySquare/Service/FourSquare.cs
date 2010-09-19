@@ -39,7 +39,10 @@ namespace MySquare.Service
             AcceptFriend,
             RejectFriend,
             RequestFriend,
-            Leaderboard
+            Leaderboard,
+            FlagClosed,
+            FlagMislocated,
+            FlagDuplicated
         }
 
 
@@ -68,7 +71,6 @@ namespace MySquare.Service
 
             Post(ServiceResource.Leaderboard, parameters);
         }
-
 
         internal void GetUser(int uid)
         {
@@ -121,7 +123,6 @@ namespace MySquare.Service
             }
             Post(ServiceResource.CheckIns, parameters);
         }
-
 
         internal void RequestFriend(int uid)
         {
@@ -228,10 +229,37 @@ namespace MySquare.Service
             Post(ServiceResource.AddVenue, parameters);
         }
 
+        internal void FlagAsClosed(int vid)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("vid", vid.ToString());
+            Post(ServiceResource.FlagClosed, parameters);
+        }
+        internal void FlagAsDuplicated(int vid)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("vid", vid.ToString());
+            Post(ServiceResource.FlagClosed, parameters);
+        }
+        internal void FlagAsMislocated(int vid)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("vid", vid.ToString());
+            Post(ServiceResource.FlagClosed, parameters);
+        }
+
 
 
 
         #region Events
+        internal event FlagEventHandler FlagResult;
+        private void OnFlagResult(FlagEventArgs e)
+        {
+            if (FlagResult != null)
+            {
+                FlagResult(this, e);
+            }
+        }
         internal event PendingFriendsEventHandler PendingFriendsResult;
         private void OnPendingFriendsResult(PendingFriendsEventArgs e)
         {
@@ -492,6 +520,18 @@ namespace MySquare.Service
                     url = "http://api.foursquare.com/iphone/me";
                     auth = true; post = false;
                     break;
+                case ServiceResource.FlagClosed:
+                    url = "http://api.foursquare.com/v1/venue/flagclosed.json";
+                    auth = true; post = true;
+                    break;
+                case ServiceResource.FlagMislocated:
+                    url = "http://api.foursquare.com/v1/venue/flagmislocated.json";
+                    auth = true; post = true;
+                    break;
+                case ServiceResource.FlagDuplicated:
+                    url = "http://api.foursquare.com/v1/venue/flagduplicate.json";
+                    auth = true; post = true;
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -550,6 +590,11 @@ namespace MySquare.Service
                     type = null;
                     //will get the raw response.
                     break;
+                case ServiceResource.FlagDuplicated:
+                case ServiceResource.FlagClosed:
+                case ServiceResource.FlagMislocated:
+                    type = typeof(FlagEventArgs);
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -588,6 +633,8 @@ namespace MySquare.Service
                 OnPendingFriendsResult((PendingFriendsEventArgs)result);
             else if (result is ErrorEventArgs)
                 OnError((ErrorEventArgs)result);
+            else if (result is FlagEventArgs)
+                OnFlagResult((FlagEventArgs)result);
             else if (service == ServiceResource.Leaderboard)
             {
                 ParseLeaderBoard(result as string);
@@ -680,6 +727,8 @@ namespace MySquare.Service
         Friends,
         All
     }
+
+
 
 
 }

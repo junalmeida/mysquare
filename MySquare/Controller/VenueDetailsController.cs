@@ -25,8 +25,9 @@ namespace MySquare.Controller
             Service.VenueResult += new VenueEventHandler(Service_VenueResult);
             Service.AddTipResult += new AddTipEventHandler(Service_AddTipResult);
             Service.Error += new ErrorEventHandler(Service_Error);
-
+            Service.FlagResult += new FlagEventHandler(Service_FlagResult);
         }
+
 
 
         void venueDetails_TabChanged(object sender, EventArgs e)
@@ -138,6 +139,7 @@ namespace MySquare.Controller
             Cursor.Current = Cursors.Default;
         }
 
+        #region Flags
         private void BuildFlagMenus()
         {
             LeftSoftButtonText = "&Flag";
@@ -155,17 +157,44 @@ namespace MySquare.Controller
             };
             menu.Click += new EventHandler(MnuAsDuplicated_Click);
             AddLeftSubMenu(menu);
+            menu = new MenuItem()
+            {
+                Text = "As Mislocated"
+            };
+            menu.Click += new EventHandler(MnuAsMislocated_Click);
+            AddLeftSubMenu(menu);
         }
+
 
         void MnuAsClosed_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Service.FlagAsClosed(Venue.Id);
         }
 
         void MnuAsDuplicated_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Service.FlagAsDuplicated(Venue.Id);
         }
+
+        void MnuAsMislocated_Click(object sender, EventArgs e)
+        {
+            Service.FlagAsMislocated(Venue.Id);
+        }
+
+        void Service_FlagResult(object sender, FlagEventArgs e)
+        {
+            View.Invoke(new ThreadStart(delegate()
+            {
+                string message = null;
+                if (e.Success)
+                    message = "This place was flagged.";
+                else
+                    message = "Unable to flag this place.";
+                MessageBox.Show(message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
+            }));
+        }
+
+        #endregion
 
         internal void OpenVenue(Venue venue)
         {
