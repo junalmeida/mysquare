@@ -102,8 +102,7 @@ namespace MySquare.Controller
                     View.venueInfo1.Activate();
 
                     LoadExtraInfo();
-
-                    LeftSoftButtonEnabled = false;
+                    BuildFlagMenus();
                     break;
                 case VenueSection.Map:
                     if (Configuration.IsPremium)
@@ -137,6 +136,35 @@ namespace MySquare.Controller
                     break;
             }
             Cursor.Current = Cursors.Default;
+        }
+
+        private void BuildFlagMenus()
+        {
+            LeftSoftButtonText = "&Flag";
+            LeftSoftButtonEnabled = true;
+            MenuItem menu;
+            menu = new MenuItem()
+            {
+                Text = "As Closed"
+            };
+            menu.Click += new EventHandler(MnuAsClosed_Click);
+            AddLeftSubMenu(menu);
+            menu = new MenuItem()
+            {
+                Text = "As Duplicated"
+            };
+            menu.Click += new EventHandler(MnuAsDuplicated_Click);
+            AddLeftSubMenu(menu);
+        }
+
+        void MnuAsClosed_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void MnuAsDuplicated_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         internal void OpenVenue(Venue venue)
@@ -245,7 +273,7 @@ namespace MySquare.Controller
 
             checkInResult = null;
             WaitThread.Reset();
-            if (Program.Location.FixType == RisingMobility.Mobile.Location.FixType.Gps)
+            if (!Program.Location.WorldPoint.IsEmpty && Program.Location.FixType == RisingMobility.Mobile.Location.FixType.Gps)
             {
                 Service.CheckIn(Venue,
                     View.checkIn1.txtShout.Text,

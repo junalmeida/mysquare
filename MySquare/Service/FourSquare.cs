@@ -181,7 +181,7 @@ namespace MySquare.Service
             if (lat.HasValue)
                 parameters.Add("geolat", lat.Value.ToString(culture));
             if (lng.HasValue)
-                parameters.Add("geolong", lat.Value.ToString(culture));
+                parameters.Add("geolong", lng.Value.ToString(culture));
 
             Post(ServiceResource.CheckIn, parameters);
         }
