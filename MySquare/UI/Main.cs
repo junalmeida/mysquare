@@ -74,15 +74,17 @@ namespace MySquare.UI
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
 
             header.Tabs.Add(tabPlaces = new Tenor.Mobile.UI.HeaderTab("Places", Resources.PinMap));
+            header.Tabs.Add(tabTips = new Tenor.Mobile.UI.HeaderTab("To-Do", Resources.PinMap));
             header.Tabs.Add(tabFriends = new Tenor.Mobile.UI.HeaderTab("Friends", Resources.Friends));
             header.Tabs.Add(tabSettings = new Tenor.Mobile.UI.HeaderTab("Settings", Resources.Settings));
-            header.Tabs.Add(tabMore = new Tenor.Mobile.UI.HeaderTab("Extra", Resources.MoreActions));
+            header.Tabs.Add(tabMore = new Tenor.Mobile.UI.HeaderTab("Extra   ", Resources.MoreActions));
         }
         HeaderTab tabFriends;
         HeaderTab tabPlaces;
+        HeaderTab tabTips;
         HeaderTab tabSettings;
         HeaderTab tabMore;
-
+ 
         internal void ChangePlacesName(string text)
         {
             if (string.IsNullOrEmpty(text))
@@ -100,14 +102,17 @@ namespace MySquare.UI
                 tabFriends.Text = text;
             header.Invalidate();
         }
-
+        internal int lastTab = 0;
         private void header_SelectedTabChanged(object sender, EventArgs e)
         {
+            lastTab = header.SelectedIndex;
             Cursor.Current = Cursors.Default;
             Controller.BaseController.Navigation.Clear();
             lblError.Visible = false;
             var tab = header.Tabs[header.SelectedIndex];
             if (tab == tabPlaces)
+                Controller.BaseController.OpenController(places1);
+            if (tab == tabTips)
                 Controller.BaseController.OpenController(places1);
             else if (tab == tabSettings)
                 Controller.BaseController.OpenController(settings1);

@@ -43,15 +43,27 @@ namespace MySquare.Controller
 
             BuildMenus();
 
+            if (form.lastTab <= 1)
+                form.header.Tabs[form.lastTab].Selected = true;
 
-            RightSoftButtonEnabled = true;
-            RightSoftButtonText = "&Search";
-
-            form.header.Tabs[0].Selected = true;
-            if (View.list1.listBox.Count == 0)
-                SearchPlaces();
+            if ((ViewTips && tips == null) || (!ViewTips && venues == null))
+                Refresh();
             else
                 ShowList();
+
+        }
+
+        bool ViewTips
+        {
+            get
+            {
+                bool tips = false;
+                View.Invoke(new ThreadStart(delegate()
+                {
+                    tips = (View.Parent as UI.Main).header.SelectedIndex == 1;
+                }));
+                return tips;
+            }
         }
 
         private void BuildMenus()
@@ -59,23 +71,16 @@ namespace MySquare.Controller
             LeftSoftButtonEnabled = true;
             LeftSoftButtonText = "&Refresh";
 
-
-            MenuItem mnu = new MenuItem()
+            if (ViewTips)
             {
-                Text = "&Places",
-                Checked = doPlaces,
-            };
-            mnu.Click += new EventHandler(ViewPlaces_Click);
-            AddLeftSubMenu(mnu);
-
-
-            mnu = new MenuItem()
+                RightSoftButtonEnabled = false;
+                RightSoftButtonText = string.Empty;
+            }
+            else
             {
-                Text = "&Tips",
-                Checked = !doPlaces,
-            };
-            mnu.Click += new EventHandler(ViewTips_Click);
-            AddLeftSubMenu(mnu);
+                RightSoftButtonEnabled = true;
+                RightSoftButtonText = "&Search";
+            }
         }
 
 
@@ -89,7 +94,18 @@ namespace MySquare.Controller
         public override void OnLeftSoftButtonClick()
         {
             CloseSearch();
+            if (LeftSoftButtonText == "&Refresh")
+                Refresh();
             BuildMenus();
+        }
+
+        private void Refresh()
+        {
+            CloseSearch();
+            if (ViewTips)
+                SearchTips();
+            else
+                SearchPlaces();
         }
 
         void CloseSearch()
@@ -99,31 +115,7 @@ namespace MySquare.Controller
                 View.list1.txtSearch.Visible = false;
                 ((UI.Main)View.Parent).inputPanel.Enabled = false;
             }
-
         }
-
-        void ViewPlaces_Click(object sender, EventArgs e)
-        {
-            MenuItem item = (MenuItem)sender;
-            item.Checked = true;
-            item.Parent.MenuItems[1].Checked = false;
-
-            CloseSearch();
-            SearchPlaces();
-
-        }
-
-
-        void ViewTips_Click(object sender, EventArgs e)
-        {
-            MenuItem item = (MenuItem)sender;
-            item.Checked = true;
-            item.Parent.MenuItems[0].Checked = false;
-            
-            CloseSearch();
-            SearchTips();
-        }
-
 
 
         public override void OnRightSoftButtonClick()
@@ -157,11 +149,9 @@ namespace MySquare.Controller
         }
 
 
-        bool doPlaces = true;
         string text;
         private void SearchPlaces(string text)
         {
-            doPlaces = true;
             if (string.IsNullOrEmpty(text))
             {
                 View.list1.txtSearch.Text = null;
@@ -174,7 +164,6 @@ namespace MySquare.Controller
 
         private void SearchTips()
         {
-            doPlaces = false;
             RequestLocation();
         }
 
@@ -219,12 +208,12 @@ namespace MySquare.Controller
             if (!Program.Location.WorldPoint.IsEmpty)
             {
                 View.list1.Address = null;
-                if (doPlaces)
-                    Service.SearchNearby(text, Program.Location.WorldPoint.Latitude,
-                                               Program.Location.WorldPoint.Longitude);
-                else
+                if (ViewTips)
                     Service.GetTipsNearby(Program.Location.WorldPoint.Latitude,
                                            Program.Location.WorldPoint.Longitude);
+                else
+                    Service.SearchNearby(text, Program.Location.WorldPoint.Latitude,
+                                               Program.Location.WorldPoint.Longitude);
                 var geo = Program.Location.GetGeoLocation();
                 if (geo != null)
                     View.list1.Address = geo;
@@ -238,28 +227,26 @@ namespace MySquare.Controller
 
         void Service_SearchArrives(object serder, MySquare.FourSquare.SearchEventArgs e)
         {
+            venues = e.Groups;
             if (View.InvokeRequired)
-                View.Invoke(new ThreadStart(delegate()
-                {
-                    LoadVenues(e.Groups);
-                }));
+                View.Invoke(new ThreadStart(ShowList));
             else
-                LoadVenues(e.Groups);
-
+                ShowList();
         }
 
 
 
         void Service_TipsResult(object serder, TipsEventArgs e)
         {
+            tips = e.Tips;
             if (View.InvokeRequired)
-                View.Invoke(new ThreadStart(delegate()
-                {
-                    LoadVenues(e.Tips);
-                }));
+                View.Invoke(new ThreadStart(ShowList));
             else
-                LoadVenues(e.Tips);
+                ShowList();
         }
+
+        Tip[] tips = null;
+        Group[] venues = null;
 
         void LoadVenues(Group[] groups)
         {
@@ -277,7 +264,6 @@ namespace MySquare.Controller
                 }
             }
             AddCreatePlace();
-            ShowList();
 
 
             Thread t = new Thread(new ThreadStart(delegate()
@@ -323,8 +309,6 @@ namespace MySquare.Controller
             }
 
             AddCreatePlace();
-            ShowList();
-
 
             Thread t = new Thread(new ThreadStart(delegate()
             {
@@ -373,7 +357,12 @@ namespace MySquare.Controller
         {
             View.list1.BringToFront();
             View.list1.Dock = DockStyle.Fill;
+            if (ViewTips && tips != null)
+                LoadVenues(tips);
+            else if (venues != null)
+                LoadVenues(venues);
             View.list1.Visible = true;
+
             Cursor.Current = Cursors.Default;
             Cursor.Show();
         }
