@@ -41,7 +41,7 @@ namespace MySquare.Controller
             RightSoftButtonText = string.Empty;
 
             View.listBox.Visible = true;
-            form.header.Tabs[1].Selected = true;
+            form.header.Tabs[2].Selected = true;
             if (View.listBox.Count == 0)
                 GetFriends();
         }
