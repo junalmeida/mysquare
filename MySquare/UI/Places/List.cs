@@ -239,20 +239,26 @@ namespace MySquare.UI.Places
                     }
                 }
 
-                if (venue.Specials != null && venue.Specials.Length > 0)
+                if (venue.Specials != null)
                 {
-                    try
+                    foreach (Special special in venue.Specials)
                     {
-                        int padd = 10 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height;
-                        AlphaImage alpha = new AlphaImage(Resources.SpecialHere);
-                        Rectangle rectS = new Rectangle(e.Bounds.Right - listBox.DefaultItemHeight - padd, e.Bounds.Y, listBox.DefaultItemHeight + padd, listBox.DefaultItemHeight + padd);
-                        rectS.Y = rectS.Y - (padd / 2);
+                        if (special.Kind != SpecialKind.here)
+                            continue;
+                        try
+                        {
+                            int padd = 10 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height;
 
-                        alpha.Draw(e.Graphics, rectS);
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.RegisterLog("gdi", ex);
+                            AlphaImage alpha = new AlphaImage(Resources.SpecialHere);
+                            Rectangle rectS = new Rectangle(e.Bounds.Right - listBox.DefaultItemHeight - padd, e.Bounds.Y, listBox.DefaultItemHeight + padd, listBox.DefaultItemHeight + padd);
+                            rectS.Y = rectS.Y - (padd / 2);
+
+                            alpha.Draw(e.Graphics, rectS);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.RegisterLog("gdi", ex);
+                        }
                     }
                 }
 

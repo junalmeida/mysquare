@@ -89,7 +89,7 @@ namespace MySquare.Service
                         queryString.Append("&");
                         queryString.Append(key);
                         queryString.Append("=");
-                        queryString.Append(value);
+                        queryString.Append(UrlEncode(value));
                     }
                 }
 

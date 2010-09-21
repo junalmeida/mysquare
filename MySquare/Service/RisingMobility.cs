@@ -68,7 +68,6 @@ namespace MySquare.Service
             var md5 = System.Security.Cryptography.MD5.Create();
             byte[] crypt = md5.ComputeHash(System.Text.Encoding.ASCII.GetBytes(token));
             token = Convert.ToBase64String(crypt, 0, crypt.Length);
-            token = UrlEncode(token);
             param.Add("u", token);
             param.Add("t", ".prm");
 
