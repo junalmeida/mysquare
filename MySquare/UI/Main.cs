@@ -77,7 +77,7 @@ namespace MySquare.UI
             header.Tabs.Add(tabTips = new Tenor.Mobile.UI.HeaderTab("To-Do", Resources.PinMap));
             header.Tabs.Add(tabFriends = new Tenor.Mobile.UI.HeaderTab("Friends", Resources.Friends));
             header.Tabs.Add(tabSettings = new Tenor.Mobile.UI.HeaderTab("Settings", Resources.Settings));
-            header.Tabs.Add(tabMore = new Tenor.Mobile.UI.HeaderTab("Extra   ", Resources.MoreActions));
+            header.Tabs.Add(tabMore = new Tenor.Mobile.UI.HeaderTab("Extra", Resources.MoreActions));
         }
         HeaderTab tabFriends;
         HeaderTab tabPlaces;

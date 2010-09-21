@@ -10,6 +10,7 @@ namespace MySquare.Service
     internal static class Log
     {
         private static string current = null;
+        private static int count = 0;
         private static string GetLogPath(string key)
         {
             string appPath = Configuration.GetAppPath();
@@ -24,7 +25,7 @@ namespace MySquare.Service
             path = Path.Combine(path, current);
             DateTime date = DateTime.Now;
 
-            string filePath = string.Format("{0}_{1}.txt", date.Ticks, key);
+            string filePath = string.Format("{0:0000}_{1}.txt", count++, key);
             filePath = System.IO.Path.Combine(path, filePath);
             return filePath;
         }
@@ -66,6 +67,7 @@ namespace MySquare.Service
             string title = ex.GetType().FullName;
             if (title != "System.Exception")
                 writer.WriteLine(ex.GetType().FullName);
+            writer.WriteLine(DateTime.Now.ToString());
             writer.WriteLine(ex.Message);
             try
             {
@@ -73,11 +75,12 @@ namespace MySquare.Service
                 {
                     WebException wex = (WebException)ex;
                     writer.WriteLine("Status: " + wex.Status.ToString());
-                    writer.WriteLine("Headers: " + wex.Response.Headers.ToString());
-
+                    if (wex.Response != null && wex.Response.Headers != null)
+                        writer.WriteLine("Headers: " + wex.Response.Headers.ToString());
                 }
             }
             catch { }
+            writer.WriteLine();
             writer.WriteLine(ex.StackTrace);
             if (ex.InnerException != null)
             {
