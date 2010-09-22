@@ -540,6 +540,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\To-Do.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="UI\Common\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />

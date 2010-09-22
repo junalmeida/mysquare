@@ -253,6 +253,13 @@ namespace MySquare.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap To_Do {
+            get {
+                object obj = ResourceManager.GetObject("To_Do", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Twitter {
             get {
                 object obj = ResourceManager.GetObject("Twitter", resourceCulture);

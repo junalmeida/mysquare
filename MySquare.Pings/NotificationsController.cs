@@ -80,6 +80,8 @@ namespace MySquare.Pings
                 }
                 if (message.Length > 0)
                 {
+                    Log.RegisterLog("ping", new Exception(message.ToString()));
+
                     Guid guid = Configuration.GetAppGuid();
                     if (!Tenor.Mobile.Device.Notification.Exists(guid))
                     {
@@ -97,6 +99,10 @@ namespace MySquare.Pings
                     Tenor.Mobile.UI.NotificationWithSoftKeys.Show(guid,
                         "MySquare", message.ToString(), false, Resources.mySquare);
                 }
+                else
+                {
+                    Log.RegisterLog("ping", new Exception(string.Format("no recent check ins. {0}", Configuration.LastCheckIn)));
+                }
                 message = null;
                 return true;
             }
@@ -112,11 +118,6 @@ namespace MySquare.Pings
             waitThread.Set();
         }
 
-
-        void Location_PollHit(object sender, EventArgs e)
-        {
-            waitThread.Set();
-        }
 
 
         CheckIn[] checkIns;

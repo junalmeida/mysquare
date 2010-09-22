@@ -179,11 +179,11 @@ namespace MySquare.Service
                 parameters.Add("twitter", Convert.ToInt32(twitter.Value).ToString());
             if (facebook.HasValue)
                 parameters.Add("facebook", Convert.ToInt32(facebook.Value).ToString());
-            if (lat.HasValue)
+            if (lat.HasValue && lng.HasValue)
+            {
                 parameters.Add("geolat", lat.Value.ToString(culture));
-            if (lng.HasValue)
                 parameters.Add("geolong", lng.Value.ToString(culture));
-
+            }
             Post(ServiceResource.CheckIn, parameters);
         }
 

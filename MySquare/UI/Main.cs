@@ -74,7 +74,7 @@ namespace MySquare.UI
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
 
             header.Tabs.Add(tabPlaces = new Tenor.Mobile.UI.HeaderTab("Places", Resources.PinMap));
-            header.Tabs.Add(tabTips = new Tenor.Mobile.UI.HeaderTab("To-Do", Resources.PinMap));
+            header.Tabs.Add(tabTips = new Tenor.Mobile.UI.HeaderTab("Tips Nearby", Resources.To_Do));
             header.Tabs.Add(tabFriends = new Tenor.Mobile.UI.HeaderTab("Friends", Resources.Friends));
             header.Tabs.Add(tabSettings = new Tenor.Mobile.UI.HeaderTab("Settings", Resources.Settings));
             header.Tabs.Add(tabMore = new Tenor.Mobile.UI.HeaderTab("Extra", Resources.MoreActions));
@@ -212,12 +212,12 @@ namespace MySquare.UI
 
             helpText.Add("Welcome to MySquare!\r\nBrought to you by Rising Mobility. Here you can see more information.");
             helpWidget.Add(
-                new Point(170 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
+                new Point(180 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
                     30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
 
             helpText.Add("To start, first tap here to set your foursquare account.");
             helpWidget.Add(
-                new Point(130 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
+                new Point(140 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
                     30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
 
             helpText.Add("Here you will see nearby places to check details and check in.");
@@ -225,14 +225,20 @@ namespace MySquare.UI
                 new Point(35 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
                     30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
 
-            helpText.Add("An icon will be shown here when you get a GPS fix.");
+            helpText.Add("See nearby tips tapping this tab. You can see what'up around you.");
+            helpWidget.Add(
+                new Point(55 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
+                    30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
+
+
+            helpText.Add("The GPS icon will get solid when you have a precise location.");
             helpWidget.Add(
                 new Point(this.Width - (17 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width),
                     47 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
 
-            helpText.Add("Here you will see your friends. Enjoy.");
+            helpText.Add("Here you will see your friends and friend requests. Enjoy!");
             helpWidget.Add(
-                new Point(85 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
+                new Point(95 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
                     30 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
 
 

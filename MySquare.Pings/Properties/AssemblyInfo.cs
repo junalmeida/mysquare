@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5e1c19d5-dfbe-4f36-84bd-e90eaf2d4558")]
+[assembly: Guid("133b1aab-6031-4c1f-8961-c9252a6a6773")]
 
 // Below attribute is to suppress FxCop warning "CA2232 : Microsoft.Usage : Add STAThreadAttribute to assembly"
 // as Device app does not support STA thread.
