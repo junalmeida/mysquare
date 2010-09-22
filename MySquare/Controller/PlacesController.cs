@@ -231,7 +231,7 @@ namespace MySquare.Controller
             if (View.InvokeRequired)
                 View.Invoke(new ThreadStart(ShowList));
             else
-                ShowList();
+                ShowList(true);
         }
 
 
@@ -242,7 +242,7 @@ namespace MySquare.Controller
             if (View.InvokeRequired)
                 View.Invoke(new ThreadStart(ShowList));
             else
-                ShowList();
+                ShowList(true);
         }
 
         Tip[] tips = null;
@@ -352,15 +352,20 @@ namespace MySquare.Controller
         }
 
 
-
         private void ShowList()
+        {
+            ShowList(false);
+        }
+        private void ShowList(bool force)
         {
             View.list1.BringToFront();
             View.list1.Dock = DockStyle.Fill;
-            if (ViewTips && tips != null && (View.list1.listBox.Count == 0 || (View.list1.listBox.Count > 1 && View.list1.listBox[1].Value != tips[0])))
+
+            if (ViewTips && tips != null && (force || View.list1.listBox.Count == 0 || (View.list1.listBox.Count > 1 && View.list1.listBox[1].Value != tips[0])))
                 LoadVenues(tips);
-            else if (!ViewTips && venues != null && (View.list1.listBox.Count == 0 || (View.list1.listBox.Count > 1 && View.list1.listBox[1].Value != venues[0].Venues[0])))
+            else if (!ViewTips && venues != null && (force || View.list1.listBox.Count == 0 || (View.list1.listBox.Count > 1 && View.list1.listBox[1].Value != venues[0].Venues[0])))
                 LoadVenues(venues);
+
             View.list1.Visible = true;
 
             Cursor.Current = Cursors.Default;
