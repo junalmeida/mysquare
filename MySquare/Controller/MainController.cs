@@ -70,7 +70,14 @@ namespace MySquare.Controller
             }
             set
             {
-                View.mnuLeft.Enabled = value;
+                try
+                {
+                    View.mnuLeft.Enabled = value;
+                }
+                catch (ThreadAbortException)
+                { }
+                catch (ObjectDisposedException)
+                { }
             }
         }
 
@@ -82,8 +89,15 @@ namespace MySquare.Controller
             }
             set
             {
-                View.mnuLeft.Text = value;
-                View.mnuLeft.MenuItems.Clear();
+                try
+                {
+                    View.mnuLeft.Text = value;
+                    View.mnuLeft.MenuItems.Clear();
+                }
+                catch (ThreadAbortException)
+                { }
+                catch (ObjectDisposedException)
+                { }
             }
         }
         protected override void AddLeftSubMenu(MenuItem item)
@@ -99,8 +113,15 @@ namespace MySquare.Controller
             }
             set
             {
-                View.mnuRight.Enabled = value;
-                View.mnuRight.MenuItems.Clear();
+                try
+                {
+                    View.mnuRight.Enabled = value;
+                    View.mnuRight.MenuItems.Clear();
+                }
+                catch (ThreadAbortException)
+                { }
+                catch (ObjectDisposedException)
+                { }
             }
         }
 
@@ -112,7 +133,14 @@ namespace MySquare.Controller
             }
             set
             {
-                View.mnuRight.Text = value;
+                try
+                {
+                    View.mnuRight.Text = value;
+                }
+                catch (ThreadAbortException)
+                { }
+                catch (ObjectDisposedException)
+                { }
             }
         }
 

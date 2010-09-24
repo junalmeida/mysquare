@@ -358,18 +358,26 @@ namespace MySquare.Controller
         }
         private void ShowList(bool force)
         {
-            View.list1.BringToFront();
-            View.list1.Dock = DockStyle.Fill;
+            try
+            {
+                View.list1.BringToFront();
+                View.list1.Dock = DockStyle.Fill;
 
-            if (ViewTips && tips != null && (force || View.list1.listBox.Count == 0 || (View.list1.listBox.Count > 1 && View.list1.listBox[1].Value != tips[0])))
-                LoadVenues(tips);
-            else if (!ViewTips && venues != null && (force || View.list1.listBox.Count == 0 || (View.list1.listBox.Count > 1 && View.list1.listBox[1].Value != venues[0].Venues[0])))
-                LoadVenues(venues);
+                if (ViewTips && tips != null &&
+                   (force || tips.Length == 0 || View.list1.listBox.Count == 0 || (View.list1.listBox.Count > 1 && View.list1.listBox[1].Value != tips[0])))
+                    LoadVenues(tips);
+                else if
+                   (!ViewTips && venues != null &&
+                   (force || (venues.Length == 0 || venues[0].Venues.Length == 0) || View.list1.listBox.Count == 0 || (View.list1.listBox.Count > 1 && View.list1.listBox[1].Value != venues[0].Venues[0])))
+                    LoadVenues(venues);
 
-            View.list1.Visible = true;
+                View.list1.Visible = true;
 
-            Cursor.Current = Cursors.Default;
-            Cursor.Show();
+                Cursor.Current = Cursors.Default;
+                Cursor.Show();
+            }
+            catch (ObjectDisposedException)
+            { }
         }
     
     }

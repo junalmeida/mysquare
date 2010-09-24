@@ -47,6 +47,15 @@ namespace MySquare
                 Location.Poll();
                 
                 Application.Run(mainForm);
+                foreach (var obj in BaseController.Controllers)
+                {
+                    try
+                    {
+                        obj.Service.Abort();
+                    }
+                    catch (Exception)
+                    { }
+                }
                 Configuration.abortCheck = true;
                 if (Configuration.PingInterval > 0)
                 {

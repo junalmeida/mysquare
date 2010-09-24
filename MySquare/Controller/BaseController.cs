@@ -72,7 +72,7 @@ namespace MySquare.Controller
         public virtual void OnRightSoftButtonClick() { }
 
 
-        protected static IList<BaseController> Controllers = new List<BaseController>();
+        internal static IList<BaseController> Controllers = new List<BaseController>();
         protected static int CurrentController = -1;
 
         protected static string[] lastTags;
