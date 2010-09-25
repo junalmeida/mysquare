@@ -82,7 +82,7 @@ namespace MySquare.Service
             catch { }
             writer.WriteLine();
             writer.WriteLine(ex.StackTrace);
-            if (ex.InnerException != null)
+            if (ex.InnerException != null && ex.InnerException != ex)
             {
                 writer.WriteLine("----");
                 RegisterLog(writer, ex.InnerException);

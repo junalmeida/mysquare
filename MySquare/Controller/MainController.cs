@@ -35,19 +35,23 @@ namespace MySquare.Controller
                 }));
             else
             {
-                View.Reset();
+                try
+                {
+                    View.Reset();
 
-                View.lblError.Text = text;
-                View.lblError.Visible = true;
+                    View.lblError.Text = text;
+                    View.lblError.Visible = true;
 
 
-                RightSoftButtonText = "&Back";
-                RightSoftButtonEnabled = true;
-                LeftSoftButtonText = string.Empty;
-                LeftSoftButtonEnabled = false;
+                    RightSoftButtonText = "&Back";
+                    RightSoftButtonEnabled = true;
+                    LeftSoftButtonText = string.Empty;
+                    LeftSoftButtonEnabled = false;
 
-                Cursor.Current = Cursors.Default;
-                Cursor.Show();
+                    Cursor.Current = Cursors.Default;
+                    Cursor.Show();
+                }
+                catch { }
             }
         }
 

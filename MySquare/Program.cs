@@ -27,45 +27,41 @@ namespace MySquare
         [MTAThread]
         public static void Main()
         {
-#if DEBUG
-           // if (System.Diagnostics.Debugger.IsAttached)
-                //Application.Run(new MySquare.UI.MapTest());
-#endif
+
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             using (UI.Main mainForm = new UI.Main())
             {
-#if !DEBUG
                 try
                 {
-#endif
-                Configuration.CheckNotifications();
-                Network.CheckCacheFiles();
 
-                Location = new WorldPosition(true, Configuration.UseGps, 15000);
-                Location.LocationChanged += new EventHandler(Location_LocationChanged);
-                Location.PollHit += new EventHandler(Location_PollHit);
-                Location.Poll();
-                
-                Application.Run(mainForm);
-                foreach (var obj in BaseController.Controllers)
-                {
-                    try
+                    Configuration.CheckNotifications();
+                    Network.CheckCacheFiles();
+
+                    Location = new WorldPosition(true, Configuration.UseGps, 15000);
+                    Location.LocationChanged += new EventHandler(Location_LocationChanged);
+                    Location.PollHit += new EventHandler(Location_PollHit);
+                    Location.Poll();
+
+                    Application.Run(mainForm);
+                    foreach (var obj in BaseController.Controllers)
                     {
-                        obj.Service.Abort();
+                        try
+                        {
+                            obj.Service.Abort();
+                        }
+                        catch (Exception)
+                        { }
                     }
-                    catch (Exception)
-                    { }
-                }
-                Configuration.abortCheck = true;
-                if (Configuration.PingInterval > 0)
-                {
-                    Configuration.RetrievePings = (MessageBox.Show("Keep recieveing check-in notifications after closing MySquare?", "MySquare", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes);
-                }
-                if (lastException != null)
-                {
-                    MessageBox.Show("Unknkown error: " + lastException.Message + "\r\n");
-                }
-#if !DEBUG
+                    Configuration.abortCheck = true;
+                    if (Configuration.PingInterval > 0)
+                    {
+                        Configuration.RetrievePings = (MessageBox.Show("Keep recieveing check-in notifications after closing MySquare?", "MySquare", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes);
+                    }
+                    if (lastException != null)
+                    {
+                        MessageBox.Show("Unknkown error: " + lastException.Message + "\r\n");
+                    }
+
                 }
                 catch (ObjectDisposedException)
                 {
@@ -73,7 +69,11 @@ namespace MySquare
                 catch (Exception ex)
                 {
                     Service.Log.RegisterLog(ex);
-                    MessageBox.Show("Unknown error.\r\n" + ex.Message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    string message = "Unknown error: " + ex.Message + "\r\n\r\nSorry for this inconvenience.";
+#if DEBUG
+                    message += "\r\n" + ex.StackTrace;
+#endif
+                    MessageBox.Show(message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                     Terminate();
                 }
                 finally
@@ -86,9 +86,7 @@ namespace MySquare
                     mainForm.Dispose();
                 }
                 catch (ObjectDisposedException) { }
-#else
-                DisposeThings();
-#endif
+
             }
             Application.Exit();
         }

@@ -100,6 +100,7 @@ namespace MySquare.Service
                 request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded";
+                
             }
             else
             {
@@ -146,11 +147,18 @@ namespace MySquare.Service
 #endif
             if (isPost)
             {
-                MemoryStream memData = new MemoryStream();
-                StreamWriter writer = new StreamWriter(memData);
+                MemoryStream memData = null;
                 if (queryString.Length > 0)
-                    writer.Write(queryString.Remove(0, 1).ToString());
-                writer.Flush();
+                    memData = new MemoryStream(
+                         System.Text.Encoding.UTF8.GetBytes(queryString.Remove(0, 1).ToString())
+                         );
+                else
+                    memData = new MemoryStream();
+
+                //StreamWriter writer = new StreamWriter(memData);
+                //if (queryString.Length > 0)
+                    //writer.Write(queryString.Remove(0, 1).ToString());
+                //writer.Flush();
                 request.ContentLength = memData.Length;
 
                 memData.Seek(0, SeekOrigin.Begin);
