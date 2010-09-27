@@ -42,6 +42,7 @@ namespace MySquare.Service
                 return false;
             else if (ex is ObjectDisposedException || ex is RequestAbortException || (ex.InnerException != null && ex.InnerException is WebException && ((WebException)ex.InnerException).Status == WebExceptionStatus.RequestCanceled))
                 return false;
+            System.Diagnostics.Debug.WriteLine(ex.Message, "RegisterLog");
 
             string fileName = GetLogPath(key);
             if (!string.IsNullOrEmpty(fileName))
@@ -53,7 +54,7 @@ namespace MySquare.Service
                         using (FileStream file = new FileStream(fileName, FileMode.Create))
                         using (StreamWriter writer = new StreamWriter(file))
                         {
-                            RegisterLog(writer, ex);
+                            RegisterLog(writer, ex, 0);
                         }
                     }
                     catch { }
@@ -62,8 +63,10 @@ namespace MySquare.Service
             return true;
         }
 
-        private static void RegisterLog(StreamWriter writer, Exception ex)
+        private static void RegisterLog(StreamWriter writer, Exception ex, int count)
         {
+            if (count > 3)
+                return;
             string title = ex.GetType().FullName;
             if (title != "System.Exception")
                 writer.WriteLine(ex.GetType().FullName);
@@ -82,10 +85,10 @@ namespace MySquare.Service
             catch { }
             writer.WriteLine();
             writer.WriteLine(ex.StackTrace);
-            if (ex.InnerException != null && ex.InnerException != ex)
+            if (ex.InnerException != null)
             {
                 writer.WriteLine("----");
-                RegisterLog(writer, ex.InnerException);
+                RegisterLog(writer, ex.InnerException, count++);
             }
         }
 

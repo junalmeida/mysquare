@@ -110,7 +110,6 @@ namespace MySquare.Service
                 request.Method = "GET";
             }
 
-
             lock (this)
             {
                 Abort(service);
