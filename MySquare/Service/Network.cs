@@ -510,8 +510,12 @@ namespace MySquare.Service
         <= 57)) // 0-9
                 || ((charValue >= 65) && (charValue
         <= 90)) // A-Z
-                || ((charValue >= 97) && (charValue
-        <= 122))) // a-z
+        //        || ((charValue >= 97) && (charValue
+        //<= 122))) // a-z -- change to accept anything after lowercase 'z'.
+                || (charValue >= 97) // a-until the end
+                || (charValue == (int)'-')
+                || (charValue == (int)'.')
+                   )
                 {
                     strWtr.Write((char)charValue);
                 }
