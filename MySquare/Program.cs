@@ -117,7 +117,9 @@ lac: {4}
 fix: {5}
 location: {6}
 service: {7},
-sattelites: {8}",
+sattelites: {8},
+altitude: {9},
+hdop: {10}",
          Program.Location.BaseStationId,
          Program.Location.CellId,
          Program.Location.CountryCode,
@@ -126,7 +128,10 @@ sattelites: {8}",
          Program.Location.FixType,
          Program.Location.WorldPoint,
          Program.Location.FixService,
-         Program.Location.Sattelites.ToString())));
+         Program.Location.Sattelites.ToString(),
+         Program.Location.WorldPoint.Altitude,
+         Program.Location.WorldPoint.HorizontalDistance
+         )));
         }
 
         static void Location_PollHit(object sender, EventArgs e)

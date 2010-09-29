@@ -82,21 +82,16 @@ namespace MySquare.Controller
                 twitter = View.checkIn1.chkTwitter.CheckState == CheckState.Checked;
             if (View.checkIn1.chkFacebook.CheckState != CheckState.Indeterminate)
                 facebook = View.checkIn1.chkFacebook.CheckState == CheckState.Checked;
-            if (Program.Location.FixType == RisingMobility.Mobile.Location.FixType.Gps)
-            {
-                Service.CheckIn(
-                    View.checkIn1.txtShout.Text,
-                    View.checkIn1.chkTellFriends.Checked,
-                    facebook, twitter, Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude);
-            }
-            else
-            {
-                Service.CheckIn(
-                    View.checkIn1.txtShout.Text,
-                    View.checkIn1.chkTellFriends.Checked,
-                    facebook, twitter, Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude);
 
-            }
+            Service.CheckIn(
+                View.checkIn1.txtShout.Text,
+                View.checkIn1.chkTellFriends.Checked,
+                facebook, twitter,
+                    Program.Location.WorldPoint.Latitude,
+                    Program.Location.WorldPoint.Longitude, 
+                    Program.Location.WorldPoint.Altitude,
+                    Program.Location.WorldPoint.HorizontalDistance);
+
             RightSoftButtonText = "&Cancel";
         }
 

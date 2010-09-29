@@ -159,15 +159,15 @@ namespace MySquare.Service
         
         internal void CheckIn(Venue venue, string shout, bool tellFriends, bool? facebook, bool? twitter)
         {
-            CheckIn(venue, shout, tellFriends, facebook, twitter, null, null);
+            CheckIn(venue, shout, tellFriends, facebook, twitter, null, null, null, null);
         }
 
-        internal void CheckIn(string shout, bool tellFriends, bool? facebook, bool? twitter, double? lat, double? lng)
+        internal void CheckIn(string shout, bool tellFriends, bool? facebook, bool? twitter, double? lat, double? lng, double? altitude, double? accuracy)
         {
-            CheckIn(null, shout, tellFriends, facebook, twitter, lat, lng);
+            CheckIn(null, shout, tellFriends, facebook, twitter, lat, lng, altitude, accuracy);
         }
 
-        internal void CheckIn(Venue venue, string shout, bool tellFriends, bool? facebook, bool? twitter, double? lat, double? lng)
+        internal void CheckIn(Venue venue, string shout, bool tellFriends, bool? facebook, bool? twitter, double? lat, double? lng, double? altitude, double? accuracy)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             if (venue != null)
@@ -183,7 +183,14 @@ namespace MySquare.Service
             {
                 parameters.Add("geolat", lat.Value.ToString(culture));
                 parameters.Add("geolong", lng.Value.ToString(culture));
+
+                if (altitude.HasValue)
+                {
+                    parameters.Add("geoalt", altitude.Value.ToString(culture));
+                }
+                //TODO: how to send accuracy?
             }
+
             Post(ServiceResource.CheckIn, parameters);
         }
 

@@ -307,7 +307,11 @@ namespace MySquare.Controller
                 Service.CheckIn(Venue,
                     View.checkIn1.txtShout.Text,
                     View.checkIn1.chkTellFriends.Checked,
-                    facebook, twitter, Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude);
+                    facebook, twitter, 
+                        Program.Location.WorldPoint.Latitude,
+                        Program.Location.WorldPoint.Longitude, 
+                        Program.Location.WorldPoint.Altitude, 
+                        Program.Location.WorldPoint.HorizontalDistance);
             }
             else
             {
