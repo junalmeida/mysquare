@@ -154,10 +154,6 @@ namespace MySquare.Service
                 else
                     memData = new MemoryStream();
 
-                //StreamWriter writer = new StreamWriter(memData);
-                //if (queryString.Length > 0)
-                    //writer.Write(queryString.Remove(0, 1).ToString());
-                //writer.Flush();
                 request.ContentLength = memData.Length;
 
                 memData.Seek(0, SeekOrigin.Begin);
