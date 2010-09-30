@@ -188,7 +188,10 @@ namespace MySquare.Service
                 {
                     parameters.Add("geoalt", altitude.Value.ToString(culture));
                 }
-                //TODO: how to send accuracy?
+                if (accuracy.HasValue)
+                {
+                    parameters.Add("geohacc", accuracy.Value.ToString(culture));
+                }
             }
 
             Post(ServiceResource.CheckIn, parameters);

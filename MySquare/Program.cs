@@ -116,9 +116,9 @@ mnc: {3}
 lac: {4}
 fix: {5}
 location: {6}
-service: {7},
-sattelites: {8},
-altitude: {9},
+service: {7}
+sattelites: {8}
+altitude: {9}
 hdop: {10}",
          Program.Location.BaseStationId,
          Program.Location.CellId,
