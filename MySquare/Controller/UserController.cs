@@ -41,7 +41,7 @@ namespace MySquare.Controller
 
             LeftSoftButtonText = string.Empty;
             LeftSoftButtonEnabled = false;
-            main.header.Tabs[1].Selected = true;
+            main.header.Tabs[2].Selected = true;
         }
 
         public override void OnLeftSoftButtonClick()
@@ -124,6 +124,16 @@ namespace MySquare.Controller
                 View.userInfo1.lblEmail.Enabled = false;
             }
 
+
+            {
+                if (!string.IsNullOrEmpty(user.Twitter))
+                    View.userInfo1.lnkFoursquare.Tag = user.Twitter;
+                else
+                    View.userInfo1.lnkFoursquare.Tag = "user/" + user.Id.ToString();
+
+                View.userInfo1.lnkFoursquare.Text = user.FirstName + "'s web profile";
+                View.userInfo1.lnkFoursquare.Enabled = true;
+            }
 
 
 

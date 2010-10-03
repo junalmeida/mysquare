@@ -78,10 +78,9 @@ namespace MySquare.UI
         {
             try
             {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("http://risingmobility.com/mysquare", string.Empty));
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("http://risingmobility.com/mysquare", string.Empty));
             }
             catch { }
         }
-
     }
 }

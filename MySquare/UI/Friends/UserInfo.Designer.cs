@@ -36,6 +36,7 @@
             this.lblShoutT = new System.Windows.Forms.Label();
             this.lblLastSeenT = new System.Windows.Forms.Label();
             this.lblLastSeen = new System.Windows.Forms.LinkLabel();
+            this.lnkFoursquare = new System.Windows.Forms.LinkLabel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,7 +44,7 @@
             // 
             this.lblFacebook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFacebook.Location = new System.Drawing.Point(20, 60);
+            this.lblFacebook.Location = new System.Drawing.Point(21, 90);
             this.lblFacebook.Name = "lblFacebook";
             this.lblFacebook.Size = new System.Drawing.Size(165, 20);
             this.lblFacebook.TabIndex = 8;
@@ -54,7 +55,7 @@
             // 
             this.lblTwitter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTwitter.Location = new System.Drawing.Point(20, 32);
+            this.lblTwitter.Location = new System.Drawing.Point(21, 62);
             this.lblTwitter.Name = "lblTwitter";
             this.lblTwitter.Size = new System.Drawing.Size(165, 20);
             this.lblTwitter.TabIndex = 9;
@@ -65,7 +66,7 @@
             // 
             this.lblEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblEmail.Location = new System.Drawing.Point(20, 4);
+            this.lblEmail.Location = new System.Drawing.Point(21, 34);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(165, 20);
             this.lblEmail.TabIndex = 10;
@@ -75,13 +76,14 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
+            this.panel1.Controls.Add(this.lnkFoursquare);
             this.panel1.Controls.Add(this.lblEmail);
             this.panel1.Controls.Add(this.lblFacebook);
             this.panel1.Controls.Add(this.lblTwitter);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(208, 83);
+            this.panel1.Size = new System.Drawing.Size(208, 111);
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.UserInfo_Paint);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseMove);
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VenueInfo_MouseDown);
@@ -90,7 +92,7 @@
             // 
             this.lblShout.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblShout.ForeColor = System.Drawing.Color.Black;
-            this.lblShout.Location = new System.Drawing.Point(0, 99);
+            this.lblShout.Location = new System.Drawing.Point(0, 127);
             this.lblShout.Name = "lblShout";
             this.lblShout.Size = new System.Drawing.Size(208, 25);
             this.lblShout.Text = "label2";
@@ -102,7 +104,7 @@
             this.lblShoutT.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblShoutT.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.lblShoutT.ForeColor = System.Drawing.Color.Black;
-            this.lblShoutT.Location = new System.Drawing.Point(0, 83);
+            this.lblShoutT.Location = new System.Drawing.Point(0, 111);
             this.lblShoutT.Name = "lblShoutT";
             this.lblShoutT.Size = new System.Drawing.Size(208, 16);
             this.lblShoutT.Text = "Last shout:";
@@ -113,7 +115,7 @@
             this.lblLastSeenT.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblLastSeenT.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.lblLastSeenT.ForeColor = System.Drawing.Color.Black;
-            this.lblLastSeenT.Location = new System.Drawing.Point(0, 124);
+            this.lblLastSeenT.Location = new System.Drawing.Point(0, 152);
             this.lblLastSeenT.Name = "lblLastSeenT";
             this.lblLastSeenT.Size = new System.Drawing.Size(208, 16);
             this.lblLastSeenT.Text = "Last seen:";
@@ -122,7 +124,7 @@
             // lblLastSeen
             // 
             this.lblLastSeen.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblLastSeen.Location = new System.Drawing.Point(0, 140);
+            this.lblLastSeen.Location = new System.Drawing.Point(0, 168);
             this.lblLastSeen.Name = "lblLastSeen";
             this.lblLastSeen.Size = new System.Drawing.Size(208, 25);
             this.lblLastSeen.TabIndex = 22;
@@ -130,6 +132,17 @@
             this.lblLastSeen.Visible = false;
             this.lblLastSeen.TextChanged += new System.EventHandler(this.lblLastSeen_TextChanged);
             this.lblLastSeen.Click += new System.EventHandler(this.lblLastSeen_Click);
+            // 
+            // lnkFoursquare
+            // 
+            this.lnkFoursquare.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkFoursquare.Location = new System.Drawing.Point(21, 6);
+            this.lnkFoursquare.Name = "lnkFoursquare";
+            this.lnkFoursquare.Size = new System.Drawing.Size(165, 20);
+            this.lnkFoursquare.TabIndex = 11;
+            this.lnkFoursquare.Text = "linkLabel1";
+            this.lnkFoursquare.Click += new System.EventHandler(this.lnkFoursquare_Click);
             // 
             // UserInfo
             // 
@@ -161,5 +174,6 @@
         internal System.Windows.Forms.Label lblShout;
         private System.Windows.Forms.Label lblLastSeenT;
         internal System.Windows.Forms.LinkLabel lblLastSeen;
+        internal System.Windows.Forms.LinkLabel lnkFoursquare;
     }
 }

@@ -17,6 +17,18 @@ namespace MySquare.UI.Friends
             InitializeComponent();
         }
 
+
+        private void lnkFoursquare_Click(object sender, EventArgs e)
+        {
+            if (lnkFoursquare.Tag != null)
+            {
+                ProcessStartInfo psi =
+                      new ProcessStartInfo("http://foursquare.com/mobile/" + (string)lnkFoursquare.Tag, string.Empty);
+                Process.Start(psi);
+            }
+
+        }
+
         private void lblEmail_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(lblEmail.Text))
@@ -50,6 +62,7 @@ namespace MySquare.UI.Friends
         AlphaImage imgEmail = null;
         AlphaImage imgFacebook = null;
         AlphaImage imgTwitter = null;
+        AlphaImage imgFoursquare = null;
         private void UserInfo_Paint(object sender, PaintEventArgs e)
         {
             if (imgEmail == null)
@@ -58,8 +71,15 @@ namespace MySquare.UI.Friends
                 imgFacebook = new AlphaImage(Resources.Facebook);
             if (imgTwitter == null)
                 imgTwitter = new AlphaImage(Resources.Twitter);
+            if (imgFoursquare == null)
+                imgFoursquare = new AlphaImage(Resources.Foursquare);
 
             int padd = (3 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width);
+            imgFoursquare.Draw(e.Graphics,
+                new Rectangle(
+                    lnkFoursquare.Left - lnkFoursquare.Height,
+                    lnkFoursquare.Top,
+                    lnkFoursquare.Height - padd, lnkFoursquare.Height - padd));
             imgEmail.Draw(e.Graphics,
                 new Rectangle(
                     lblEmail.Left - lblEmail.Height,
@@ -131,6 +151,7 @@ namespace MySquare.UI.Friends
             if (venue != null)
                 (BaseController.OpenController((Parent.Parent as Main).venueDetails1) as VenueDetailsController).OpenVenue(venue);
         }
+
 
     }
 }
