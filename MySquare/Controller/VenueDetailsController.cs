@@ -183,15 +183,19 @@ namespace MySquare.Controller
 
         void Service_FlagResult(object sender, FlagEventArgs e)
         {
-            View.Invoke(new ThreadStart(delegate()
+            try
             {
-                string message = null;
-                if (e.Success)
-                    message = "This place was flagged.";
-                else
-                    message = "Unable to flag this place.";
-                MessageBox.Show(message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
-            }));
+                View.Invoke(new ThreadStart(delegate()
+                {
+                    string message = null;
+                    if (e.Success)
+                        message = "This place was flagged.";
+                    else
+                        message = "Unable to flag this place.";
+                    MessageBox.Show(message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
+                }));
+            }
+            catch (ObjectDisposedException) { }
         }
 
         #endregion
@@ -275,6 +279,7 @@ namespace MySquare.Controller
                         View.lblAddress.Text = "unable to read data.";
                     }));
                 }
+                catch (ObjectDisposedException) { return; }
                 catch (InvalidOperationException) { }
                 Log.RegisterLog(e.Exception);
             }
@@ -333,11 +338,15 @@ namespace MySquare.Controller
 
         private void CheckInResult()
         {
-            if (View.InvokeRequired)
+            try
             {
-                View.Invoke(new ThreadStart(CheckInResult));
-                return;
+                if (View.InvokeRequired)
+                {
+                    View.Invoke(new ThreadStart(CheckInResult));
+                    return;
+                }
             }
+            catch (ObjectDisposedException) { return;  }
             if (checkInResult != null)
             {
 
@@ -392,6 +401,7 @@ namespace MySquare.Controller
                                     View.checkIn1.pnlCheckInResult.Invoke(new ThreadStart(delegate() { View.checkIn1.pnlCheckInResult.Invalidate(); }));
                                 }
                         }
+                        catch (ObjectDisposedException) { return; }
                         catch { }
                     }
                 View.checkIn1.scoreImageList.ClearImageList();
@@ -409,10 +419,11 @@ namespace MySquare.Controller
                                     View.checkIn1.pnlCheckInResult.Invoke(new ThreadStart(delegate() { View.checkIn1.pnlCheckInResult.Invalidate(); }));
                                 }
                         }
+                        catch (ObjectDisposedException) { return; }
                         catch { }
                     }
             }));
-            t.Start();
+            t.StartThread();
         }
 
 
@@ -496,28 +507,35 @@ namespace MySquare.Controller
 
                 Thread t = new Thread(new ThreadStart(delegate()
                 {
-                    if (Venue.PrimaryCategory != null && !string.IsNullOrEmpty(Venue.PrimaryCategory.IconUrl))
+                    try
                     {
-                        byte[] image = Service.DownloadImageSync(Venue.PrimaryCategory.IconUrl);
-                        View.Invoke(new ThreadStart(delegate()
+                        if (Venue.PrimaryCategory != null && !string.IsNullOrEmpty(Venue.PrimaryCategory.IconUrl))
                         {
-                            View.venueInfo1.imgCategory.Tag = image;
-                            View.venueInfo1.imgCategory.Invalidate();
-                        }));
-                    }
+                            byte[] image = Service.DownloadImageSync(Venue.PrimaryCategory.IconUrl);
+                            View.Invoke(new ThreadStart(delegate()
+                            {
+                                View.venueInfo1.imgCategory.Tag = image;
+                                View.venueInfo1.imgCategory.Invalidate();
+                            }));
+                        }
 
-                    if (Venue.Status != null && Venue.Status.Mayor != null && !string.IsNullOrEmpty(Venue.Status.Mayor.User.ImageUrl))
-                    {
-                        byte[] image = Service.DownloadImageSync(Venue.Status.Mayor.User.ImageUrl);
-                        View.Invoke(new ThreadStart(delegate()
+                        if (Venue.Status != null && Venue.Status.Mayor != null && !string.IsNullOrEmpty(Venue.Status.Mayor.User.ImageUrl))
                         {
-                            View.venueInfo1.imgMayor.Tag = image;
-                            View.venueInfo1.imgMayor.Invalidate();
-                        }));
+                            byte[] image = Service.DownloadImageSync(Venue.Status.Mayor.User.ImageUrl);
+                            View.Invoke(new ThreadStart(delegate()
+                            {
+                                View.venueInfo1.imgMayor.Tag = image;
+                                View.venueInfo1.imgMayor.Invalidate();
+                            }));
+                        }
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        return;
                     }
 
                 }));
-                t.Start();
+                t.StartThread();
             }
         }
 
@@ -526,6 +544,7 @@ namespace MySquare.Controller
         void Service_VenueResult(object sender, VenueEventArgs e)
         {
             this.Venue = e.Venue;
+
             LoadExtraInfo();
         }
         #endregion
@@ -549,22 +568,29 @@ namespace MySquare.Controller
 
                 Thread t = new Thread(new ThreadStart(delegate()
                 {
-                    CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
-                    string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
-                        size.Width, size.Height,
-                        Venue.Latitude.ToString(culture),
-                        Venue.Longitude.ToString(culture), zoom, Configuration.MapType.ToString().ToLower());
-
-                    byte[] buffer = Service.DownloadImageSync(googleMapsUrl, false);
-
-                    this.View.Invoke(new ThreadStart(delegate()
+                    try
                     {
-                        box.Image = null;
-                        box.Tag = buffer;
-                        box.Invalidate();
-                    }));
+                        CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
+                        string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
+                            size.Width, size.Height,
+                            Venue.Latitude.ToString(culture),
+                            Venue.Longitude.ToString(culture), zoom, Configuration.MapType.ToString().ToLower());
+
+                        byte[] buffer = Service.DownloadImageSync(googleMapsUrl, false);
+
+                        this.View.Invoke(new ThreadStart(delegate()
+                        {
+                            box.Image = null;
+                            box.Tag = buffer;
+                            box.Invalidate();
+                        }));
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        return;
+                    }
                 }));
-                t.Start();
+                t.StartThread();
             }
         }
 
@@ -588,33 +614,37 @@ namespace MySquare.Controller
                 View.venueTips1.lblError.Visible = true;
 
             Thread t = new Thread(new ThreadStart(delegate()
-              {
-                  if (Venue.Tips != null)
-                  {
-                      foreach (Tip tip in Venue.Tips)
-                      {
-                          if (tip.User != null)
-                          {
-                              byte[] buffer = Service.DownloadImageSync(tip.User.ImageUrl);
-                              if (buffer != null)
-                              {
-                                  using (MemoryStream mem = new MemoryStream(buffer))
-                                  {
-                                      Bitmap image =
-                                          new Bitmap(mem);
-                                      View.venueTips1.imageList[tip.User.ImageUrl] = image;
-                                  }
-                                  View.Invoke(new ThreadStart(delegate()
-                                  {
-                                      View.venueTips1.listBox.Invalidate();
-                                  }));
-                              }
-                              buffer = null;
-                          }
-                      }
-                  }
-              }));
-            t.Start();
+            {
+                try
+                {
+                    if (Venue.Tips != null)
+                    {
+                        foreach (Tip tip in Venue.Tips)
+                        {
+                            if (tip.User != null)
+                            {
+                                byte[] buffer = Service.DownloadImageSync(tip.User.ImageUrl);
+                                if (buffer != null)
+                                {
+                                    using (MemoryStream mem = new MemoryStream(buffer))
+                                    {
+                                        Bitmap image =
+                                            new Bitmap(mem);
+                                        View.venueTips1.imageList[tip.User.ImageUrl] = image;
+                                    }
+                                    View.Invoke(new ThreadStart(delegate()
+                                    {
+                                        View.venueTips1.listBox.Invalidate();
+                                    }));
+                                }
+                                buffer = null;
+                            }
+                        }
+                    }
+                }
+                catch (ObjectDisposedException) { }
+            }));
+            t.StartThread();
 
         }
 
@@ -639,10 +669,14 @@ namespace MySquare.Controller
         void Service_AddTipResult(object serder, TipEventArgs e)
         {
             tipResult = e.Tip;
-            if (View.InvokeRequired)
-                View.Invoke(new ThreadStart(AddTipResult));
-            else
-                AddTipResult();
+            try
+            {
+                if (View.InvokeRequired)
+                    View.Invoke(new ThreadStart(AddTipResult));
+                else
+                    AddTipResult();
+            }
+            catch (ObjectDisposedException) { }
 
         }
 
@@ -668,11 +702,15 @@ namespace MySquare.Controller
         #region People
         private void LoadPeople()
         {
-            if (View.InvokeRequired)
+            try
             {
-                View.Invoke(new ThreadStart(LoadPeople));
-                return;
+                if (View.InvokeRequired)
+                {
+                    View.Invoke(new ThreadStart(LoadPeople));
+                    return;
+                }
             }
+            catch (ObjectDisposedException) { return; }
             if (!View.peopleHere.Visible)
                 return;
             View.peopleHere.lblError.Visible = false;
@@ -706,11 +744,12 @@ namespace MySquare.Controller
                                     View.Invoke(new ThreadStart(delegate() { View.peopleHere.listBox.Invalidate(); }));
                                 }
                             }
+                            catch (ObjectDisposedException) { return; }
                             catch { }
                         }
                     }
                 }));
-                t.Start();
+                t.StartThread();
             }
             else if (Venue.fullData)
             {

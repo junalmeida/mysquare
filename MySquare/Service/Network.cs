@@ -140,7 +140,7 @@ namespace MySquare.Service
                 {
                     ParseResponse((int)service, resourceFile, stream);
                 }));
-                t.Start();
+                t.StartThread();
                 return;
             }
 #endif

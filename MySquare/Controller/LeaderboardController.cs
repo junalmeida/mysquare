@@ -87,10 +87,14 @@ namespace MySquare.Controller
             users = e.Users;
             refreshTime = e.RefreshTime;
             allText = e.AllText;
-            if (View.InvokeRequired)
-                View.Invoke(new ThreadStart(LoadFriends));
-            else
-                LoadFriends();
+            try
+            {
+                if (View.InvokeRequired)
+                    View.Invoke(new ThreadStart(LoadFriends));
+                else
+                    LoadFriends();
+            }
+            catch (ObjectDisposedException) { }
         }
 
 

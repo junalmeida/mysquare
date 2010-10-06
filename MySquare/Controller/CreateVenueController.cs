@@ -81,14 +81,17 @@ namespace MySquare.Controller
             Program.Location.LocationChanged -= new EventHandler(pos_LocationChanged);
             Program.Location.Error -= new RisingMobility.Mobile.Location.ErrorEventHandler(pos_Error);
             Program.KeepGpsOpened = false;
-
-            if (View.InvokeRequired)
-                View.Invoke(new ThreadStart(delegate()
-                {
+            try
+            {
+                if (View.InvokeRequired)
+                    View.Invoke(new ThreadStart(delegate()
+                    {
+                        View.Visible = false;
+                    }));
+                else
                     View.Visible = false;
-                }));
-            else
-                View.Visible = false;
+            }
+            catch (ObjectDisposedException) { }
         }
 
   
@@ -153,10 +156,17 @@ namespace MySquare.Controller
             PictureBox box = this.View.picMap;
 
             Size size = new Size();
-            box.Invoke(new ThreadStart(delegate()
+            try
             {
-                size = box.Size;
-            }));
+                box.Invoke(new ThreadStart(delegate()
+                {
+                    size = box.Size;
+                }));
+            }
+            catch (ObjectDisposedException)
+            {
+                return;
+            }
 
             if (t != null)
                 t.Abort();
@@ -181,29 +191,34 @@ namespace MySquare.Controller
                     View.latitudeSelected = null;
                     View.longitudeSelected = null;
                     View.selectedPoint = Point.Empty;
-
-                    this.View.Invoke(new ThreadStart(delegate()
+                    try
                     {
-                        string precision = "";
-                        if (Program.Location.FixType == FixType.Gps)
-                            precision = "High precision";
-                        else if (Program.Location.FixType == FixType.GeoIp)
-                            precision = "Low precision";
-                        else if (Program.Location.FixType == FixType.GsmNetwork)
-                            precision = "Average precision";
+                        this.View.Invoke(new ThreadStart(delegate()
+                        {
+                            string precision = "";
+                            if (Program.Location.FixType == FixType.Gps)
+                                precision = "High precision";
+                            else if (Program.Location.FixType == FixType.GeoIp)
+                                precision = "Low precision";
+                            else if (Program.Location.FixType == FixType.GsmNetwork)
+                                precision = "Average precision";
 
-                        View.FixType = precision;
+                            View.FixType = precision;
 
-                        box.Image = null;
-                        if (box.Tag != null && box.Tag is IDisposable)
-                            ((IDisposable)box.Tag).Dispose();
-                        box.Tag = buffer;
-                        box.Invalidate();
+                            box.Image = null;
+                            if (box.Tag != null && box.Tag is IDisposable)
+                                ((IDisposable)box.Tag).Dispose();
+                            box.Tag = buffer;
+                            box.Invalidate();
 
-                    }));
+                        }));
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                    }
                 }
             }));
-            t.Start();
+            t.StartThread();
         }
 
 
@@ -228,7 +243,7 @@ namespace MySquare.Controller
                     Log.RegisterLog("geolocation", ex);
                 }
             }));
-            t.Start();
+            t.StartThread();
         }
 
         void Service_GeocodeResult(Geolocation geo)

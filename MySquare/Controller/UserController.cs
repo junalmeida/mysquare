@@ -70,29 +70,39 @@ namespace MySquare.Controller
 
         void Service_Error(object serder, MySquare.Service.ErrorEventArgs e)
         {
-            if (e.Exception is UnauthorizedAccessException)
-                ShowError(e.Exception);
-            else
-                View.Invoke(new ThreadStart(delegate()
-                {
-                    View.lblFriendStatus.Text = "unable to read data.";
-                }));
+            try
+            {
+                if (e.Exception is UnauthorizedAccessException)
+                    ShowError(e.Exception);
+                else
+                    View.Invoke(new ThreadStart(delegate()
+                    {
+                        View.lblFriendStatus.Text = "unable to read data.";
+                    }));
+            }
+            catch (ObjectDisposedException) { }
         }
 
 
         User user;
         internal void LoadUser(MySquare.FourSquare.User user)
         {
-
-            if (View.InvokeRequired)
+            try
             {
-                View.Invoke(new ThreadStart(delegate()
+
+                if (View.InvokeRequired)
                 {
-                    LoadUser(user);
-                }));
+                    View.Invoke(new ThreadStart(delegate()
+                    {
+                        LoadUser(user);
+                    }));
+                    return;
+                }
+            }
+            catch (ObjectDisposedException)
+            {
                 return;
             }
-
             this.user = user;
 
             base.SaveNavigation(user);
@@ -321,11 +331,12 @@ namespace MySquare.Controller
                                     View.Invoke(new ThreadStart(delegate() { View.userBadges1.listBox.Invalidate(); }));
                                 }
                             }
+                            catch (ObjectDisposedException) { return; }
                             catch (Exception ex) { Log.RegisterLog("image", ex); }
                         }
                     }
                 }));
-                t.Start();
+                t.StartThread();
             }
 
         }
@@ -341,11 +352,15 @@ namespace MySquare.Controller
         private void LoadFriends(User[] users)
         {
             this.user.Friends = users;
-            if (View.InvokeRequired)
+            try
             {
-                View.Invoke(new ThreadStart(delegate() { LoadFriends(users); }));
-                return;
+                if (View.InvokeRequired)
+                {
+                    View.Invoke(new ThreadStart(delegate() { LoadFriends(users); }));
+                    return;
+                }
             }
+            catch (ObjectDisposedException) { return; }
 
             View.userFriends1.ImageList = new Dictionary<string, byte[]>();
             if (users != null)
@@ -372,11 +387,12 @@ namespace MySquare.Controller
                                     View.Invoke(new ThreadStart(delegate() { View.userFriends1.listBox.Invalidate(); }));
                                 }
                             }
+                            catch (ObjectDisposedException) { return; }
                             catch { }
                         }
                     }
                 }));
-                t.Start();
+                t.StartThread();
             }
         }
 

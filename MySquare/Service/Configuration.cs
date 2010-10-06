@@ -390,7 +390,7 @@ namespace MySquare.Service
                 catch { }
             }));
 
-            t.Start();
+            t.StartThread();
         }
 
 
@@ -403,6 +403,38 @@ namespace MySquare.Service
         Satellite = 1,
         Hybrid = 2,
         Terrain = 3
+    }
+
+
+
+
+    static class ThreadExtensions
+    {
+        static List<Thread> threadList = new List<Thread>();
+        public static void StartThread(this Thread t)
+        {
+            if (!threadList.Contains(t))
+                threadList.Add(t);
+            t.IsBackground = true;
+            t.Start();
+        }
+
+
+        public static void AbortThreads()
+        {
+            foreach (Thread t in threadList)
+            {
+                try
+                {
+                    if (t != null)
+                        t.Abort();
+                }
+                catch { }
+            }
+        }
+
+
+    
     }
 
 }

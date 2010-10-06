@@ -43,42 +43,43 @@ namespace MySquare
                     Location.Poll();
 
                     Application.Run(mainForm);
+                    ThreadExtensions.AbortThreads();
                     foreach (var obj in BaseController.Controllers)
                     {
                         try
                         {
                             obj.Service.Abort();
                         }
-                        catch (Exception)
+                        catch
                         { }
                     }
+
                     Configuration.abortCheck = true;
                     if (Configuration.PingInterval > 0)
                     {
                         Configuration.RetrievePings = (MessageBox.Show("Keep recieveing check-in notifications after closing MySquare?", "MySquare", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes);
                     }
-                    if (lastException != null)
-                    {
-                        MessageBox.Show("Unknkown error: " + lastException.Message + "\r\n");
-                    }
-
+ 
                 }
-                catch (ObjectDisposedException)
-                {
-                }
+                catch (ThreadAbortException) { }
+                catch (ObjectDisposedException) { }
                 catch (Exception ex)
                 {
+                    lastException = ex;
                     Service.Log.RegisterLog(ex);
-                    string message = "Unknown error: " + ex.Message + "\r\n\r\nSorry for this inconvenience.";
-#if DEBUG
-                    message += "\r\n" + ex.StackTrace;
-#endif
-                    MessageBox.Show(message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                     Terminate();
                 }
                 finally
                 {
                     DisposeThings();
+                    if (lastException != null)
+                    {
+                        string message = "Unknown error: " + lastException.Message + "\r\n\r\nSorry for this inconvenience.";
+#if DEBUG
+                        message += "\r\n" + lastException.StackTrace;
+#endif
+                        MessageBox.Show(message, "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    }
                 }
                 try
                 {
@@ -189,7 +190,7 @@ hdop: {10}",
         static Exception lastException;
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if (e != null && e.ExceptionObject is Exception)
+            if (e != null && e.ExceptionObject is Exception && !(e.ExceptionObject is ThreadAbortException))
             {
                 lastException = (Exception)e.ExceptionObject;
                 Service.Log.RegisterLog(e.ExceptionObject as Exception);

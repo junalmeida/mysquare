@@ -90,10 +90,14 @@ namespace RisingMobility.Mobile.UI
             set
             {
                 centerMark = value;
-                if (this.InvokeRequired)
-                    this.Invoke(new ThreadStart(this.Invalidate));
-                else
-                    Invalidate();
+                try
+                {
+                    if (this.InvokeRequired)
+                        this.Invoke(new ThreadStart(this.Invalidate));
+                    else
+                        Invalidate();
+                }
+                catch (ObjectDisposedException) { }
             }
         }
 
@@ -441,7 +445,12 @@ namespace RisingMobility.Mobile.UI
                 }
                 private set
                 {
-                    bitmap = value; control.Invoke(new ThreadStart(control.Invalidate));
+                    bitmap = value;
+                    try
+                    {
+                        control.Invoke(new ThreadStart(control.Invalidate));
+                    }
+                    catch (ObjectDisposedException) { }
                 }
             }
 

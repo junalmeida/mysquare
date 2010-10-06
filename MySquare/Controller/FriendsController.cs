@@ -103,11 +103,15 @@ namespace MySquare.Controller
 
         void Service_CheckInsResult(object serder, MySquare.FourSquare.CheckInsEventArgs e)
         {
-            View.Invoke(new ThreadStart(delegate()
-                {
-                    checkIns = e.CheckIns;
-                    LoadCheckIns();
-                }));
+            try
+            {
+                View.Invoke(new ThreadStart(delegate()
+                    {
+                        checkIns = e.CheckIns;
+                        LoadCheckIns();
+                    }));
+            }
+            catch (ObjectDisposedException) { }
         }
 
         CheckIn[] checkIns;
@@ -136,12 +140,16 @@ namespace MySquare.Controller
                                 View.ImageList.Add(chk.User.ImageUrl, buffer);
                                 View.Invoke(new ThreadStart(delegate() { View.listBox.Invalidate(); }));
                             }
-                            catch { }
+                            catch (ObjectDisposedException)
+                            {
+                                break;
+                            }
+                            catch (Exception) { }
                         }
                     }
                 }
             }));
-            t.Start();
+            t.StartThread();
 
             Service.GetPendingFriends();
             Service.GetFriends(0);
@@ -150,20 +158,28 @@ namespace MySquare.Controller
 
         void Service_FriendsResult(object sender, FriendsEventArgs e)
         {
-            this.View.Invoke(new ThreadStart(delegate()
+            try
             {
-                friends = e.Friends;
-                LoadFriends();
-            }));
+                this.View.Invoke(new ThreadStart(delegate()
+                          {
+                              friends = e.Friends;
+                              LoadFriends();
+                          }));
+            }
+            catch (ObjectDisposedException) { }
         }
 
         void Service_PendingFriendsResult(object serder, PendingFriendsEventArgs e)
         {
-            this.View.Invoke(new ThreadStart(delegate()
+            try
             {
-                pendingFriends = e.Friends;
-                LoadFriends();
-            }));
+                this.View.Invoke(new ThreadStart(delegate()
+                {
+                    pendingFriends = e.Friends;
+                    LoadFriends();
+                }));
+            }
+            catch (ObjectDisposedException) { }
         }
 
         private void LoadFriends()
@@ -211,11 +227,15 @@ namespace MySquare.Controller
                             View.ImageList.Add(u.ImageUrl, buffer);
                             View.Invoke(new ThreadStart(delegate() { View.listBox.Invalidate(); }));
                         }
+                        catch (ObjectDisposedException)
+                        {
+                            break;
+                        }
                         catch { }
                     }
                 }
             }));
-            t.Start();
+            t.StartThread();
 
             if (pendingUsers.Count > 0)
             {

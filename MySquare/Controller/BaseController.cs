@@ -267,6 +267,9 @@ namespace MySquare.Controller
 
         protected void ShowError(string text)
         {
+            if (Controllers.Count == 0)
+                return;
+
             lastController = CurrentController;
             CurrentController = 0;
             MainController.ShowErrorForm(text);

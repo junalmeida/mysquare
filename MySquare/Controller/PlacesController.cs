@@ -58,10 +58,14 @@ namespace MySquare.Controller
             get
             {
                 bool tips = false;
-                View.Invoke(new ThreadStart(delegate()
+                try
                 {
-                    tips = (View.Parent as UI.Main).header.SelectedIndex == 1;
-                }));
+                    View.Invoke(new ThreadStart(delegate()
+                    {
+                        tips = (View.Parent as UI.Main).header.SelectedIndex == 1;
+                    }));
+                }
+                catch (ObjectDisposedException) { }
                 return tips;
             }
         }
@@ -227,22 +231,34 @@ namespace MySquare.Controller
 
         void Service_SearchArrives(object serder, MySquare.FourSquare.SearchEventArgs e)
         {
-            venues = e.Groups;
-            if (View.InvokeRequired)
-                View.Invoke(new ThreadStart(ShowList));
-            else
-                ShowList(true);
+            try
+            {
+                venues = e.Groups;
+                if (View.InvokeRequired)
+                    View.Invoke(new ThreadStart(ShowList));
+                else
+                    ShowList(true);
+            }
+            catch (ObjectDisposedException)
+            {
+            }
         }
 
 
 
         void Service_TipsResult(object serder, TipsEventArgs e)
         {
-            tips = e.Tips;
-            if (View.InvokeRequired)
-                View.Invoke(new ThreadStart(ShowList));
-            else
-                ShowList(true);
+            try
+            {
+                tips = e.Tips;
+                if (View.InvokeRequired)
+                    View.Invoke(new ThreadStart(ShowList));
+                else
+                    ShowList(true);
+            }
+            catch (ObjectDisposedException)
+            {
+            }
         }
 
         Tip[] tips = null;
@@ -282,17 +298,24 @@ namespace MySquare.Controller
 
                             if (buffer != null)
                             {
-                                View.list1.ImageList[url] = buffer;
-                                View.list1.listBox.Invoke(new ThreadStart(delegate()
+                                try
                                 {
-                                    View.list1.listBox.Invalidate();
-                                }));
+                                    View.list1.ImageList[url] = buffer;
+                                    View.list1.listBox.Invoke(new ThreadStart(delegate()
+                                    {
+                                        View.list1.listBox.Invalidate();
+                                    }));
+                                }
+                                catch (ObjectDisposedException)
+                                {
+                                    return;
+                                }
                             }
                         }
 
                     }
             }));
-            t.Start();
+            t.StartThread();
         }
 
         private void LoadVenues(Tip[] tips)
@@ -326,17 +349,24 @@ namespace MySquare.Controller
 
                         if (buffer != null)
                         {
-                            View.list1.ImageList[url] = buffer;
-                            View.list1.listBox.Invoke(new ThreadStart(delegate()
+                            try
                             {
-                                View.list1.listBox.Invalidate();
-                            }));
+                                View.list1.ImageList[url] = buffer;
+                                View.list1.listBox.Invoke(new ThreadStart(delegate()
+                                {
+                                    View.list1.listBox.Invalidate();
+                                }));
+                            }
+                            catch (ObjectDisposedException)
+                            {
+                                return;
+                            }
                         }
                     }
 
                 }
             }));
-            t.Start();
+            t.StartThread();
         }
 
         private void AddCreatePlace()

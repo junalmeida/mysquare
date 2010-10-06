@@ -103,11 +103,15 @@ namespace MySquare.Controller
         }
         private void CheckInResult()
         {
-            if (View.InvokeRequired)
+            try
             {
-                View.Invoke(new ThreadStart(CheckInResult));
-                return;
+                if (View.InvokeRequired)
+                {
+                    View.Invoke(new ThreadStart(CheckInResult));
+                    return;
+                }
             }
+            catch (ObjectDisposedException) { }
             if (checkInResult != null)
             {
 

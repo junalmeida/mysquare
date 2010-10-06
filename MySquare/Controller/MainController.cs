@@ -28,31 +28,35 @@ namespace MySquare.Controller
 
         internal void ShowErrorForm(string text)
         {
-            if (View.InvokeRequired)
-                View.Invoke(new System.Threading.ThreadStart(delegate()
-                {
-                    ShowErrorForm(text);
-                }));
-            else
+            try
             {
-                try
+                if (View.InvokeRequired)
+                    View.Invoke(new System.Threading.ThreadStart(delegate()
+                    {
+                        ShowErrorForm(text);
+                    }));
+                else
                 {
-                    View.Reset();
+                    try
+                    {
+                        View.Reset();
 
-                    View.lblError.Text = text;
-                    View.lblError.Visible = true;
+                        View.lblError.Text = text;
+                        View.lblError.Visible = true;
 
 
-                    RightSoftButtonText = "&Back";
-                    RightSoftButtonEnabled = true;
-                    LeftSoftButtonText = string.Empty;
-                    LeftSoftButtonEnabled = false;
+                        RightSoftButtonText = "&Back";
+                        RightSoftButtonEnabled = true;
+                        LeftSoftButtonText = string.Empty;
+                        LeftSoftButtonEnabled = false;
 
-                    Cursor.Current = Cursors.Default;
-                    Cursor.Show();
+                        Cursor.Current = Cursors.Default;
+                        Cursor.Show();
+                    }
+                    catch { }
                 }
-                catch { }
             }
+            catch (ObjectDisposedException) { }
         }
 
         internal void Service_Error(object serder, ErrorEventArgs e)

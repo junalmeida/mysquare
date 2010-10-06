@@ -67,7 +67,15 @@ namespace MySquare.UI.Places
         internal Geolocation Address
         {
             get { return address; }
-            set { address = value; this.Invoke(new ThreadStart(this.listBox.Invalidate)); }
+            set
+            {
+                address = value;
+                try
+                {
+                    this.Invoke(new ThreadStart(this.listBox.Invalidate));
+                }
+                catch (ObjectDisposedException) { }
+            }
         }
 
         float itemPadding;
