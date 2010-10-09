@@ -4,49 +4,14 @@
         <name>Tenor.Mobile</name>
     </assembly>
     <members>
-        <member name="T:Tenor.Mobile.Device.Notification">
+        <member name="T:Tenor.Mobile.UI.NotificationMessageWindow">
             <summary>
-            Controls options for notification bubbles.
+            Handles messages received from the Notification system and throws events in the parent NotificationEngine object
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Device.Notification.#ctor(System.Guid)">
+        <member name="T:Tenor.Mobile.Device.LedStatus">
             <summary>
-            Opens the given notification id.
-            </summary>
-            <param name="id"></param>
-        </member>
-        <member name="M:Tenor.Mobile.Device.Notification.Create(System.Guid)">
-            <summary>
-            Creates a new notification id.
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Tenor.Mobile.Device.Notification.Exists(System.Guid)">
-            <summary>
-            Checks if the given notification id already exists.
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="P:Tenor.Mobile.Device.Notification.Text">
-            <summary>
-            A description text of this notification.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Device.Notification.Wave">
-            <summary>
-            The wave file to play when sounds are enabled.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Device.Notification.Duration">
-            <summary>
-            The duration in minutes.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Device.Notification.Options">
-            <summary>
-            A bit-wise combination off <see cref="T:Tenor.Mobile.Device.NotificationOptions"/>
+            Stores information about led status.
             </summary>
         </member>
         <member name="T:Tenor.Mobile.UI.NotificationWithSoftKeys">
@@ -175,6 +140,168 @@
         <member name="E:Tenor.Mobile.UI.NotificationWithSoftKeys.RightSoftKeyClick">
             <summary>
             Occurs when the user clicks the right soft key if it is of type SoftKeyType.StayOpen.
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNOTIFICATIONDATA.csDuration">
+            <summary>
+            Duration to display the bubble (in seconds).
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNOTIFICATIONDATA.grfFlags">
+            <summary>
+            Flags that affect the behaviour of the Notification bubble
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNOTIFICATIONDATA.lParam">
+            <summary>
+            User defined parameter
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNP.INFORM">
+            <summary>
+            Bubble shown for duration, then goes away
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNP.ICONIC">
+            <summary>
+            No bubble, icon shown for duration then goes away
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.UI.SHNF">
+            <summary>
+            Flags that affect the display behaviour of the Notification
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNF.STRAIGHTTOTRAY">
+            <summary>
+            For SHNP_INFORM priority and above, don't display the notification bubble when it's initially added;
+            the icon will display for the duration then it will go straight into the tray.
+            The user can view the icon / see the bubble by opening the tray.
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNF.CRITICAL">
+            <summary>
+            Critical information - highlights the border and title of the bubble.
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNF.FORCEMESSAGE">
+            <summary>
+            Force the message (bubble) to display even if settings says not to.
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNF.DISPLAYON">
+            <summary>
+            Force the display to turn on for notification. Added for Windows Mobile 2003.
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SHNF.SILENT">
+            <summary>
+            Force the notification to be silent and not vibrate, regardless of Settings. Added for Windows Mobile 2003.
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.Network.Connection">
+            <summary>
+            Manages a network connection.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Network.Connection.#ctor(System.String)">
+            <summary>
+            Creates a new instance to manage a new connection.
+            </summary>
+            <param name="url"></param>
+        </member>
+        <member name="M:Tenor.Mobile.Network.Connection.Connect">
+            <summary>
+            Asyncronously connects to network.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Network.Connection.Disconnect">
+            <summary>
+            Tries to disconnect this connection.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Network.Connection.Status">
+            <summary>
+            Gets the current status of this connection.
+            </summary>
+        </member>
+        <member name="E:Tenor.Mobile.Network.Connection.Connected">
+            <summary>
+            Occurs when the connection sucessfuly connects.
+            </summary>
+        </member>
+        <member name="E:Tenor.Mobile.Network.Connection.Disconnected">
+            <summary>
+            Occurs when the connection has gone.
+            </summary>
+        </member>
+        <member name="E:Tenor.Mobile.Network.Connection.Failed">
+            <summary>
+            Occurs when cannot connect;
+            </summary>
+        </member>
+        <member name="E:Tenor.Mobile.Network.Connection.Suspended">
+            <summary>
+            Occurs when the connection is suspended due to a device operation such as a call.
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.UI.Samsung">
+            <summary>
+            Render controls using Samsung's default interface style.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.UI.Skin.Current">
+            <summary>
+            Keeps the current skin for Tenor Mobile controls.
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.UI.TabStrip">
+            <summary>
+            The TabControl style for new WM 6.5 devices.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.TabStrip.#ctor">
+            <summary>
+            Creates a new instance of the TabStrip.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.TabStrip.ScaleControl(System.Drawing.SizeF,System.Windows.Forms.BoundsSpecified)">
+            <summary>
+            Scales a control's location, size, padding and margin.
+            </summary>
+            <param name="factor"></param>
+            <param name="specified"></param>
+        </member>
+        <member name="M:Tenor.Mobile.UI.TabStrip.OnResize(System.EventArgs)">
+            <summary>
+            Raises the Resize event.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tenor.Mobile.UI.TabStrip.OnHandleCreated(System.EventArgs)">
+            <summary>
+            Raises the HandleCreated event.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle)">
+            <summary>
+            Draws an image with alpha blending.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Color)">
+            <summary>
+            Draws an image with alpha blending.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Rectangle,System.Drawing.Color)">
+            <summary>
+            Draws an image with alpha blending.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Drawing.AlphaImage.DrawImageGdi(System.Drawing.Graphics,System.Drawing.Rectangle)">
+            <summary>
+            Draws an image with alpha blending.
             </summary>
         </member>
         <member name="T:Tenor.Mobile.UI.KListControl">
@@ -474,336 +601,54 @@
             Scrolling grid.
             </summary>
         </member>
-        <member name="T:Tenor.Mobile.Diagnostics.Window">
-            <summary>
-            Represents a window.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Diagnostics.Window.GetWindows">
-            <summary>
-            Lists all windows currently created.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Tenor.Mobile.Diagnostics.Window.Visible">
-            <summary>
-            Gets whether this window is visible.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Diagnostics.Window.Text">
-            <summary>
-            Gets the window title.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Diagnostics.Window.ClassName">
-            <summary>
-            Gets the window class name.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Diagnostics.Window.ProcessId">
-            <summary>
-            Gets the process id that created this window.
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.Diagnostics.Process">
-            <summary>
-            Represents a running process.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Diagnostics.Process.Kill">
-            <summary>
-            Immediately stops this process.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Diagnostics.Process.Start(System.String,System.String)">
-            <summary>
-            Starts a process by specifying the file name and a set of arguments.
-            </summary>
-            <param name="fileName">The full path of the application.</param>
-            <param name="arguments">A set of arguments.</param>
-            <returns>The Process that references this executable.</returns>
-        </member>
-        <member name="M:Tenor.Mobile.Diagnostics.Process.GetProcesses">
-            <summary>
-            Lists current running process.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Tenor.Mobile.Diagnostics.Process.Id">
-            <summary>
-            Gets the process id.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Diagnostics.Process.FileName">
-            <summary>
-            Gets the full path of this process image.
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.Drawing.GradientFill">
-            <summary>
-            Hold methods that can draw a GradientFill on WinCE.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Drawing.GradientFill.Fill(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Color,System.Drawing.Color,Tenor.Mobile.Drawing.GradientFill.FillDirection)">
-            <summary>
-            This method wraps the PInvoke to GradientFill.
-            Returns true if the call to GradientFill succeeded; false
-            otherwise.
-            </summary>
-            <param name="gr">The Graphics object we are filling</param>
-            <param name="rc">The rectangle to fill</param>
-            <param name="startColor">The starting color for the fill</param>
-            <param name="endColor">The ending color for the fill</param>
-            <param name="fillDir">The direction to fill</param>
-            <returns>Returns true if the call to GradientFill succeeded</returns>
-        </member>
-        <member name="T:Tenor.Mobile.Drawing.GradientFill.FillDirection">
-            <summary>
-            The direction to the GradientFill will follow
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight">
-            <summary>
-            The fill goes horizontally
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.Drawing.GradientFill.FillDirection.TopToBottom">
-            <summary>
-            The fill goes vertically
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.Drawing.IconHelper">
-            <summary>
-            Provides functions to manipulate icons.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Drawing.IconHelper.ExtractAssociatedIcon(System.String)">
-            <summary>
-            Extracts an icon from a document or an executable.
-            </summary>
-            <param name="filename">Full path of a file.</param>
-            <returns>An Icon.</returns>
-        </member>
-        <member name="M:Tenor.Mobile.Drawing.IconHelper.ExtractAssociatedIcon(System.String,System.Boolean)">
-            <summary>
-            Extracts an icon from a document or an executable.
-            </summary>
-            <param name="filename">Full path of a file.</param>
-            <param name="largeIcon"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Tenor.Mobile.UI.NotificationMessageWindow">
-            <summary>
-            Handles messages received from the Notification system and throws events in the parent NotificationEngine object
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.Device.LedStatus">
-            <summary>
-            Stores information about led status.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.UI.Skin.Current">
-            <summary>
-            Keeps the current skin for Tenor Mobile controls.
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SoftKeyType.Dismiss">
-            <summary>
-            Remove the notification when the softkey is pressed
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SoftKeyType.Hide">
-            <summary>
-             Hide the notification when the softkey is pressed (but do not dismiss)
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SoftKeyType.StayOpen">
-            <summary>
-            Do not dismiss or hide the notification when the softkey is pressed.
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SoftKeyType.Submit">
-            <summary>
-            Submit the HTML form in the associated notification instead of sending WM_COMMAND to the sink
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SoftKeyType.Disabled">
-            <summary>
-            This softkey is disabled
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNOTIFICATIONDATA.csDuration">
-            <summary>
-            Duration to display the bubble (in seconds).
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNOTIFICATIONDATA.grfFlags">
-            <summary>
-            Flags that affect the behaviour of the Notification bubble
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNOTIFICATIONDATA.lParam">
-            <summary>
-            User defined parameter
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNP.INFORM">
-            <summary>
-            Bubble shown for duration, then goes away
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNP.ICONIC">
-            <summary>
-            No bubble, icon shown for duration then goes away
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.UI.SHNF">
-            <summary>
-            Flags that affect the display behaviour of the Notification
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNF.STRAIGHTTOTRAY">
-            <summary>
-            For SHNP_INFORM priority and above, don't display the notification bubble when it's initially added;
-            the icon will display for the duration then it will go straight into the tray.
-            The user can view the icon / see the bubble by opening the tray.
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNF.CRITICAL">
-            <summary>
-            Critical information - highlights the border and title of the bubble.
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNF.FORCEMESSAGE">
-            <summary>
-            Force the message (bubble) to display even if settings says not to.
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNF.DISPLAYON">
-            <summary>
-            Force the display to turn on for notification. Added for Windows Mobile 2003.
-            </summary>
-        </member>
-        <member name="F:Tenor.Mobile.UI.SHNF.SILENT">
-            <summary>
-            Force the notification to be silent and not vibrate, regardless of Settings. Added for Windows Mobile 2003.
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.Network.Connection">
-            <summary>
-            Manages a network connection.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Network.Connection.#ctor(System.String)">
-            <summary>
-            Creates a new instance to manage a new connection.
-            </summary>
-            <param name="url"></param>
-        </member>
-        <member name="M:Tenor.Mobile.Network.Connection.Connect">
-            <summary>
-            Asyncronously connects to network.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Network.Connection.Disconnect">
-            <summary>
-            Tries to disconnect this connection.
-            </summary>
-        </member>
-        <member name="P:Tenor.Mobile.Network.Connection.Status">
-            <summary>
-            Gets the current status of this connection.
-            </summary>
-        </member>
-        <member name="E:Tenor.Mobile.Network.Connection.Connected">
-            <summary>
-            Occurs when the connection sucessfuly connects.
-            </summary>
-        </member>
-        <member name="E:Tenor.Mobile.Network.Connection.Disconnected">
-            <summary>
-            Occurs when the connection has gone.
-            </summary>
-        </member>
-        <member name="E:Tenor.Mobile.Network.Connection.Failed">
-            <summary>
-            Occurs when cannot connect;
-            </summary>
-        </member>
-        <member name="E:Tenor.Mobile.Network.Connection.Suspended">
-            <summary>
-            Occurs when the connection is suspended due to a device operation such as a call.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Device.Device.Vibrate(System.Int32)">
-            <summary>
-            Vibrates the device for milliseconds on <paramref name="timeout"/>.
-            </summary>
-            <param name="timeout">Timeout in milliseconds.</param>
-        </member>
-        <member name="P:Tenor.Mobile.Device.Device.OemInfo">
-            <summary>
-            Gets the string os OEM.
-            </summary>
-        </member>
-        <member name="T:Tenor.Mobile.UI.Samsung">
-            <summary>
-            Render controls using Samsung's default interface style.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.IO.StreamToBytes(System.IO.Stream)">
-            <summary>
-            Converts any Stream into an array of bytes.
-            </summary>
-            <param name="stream">The desired stream.</param>
-            <returns>An array of bytes.</returns>
-        </member>
-        <member name="T:Tenor.Mobile.NativeMethods.IMessageFilter">
-            <summary>
-            Defines a message filter interface.
-            </summary>
-            <remarks>This interface allows an application to capture a message before it is dispatched to a control or form.
-            <para>A class that implements the IMessageFilter interface can be added to the application's message pump to filter out a message or perform other operations before the message is dispatched to a form or control. To add the message filter to an application's message pump, use the <see cref="M:OpenNETCF.Windows.Forms.ApplicationEx.AddMessageFilter(OpenNETCF.Windows.Forms.IMessageFilter)"/> method in the <see cref="T:OpenNETCF.Windows.Forms.ApplicationEx"/> class.</para></remarks>
-        </member>
-        <member name="M:Tenor.Mobile.NativeMethods.IMessageFilter.PreFilterMessage(Microsoft.WindowsCE.Forms.Message@)">
-            <summary>
-            Filters out a message before it is dispatched.
-            </summary>
-            <param name="m">The message to be dispatched. You cannot modify this message.</param>
-            <returns>true to filter the message and stop it from being dispatched; false to allow the message to continue to the next filter or control.</returns>
-        </member>
-        <member name="T:Tenor.Mobile.UI.TabStrip">
-            <summary>
-            The TabControl style for new WM 6.5 devices.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.UI.TabStrip.#ctor">
-            <summary>
-            Creates a new instance of the TabStrip.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.UI.TabStrip.ScaleControl(System.Drawing.SizeF,System.Windows.Forms.BoundsSpecified)">
-            <summary>
-            Scales a control's location, size, padding and margin.
-            </summary>
-            <param name="factor"></param>
-            <param name="specified"></param>
-        </member>
-        <member name="M:Tenor.Mobile.UI.TabStrip.OnResize(System.EventArgs)">
-            <summary>
-            Raises the Resize event.
-            </summary>
-            <param name="e"></param>
-        </member>
-        <member name="M:Tenor.Mobile.UI.TabStrip.OnHandleCreated(System.EventArgs)">
-            <summary>
-            Raises the HandleCreated event.
-            </summary>
-            <param name="e"></param>
-        </member>
         <member name="P:Tenor.Mobile.UI.HeaderStrip.Text">
             <summary>
             Gets or sets the Text of this HeaderStrip.
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.Device.Notification">
+            <summary>
+            Controls options for notification bubbles.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Device.Notification.#ctor(System.Guid)">
+            <summary>
+            Opens the given notification id.
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Tenor.Mobile.Device.Notification.Create(System.Guid)">
+            <summary>
+            Creates a new notification id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tenor.Mobile.Device.Notification.Exists(System.Guid)">
+            <summary>
+            Checks if the given notification id already exists.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Tenor.Mobile.Device.Notification.Text">
+            <summary>
+            A description text of this notification.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Device.Notification.Wave">
+            <summary>
+            The wave file to play when sounds are enabled.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Device.Notification.Duration">
+            <summary>
+            The duration in minutes.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Device.Notification.Options">
+            <summary>
+            A bit-wise combination off <see cref="T:Tenor.Mobile.Device.NotificationOptions"/>
             </summary>
         </member>
         <member name="T:Tenor.Mobile.UI.KListItem">
@@ -873,24 +718,179 @@
             Gets the Bounds.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle)">
+        <member name="T:Tenor.Mobile.Diagnostics.Window">
             <summary>
-            Draws an image with alpha blending.
+            Represents a window.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Color)">
+        <member name="M:Tenor.Mobile.Diagnostics.Window.GetWindows">
             <summary>
-            Draws an image with alpha blending.
+            Lists all windows currently created.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Tenor.Mobile.Diagnostics.Window.Visible">
+            <summary>
+            Gets whether this window is visible.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Drawing.AlphaImage.Draw(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Rectangle,System.Drawing.Color)">
+        <member name="P:Tenor.Mobile.Diagnostics.Window.Text">
             <summary>
-            Draws an image with alpha blending.
+            Gets the window title.
             </summary>
         </member>
-        <member name="M:Tenor.Mobile.Drawing.AlphaImage.DrawImageGdi(System.Drawing.Graphics,System.Drawing.Rectangle)">
+        <member name="P:Tenor.Mobile.Diagnostics.Window.ClassName">
             <summary>
-            Draws an image with alpha blending.
+            Gets the window class name.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Diagnostics.Window.ProcessId">
+            <summary>
+            Gets the process id that created this window.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Device.Device.Vibrate(System.Int32)">
+            <summary>
+            Vibrates the device for milliseconds on <paramref name="timeout"/>.
+            </summary>
+            <param name="timeout">Timeout in milliseconds.</param>
+        </member>
+        <member name="P:Tenor.Mobile.Device.Device.OemInfo">
+            <summary>
+            Gets the string os OEM.
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SoftKeyType.Dismiss">
+            <summary>
+            Remove the notification when the softkey is pressed
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SoftKeyType.Hide">
+            <summary>
+             Hide the notification when the softkey is pressed (but do not dismiss)
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SoftKeyType.StayOpen">
+            <summary>
+            Do not dismiss or hide the notification when the softkey is pressed.
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SoftKeyType.Submit">
+            <summary>
+            Submit the HTML form in the associated notification instead of sending WM_COMMAND to the sink
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.SoftKeyType.Disabled">
+            <summary>
+            This softkey is disabled
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.IO.StreamToBytes(System.IO.Stream)">
+            <summary>
+            Converts any Stream into an array of bytes.
+            </summary>
+            <param name="stream">The desired stream.</param>
+            <returns>An array of bytes.</returns>
+        </member>
+        <member name="T:Tenor.Mobile.NativeMethods.IMessageFilter">
+            <summary>
+            Defines a message filter interface.
+            </summary>
+            <remarks>This interface allows an application to capture a message before it is dispatched to a control or form.
+            <para>A class that implements the IMessageFilter interface can be added to the application's message pump to filter out a message or perform other operations before the message is dispatched to a form or control. To add the message filter to an application's message pump, use the <see cref="M:OpenNETCF.Windows.Forms.ApplicationEx.AddMessageFilter(OpenNETCF.Windows.Forms.IMessageFilter)"/> method in the <see cref="T:OpenNETCF.Windows.Forms.ApplicationEx"/> class.</para></remarks>
+        </member>
+        <member name="M:Tenor.Mobile.NativeMethods.IMessageFilter.PreFilterMessage(Microsoft.WindowsCE.Forms.Message@)">
+            <summary>
+            Filters out a message before it is dispatched.
+            </summary>
+            <param name="m">The message to be dispatched. You cannot modify this message.</param>
+            <returns>true to filter the message and stop it from being dispatched; false to allow the message to continue to the next filter or control.</returns>
+        </member>
+        <member name="T:Tenor.Mobile.Drawing.IconHelper">
+            <summary>
+            Provides functions to manipulate icons.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Drawing.IconHelper.ExtractAssociatedIcon(System.String)">
+            <summary>
+            Extracts an icon from a document or an executable.
+            </summary>
+            <param name="filename">Full path of a file.</param>
+            <returns>An Icon.</returns>
+        </member>
+        <member name="M:Tenor.Mobile.Drawing.IconHelper.ExtractAssociatedIcon(System.String,System.Boolean)">
+            <summary>
+            Extracts an icon from a document or an executable.
+            </summary>
+            <param name="filename">Full path of a file.</param>
+            <param name="largeIcon"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tenor.Mobile.Drawing.GradientFill">
+            <summary>
+            Hold methods that can draw a GradientFill on WinCE.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Drawing.GradientFill.Fill(System.Drawing.Graphics,System.Drawing.Rectangle,System.Drawing.Color,System.Drawing.Color,Tenor.Mobile.Drawing.GradientFill.FillDirection)">
+            <summary>
+            This method wraps the PInvoke to GradientFill.
+            Returns true if the call to GradientFill succeeded; false
+            otherwise.
+            </summary>
+            <param name="gr">The Graphics object we are filling</param>
+            <param name="rc">The rectangle to fill</param>
+            <param name="startColor">The starting color for the fill</param>
+            <param name="endColor">The ending color for the fill</param>
+            <param name="fillDir">The direction to fill</param>
+            <returns>Returns true if the call to GradientFill succeeded</returns>
+        </member>
+        <member name="T:Tenor.Mobile.Drawing.GradientFill.FillDirection">
+            <summary>
+            The direction to the GradientFill will follow
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight">
+            <summary>
+            The fill goes horizontally
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.Drawing.GradientFill.FillDirection.TopToBottom">
+            <summary>
+            The fill goes vertically
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.Diagnostics.Process">
+            <summary>
+            Represents a running process.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Diagnostics.Process.Kill">
+            <summary>
+            Immediately stops this process.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.Diagnostics.Process.Start(System.String,System.String)">
+            <summary>
+            Starts a process by specifying the file name and a set of arguments.
+            </summary>
+            <param name="fileName">The full path of the application.</param>
+            <param name="arguments">A set of arguments.</param>
+            <returns>The Process that references this executable.</returns>
+        </member>
+        <member name="M:Tenor.Mobile.Diagnostics.Process.GetProcesses">
+            <summary>
+            Lists current running process.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Tenor.Mobile.Diagnostics.Process.Id">
+            <summary>
+            Gets the process id.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.Diagnostics.Process.FileName">
+            <summary>
+            Gets the full path of this process image.
             </summary>
         </member>
     </members>
