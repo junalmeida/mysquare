@@ -61,6 +61,8 @@ namespace MySquare.Service
 
         internal void GetPremiumInfo(string username)
         {
+            if (username != null)
+                username = username.ToLower();
             Dictionary<string, string> param = new Dictionary<string, string>();
             string token = DateTime.UtcNow.ToString("yyyy-MM");
             token += "||" + username;
