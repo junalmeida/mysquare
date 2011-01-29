@@ -20,18 +20,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_00A8C0EFB502F55A9556C25B0F84662D"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_00A8C0EFB502F55A9556C25B0F84662D"
-        "OwnerKey" = "8:_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_075D4F6A9C79CF951151B9E357912F17"
         "OwnerKey" = "8:_4C98B488594242149B2B4E14C877C924"
         "MsmSig" = "8:_UNDEFINED"
@@ -39,19 +27,7 @@
         "Entry"
         {
         "MsmKey" = "8:_075D4F6A9C79CF951151B9E357912F17"
-        "OwnerKey" = "8:_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_075D4F6A9C79CF951151B9E357912F17"
         "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_075D4F6A9C79CF951151B9E357912F17"
-        "OwnerKey" = "8:_2F14680E7BE54A905DAADFD1F0E13A6D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -111,18 +87,6 @@
         "Entry"
         {
         "MsmKey" = "8:_238516D67CC6D634020D90E98049ACF4"
-        "OwnerKey" = "8:_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_238516D67CC6D634020D90E98049ACF4"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_238516D67CC6D634020D90E98049ACF4"
         "OwnerKey" = "8:_814316E0050E4EB952152FA765C75E39"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -140,32 +104,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2F14680E7BE54A905DAADFD1F0E13A6D"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2F14680E7BE54A905DAADFD1F0E13A6D"
-        "OwnerKey" = "8:_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4A6B634920298A6A767B2E0FE06823C1"
         "OwnerKey" = "8:_4C98B488594242149B2B4E14C877C924"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_4A6B634920298A6A767B2E0FE06823C1"
-        "OwnerKey" = "8:_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_4A6B634920298A6A767B2E0FE06823C1"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -195,19 +135,7 @@
         "Entry"
         {
         "MsmKey" = "8:_58099714CEEB91307C04DE78E0560B8D"
-        "OwnerKey" = "8:_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_58099714CEEB91307C04DE78E0560B8D"
         "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_58099714CEEB91307C04DE78E0560B8D"
-        "OwnerKey" = "8:_2F14680E7BE54A905DAADFD1F0E13A6D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -236,56 +164,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_6BDC4DFAE5404207A3C44D74255501A0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_749AE78C28E581A12D6431273828D748"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_749AE78C28E581A12D6431273828D748"
-        "OwnerKey" = "8:_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_814316E0050E4EB952152FA765C75E39"
         "OwnerKey" = "8:_4C98B488594242149B2B4E14C877C924"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_814316E0050E4EB952152FA765C75E39"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_814316E0050E4EB952152FA765C75E39"
-        "OwnerKey" = "8:_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_A61913C031683D19B3F6DE496DAFB5FC"
         "OwnerKey" = "8:_4C98B488594242149B2B4E14C877C924"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A61913C031683D19B3F6DE496DAFB5FC"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -302,44 +194,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A95D486E6B0464E74E1E3F3C7A9CEB2B"
-        "OwnerKey" = "8:_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A95D486E6B0464E74E1E3F3C7A9CEB2B"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A95D486E6B0464E74E1E3F3C7A9CEB2B"
-        "OwnerKey" = "8:_2F14680E7BE54A905DAADFD1F0E13A6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_B30A8602102B092388F1C4138A939A60"
         "OwnerKey" = "8:_4C98B488594242149B2B4E14C877C924"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B30A8602102B092388F1C4138A939A60"
-        "OwnerKey" = "8:_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B30A8602102B092388F1C4138A939A60"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B30A8602102B092388F1C4138A939A60"
-        "OwnerKey" = "8:_2F14680E7BE54A905DAADFD1F0E13A6D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -358,12 +214,6 @@
         {
         "MsmKey" = "8:_C5B961294A88E44AAE2DC2B8F9A8C060"
         "OwnerKey" = "8:_4C98B488594242149B2B4E14C877C924"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C5B961294A88E44AAE2DC2B8F9A8C060"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -500,34 +350,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_2F14680E7BE54A905DAADFD1F0E13A6D"
-            {
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.WindowsCE.Forms, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac"
-                "ScatterAssemblies"
-                {
-                    "_2F14680E7BE54A905DAADFD1F0E13A6D"
-                    {
-                    "Name" = "8:Microsoft.WindowsCE.Forms.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.WindowsCE.Forms.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
-            "Condition" = "8:"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "Register" = "3:0"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_4A6B634920298A6A767B2E0FE06823C1"
             {
             "AssemblyIsInGAC" = "11:FALSE"
@@ -584,34 +406,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-            {
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MySquare, Version=1.4.4012.33349, Culture=neutral"
-                "ScatterAssemblies"
-                {
-                    "_62ACC2DE6FA0E1CD6B2A3147A97ABEF5"
-                    {
-                    "Name" = "8:MySquare.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:MySquare.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
-            "Condition" = "8:"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "Register" = "3:0"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{BA458234-9B71-4F46-8107-E91156377184}:_6BDC4DFAE5404207A3C44D74255501A0"
             {
             "SourcePath" = "8:..\\WpsProxy.dll"
@@ -628,34 +422,6 @@
             "Register" = "3:0"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_749AE78C28E581A12D6431273828D748"
-            {
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.WindowsMobile.Telephony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
-                "ScatterAssemblies"
-                {
-                    "_749AE78C28E581A12D6431273828D748"
-                    {
-                    "Name" = "8:Microsoft.WindowsMobile.Telephony.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.WindowsMobile.Telephony.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
-            "Condition" = "8:"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "Register" = "3:0"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_814316E0050E4EB952152FA765C75E39"
@@ -1006,46 +772,6 @@
                                         }
                                         "Values"
                                         {
-                                        }
-                                    }
-                                }
-                                "Values"
-                                {
-                                }
-                            }
-                        }
-                        "Values"
-                        {
-                        }
-                    }
-                    "{B1EBC968-6B66-4532-A885-748B79AF4477}:_B678A1F9D5744A9380047FFFBAF0C1E1"
-                    {
-                    "Name" = "8:Software"
-                    "Condition" = "8:"
-                        "Keys"
-                        {
-                            "{B1EBC968-6B66-4532-A885-748B79AF4477}:_1867BDC271D9454CA71A87F4BDCFE91D"
-                            {
-                            "Name" = "8:RisingMobility"
-                            "Condition" = "8:"
-                                "Keys"
-                                {
-                                    "{B1EBC968-6B66-4532-A885-748B79AF4477}:_9CDE56D9FB8944A0A356AC3A06F9094A"
-                                    {
-                                    "Name" = "8:MySquare"
-                                    "Condition" = "8:"
-                                        "Keys"
-                                        {
-                                        }
-                                        "Values"
-                                        {
-                                            "{C3684F64-58E2-4092-8E3C-D7483080DE5A}:_2BC008AEABFD4427B21D735FC84BAE9E"
-                                            {
-                                            "Name" = "8:RetrievePings"
-                                            "Condition" = "8:"
-                                            "ValueTypes" = "3:3"
-                                            "Value" = "3:0"
-                                            }
                                         }
                                     }
                                 }
