@@ -124,10 +124,11 @@
             // 
             this.lnkTextLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkTextLink.Location = new System.Drawing.Point(0, 18);
+            this.lnkTextLink.ForeColor = System.Drawing.Color.Cyan;
             this.lnkTextLink.Name = "lnkTextLink";
             this.lnkTextLink.Size = new System.Drawing.Size(240, 20);
             this.lnkTextLink.TabIndex = 0;
-            this.lnkTextLink.Text = "linkLabel1";
+            this.lnkTextLink.Text = "loading...";
             this.lnkTextLink.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lnkTextLink.Click += new System.EventHandler(this.lnkTextLink_Click);
             // 
