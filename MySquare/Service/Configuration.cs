@@ -325,7 +325,7 @@ namespace MySquare.Service
         {
             var a = typeof(Configuration).Assembly;
             Version versionObj = a.GetName().Version;
-            string version = string.Format("{0}.{1}.{2}", versionObj.Major, versionObj.Minor, versionObj.Revision);
+            string version = string.Format("{0}.{1}.{2}", versionObj.Major, versionObj.Minor, versionObj.Build);
 
             string suffix = null;
             object[] atts = a.GetCustomAttributes(typeof(System.Reflection.AssemblyConfigurationAttribute), true);

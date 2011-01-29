@@ -48,7 +48,7 @@
             this.lblFacebook.Name = "lblFacebook";
             this.lblFacebook.Size = new System.Drawing.Size(165, 20);
             this.lblFacebook.TabIndex = 8;
-            this.lblFacebook.Text = "linkLabel1";
+            this.lblFacebook.Text = "loading...";
             this.lblFacebook.Click += new System.EventHandler(this.lblFacebook_Click);
             // 
             // lblTwitter
@@ -59,7 +59,7 @@
             this.lblTwitter.Name = "lblTwitter";
             this.lblTwitter.Size = new System.Drawing.Size(165, 20);
             this.lblTwitter.TabIndex = 9;
-            this.lblTwitter.Text = "linkLabel1";
+            this.lblTwitter.Text = "loading...";
             this.lblTwitter.Click += new System.EventHandler(this.lblTwitter_Click);
             // 
             // lblEmail
@@ -70,7 +70,7 @@
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(165, 20);
             this.lblEmail.TabIndex = 10;
-            this.lblEmail.Text = "linkLabel1";
+            this.lblEmail.Text = "loading...";
             this.lblEmail.Click += new System.EventHandler(this.lblEmail_Click);
             // 
             // panel1
@@ -141,7 +141,7 @@
             this.lnkFoursquare.Name = "lnkFoursquare";
             this.lnkFoursquare.Size = new System.Drawing.Size(165, 20);
             this.lnkFoursquare.TabIndex = 11;
-            this.lnkFoursquare.Text = "linkLabel1";
+            this.lnkFoursquare.Text = "loading...";
             this.lnkFoursquare.Click += new System.EventHandler(this.lnkFoursquare_Click);
             // 
             // UserInfo
