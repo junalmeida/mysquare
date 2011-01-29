@@ -46,6 +46,9 @@
             this.cboMapType = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cboAutoUpdate = new System.Windows.Forms.CheckBox();
+            this.cboDoubleTap = new System.Windows.Forms.CheckBox();
             label7 = new System.Windows.Forms.Label();
             label8 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
@@ -209,6 +212,9 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(this.cboDoubleTap);
+            this.panel1.Controls.Add(this.cboAutoUpdate);
+            this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(label9);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.chkUseGps);
@@ -217,7 +223,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 280);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(239, 129);
+            this.panel1.Size = new System.Drawing.Size(239, 205);
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
@@ -278,6 +284,33 @@
             this.panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
             // 
+            // label10
+            // 
+            this.label10.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.label10.ForeColor = System.Drawing.Color.White;
+            this.label10.Location = new System.Drawing.Point(3, 130);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(137, 15);
+            this.label10.Text = "Other options:";
+            // 
+            // cboAutoUpdate
+            // 
+            this.cboAutoUpdate.ForeColor = System.Drawing.Color.White;
+            this.cboAutoUpdate.Location = new System.Drawing.Point(15, 151);
+            this.cboAutoUpdate.Name = "cboAutoUpdate";
+            this.cboAutoUpdate.Size = new System.Drawing.Size(212, 20);
+            this.cboAutoUpdate.TabIndex = 16;
+            this.cboAutoUpdate.Text = "Check for &updates at startup";
+            // 
+            // cboDoubleTap
+            // 
+            this.cboDoubleTap.ForeColor = System.Drawing.Color.White;
+            this.cboDoubleTap.Location = new System.Drawing.Point(15, 177);
+            this.cboDoubleTap.Name = "cboDoubleTap";
+            this.cboDoubleTap.Size = new System.Drawing.Size(209, 20);
+            this.cboDoubleTap.TabIndex = 17;
+            this.cboDoubleTap.Text = "Double tap on lists";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -289,7 +322,7 @@
             this.Controls.Add(this.panel2);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "Settings";
-            this.Size = new System.Drawing.Size(239, 528);
+            this.Size = new System.Drawing.Size(239, 488);
             this.pnlPremium.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -314,5 +347,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel2;
+        internal System.Windows.Forms.CheckBox cboDoubleTap;
+        internal System.Windows.Forms.CheckBox cboAutoUpdate;
+        private System.Windows.Forms.Label label10;
     }
 }

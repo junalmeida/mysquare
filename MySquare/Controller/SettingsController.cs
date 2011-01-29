@@ -42,7 +42,8 @@ namespace MySquare.Controller
             View.chkShowAds.Checked = MySquare.Service.Configuration.ShowAds;
             View.chkUseGps.Checked = MySquare.Service.Configuration.UseGps;
             View.chkNotifications.Checked = MySquare.Service.Configuration.PingInterval > 0;
-
+            View.cboAutoUpdate.Checked = MySquare.Service.Configuration.AutoUpdate;
+            View.cboDoubleTap.Checked = MySquare.Service.Configuration.DoubleTap;
 
             View.cboMapType.Items.Clear();
             View.cboMapType.Items.Add(MySquare.Service.MapType.Roadmap);
@@ -70,9 +71,11 @@ namespace MySquare.Controller
 
             MySquare.Service.Configuration.ShowAds = View.chkShowAds.Checked;
             MySquare.Service.Configuration.UseGps = View.chkUseGps.Checked;
+            MySquare.Service.Configuration.DoubleTap = View.cboDoubleTap.Checked;
+            MySquare.Service.Configuration.AutoUpdate = View.cboAutoUpdate.Checked;
             MySquare.Service.Configuration.PingInterval =
-                View.chkNotifications.Checked ?
-                MySquare.Service.Configuration.DefaultPingInterval : 0;
+            View.chkNotifications.Checked ?
+            MySquare.Service.Configuration.DefaultPingInterval : 0;
 
             MySquare.Service.Configuration.MapType = (MySquare.Service.MapType)View.cboMapType.Items[View.cboMapType.SelectedIndex];
 

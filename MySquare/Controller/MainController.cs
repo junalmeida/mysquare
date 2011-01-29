@@ -203,21 +203,29 @@ namespace MySquare.Controller
            7000, 7000 * 5);
         }
 
+        bool updateChecked = false;
         private void GetAdSense(object state)
         {
+            if (adMob == null)
+            {
+                //initialize
+                adMob = new RisingMobilityService();
+                adMob.AdArrived += new AdEventHandler(adMob_AdArrived);
+                adMob.VersionArrived += new VersionInfoEventHandler(service_VersionArrived);
+            }
             if (Configuration.ShowAds)
             {
-                if (adMob == null)
-                {
-                    //initialize
-                    adMob = new RisingMobilityService();
-                    adMob.AdArrived += new AdEventHandler(adMob_AdArrived);
-                }
+
                 //todo: check if mainform is activated
                 if (Program.Location.WorldPoint.IsEmpty)
                     adMob.GetAd(null, null, lastTags);
                 else
                     adMob.GetAd(Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude, lastTags);
+            }
+            if (!updateChecked && !Configuration.IsAlpha)
+            {
+                updateChecked = true;
+                adMob.GetVersionInfo();
             }
         }
 
@@ -235,6 +243,17 @@ namespace MySquare.Controller
             catch (ObjectDisposedException) { }
         }
 
+        void service_VersionArrived(object sender, VersionInfoEventArgs e)
+        {
+            try
+            {
+                View.Invoke(new ThreadStart(delegate()
+                    {
+                        MoreActionsController.LoadVersion(e, false);
+                    }));
+            }
+            catch (ObjectDisposedException) { }
+        }
 
         #endregion
 

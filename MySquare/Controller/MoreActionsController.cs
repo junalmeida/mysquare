@@ -20,6 +20,7 @@ namespace MySquare.Controller
             service.Error += new ErrorEventHandler(service_Error);
             service.VersionArrived += new VersionInfoEventHandler(service_VersionArrived);
 
+            View.listBox.SelectedItemChanged += new System.EventHandler(this.listBox_SelectedItemChanged);
             View.listBox.SelectedItemClicked += new System.EventHandler(this.listBox_SelectedItemClicked);
         }
 
@@ -47,6 +48,12 @@ namespace MySquare.Controller
         public override void Deactivate()
         {
             View.Visible = false;
+        }
+
+        private void listBox_SelectedItemChanged(object sender, EventArgs e)
+        {
+            if (!Configuration.DoubleTap)
+                listBox_SelectedItemClicked(sender, e);
         }
 
         private void listBox_SelectedItemClicked(object sender, EventArgs e)
@@ -92,8 +99,12 @@ namespace MySquare.Controller
             catch (ObjectDisposedException) { }
             version = null;
         }
-
         private void LoadVersion()
+        {
+            LoadVersion(this.version, true);
+        }
+
+        internal static void LoadVersion(VersionInfoEventArgs version, bool showAllMessages)
         {
             Cursor.Current = Cursors.Default;
 
@@ -110,7 +121,7 @@ namespace MySquare.Controller
                     catch { }
                 }
             }
-            else
+            else if (showAllMessages)
             {
                 MessageBox.Show("You have the latest version.", "MySquare", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             }

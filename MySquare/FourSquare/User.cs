@@ -134,6 +134,7 @@ namespace MySquare.FourSquare
         friend,
         pendingyou,
         pendingthem,
+        followingthem,
         self
     }
 

@@ -17,10 +17,7 @@ namespace MySquare.UI.Friends
             fontBold = new Font(Font.Name, 9, FontStyle.Bold);
         }
 
-        private void listBox_SelectedItemChanged(object sender, EventArgs e)
-        {
-
-        }
+     
 
 
         internal void Activate()
@@ -147,6 +144,12 @@ namespace MySquare.UI.Friends
             if (form == null)
                 form = (this.Parent.Parent as Main).userDetail1;
             (MySquare.Controller.BaseController.OpenController(form) as MySquare.Controller.UserController).LoadUser(user);
+        }
+
+        private void listBox_SelectedItemChanged(object sender, EventArgs e)
+        {
+            if (!Configuration.DoubleTap)
+                listBox_SelectedItemClicked(sender, e);
         }
 
 

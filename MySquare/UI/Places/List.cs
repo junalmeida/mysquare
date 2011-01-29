@@ -290,6 +290,8 @@ namespace MySquare.UI.Places
 
         private void listBox_SelectedItemChanged(object sender, EventArgs e)
         {
+            if (!Configuration.DoubleTap)
+                listBox_SelectedItemClicked(sender, e);
         }
 
         private void listBox_SelectedItemClicked(object sender, EventArgs e)

@@ -373,6 +373,12 @@ namespace MySquare.Service
 
 
         #region Image Service
+        internal bool IsInCache(string url)
+        {
+            byte[] result = GetFromCache(url);
+            return (result != null);
+        }
+
         internal byte[] DownloadImageSync(string url)
         {
             return DownloadImageSync(url, true);

@@ -373,12 +373,20 @@ namespace MySquare.Controller
 
                 Thread t = new Thread(new ThreadStart(delegate()
                 {
+                    int i = 0;
                     foreach (User u in users)
                     {
                         if (!string.IsNullOrEmpty(u.ImageUrl))
                         {
                             try
                             {
+                                //TODO: Load friends of friends avatars on demand.
+                                //This is a workaround to not let the dataplan leak.
+                                if (i > 10)
+                                    break;
+                                if (!Service.IsInCache(u.ImageUrl))
+                                    i++;
+                                
                                 byte[] image = Service.DownloadImageSync(u.ImageUrl);
 
                                 if (!View.userFriends1.ImageList.ContainsKey(u.ImageUrl))

@@ -88,7 +88,11 @@ namespace MySquare.Service
                 isPremium = false;
             else
             {
-                string resultS = "true||" + time + "||" + Login;
+                string username = Login;
+                if (username != null)
+                    username = username.ToLower();
+
+                string resultS = "true||" + time + "||" + username;
                 var md5 = System.Security.Cryptography.MD5.Create();
                 byte[] crypt = md5.ComputeHash(System.Text.Encoding.ASCII.GetBytes(resultS));
                 isPremium = crypt.SequenceEqual(e.Result);
@@ -176,6 +180,43 @@ namespace MySquare.Service
             set
             {
                 key.SetValue("MapType", value.ToString());
+            }
+        }
+
+
+        public static bool AutoUpdate
+        {
+            get
+            {
+
+                try
+                {
+                    return Convert.ToBoolean((int)key.GetValue("AutoUpdate", 1));
+                }
+                catch { return true; }
+
+            }
+            set
+            {
+                key.SetValue("AutoUpdate", Convert.ToInt32(value));
+            }
+        }
+
+        public static bool DoubleTap
+        {
+            get
+            {
+
+                try
+                {
+                    return Convert.ToBoolean((int)key.GetValue("DoubleTap", 1));
+                }
+                catch { return true; }
+
+            }
+            set
+            {
+                key.SetValue("DoubleTap", Convert.ToInt32(value));
             }
         }
 
@@ -284,7 +325,7 @@ namespace MySquare.Service
         {
             var a = typeof(Configuration).Assembly;
             Version versionObj = a.GetName().Version;
-            string version = string.Format("{0}.{1}", versionObj.Major, versionObj.Minor);
+            string version = string.Format("{0}.{1}.{2}", versionObj.Major, versionObj.Minor, versionObj.Revision);
 
             string suffix = null;
             object[] atts = a.GetCustomAttributes(typeof(System.Reflection.AssemblyConfigurationAttribute), true);
@@ -393,6 +434,18 @@ namespace MySquare.Service
             t.StartThread();
         }
 
+
+        internal static bool IsAlpha
+        {
+            get
+            {
+#if ALPHA
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
 
     }
 

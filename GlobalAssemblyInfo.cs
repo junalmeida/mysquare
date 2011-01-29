@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Rising Mobility")]
 [assembly: AssemblyTrademark("Rising Mobility ™ 2010")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.4.*")]
+[assembly: AssemblyVersion("1.4.1.*")]
 #if ALPHA
-[assembly: AssemblyConfiguration("alpha4")]
+[assembly: AssemblyConfiguration("alpha")]
 #elif DEBUG
 [assembly: AssemblyConfiguration("debug")]
 #else

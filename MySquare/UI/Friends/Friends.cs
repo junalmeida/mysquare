@@ -18,7 +18,8 @@ namespace MySquare.UI.Friends
 
         private void listBox_SelectedItemChanged(object sender, EventArgs e)
         {
-
+            if (!Configuration.DoubleTap)
+                listBox_SelectedItemClicked(sender, e);
         }
 
         SizeF factor; float itemPadding;
