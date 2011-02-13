@@ -152,7 +152,7 @@ namespace MySquare.Controller
             t.StartThread();
 
             Service.GetPendingFriends();
-            Service.GetFriends(0);
+            Service.GetFriends(null);
         }
 
 

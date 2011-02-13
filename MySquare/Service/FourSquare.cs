@@ -22,7 +22,8 @@ namespace MySquare.Service
 
         #endregion
 
-
+        private const string client_id = "HAS1SHMA5HIZQSJZREGQEXQOHG51X3TZVX1BJCMVDQZT0FBF";
+        private const string client_secret = "OPJZHF2G0SUT1DBLWEP2GQAV4LYFKAU005LUPDLS54V3IC3G";
 
         enum ServiceResource
         {
@@ -45,11 +46,19 @@ namespace MySquare.Service
             FlagDuplicated
         }
 
+        protected override void SetClientId(StringBuilder queryString)
+        {
+            queryString.Append("&client_id=");
+            queryString.Append(UrlEncode(client_id));
+            queryString.Append("&client_secret=");
+            queryString.Append(UrlEncode(client_secret));
+        }
+
 
         internal void GetLeaderBoard(double lat, double lng, Scope scope)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            int uid = 0;
+            string uid = null;
             foreach (var u in cacheUsers)
             {
                 if (u.FriendStatus.HasValue && u.FriendStatus.Value == FriendStatus.self)
@@ -58,8 +67,8 @@ namespace MySquare.Service
                     break;
                 }
             }
-            if (uid > 0)
-                parameters.Add("uid", uid.ToString());
+            if (uid != null)
+                parameters.Add("uid", uid);
             parameters.Add("geolat", lat.ToString(culture));
             parameters.Add("geolong", lng.ToString(culture));
             parameters.Add("view", "all");
@@ -72,21 +81,21 @@ namespace MySquare.Service
             Post(ServiceResource.Leaderboard, parameters);
         }
 
-        internal void GetUser(int uid)
+        internal void GetUser(string uid)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            if (uid > 0)
-                parameters.Add("uid", uid.ToString());
+            if (uid != null)
+                parameters.Add("uid", uid);
             parameters.Add("badges", "1");
             parameters.Add("mayor", "0");
 
             Post(ServiceResource.User, parameters);
         }
 
-        internal void GetFriends(int uid)
+        internal void GetFriends(string uid)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            if (uid > 0)
+            if (uid != null)
                 parameters.Add("uid", uid.ToString());
 
             Post(ServiceResource.Friends, parameters);
@@ -97,19 +106,19 @@ namespace MySquare.Service
             Post(ServiceResource.PendingFriends, null);
         }
 
-        internal void AcceptFriend(int uid)
+        internal void AcceptFriend(string uid)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            if (uid > 0)
-                parameters.Add("uid", uid.ToString());
+            if (uid != null)
+                parameters.Add("uid", uid);
             Post(ServiceResource.AcceptFriend, parameters);
         }
 
-        internal void RejectFriend(int uid)
+        internal void RejectFriend(string uid)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            if (uid > 0)
-                parameters.Add("uid", uid.ToString());
+            if (uid != null)
+                parameters.Add("uid", uid);
             Post(ServiceResource.RejectFriend, parameters);
         }
 
@@ -124,22 +133,21 @@ namespace MySquare.Service
             Post(ServiceResource.CheckIns, parameters);
         }
 
-        internal void RequestFriend(int uid)
+        internal void RequestFriend(string uid)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            if (uid > 0)
-                parameters.Add("uid", uid.ToString());
+            if (uid != null)
+                parameters.Add("uid", uid);
             Post(ServiceResource.RequestFriend, parameters);
         }
 
         internal void SearchNearby(string search, double lat, double lgn)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("geolat", lat.ToString(culture));
-            parameters.Add("geolong", lgn.ToString(culture));
-            parameters.Add("l", MySquare.Service.Configuration.ResultsLimit.ToString(culture));
+            parameters.Add("ll", string.Format("{0},{1}", lat.ToString(culture), lgn.ToString(culture)));
+            parameters.Add("limit", MySquare.Service.Configuration.ResultsLimit.ToString(culture));
             if (!string.IsNullOrEmpty(search))
-                parameters.Add("q", search);
+                parameters.Add("query", search);
 
             Post(ServiceResource.SearchNearby, parameters);
         }
@@ -147,9 +155,8 @@ namespace MySquare.Service
         internal void GetTipsNearby(double lat, double lgn)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("geolat", lat.ToString(culture));
-            parameters.Add("geolong", lgn.ToString(culture));
-            parameters.Add("l", MySquare.Service.Configuration.ResultsLimit.ToString(culture));
+            parameters.Add("ll", string.Format("{0},{1}", lat.ToString(culture), lgn.ToString(culture)));
+            parameters.Add("limit", MySquare.Service.Configuration.ResultsLimit.ToString(culture));
             parameters.Add("filter", "nearby");
             parameters.Add("sort", "nearby");
 
@@ -171,33 +178,43 @@ namespace MySquare.Service
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             if (venue != null)
-                parameters.Add("vid", venue.Id.ToString());
+                parameters.Add("venueId", venue.Id.ToString());
             if (!string.IsNullOrEmpty(shout))
                 parameters.Add("shout", shout);
-            parameters.Add("private", Convert.ToInt32((!tellFriends)).ToString());
-            if (twitter.HasValue)
-                parameters.Add("twitter", Convert.ToInt32(twitter.Value).ToString());
-            if (facebook.HasValue)
-                parameters.Add("facebook", Convert.ToInt32(facebook.Value).ToString());
+
+            List<string> broadcast = new List<string>();
+
+            if (!tellFriends)
+                broadcast.Add("private");
+            else
+            {
+                broadcast.Add("public");
+                if (facebook.HasValue && facebook.Value)
+                    broadcast.Add("facebook");
+                if (twitter.HasValue && twitter.Value)
+                    broadcast.Add("twitter");
+            }
+            parameters.Add("broadcast", string.Join(",", broadcast.ToArray()));
+         
+
             if (lat.HasValue && lng.HasValue)
             {
-                parameters.Add("geolat", lat.Value.ToString(culture));
-                parameters.Add("geolong", lng.Value.ToString(culture));
+                parameters.Add("ll",string.Format(culture, "{0},{1}", lat.Value, lng.Value));
 
                 if (altitude.HasValue)
                 {
-                    parameters.Add("geoalt", altitude.Value.ToString(culture));
+                    parameters.Add("alt", altitude.Value.ToString(culture));
                 }
                 if (accuracy.HasValue)
                 {
-                    parameters.Add("geohacc", accuracy.Value.ToString(culture));
+                    parameters.Add("altAcc", accuracy.Value.ToString(culture));
                 }
             }
 
             Post(ServiceResource.CheckIn, parameters);
         }
 
-        internal void GetVenue(int vid)
+        internal void GetVenue(string vid)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("vid", vid.ToString());
@@ -206,7 +223,7 @@ namespace MySquare.Service
         }
 
 
-        internal void AddTip(int vid, string text)
+        internal void AddTip(string vid, string text)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("vid", vid.ToString());
@@ -239,19 +256,19 @@ namespace MySquare.Service
             Post(ServiceResource.AddVenue, parameters);
         }
 
-        internal void FlagAsClosed(int vid)
+        internal void FlagAsClosed(string vid)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("vid", vid.ToString());
             Post(ServiceResource.FlagClosed, parameters);
         }
-        internal void FlagAsDuplicated(int vid)
+        internal void FlagAsDuplicated(string vid)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("vid", vid.ToString());
             Post(ServiceResource.FlagClosed, parameters);
         }
-        internal void FlagAsMislocated(int vid)
+        internal void FlagAsMislocated(string vid)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("vid", vid.ToString());
@@ -474,16 +491,16 @@ namespace MySquare.Service
             switch (service)
             {
                 case ServiceResource.SearchNearby:
-                    url = "http://api.foursquare.com/v1/venues.json";
-                    auth = !string.IsNullOrEmpty(Configuration.Login);
+                    url = "https://api.foursquare.com/v2/venues/search";
+                    auth = !string.IsNullOrEmpty(Configuration.Token);
                     break;
                 case ServiceResource.TipsNearby:
-                    url = "http://api.foursquare.com/v1/tips.json";
+                    url = "https://api.foursquare.com/v2/tips/search";
                     post = false;
-                    auth = !string.IsNullOrEmpty(Configuration.Login);
+                    auth = !string.IsNullOrEmpty(Configuration.Token);
                     break;
                 case ServiceResource.CheckIn:
-                    url = "http://api.foursquare.com/v1/checkin.json";
+                    url = "https://api.foursquare.com/v2/checkins/add";
                     post = true; auth = true;
                     break;
                 case ServiceResource.Venue:
@@ -547,12 +564,12 @@ namespace MySquare.Service
             }
 
             if (auth &&
-                string.IsNullOrEmpty(MySquare.Service.Configuration.Login))
+                string.IsNullOrEmpty(MySquare.Service.Configuration.Token))
                 OnError(new ErrorEventArgs(new UnauthorizedAccessException()));
             else
                 base.Post((int)service, url, post,
-                    (auth ? MySquare.Service.Configuration.Login : null),
-                    (auth ? MySquare.Service.Configuration.Password : null), parameters);
+                    (auth ? MySquare.Service.Configuration.Token : null),
+                     parameters);
         }
 
         protected override Type GetJsonType(int key)

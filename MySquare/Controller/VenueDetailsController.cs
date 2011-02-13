@@ -407,21 +407,22 @@ namespace MySquare.Controller
                 View.checkIn1.scoreImageList.ClearImageList();
                 View.checkIn1.scoreImageList = new Dictionary<string, Bitmap>();
                 if (checkInResult.Scoring != null)
-                    foreach (var score in checkInResult.Scoring)
-                    {
-                        try
+                    foreach (var scoreCol in checkInResult.Scoring)
+                        foreach (var score in scoreCol)
                         {
-                            if (!string.IsNullOrEmpty(score.ImageUrl))
-                                using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(score.ImageUrl)))
-                                {
-                                    Bitmap bmp = new Bitmap(mem);
-                                    View.checkIn1.scoreImageList.Add(score.ImageUrl, bmp);
-                                    View.checkIn1.pnlCheckInResult.Invoke(new ThreadStart(delegate() { View.checkIn1.pnlCheckInResult.Invalidate(); }));
-                                }
+                            try
+                            {
+                                if (!string.IsNullOrEmpty(score.ImageUrl))
+                                    using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(score.ImageUrl)))
+                                    {
+                                        Bitmap bmp = new Bitmap(mem);
+                                        View.checkIn1.scoreImageList.Add(score.ImageUrl, bmp);
+                                        View.checkIn1.pnlCheckInResult.Invoke(new ThreadStart(delegate() { View.checkIn1.pnlCheckInResult.Invalidate(); }));
+                                    }
+                            }
+                            catch (ObjectDisposedException) { return; }
+                            catch { }
                         }
-                        catch (ObjectDisposedException) { return; }
-                        catch { }
-                    }
             }));
             t.StartThread();
         }

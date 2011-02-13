@@ -74,9 +74,9 @@ namespace MySquare.Service
             }
         }
 
-        protected void Post(int service, string url, bool isPost, string Login, string Password, Dictionary<string, string> parameters)
+        protected void Post(int service, string url, bool isPost, string oAuth, Dictionary<string, string> parameters)
         {
-            bool auth = !string.IsNullOrEmpty(Login);
+            bool auth = !string.IsNullOrEmpty(oAuth);
 
             StringBuilder queryString = new StringBuilder();
 
@@ -93,6 +93,15 @@ namespace MySquare.Service
                     }
                 }
 
+            if (!auth)
+            {
+                SetClientId(queryString);
+            }
+            else
+            {
+                queryString.Append("&oauth_token=");
+                queryString.Append(oAuth);
+            }
 
             HttpWebRequest request;
             if (isPost)
@@ -119,20 +128,24 @@ namespace MySquare.Service
             request.Timeout = 15000;
             request.UserAgent = userAgent;
 
-            if (auth && !string.IsNullOrEmpty(Login))
-            {
-                request.Headers.Add("Authorization", "Basic " +
-                    Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}",
-                    Login, Password))));
-            }
+            //if (auth && !string.IsNullOrEmpty(Login))
+            //{
+            //    request.Headers.Add("Authorization", "Basic " +
+            //        Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}",
+            //        Login, Password))));
+            //}
 
 
 #if TESTING
-            string resourceFile = url.Substring(url.LastIndexOf("/") + 1).Replace(".json", "Test.txt").Replace("me?", "leaderboardTest.txt?");
+
+            string[] parts = url.Split('/');
+            string resourceFile = parts[4] + "_" + parts[5];
+
+
             int qs = resourceFile.IndexOf("?");
             if (qs > -1)
                 resourceFile = resourceFile.Substring(0, qs);
-            resourceFile = "MySquare.Service." + resourceFile;
+            resourceFile = "MySquare.Service." + resourceFile + "_Test.txt";
             Stream stream = this.GetType().Assembly.GetManifestResourceStream(resourceFile);
             if (stream != null)
             {
@@ -169,6 +182,10 @@ namespace MySquare.Service
 
         }
 
+        protected virtual void SetClientId(StringBuilder queryString)
+        {
+        }
+
 #if TESTING
         private void ParseResponse(int service, string file, Stream stream)
         {
@@ -194,6 +211,8 @@ namespace MySquare.Service
                     {
 
                         Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+                        serializer.Converters.Add(new MySquare.FourSquare.NotificationConverter());
+                        serializer.Converters.Add(new MySquare.Service.DateTimeConverter());
                         //Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
                         Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
                         result = serializer.Deserialize(reader, type);
@@ -283,6 +302,17 @@ namespace MySquare.Service
                         Log.RegisterLog(ex);
                         return;
                     }
+                    catch (WebException ex)
+                    {
+                        response = (HttpWebResponse)ex.Response;
+                        StreamReader networkReader = new StreamReader(response.GetResponseStream());
+                        responseTxt = networkReader.ReadToEnd();
+
+                        Log.RegisterLog(new Exception(responseTxt, ex));
+                        throw;
+                    }
+
+
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         using (Stream stream = response.GetResponseStream())
@@ -596,6 +626,25 @@ namespace MySquare.Service
         public ServerException(string message)
             : base(message)
         {
+        }
+    }
+
+    class DateTimeConverter : Newtonsoft.Json.Converters.DateTimeConverterBase
+    {
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            double milliseconds = Convert.ToDouble(reader.Value);
+
+            DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+            date = date.ToLocalTime().AddSeconds(milliseconds);
+
+            return date;
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
         }
     }
 }

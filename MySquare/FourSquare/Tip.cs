@@ -9,8 +9,9 @@ namespace MySquare.FourSquare
     class Tip
     {
         [JsonProperty("id")]
-        public int Id
+        public string Id
         { get; set; }
+
 
         [JsonProperty("text")]
         public string Text
@@ -50,18 +51,26 @@ namespace MySquare.FourSquare
 
 
     delegate void TipsEventHandler(object serder, TipsEventArgs e);
-    class TipsEventArgs : EventArgs
+    class TipsEventArgs : EnvelopeEventArgs<TipsResult>
     {
-        public TipsEventArgs(Tip[] tip)
-        {
-            this.Tips = tip;
-        }
 
+        public Tip[] Tips
+        {
+            get
+            {
+                return Response == null ? null : Response.Tips;
+            }
+        }
+    }
+
+    class TipsResult
+    {
         [JsonProperty("tips")]
-        internal Tip[] Tips
+        public Tip[] Tips
         {
             get;
             private set;
         }
+
     }
 }

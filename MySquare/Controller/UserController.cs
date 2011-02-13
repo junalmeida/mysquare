@@ -310,14 +310,14 @@ namespace MySquare.Controller
         }
 
 
-        private void LoadBadges(Badge[] badges)
+        private void LoadBadges(BadgeNotification[] badges)
         {
             View.userBadges1.Badges = badges;
             if (badges != null)
             {
                 Thread t = new Thread(new ThreadStart(delegate()
                 {
-                    foreach (Badge b in badges)
+                    foreach (BadgeNotification b in badges)
                     {
                         if (!string.IsNullOrEmpty(b.ImageUrl))
                         {

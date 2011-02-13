@@ -52,7 +52,7 @@ namespace MySquare.Service
                 param.Add("lat", latitude.Value.ToString(culture));
                 param.Add("lng", longitude.Value.ToString(culture));
             }
-            base.Post((int)ServiceKey.Ad, adService, false, null, null, param);
+            base.Post((int)ServiceKey.Ad, adService, false, null, param);
         }
 
 
@@ -73,14 +73,14 @@ namespace MySquare.Service
             param.Add("u", token);
             param.Add("t", ".prm");
 
-            base.Post((int)ServiceKey.Premium, rService, true, null, null, param);
+            base.Post((int)ServiceKey.Premium, rService, true, null, param);
         }
 
         internal void GetVersionInfo()
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("t", ".upd");
-            base.Post((int)ServiceKey.Version, rService, false, null, null, param);
+            base.Post((int)ServiceKey.Version, rService, false, null, param);
         }
 
 

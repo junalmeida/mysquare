@@ -7,16 +7,23 @@ using Newtonsoft.Json;
 namespace MySquare.FourSquare
 {
     delegate void CheckInEventHandler(object serder, CheckInEventArgs e);
-    class CheckInEventArgs : EventArgs
+    class CheckInEventArgs : EnvelopeEventArgs<CheckInResult>
     {
-        [JsonProperty("checkin")]
-        internal CheckIn CheckIn
+        public CheckIn CheckIn
         {
-            get;
-            private set;
+            get
+            {
+                return Response == null ? null : Response.CheckIn;
+            }
         }
     }
 
+    class CheckInResult
+    {
+        [JsonProperty("checkin")]
+        internal CheckIn CheckIn
+        { get; private set; }
+    }
 
     delegate void CheckInsEventHandler(object serder, CheckInsEventArgs e);
     class CheckInsEventArgs : EventArgs
@@ -29,25 +36,36 @@ namespace MySquare.FourSquare
         }
     }
 
+    enum CheckInType
+    {
+        checkin,
+        shout,
+        venueless
+    }
+
     class CheckIn
     {
         [JsonProperty("id")]
-        public int Id
+        public string Id
         { get; set; }
 
-        [JsonProperty("message")]
-        public string Message
+        [JsonProperty("type")]
+        public CheckInType Type
+        { get; set; }
+
+        [JsonProperty("private")]
+        public bool IsPrivate
         { get; set; }
 
         [JsonProperty("shout")]
         public string Shout
         { get; set; }
 
-        [JsonProperty("display")]
-        public string Display
+        [JsonProperty("timeZone")]
+        public string TimeZone
         { get; set; }
 
-        [JsonProperty("created")]
+        [JsonProperty("createdAt")]
         public DateTime Created
         { get; set; }
 
@@ -59,30 +77,34 @@ namespace MySquare.FourSquare
         public User User
         { get; set; }
 
+        [JsonProperty("message")]
+        public string Message
+        { get; set; }
+
+        [JsonProperty("display")]
+        public string Display
+        { get; set; }
+
+
         [JsonProperty("mayor")]
-        public Mayor Mayor
+        public MayorshipNotification Mayor
         { get; set; }
 
         [JsonProperty("badges")]
-        public Badge[] Badges
+        public BadgeNotification[] Badges
         { get; set; }
 
 
         [JsonProperty("scores")]
-        public Score[] Scoring
+        public ScoreNotification[] Scoring
         { get; set; }
 
         [JsonProperty("specials")]
-        public Special[] Specials
+        public SpecialNotification[] Specials
         { get; set; }
 
         [JsonProperty("ping")]
         public bool Ping
         { get; set; }
-
-        public override string ToString()
-        {
-            return string.IsNullOrEmpty(Display) ? Shout : Display;
-        }
     }
 }

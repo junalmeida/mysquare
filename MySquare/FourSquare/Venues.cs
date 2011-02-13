@@ -8,7 +8,18 @@ namespace MySquare.FourSquare
 {
     delegate void SearchEventHandler(object serder, SearchEventArgs e);
 
-    class SearchEventArgs : EventArgs
+    class SearchEventArgs : EnvelopeEventArgs<SearchResults>
+    {
+        public Group[] Groups
+        {
+            get
+            {
+                return Response == null ? null : Response.Groups;
+            }
+        }
+    }
+
+    class SearchResults
     {
         [JsonProperty("venues")]
         private Venue[] Venues
@@ -21,7 +32,7 @@ namespace MySquare.FourSquare
             get
             {
                 if (groups == null)
-                    return new Group[] { new Group() { Venues = this.Venues }};
+                    return new Group[] { new Group() { Venues = this.Venues } };
                 else
                     return groups;
             }
@@ -46,7 +57,7 @@ namespace MySquare.FourSquare
         public string Type
         { get; set; }
 
-        [JsonProperty("venues")]
+        [JsonProperty("items")]
         public Venue[] Venues
         { get; set; }
 
@@ -62,8 +73,9 @@ namespace MySquare.FourSquare
         internal bool fullData;
 
         [JsonProperty("id")]
-        public int Id
+        public string Id
         { get; set; }
+
 
         [JsonProperty("name")]
         public string Name
@@ -128,7 +140,7 @@ namespace MySquare.FourSquare
         { get; set; }
 
         [JsonProperty("specials")]
-        public Special[] Specials
+        public SpecialNotification[] Specials
         { get; set; }
 
         [JsonProperty("tags")]
@@ -187,7 +199,7 @@ namespace MySquare.FourSquare
     {
 
         [JsonProperty("id")]
-        public int Id
+        public string Id
         { get; set; }
 
         [JsonProperty("fullpathname")]
@@ -233,7 +245,7 @@ namespace MySquare.FourSquare
         { get; set; }
 
         [JsonProperty("mayor")]
-        public Mayor Mayor
+        public MayorshipNotification Mayor
         { get; set; }
     }
 

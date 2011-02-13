@@ -9,9 +9,9 @@ namespace MySquare.FourSquare
     class User
     {
         internal bool fullData;
-        
+
         [JsonProperty("id")]
-        public int Id
+        public string Id
         { get; set; }
 
         [JsonProperty("firstname")]
@@ -47,7 +47,7 @@ namespace MySquare.FourSquare
         { get; set; }
 
         [JsonProperty("badges")]
-        public Badge[] Badges
+        public BadgeNotification[] Badges
         { get; set; }
 
         [JsonProperty("status")]

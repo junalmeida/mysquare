@@ -249,7 +249,7 @@ namespace MySquare.UI.Places
 
                 if (venue.Specials != null)
                 {
-                    foreach (Special special in venue.Specials)
+                    foreach (SpecialNotification special in venue.Specials)
                     {
                         if (special.Kind != SpecialKind.here)
                             continue;

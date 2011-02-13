@@ -115,6 +115,20 @@ namespace MySquare.Service
                 LoadPremiumInfo();
             }
         }
+ 
+        public static string Token
+        {
+            get
+            {
+                return (string)key.GetValue("Token", null);
+            }
+            set
+            {
+                isPremium = null;
+                key.SetValue("Token", value);
+                LoadPremiumInfo();
+            }
+        }
 
         public static string Password
         {

@@ -16,31 +16,58 @@ namespace MySquare.Test
     public class CheckinTest
     {
         AutoResetEvent wait = new AutoResetEvent(false);
-        CheckIn result;
-        //[TestMethod]
+        CheckInEventArgs result;
+        Exception exception;
+        [TestMethod]
         public void CheckIn()
         {
+#if !TESTING
+            Assert.Inconclusive("Not in test mode.");
+#endif
             var service = new Service.FourSquare();
-            Configuration.Login = "junalmeida@gmail.com";
-            Configuration.Password = "htc9377@";
 
             service.Error += new ErrorEventHandler(service_Error);
             service.CheckInResult += new CheckInEventHandler(service_CheckInResult);
             wait.Reset();
             result = null;
-            service.CheckIn(new Venue() { Id = 5080252 }, "teste", false, null, null);
+            exception = null;
+            //css festas
+            service.CheckIn(new Venue() { Id = "4c1d4a0b63750f47ff08b867" }, "teste", false, null, null);
             wait.WaitOne();
+            
+            if (exception != null)
+                Assert.Fail(exception.InnerException == null ? exception.Message : exception.InnerException.Message);
+
             Assert.IsNotNull(result);
+            Assert.IsNotNull(result.CheckIn);
+            Assert.IsNotNull(result.CheckIn.Venue);
+
+            Assert.IsNotNull(result.Notifications);
+            bool hasMessage=false;
+            foreach (INotification notif in result.Notifications)
+            {
+                var message = notif as NotificationMessage;
+                var score = notif as ScoreNotification;
+                var badge = notif as BadgeNotification;
+                var mayorship = notif as MayorshipNotification;
+                var special = notif as SpecialNotification;
+
+                if (message != null)
+                    hasMessage = true;
+            }
+            Assert.IsTrue(hasMessage);
+            
         }
 
         void service_CheckInResult(object serder, CheckInEventArgs e)
         {
-            result = e.CheckIn;
+            result = e;
             wait.Set();
         }
 
         void service_Error(object serder, ErrorEventArgs e)
         {
+            exception = e.Exception;
             wait.Set();
         }
     }

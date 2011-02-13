@@ -58,9 +58,9 @@ namespace MySquare.UI.Places.Details
         internal string message;
         internal string mayorship;
         internal bool showCrown;
-        internal Badge[] badges;
-        internal Score[] scoring;
-        internal Special[] specials;
+        internal BadgeNotification[] badges;
+        internal ScoreNotification[] scoring;
+        internal SpecialNotification[] specials;
         internal Dictionary<string, Bitmap> badgeImageList;
         internal Dictionary<string, Bitmap> scoreImageList;
 
@@ -264,42 +264,43 @@ namespace MySquare.UI.Places.Details
 
             if (scoring != null)
             {
-                foreach (var score in scoring)
-                {
-
-                    int stampSize = 16 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
-
-                    DrawSeparator(graphics, padding, ref rectF, ref lastRectangle);
-
-                    Rectangle textRectangle =
-                        new Rectangle(
-                            lastRectangle.Left,
-                            lastRectangle.Top,
-                            lastRectangle.Width - stampSize - (padding * 2), this.Height);
-
-                    measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, score.ToString(), Font, textRectangle);
-                    graphics.DrawString(score.ToString(), Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
-
-                    if (measure.Height < stampSize)
-                        measure.Height = stampSize;
-
-                    if (scoreImageList != null && scoreImageList.ContainsKey(score.ImageUrl))
+                foreach (var scoreCol in scoring)
+                    foreach (var score in scoreCol)
                     {
-                        try
-                        {
-                            AlphaImage image = new AlphaImage(scoreImageList[score.ImageUrl]);
-                            image.Draw(graphics, new Rectangle(
-                                lastRectangle.Right - stampSize - padding,
-                                lastRectangle.Top + ((measure.Height / 2) - (stampSize / 2)), stampSize, stampSize));
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.RegisterLog("gdi", ex);
-                        }
-                    }
 
-                    lastRectangle.Height = measure.Height + padding;
-                }
+                        int stampSize = 16 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
+
+                        DrawSeparator(graphics, padding, ref rectF, ref lastRectangle);
+
+                        Rectangle textRectangle =
+                            new Rectangle(
+                                lastRectangle.Left,
+                                lastRectangle.Top,
+                                lastRectangle.Width - stampSize - (padding * 2), this.Height);
+
+                        measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, score.ToString(), Font, textRectangle);
+                        graphics.DrawString(score.ToString(), Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
+
+                        if (measure.Height < stampSize)
+                            measure.Height = stampSize;
+
+                        if (scoreImageList != null && scoreImageList.ContainsKey(score.ImageUrl))
+                        {
+                            try
+                            {
+                                AlphaImage image = new AlphaImage(scoreImageList[score.ImageUrl]);
+                                image.Draw(graphics, new Rectangle(
+                                    lastRectangle.Right - stampSize - padding,
+                                    lastRectangle.Top + ((measure.Height / 2) - (stampSize / 2)), stampSize, stampSize));
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.RegisterLog("gdi", ex);
+                            }
+                        }
+
+                        lastRectangle.Height = measure.Height + padding;
+                    }
             }
 
             e.Graphics.DrawImage(backBuffer, 0, 0);

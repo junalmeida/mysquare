@@ -1,0 +1,86 @@
+﻿{
+   "meta":{
+      "code":200
+   },
+   "notifications":[
+      {
+         "type":"message",
+         "item":{
+            "message":"OK! We've got you @ CSS Festas. You've been here times."
+         }
+      },
+      {
+         "type":"mayorship",
+         "item":{
+            "type":"nochange",
+            "checkins":1,
+            "message":"You're still the Mayor of CSS Festas! (check-in in the past two months)",
+            "image":"http://foursquare.com/img/crown.png"
+         }
+      },
+      {
+         "type":"score",
+         "item":{
+            "scores":[
+               {
+                  "points":1,
+                  "icon":"/img/scoring/2.png",
+                  "message":"First stop tonight"
+               }
+            ],
+            "total":1
+         }
+      }
+   ],
+   "response":{
+      "checkin":{
+         "id":"4d5820358147f04ddf939e54",
+         "createdAt":1297621045,
+         "type":"checkin",
+         "private":true,
+         "shout":"teste",
+         "timeZone":"America/Sao_Paulo",
+         "venue":{
+            "id":"4c1d4a0b63750f47ff08b867",
+            "name":"CSS Festas",
+            "contact":{
+
+            },
+            "location":{
+               "address":"travessa francisco freire",
+               "city":"Rio de Janeiro",
+               "state":"RJ",
+               "lat":-22.866314565233782,
+               "lng":-43.37683975696564
+            },
+            "categories":[
+               {
+                  "id":"4bf58dd8d48988d171941735",
+                  "name":"Event Space",
+                  "icon":"http://foursquare.com/img/categories/building/default.png",
+                  "parents":[
+                     "Home / Work / Other"
+                  ],
+                  "primary":true
+               },
+               {
+                  "id":"4bf58dd8d48988d1f1931735",
+                  "name":"Other - Entertainment",
+                  "icon":"http://foursquare.com/img/categories/arts_entertainment/default.png",
+                  "parents":[
+                     "Arts & Entertainment"
+                  ]
+               }
+            ],
+            "verified":false,
+            "stats":{
+               "checkinsCount":12,
+               "usersCount":1
+            },
+            "todos":{
+               "count":0
+            }
+         }
+      }
+   }
+}

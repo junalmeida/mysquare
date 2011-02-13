@@ -10,6 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 		MySquare.vsmdi = MySquare.vsmdi
+		MySquare1.vsmdi = MySquare1.vsmdi
+		MySquare2.vsmdi = MySquare2.vsmdi
+		MySquare3.vsmdi = MySquare3.vsmdi
 		oauth.txt = oauth.txt
 	EndProjectSection
 EndProject
@@ -38,6 +41,9 @@ Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
 		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = MySquare3.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Alpha|Any CPU = Alpha|Any CPU

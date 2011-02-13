@@ -1,4 +1,4 @@
-﻿#define PROXY
+﻿//#define PROXY
 
 using System;
 using System.Text;
@@ -7,6 +7,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Windows.Forms;
 using System.Net;
+using MySquare.Service;
 
 namespace MySquare.Test
 {
@@ -17,6 +18,19 @@ namespace MySquare.Test
     public class InterfaceTest
     {
         [TestMethod]
+        public void CreateOAuth()
+        {
+            using (OAuth oauth = new OAuth())
+            {
+                Application.Run(oauth);
+                if (!string.IsNullOrEmpty(oauth.Token))
+                    Configuration.Token = oauth.Token;
+            }
+
+        }
+
+
+        //[TestMethod]
         public void ApplicationTest()
         {
 #if !TESTING
@@ -27,8 +41,8 @@ namespace MySquare.Test
             (HttpWebRequest.DefaultWebProxy as WebProxy).BypassProxyOnLocal = true;
             HttpWebRequest.DefaultWebProxy.Credentials = new NetworkCredential("y3tr", "htc9377K");
 #endif
-            //MySquare.Program.Main();
-            Application.Run(new Form1());
+            MySquare.Program.Main();
+            //Application.Run(new Form1());
         }
     }
 }
