@@ -95,10 +95,10 @@ namespace MySquare.Controller
             RightSoftButtonText = "&Cancel";
         }
 
-        CheckIn checkInResult;
+        CheckInEventArgs checkInResult;
         void Service_CheckInResult(object serder, MySquare.FourSquare.CheckInEventArgs e)
         {
-            checkInResult = e.CheckIn;
+            checkInResult = e;
             CheckInResult();
         }
         private void CheckInResult()
@@ -120,20 +120,10 @@ namespace MySquare.Controller
 
                 View.checkIn1.message = checkInResult.Message;
 
-                if (checkInResult.Badges != null && checkInResult.Badges.Length > 0)
-                    View.checkIn1.badges = checkInResult.Badges;
-                else
-                    View.checkIn1.badges = null;
 
-                if (checkInResult.Scoring != null && checkInResult.Scoring.Length > 0)
-                    View.checkIn1.scoring = checkInResult.Scoring;
-                else
-                    View.checkIn1.scoring = null;
-
-                if (checkInResult.Specials != null && checkInResult.Specials.Length > 0)
-                    View.checkIn1.specials = checkInResult.Specials;
-                else
-                    View.checkIn1.specials = null;
+                View.checkIn1.badges = checkInResult.Badges;
+                View.checkIn1.scoring = checkInResult.Score;
+                View.checkIn1.specials = checkInResult.Specials;
             }
 
             View.checkIn1.txtShout.Text = string.Empty;

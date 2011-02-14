@@ -84,7 +84,7 @@ namespace MySquare.UI.Friends
             {
                 CheckIn checkIn = (CheckIn)e.Item.Value;
 
-                text = checkIn.Display;
+                text = checkIn.ToString();
 
                 if (checkIn.User != null)
                     userUrl = checkIn.User.ImageUrl;

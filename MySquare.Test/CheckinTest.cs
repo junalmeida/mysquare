@@ -46,7 +46,7 @@ namespace MySquare.Test
             bool hasMessage=false;
             foreach (INotification notif in result.Notifications)
             {
-                var message = notif as NotificationMessage;
+                var message = notif as MessageNotification;
                 var score = notif as ScoreNotification;
                 var badge = notif as BadgeNotification;
                 var mayorship = notif as MayorshipNotification;

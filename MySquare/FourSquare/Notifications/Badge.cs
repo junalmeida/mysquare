@@ -9,7 +9,7 @@ namespace MySquare.FourSquare
     class BadgeNotification: INotification
     {
         [JsonProperty("id")]
-        public int Id
+        public string Id
         { get; set; }
 
         [JsonProperty("name")]

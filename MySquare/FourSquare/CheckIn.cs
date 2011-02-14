@@ -16,6 +16,108 @@ namespace MySquare.FourSquare
                 return Response == null ? null : Response.CheckIn;
             }
         }
+
+        string message;
+        public string Message
+        {
+            get
+            {
+                if (message == null)
+                {
+                    foreach (var notif in Notifications)
+                    {
+                        var msg = notif as MessageNotification;
+                        if (msg != null)
+                        {
+                            message = msg.Message;
+                            break;
+                        }
+                    }
+                }
+                return message;
+            }
+        }
+
+        BadgeNotification[] badges;
+        public BadgeNotification[] Badges
+        {
+            get
+            {
+                if (badges == null)
+                {
+                    List<BadgeNotification> list = new List<BadgeNotification>();
+                    foreach (var notif in Notifications)
+                    {
+                        var item = notif as BadgeNotification;
+                        if (item != null)
+                            list.Add(item);
+                    }
+                    badges = list.ToArray();
+                }
+                return badges;
+            }
+        }
+
+        Score[] score;
+        public Score[] Score
+        {
+            get
+            {
+                if (score == null)
+                {
+                    foreach (var notif in Notifications)
+                    {
+                        var item = notif as ScoreNotification;
+                        if (item != null)
+                        {
+                            score = item.ToArray();
+                            break;
+                        }
+                    }
+                }
+                return score;
+            }
+        }
+
+        SpecialNotification[] specials;
+        public SpecialNotification[] Specials
+        {
+            get
+            {
+                if (specials == null)
+                {
+                    List<SpecialNotification> list = new List<SpecialNotification>();
+                    foreach (var notif in Notifications)
+                    {
+                        var item = notif as SpecialNotification;
+                        if (item != null)
+                            list.Add(item);
+                    }
+                    specials = list.ToArray();
+                }
+                return specials;
+            }
+        }
+
+        MayorshipNotification mayorship;
+        public MayorshipNotification Mayorship
+        {
+            get
+            {
+                if (mayorship == null)
+                {
+                   
+                    foreach (var notif in Notifications)
+                    {
+                        mayorship = notif as MayorshipNotification;
+                        if (mayorship != null)
+                            break;
+                    }
+                }
+                return mayorship;
+            }
+        }
+
     }
 
     class CheckInResult
@@ -77,34 +179,14 @@ namespace MySquare.FourSquare
         public User User
         { get; set; }
 
-        [JsonProperty("message")]
-        public string Message
-        { get; set; }
+        public override string ToString()
+        {
+            if (Venue != null)
+                return string.Format("{0} @ {1}", User, Venue);
+            else
+                return string.Format("{0} shouted: {1}", User, Shout);
+        }
+        // photos and comments
 
-        [JsonProperty("display")]
-        public string Display
-        { get; set; }
-
-
-        [JsonProperty("mayor")]
-        public MayorshipNotification Mayor
-        { get; set; }
-
-        [JsonProperty("badges")]
-        public BadgeNotification[] Badges
-        { get; set; }
-
-
-        [JsonProperty("scores")]
-        public ScoreNotification[] Scoring
-        { get; set; }
-
-        [JsonProperty("specials")]
-        public SpecialNotification[] Specials
-        { get; set; }
-
-        [JsonProperty("ping")]
-        public bool Ping
-        { get; set; }
     }
 }

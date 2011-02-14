@@ -287,7 +287,7 @@ namespace MySquare.Controller
 
         #region CheckIn
         bool waitingCheckIn;
-        MySquare.FourSquare.CheckIn checkInResult = null;
+        MySquare.FourSquare.CheckInEventArgs checkInResult = null;
 
         internal void DoCheckIn()
         {
@@ -332,7 +332,7 @@ namespace MySquare.Controller
         void Service_CheckInResult(object serder, MySquare.FourSquare.CheckInEventArgs e)
         {
             waitingCheckIn = false;
-            checkInResult = e.CheckIn;
+            checkInResult = e;
             CheckInResult();
         }
 
@@ -355,10 +355,10 @@ namespace MySquare.Controller
                 View.checkIn1.pnlCheckInResult.Visible = true;
 
                 View.checkIn1.message = checkInResult.Message;
-                if (checkInResult.Mayor != null)
+                if (checkInResult.Mayorship != null)
                 {
-                    View.checkIn1.mayorship = checkInResult.Mayor.Message;
-                    View.checkIn1.showCrown = checkInResult.Mayor.Type != MayorType.nochange;
+                    View.checkIn1.mayorship = checkInResult.Mayorship.Message;
+                    View.checkIn1.showCrown = checkInResult.Mayorship.Type != MayorType.nochange;
                 }
                 else
                 {
@@ -371,8 +371,8 @@ namespace MySquare.Controller
                 else
                     View.checkIn1.badges = null;
 
-                if (checkInResult.Scoring != null && checkInResult.Scoring.Length > 0)
-                    View.checkIn1.scoring = checkInResult.Scoring;
+                if (checkInResult.Score != null && checkInResult.Score.Length > 0)
+                    View.checkIn1.scoring = checkInResult.Score;
                 else
                     View.checkIn1.scoring = null;
 
@@ -406,23 +406,22 @@ namespace MySquare.Controller
                     }
                 View.checkIn1.scoreImageList.ClearImageList();
                 View.checkIn1.scoreImageList = new Dictionary<string, Bitmap>();
-                if (checkInResult.Scoring != null)
-                    foreach (var scoreCol in checkInResult.Scoring)
-                        foreach (var score in scoreCol)
+                if (checkInResult.Score != null)
+                    foreach (var score in checkInResult.Score)
+                    {
+                        try
                         {
-                            try
-                            {
-                                if (!string.IsNullOrEmpty(score.ImageUrl))
-                                    using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(score.ImageUrl)))
-                                    {
-                                        Bitmap bmp = new Bitmap(mem);
-                                        View.checkIn1.scoreImageList.Add(score.ImageUrl, bmp);
-                                        View.checkIn1.pnlCheckInResult.Invoke(new ThreadStart(delegate() { View.checkIn1.pnlCheckInResult.Invalidate(); }));
-                                    }
-                            }
-                            catch (ObjectDisposedException) { return; }
-                            catch { }
+                            if (!string.IsNullOrEmpty(score.ImageUrl))
+                                using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(score.ImageUrl)))
+                                {
+                                    Bitmap bmp = new Bitmap(mem);
+                                    View.checkIn1.scoreImageList.Add(score.ImageUrl, bmp);
+                                    View.checkIn1.pnlCheckInResult.Invoke(new ThreadStart(delegate() { View.checkIn1.pnlCheckInResult.Invalidate(); }));
+                                }
                         }
+                        catch (ObjectDisposedException) { return; }
+                        catch { }
+                    }
             }));
             t.StartThread();
         }

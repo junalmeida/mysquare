@@ -13,7 +13,7 @@ namespace MySquare.FourSquare
     {
     }
 
-    class NotificationMessage :  INotification
+    class MessageNotification :  INotification
     {
         [JsonProperty("message")]
         public string Message { get; private set; }
@@ -36,7 +36,7 @@ namespace MySquare.FourSquare
             switch (discriminator)
             {
                 case "message":
-                    item = new NotificationMessage();
+                    item = new MessageNotification();
                     break;
                 case "mayorship":
                     item = new MayorshipNotification();
