@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using System.Net;
-using System.IO;
-using System.Threading;
 using System.Diagnostics;
-using Newtonsoft.Json;
+using System.IO;
+using System.Linq;
+using System.Net;
 using System.Reflection;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace MySquare.Service
 {
     class RequestAbortException : Exception
     {
         public RequestAbortException(string url, Exception inner)
-            : base (string.Format("The request on {0} was cancelled.", url), inner)
+            : base(string.Format("The request on {0} was cancelled.", url), inner)
         {
         }
     }
@@ -109,7 +108,7 @@ namespace MySquare.Service
                 request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded";
-                
+
             }
             else
             {
@@ -247,7 +246,7 @@ namespace MySquare.Service
         private void WriteRequest(IAsyncResult r)
         {
             object[] data = (object[])r.AsyncState;
-            HttpWebRequest request = (HttpWebRequest)data[0]; 
+            HttpWebRequest request = (HttpWebRequest)data[0];
             int service = (int)data[1];
             MemoryStream memData = (MemoryStream)data[2];
 
@@ -430,9 +429,12 @@ namespace MySquare.Service
                         {
                             using (Stream stream = response.GetResponseStream())
                             {
+#if !TESTING_2010
                                 result = Tenor.Mobile.IO.StreamToBytes(stream);
                                 if (cache)
                                     SaveToCache(url, result);
+#endif
+
                             }
                         }
                     }
@@ -495,7 +497,11 @@ namespace MySquare.Service
             {
                 using (System.IO.FileStream file = System.IO.File.OpenRead(path))
                 {
+#if !TESTING_2010
                     return Tenor.Mobile.IO.StreamToBytes(file);
+#else
+                    return null;
+#endif
                 }
             }
             else
@@ -542,8 +548,8 @@ namespace MySquare.Service
         <= 57)) // 0-9
                 || ((charValue >= 65) && (charValue
         <= 90)) // A-Z
-        //        || ((charValue >= 97) && (charValue
-        //<= 122))) // a-z -- change to accept anything after lowercase 'z'.
+                    //        || ((charValue >= 97) && (charValue
+                    //<= 122))) // a-z -- change to accept anything after lowercase 'z'.
                 || (charValue >= 97) // a-until the end
                 || (charValue == (int)'-')
                 || (charValue == (int)'.')
@@ -620,7 +626,8 @@ namespace MySquare.Service
 
     class ServerException : Exception
     {
-        public ServerException() : base()
+        public ServerException()
+            : base()
         {
         }
         public ServerException(string message)

@@ -1,13 +1,5 @@
-﻿//#define PROXY
-
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Windows.Forms;
-using System.Net;
-using MySquare.Service;
 
 namespace MySquare.Test
 {
@@ -15,7 +7,7 @@ namespace MySquare.Test
     /// Summary description for InterfaceTest
     /// </summary>
     [TestClass]
-    public class InterfaceTest
+    public class InterfaceTest : TestBase
     {
         [TestMethod]
         public void CreateOAuth()
@@ -24,7 +16,7 @@ namespace MySquare.Test
             {
                 Application.Run(oauth);
                 if (!string.IsNullOrEmpty(oauth.Token))
-                    Configuration.Token = oauth.Token;
+                    MySquare.Service.Configuration.Token = oauth.Token;
             }
 
         }
@@ -36,12 +28,7 @@ namespace MySquare.Test
 #if !TESTING
             Assert.Inconclusive("Not in test mode.");
 #endif
-#if PROXY
-            HttpWebRequest.DefaultWebProxy = new WebProxy("inet-rj.petrobras.com.br", 8080);
-            (HttpWebRequest.DefaultWebProxy as WebProxy).BypassProxyOnLocal = true;
-            HttpWebRequest.DefaultWebProxy.Credentials = new NetworkCredential("y3tr", "htc9377K");
-#endif
-            MySquare.Program.Main();
+            //MySquare.Program.Main();
             //Application.Run(new Form1());
         }
     }

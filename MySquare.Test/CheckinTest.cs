@@ -13,7 +13,7 @@ namespace MySquare.Test
     /// Summary description for CheckinTest
     /// </summary>
     [TestClass]
-    public class CheckinTest
+    public class CheckinTest : TestBase
     {
         AutoResetEvent wait = new AutoResetEvent(false);
         CheckInEventArgs result;

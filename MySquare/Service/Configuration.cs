@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Win32;
-using System.Threading;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using Microsoft.Win32;
 
 namespace MySquare.Service
 {
@@ -115,7 +114,7 @@ namespace MySquare.Service
                 LoadPremiumInfo();
             }
         }
- 
+
         public static string Token
         {
             get
@@ -189,7 +188,7 @@ namespace MySquare.Service
                     return (MapType)Enum.Parse(typeof(MapType), key.GetValue("MapType", MapType.Roadmap.ToString()).ToString(), true);
                 }
                 catch { return MapType.Roadmap; }
-          
+
             }
             set
             {
@@ -318,7 +317,7 @@ namespace MySquare.Service
                 {
                     cookie = Guid.NewGuid().ToString().Replace("-", "");
 
-                    
+
                     key.SetValue("Cookie", cookie);
                 }
                 return cookie;
@@ -402,6 +401,7 @@ namespace MySquare.Service
         internal static bool abortCheck = false;
         internal static void CheckNotifications()
         {
+#if !TESTING_2010
             Thread t = new Thread(new ThreadStart(delegate()
             {
                 try
@@ -446,6 +446,8 @@ namespace MySquare.Service
             }));
 
             t.StartThread();
+#endif
+
         }
 
 
@@ -463,7 +465,7 @@ namespace MySquare.Service
 
     }
 
-    [Obfuscation(Exclude=true, ApplyToMembers=true)]
+    [Obfuscation(Exclude = true, ApplyToMembers = true)]
     enum MapType
     {
         Roadmap = 0,
@@ -501,7 +503,7 @@ namespace MySquare.Service
         }
 
 
-    
+
     }
 
 }

@@ -15,7 +15,7 @@ namespace MySquare.Test
     /// Summary description for UnitTest1
     /// </summary>
     [TestClass]
-    public class GeocodingTest
+    public class GeocodingTest : TestBase
     {
         //[TestMethod]
         public void Geocoding()

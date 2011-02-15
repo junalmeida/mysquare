@@ -17,7 +17,11 @@ using System.Runtime.InteropServices;
 [assembly: Guid("133b1aab-6031-4c1f-8961-c9252a6a6773")]
 
 #if DEBUG
+#if !TESTING_2010
 [assembly: InternalsVisibleTo("MySquare.Test")]
+#else
+[assembly: InternalsVisibleTo("MySquare.2010.Test")]
+#endif
 #endif
 // Below attribute is to suppress FxCop warning "CA2232 : Microsoft.Usage : Add STAThreadAttribute to assembly"
 // as Device app does not support STA thread.

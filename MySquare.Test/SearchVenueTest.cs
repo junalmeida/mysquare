@@ -11,7 +11,7 @@ namespace MySquare.Test
     /// Summary description for UnitTest1
     /// </summary>
     [TestClass]
-    public class SearchVenueTest
+    public class SearchVenueTest : TestBase
     {
         const int TimeOut = 10000;
         AutoResetEvent wait = new AutoResetEvent(false);

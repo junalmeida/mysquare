@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Xml;
 using Newtonsoft.Json;
-using System.Windows.Forms;
 
 namespace MySquare.Service
 {
@@ -34,11 +32,11 @@ namespace MySquare.Service
         }
 
         internal const string adService = "http://risingmobility.com/admob.ashx";
-//#if TESTING
+        //#if TESTING
         //internal const string rService = "http://localhost:49618/mysquare/service.ashx";
-//#else
+        //#else
         internal const string rService = "http://risingmobility.com/mysquare/service.ashx";
-//#endif
+        //#endif
 
         internal void GetAd(double? latitude, double? longitude, string[] keywords)
         {
@@ -54,9 +52,6 @@ namespace MySquare.Service
             }
             base.Post((int)ServiceKey.Ad, adService, false, null, param);
         }
-
-
-
 
 
         internal void GetPremiumInfo(string username)
@@ -136,7 +131,7 @@ namespace MySquare.Service
     }
 
     delegate void AdEventHandler(object sender, AdEventArgs e);
-    [Obfuscation(Exclude=true, ApplyToMembers=true)]
+    [Obfuscation(Exclude = true, ApplyToMembers = true)]
     class AdEventArgs : EventArgs
     {
         public AdEventArgs() { }
