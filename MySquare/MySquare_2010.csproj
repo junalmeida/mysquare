@@ -8,8 +8,8 @@
     <ProjectGuid>{CF55037D-738B-4FB8-97B2-9D0F38AF79E8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MySquare_2010</RootNamespace>
-    <AssemblyName>MySquare_2010</AssemblyName>
+    <RootNamespace>MySquare</RootNamespace>
+    <AssemblyName>MySquare</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -29,6 +29,16 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Testing|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Testing\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;TESTING_2010;TESTING</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json.Compact">
@@ -105,13 +115,13 @@
     <Compile Include="Service\RisingMobility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Service\checkinsTest.txt" />
-    <Content Include="Service\checkins_add_Test.txt" />
-    <Content Include="Service\friendsTest.txt" />
-    <Content Include="Service\leaderboardTest.txt" />
-    <Content Include="Service\userTest.txt" />
-    <Content Include="Service\venuesTest.txt" />
-    <Content Include="Service\venueTest.txt" />
+    <EmbeddedResource Include="Service\checkinsTest.txt" />
+    <EmbeddedResource Include="Service\checkins_add_Test.txt" />
+    <EmbeddedResource Include="Service\friendsTest.txt" />
+    <EmbeddedResource Include="Service\leaderboardTest.txt" />
+    <EmbeddedResource Include="Service\userTest.txt" />
+    <EmbeddedResource Include="Service\venuesTest.txt" />
+    <EmbeddedResource Include="Service\venueTest.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Location\GMaps\" />

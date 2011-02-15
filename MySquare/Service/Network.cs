@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using Newtonsoft.Json;
 
 namespace MySquare.Service
@@ -336,6 +337,9 @@ namespace MySquare.Service
                                 }
 
                                 Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+                                serializer.Converters.Add(new DateTimeConverter());
+                                serializer.Converters.Add(new MySquare.FourSquare.NotificationConverter());
+
                                 //Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StreamReader(stream));
                                 Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
                                 result = serializer.Deserialize(reader, type);
