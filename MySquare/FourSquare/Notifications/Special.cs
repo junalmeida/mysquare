@@ -18,7 +18,7 @@ namespace MySquare.FourSquare
         nearby
     }
 
-    class SpecialNotification : INotification
+    class Special : INotification
     {
         [JsonProperty("id")]
         public int Id

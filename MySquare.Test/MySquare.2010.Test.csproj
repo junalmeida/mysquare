@@ -67,6 +67,7 @@
     <Compile Include="OAuth.Designer.cs">
       <DependentUpon>OAuth.cs</DependentUpon>
     </Compile>
+    <Compile Include="OneVenueTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchVenueTest.cs" />
     <Compile Include="TestBase.cs" />

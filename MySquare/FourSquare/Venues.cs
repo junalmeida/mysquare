@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace MySquare.FourSquare
@@ -10,7 +8,7 @@ namespace MySquare.FourSquare
 
     class SearchEventArgs : EnvelopeEventArgs<SearchResults>
     {
-        public Group[] Groups
+        public VenueGroup[] Groups
         {
             get
             {
@@ -25,14 +23,14 @@ namespace MySquare.FourSquare
         private Venue[] Venues
         { get; set; }
 
-        private Group[] groups;
+        private VenueGroup[] groups;
         [JsonProperty("groups")]
-        public Group[] Groups
+        public VenueGroup[] Groups
         {
             get
             {
                 if (groups == null)
-                    return new Group[] { new Group() { Venues = this.Venues } };
+                    return new VenueGroup[] { new VenueGroup() { Venues = this.Venues } };
                 else
                     return groups;
             }
@@ -44,14 +42,34 @@ namespace MySquare.FourSquare
     }
 
     delegate void VenueEventHandler(object sender, VenueEventArgs e);
-    class VenueEventArgs : EventArgs
+    class VenueEventArgs : EnvelopeEventArgs<VenueResult>
+    {
+        public Venue Venue
+        {
+            get
+            {
+                return Response == null ? null : Response.Venue;
+            }
+            set
+            {
+                if (Response != null)
+                {
+                    Response.Venue = value;
+                }
+                else
+                    throw new InvalidOperationException();
+            }
+        }
+    }
+
+    class VenueResult
     {
         [JsonProperty("venue")]
         public Venue Venue
         { get; set; }
     }
 
-    class Group
+    class VenueGroup
     {
         [JsonProperty("type")]
         public string Type
@@ -81,50 +99,41 @@ namespace MySquare.FourSquare
         public string Name
         { get; set; }
 
-        [JsonProperty("primarycategory")]
+        [JsonProperty("location")]
+        public AddressLocation Location
+        { get; set; }
+
+        [JsonProperty("contact")]
+        public Contact Contact
+        { get; set; }
+
+
+        [JsonProperty("verified")]
+        public bool Verified
+        { get; set; }
+
+
         public Category PrimaryCategory
-        { get; set; }
-
-        [JsonProperty("address")]
-        public string Address
-        { get; set; }
-
-        [JsonProperty("crossstreet")]
-        public string CrossStreet
-        { get; set; }
-
-        [JsonProperty("phone")]
-        public string Phone
-        { get; set; }
+        {
+            get
+            {
+                return
+                    (from cat in Categories.AsQueryable()
+                     where cat.Primary == true
+                     select cat).SingleOrDefault();
+            }
+        }
 
 
-        [JsonProperty("city")]
-        public string City
-        { get; set; }
 
-        [JsonProperty("state")]
-        public string State
-        { get; set; }
-
-        [JsonProperty("zip")]
-        public string ZipCode
-        { get; set; }
-
-        [JsonProperty("twitter")]
-        public string Twitter
-        { get; set; }
-
-
-        [JsonProperty("geolat")]
-        public double Latitude
-        { get; set; }
-
-        [JsonProperty("geolong")]
-        public double Longitude
-        { get; set; }
 
         [JsonProperty("stats")]
         public Status Status
+        { get; set; }
+
+
+        [JsonProperty("mayor")]
+        public Mayorship Mayor
         { get; set; }
 
         [JsonProperty("distance")]
@@ -132,7 +141,7 @@ namespace MySquare.FourSquare
         { get; set; }
 
         [JsonProperty("tips")]
-        public Tip[] Tips
+        public TipGroupCollection TipGroups
         { get; set; }
 
         [JsonProperty("categories")]
@@ -140,17 +149,13 @@ namespace MySquare.FourSquare
         { get; set; }
 
         [JsonProperty("specials")]
-        public SpecialNotification[] Specials
+        public Special[] Specials
         { get; set; }
 
         [JsonProperty("tags")]
         public string[] Tags
         { get; set; }
 
-
-        [JsonProperty("checkins")]
-        public CheckIn[] CheckIns
-        { get; set; }
 
         public override string ToString()
         {
@@ -163,23 +168,31 @@ namespace MySquare.FourSquare
             venue.fullData = fullData;
             venue.Id = Id;
             venue.Name = Name;
-            venue.PrimaryCategory = PrimaryCategory;
-            venue.Address = Address;
-            venue.CrossStreet = CrossStreet;
-            venue.Phone = Phone;
-            venue.City = City;
-            venue.State = State;
-            venue.ZipCode = ZipCode;
-            venue.Twitter = Twitter;
-            venue.Latitude = Latitude;
-            venue.Longitude = Longitude;
+            if (Location != null)
+                venue.Location = new AddressLocation()
+                {
+                    Address = Location.Address,
+                    CrossStreet = Location.CrossStreet,
+                    City = Location.City,
+                    State = Location.State,
+                    ZipCode = Location.ZipCode,
+                    Latitude = Location.Latitude,
+                    Longitude = Location.Longitude
+                };
+
+            if (Contact != null)
+                venue.Contact = new FourSquare.Contact()
+                {
+                    Phone = Contact.Phone
+                };
+
+            //venue.Twitter = Twitter;
             venue.Status = Status;
             venue.Distance = Distance;
-            venue.Tips = Tips;
+            venue.TipGroups = TipGroups;
             venue.Categories = Categories;
             venue.Specials = Specials;
             venue.Tags = Tags;
-            venue.CheckIns = CheckIns;
         }
 
         public override bool Equals(object obj)
@@ -195,6 +208,48 @@ namespace MySquare.FourSquare
         }
     }
 
+    class Contact
+    {
+        [JsonProperty("phone")]
+        public string Phone
+        { get; set; }
+    }
+    class AddressLocation
+    {
+
+        [JsonProperty("address")]
+        public string Address
+        { get; set; }
+
+        [JsonProperty("crossStreet")]
+        public string CrossStreet
+        { get; set; }
+
+        [JsonProperty("city")]
+        public string City
+        { get; set; }
+
+        [JsonProperty("state")]
+        public string State
+        { get; set; }
+
+        [JsonProperty("postalCode")]
+        public string ZipCode
+        { get; set; }
+
+        [JsonProperty("country")]
+        public string Country
+        { get; set; }
+
+        [JsonProperty("lat")]
+        public double Latitude
+        { get; set; }
+
+        [JsonProperty("lng")]
+        public double Longitude
+        { get; set; }
+    }
+
     class Category
     {
 
@@ -202,15 +257,19 @@ namespace MySquare.FourSquare
         public string Id
         { get; set; }
 
-        [JsonProperty("fullpathname")]
+        [JsonProperty("name")]
         public string FullName
         { get; set; }
 
-        [JsonProperty("nodename")]
-        public string NodeName
+        [JsonProperty("parents")]
+        public string[] Parents
         { get; set; }
 
-        [JsonProperty("iconurl")]
+        [JsonProperty("primary")]
+        public bool Primary
+        { get; set; }
+
+        [JsonProperty("icon")]
         public string IconUrl
         { get; set; }
 
@@ -218,7 +277,7 @@ namespace MySquare.FourSquare
         {
             return FullName;
         }
- 
+
     }
 
     class Status
@@ -228,7 +287,7 @@ namespace MySquare.FourSquare
         public int HereNow
         { get; set; }
 
-        [JsonProperty("checkins")]
+        [JsonProperty("checkinsCount")]
         public int CheckIns
         { get; set; }
 
@@ -244,9 +303,6 @@ namespace MySquare.FourSquare
         public BeenHere BeenHere
         { get; set; }
 
-        [JsonProperty("mayor")]
-        public MayorshipNotification Mayor
-        { get; set; }
     }
 
     class BeenHere

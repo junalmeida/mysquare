@@ -79,17 +79,17 @@ namespace MySquare.FourSquare
             }
         }
 
-        SpecialNotification[] specials;
-        public SpecialNotification[] Specials
+        Special[] specials;
+        public Special[] Specials
         {
             get
             {
                 if (specials == null)
                 {
-                    List<SpecialNotification> list = new List<SpecialNotification>();
+                    List<Special> list = new List<Special>();
                     foreach (var notif in Notifications)
                     {
-                        var item = notif as SpecialNotification;
+                        var item = notif as Special;
                         if (item != null)
                             list.Add(item);
                     }
@@ -99,8 +99,8 @@ namespace MySquare.FourSquare
             }
         }
 
-        MayorshipNotification mayorship;
-        public MayorshipNotification Mayorship
+        Mayorship mayorship;
+        public Mayorship Mayorship
         {
             get
             {
@@ -109,7 +109,7 @@ namespace MySquare.FourSquare
                    
                     foreach (var notif in Notifications)
                     {
-                        mayorship = notif as MayorshipNotification;
+                        mayorship = notif as Mayorship;
                         if (mayorship != null)
                             break;
                     }

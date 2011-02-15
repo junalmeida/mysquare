@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace MySquare.FourSquare
@@ -17,7 +14,7 @@ namespace MySquare.FourSquare
         public string Text
         { get; set; }
 
-        [JsonProperty("created")]
+        [JsonProperty("createdAt")]
         public DateTime Created
         { get; set; }
 
@@ -72,5 +69,57 @@ namespace MySquare.FourSquare
             private set;
         }
 
+    }
+
+    [JsonObject]
+    class TipGroupCollection : System.Collections.ObjectModel.Collection<TipGroup>
+    {
+        [JsonProperty("count")]
+        public int TotalTips
+        { get; private set; }
+
+        [JsonProperty("groups")]
+        private TipGroup[] Groups
+        {
+            get
+            {
+                return null;
+            }
+            set
+            {
+                base.Items.Clear();
+
+                foreach (var obj in value)
+                    base.Items.Add(obj);
+            }
+
+        }
+
+
+    }
+
+    [JsonObject]
+    class TipGroup : System.Collections.ObjectModel.Collection<Tip>
+    {
+        [JsonProperty("name")]
+        public string Name
+        { get; private set; }
+
+        [JsonProperty("items")]
+        private Tip[] Tips
+        {
+            get
+            {
+                return null;
+            }
+            set
+            {
+                base.Items.Clear();
+
+                foreach (var obj in value)
+                    base.Items.Add(obj);
+            }
+
+        }
     }
 }

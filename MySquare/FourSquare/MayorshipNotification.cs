@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace MySquare.FourSquare
 {
-    class MayorshipNotification : INotification
+    class Mayorship : INotification
     {
         [JsonProperty("type")]
         public MayorType Type

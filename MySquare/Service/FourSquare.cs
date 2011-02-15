@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Text;
-using Microsoft.Win32;
-using System.Threading;
-using MySquare.FourSquare;
-using System.Diagnostics;
 using System.Xml;
+using MySquare.FourSquare;
 
 namespace MySquare.Service
 {
@@ -162,8 +158,8 @@ namespace MySquare.Service
 
             Post(ServiceResource.TipsNearby, parameters);
         }
-        
-        
+
+
         internal void CheckIn(Venue venue, string shout, bool tellFriends, bool? facebook, bool? twitter)
         {
             CheckIn(venue, shout, tellFriends, facebook, twitter, null, null, null, null);
@@ -195,11 +191,11 @@ namespace MySquare.Service
                     broadcast.Add("twitter");
             }
             parameters.Add("broadcast", string.Join(",", broadcast.ToArray()));
-         
+
 
             if (lat.HasValue && lng.HasValue)
             {
-                parameters.Add("ll",string.Format(culture, "{0},{1}", lat.Value, lng.Value));
+                parameters.Add("ll", string.Format(culture, "{0},{1}", lat.Value, lng.Value));
 
                 if (altitude.HasValue)
                 {
@@ -217,7 +213,7 @@ namespace MySquare.Service
         internal void GetVenue(string vid)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("vid", vid.ToString());
+            parameters.Add("id", vid.ToString());
 
             Post(ServiceResource.Venue, parameters);
         }
@@ -419,19 +415,19 @@ namespace MySquare.Service
                     else
                         cacheVenues.Add(e.Venue);
 
-                    if (e.Venue.Status != null && e.Venue.Status.Mayor != null)
+                    if (e.Venue.Status != null && e.Venue.Mayor != null)
                     {
-                        index = cacheUsers.IndexOf(e.Venue.Status.Mayor.User);
+                        index = cacheUsers.IndexOf(e.Venue.Mayor.User);
                         if (index == -1)
-                            cacheUsers.Add(e.Venue.Status.Mayor.User);
+                            cacheUsers.Add(e.Venue.Mayor.User);
                         else if (cacheUsers[index].fullData)
-                            e.Venue.Status.Mayor.User = cacheUsers[index];
+                            e.Venue.Mayor.User = cacheUsers[index];
                     }
 
-                    if (e.Venue.CheckIns != null && e.Venue.CheckIns.Length > 0)
-                    {
-                        ManageCheckInsCache(e.Venue.CheckIns);
-                    }
+                    //if (e.Venue.CheckIns != null && e.Venue.CheckIns.Length > 0)
+                    //{
+                    //    ManageCheckInsCache(e.Venue.CheckIns);
+                    //}
 
 
                     VenueResult(this, e);
@@ -466,7 +462,7 @@ namespace MySquare.Service
         {
             if (SearchArrives != null)
             {
-                foreach (Group g in e.Groups)
+                foreach (VenueGroup g in e.Groups)
                     if (g.Venues != null)
                         for (int i = 0; i < g.Venues.Length; i++)
                         {
@@ -504,8 +500,8 @@ namespace MySquare.Service
                     post = true; auth = true;
                     break;
                 case ServiceResource.Venue:
-                    url = "http://api.foursquare.com/v1/venue.json";
-                    auth = !string.IsNullOrEmpty(Configuration.Login);
+                    url = "https://api.foursquare.com/v2/venues/{0}";
+                    auth = !string.IsNullOrEmpty(Configuration.Token);
                     break;
                 case ServiceResource.AddTip:
                     url = "http://api.foursquare.com/v1/addtip.json";
@@ -562,6 +558,15 @@ namespace MySquare.Service
                 default:
                     throw new NotImplementedException();
             }
+
+            if (parameters.ContainsKey("id") && url.Contains("{0}"))
+            {
+                string id = parameters["id"];
+                parameters.Remove("id");
+                url = string.Format(url, id);
+
+            }
+
 
             if (auth &&
                 string.IsNullOrEmpty(MySquare.Service.Configuration.Token))

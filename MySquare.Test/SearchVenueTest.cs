@@ -1,10 +1,5 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySquare.FourSquare;
-using System.Threading;
 namespace MySquare.Test
 {
     /// <summary>
@@ -13,15 +8,6 @@ namespace MySquare.Test
     [TestClass]
     public class SearchVenueTest : TestBase
     {
-        const int TimeOut = 10000;
-        AutoResetEvent wait = new AutoResetEvent(false);
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            wait.Reset();
-            exception = null;
-        }
 
         [TestMethod]
         public void SearchVenues()
@@ -50,9 +36,9 @@ namespace MySquare.Test
             }
             else
                 Assert.Inconclusive("Request timed out.");
-            
+
         }
-        Exception exception;
+
         SearchEventArgs searchResults;
 
         void service_Error(object serder, MySquare.Service.ErrorEventArgs e)

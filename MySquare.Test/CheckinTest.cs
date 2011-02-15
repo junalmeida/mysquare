@@ -1,10 +1,5 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySquare.FourSquare;
-using System.Threading;
 using MySquare.Service;
 
 namespace MySquare.Test
@@ -15,9 +10,8 @@ namespace MySquare.Test
     [TestClass]
     public class CheckinTest : TestBase
     {
-        AutoResetEvent wait = new AutoResetEvent(false);
         CheckInEventArgs result;
-        Exception exception;
+
         [TestMethod]
         public void CheckIn()
         {
@@ -34,7 +28,7 @@ namespace MySquare.Test
             //css festas
             service.CheckIn(new Venue() { Id = "4c1d4a0b63750f47ff08b867" }, "teste", false, null, null);
             wait.WaitOne();
-            
+
             if (exception != null)
                 Assert.Fail(exception.InnerException == null ? exception.Message : exception.InnerException.Message);
 
@@ -43,20 +37,20 @@ namespace MySquare.Test
             Assert.IsNotNull(result.CheckIn.Venue);
 
             Assert.IsNotNull(result.Notifications);
-            bool hasMessage=false;
+            bool hasMessage = false;
             foreach (INotification notif in result.Notifications)
             {
                 var message = notif as MessageNotification;
                 var score = notif as ScoreNotification;
                 var badge = notif as BadgeNotification;
-                var mayorship = notif as MayorshipNotification;
-                var special = notif as SpecialNotification;
+                var mayorship = notif as Mayorship;
+                var special = notif as Special;
 
                 if (message != null)
                     hasMessage = true;
             }
             Assert.IsTrue(hasMessage);
-            
+
         }
 
         void service_CheckInResult(object serder, CheckInEventArgs e)

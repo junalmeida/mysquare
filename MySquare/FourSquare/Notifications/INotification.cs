@@ -39,7 +39,7 @@ namespace MySquare.FourSquare
                     item = new MessageNotification();
                     break;
                 case "mayorship":
-                    item = new MayorshipNotification();
+                    item = new Mayorship();
                     break;
                 case "score":
                     var scores = serializer.Deserialize<Score[]>(obj["item"]["scores"].CreateReader());
