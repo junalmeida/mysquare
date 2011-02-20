@@ -25,9 +25,9 @@ namespace MySquare.UI.Friends
 
         internal Dictionary<string, byte[]> imageList;
         Dictionary<string, AlphaImage> imageListA;
-        BadgeNotification[] badges;
+        Badge[] badges;
 
-        internal BadgeNotification[] Badges
+        internal Badge[] Badges
         {
             get { return badges; }
             set
@@ -38,7 +38,7 @@ namespace MySquare.UI.Friends
                 imageListA = new Dictionary<string, AlphaImage>();
                 listBox.Clear();
                 if (badges != null)
-                    foreach (BadgeNotification badge in badges)
+                    foreach (Badge badge in badges)
                         listBox.AddItem(null, badge, MeasureHeight(badge));
             }
         }
@@ -56,7 +56,7 @@ namespace MySquare.UI.Friends
 
 
 
-        internal int MeasureHeight(BadgeNotification badge)
+        internal int MeasureHeight(Badge badge)
         {
 #if DEBUG
             if (Environment.OSVersion.Platform != PlatformID.WinCE)
@@ -81,7 +81,7 @@ namespace MySquare.UI.Friends
 
         private void listBox_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
         {
-            BadgeNotification badge = (BadgeNotification)e.Item.Value;
+            Badge badge = (Badge)e.Item.Value;
 
             Size factor = Tenor.Mobile.UI.Skin.Current.ScaleFactor;
             if (!string.IsNullOrEmpty(badge.Name))

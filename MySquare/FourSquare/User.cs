@@ -47,7 +47,7 @@ namespace MySquare.FourSquare
         { get; set; }
 
         [JsonProperty("badges")]
-        public BadgeNotification[] Badges
+        public Badge[] Badges
         { get; set; }
 
         [JsonProperty("status")]

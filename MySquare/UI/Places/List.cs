@@ -196,12 +196,15 @@ namespace MySquare.UI.Places
                 string secondText = null;
                 if (tip != null && !string.IsNullOrEmpty(tip.Text))
                     secondText = tip.Text;
-                else if (!string.IsNullOrEmpty(venue.Address))
-                    secondText = venue.Address;
-                else if (!string.IsNullOrEmpty(venue.City))
-                    secondText = venue.City;
-                else if (!string.IsNullOrEmpty(venue.State))
-                    secondText = venue.State;
+                else if (venue.Location != null)
+                {
+                    if (!string.IsNullOrEmpty(venue.Location.Address))
+                        secondText = venue.Location.Address;
+                    else if (!string.IsNullOrEmpty(venue.Location.City))
+                        secondText = venue.Location.City;
+                    else if (!string.IsNullOrEmpty(venue.Location.State))
+                        secondText = venue.Location.State;
+                }
                 if (secondText != null)
                 {
                     if (secondFont == null)
@@ -249,7 +252,7 @@ namespace MySquare.UI.Places
 
                 if (venue.Specials != null)
                 {
-                    foreach (SpecialNotification special in venue.Specials)
+                    foreach (Special special in venue.Specials)
                     {
                         if (special.Kind != SpecialKind.here)
                             continue;

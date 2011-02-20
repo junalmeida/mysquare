@@ -218,12 +218,15 @@ namespace MySquare.Controller
         {
             View.lblVenueName.Text = Venue.Name;
             List<string> address = new List<string>();
-            if (!string.IsNullOrEmpty(Venue.Address))
-                address.Add(Venue.Address);
-            if (!string.IsNullOrEmpty(Venue.City))
-                address.Add(Venue.City);
-            if (!string.IsNullOrEmpty(Venue.State))
-                address.Add(Venue.State);
+            if (Venue.Location != null)
+            {
+                if (!string.IsNullOrEmpty(Venue.Location.Address))
+                    address.Add(Venue.Location.Address);
+                if (!string.IsNullOrEmpty(Venue.Location.City))
+                    address.Add(Venue.Location.City);
+                if (!string.IsNullOrEmpty(Venue.Location.State))
+                    address.Add(Venue.Location.State);
+            }
             View.lblAddress.Text = string.Join(", ", address.ToArray()).Replace("&", "&&");
         }
 
@@ -459,9 +462,9 @@ namespace MySquare.Controller
                     View.venueInfo1.lblCategory.Text = null;
 
 
-                if (!string.IsNullOrEmpty(Venue.Phone))
+                if (Venue.Contact != null && !string.IsNullOrEmpty(Venue.Contact.Phone))
                 {
-                    View.venueInfo1.lblPhone.Text = Venue.Phone;
+                    View.venueInfo1.lblPhone.Text = Venue.Contact.Phone;
                     View.venueInfo1.lblPhone.Enabled = true;
                 }
                 else
@@ -470,21 +473,21 @@ namespace MySquare.Controller
                     View.venueInfo1.lblPhone.Enabled = false;
                 }
 
-                if (Venue.Status != null && Venue.Status.Mayor != null)
+                if (Venue.Status != null && Venue.Mayor != null)
                 {
                     View.venueInfo1.lblMayor.Text =
-                        string.Concat(Venue.Status.Mayor.User.FirstName, " ", Venue.Status.Mayor.User.LastName);
+                        string.Concat(Venue.Mayor.User.FirstName, " ", Venue.Mayor.User.LastName);
                     View.venueInfo1.lblMayor.Enabled = true;
-                    View.venueInfo1.lblMayor.Tag = Venue.Status.Mayor.User;
+                    View.venueInfo1.lblMayor.Tag = Venue.Mayor.User;
                 }
                 else
                 {
                     View.venueInfo1.lblMayor.Text = "Not available";
                     View.venueInfo1.lblMayor.Enabled = false;
                 }
-                if (Venue.Status != null && (Venue.Status.HereNow > 0 || Venue.Status.CheckIns > 0))
+                if (Venue.Status != null && (Venue.Status.CheckIns > 0))
                     View.venueInfo1.lblStats.Text =
-                        string.Concat(Venue.Status.HereNow, " here, ", Venue.Status.CheckIns, " check-ins.");
+                        string.Concat(Venue.Status.CheckIns, " check-ins.");
                 else
                     View.venueInfo1.lblStats.Text = null;
 
@@ -519,9 +522,9 @@ namespace MySquare.Controller
                             }));
                         }
 
-                        if (Venue.Status != null && Venue.Status.Mayor != null && !string.IsNullOrEmpty(Venue.Status.Mayor.User.ImageUrl))
+                        if (Venue.Status != null && Venue.Mayor != null && !string.IsNullOrEmpty(Venue.Mayor.User.ImageUrl))
                         {
-                            byte[] image = Service.DownloadImageSync(Venue.Status.Mayor.User.ImageUrl);
+                            byte[] image = Service.DownloadImageSync(Venue.Mayor.User.ImageUrl);
                             View.Invoke(new ThreadStart(delegate()
                             {
                                 View.venueInfo1.imgMayor.Tag = image;
@@ -573,8 +576,8 @@ namespace MySquare.Controller
                         CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
                         string googleMapsUrl = string.Format(BaseController.googleMapsUrl,
                             size.Width, size.Height,
-                            Venue.Latitude.ToString(culture),
-                            Venue.Longitude.ToString(culture), zoom, Configuration.MapType.ToString().ToLower());
+                            Venue.Location.Latitude.ToString(culture),
+                            Venue.Location.Longitude.ToString(culture), zoom, Configuration.MapType.ToString().ToLower());
 
                         byte[] buffer = Service.DownloadImageSync(googleMapsUrl, false);
 
@@ -602,12 +605,13 @@ namespace MySquare.Controller
             View.venueTips1.listBox.Clear();
             View.venueTips1.imageList.ClearImageList();
             View.venueTips1.imageList = new Dictionary<string, Bitmap>();
-            if (Venue.Tips != null)
+            if (Venue.TipGroups != null)
             {
-                foreach (Tip tip in Venue.Tips)
-                {
-                    View.venueTips1.listBox.AddItem(null, tip, View.venueTips1.MeasureHeight(tip));
-                }
+                foreach (var group in Venue.TipGroups)
+                    foreach (Tip tip in group)
+                    {
+                        View.venueTips1.listBox.AddItem(null, tip, View.venueTips1.MeasureHeight(tip));
+                    }
                 View.venueTips1.lblError.Visible = false;
             }
             else
@@ -617,29 +621,30 @@ namespace MySquare.Controller
             {
                 try
                 {
-                    if (Venue.Tips != null)
+                    if (Venue.TipGroups != null)
                     {
-                        foreach (Tip tip in Venue.Tips)
-                        {
-                            if (tip.User != null)
+                        foreach (var group in Venue.TipGroups)
+                            foreach (Tip tip in group)
                             {
-                                byte[] buffer = Service.DownloadImageSync(tip.User.ImageUrl);
-                                if (buffer != null)
+                                if (tip.User != null)
                                 {
-                                    using (MemoryStream mem = new MemoryStream(buffer))
+                                    byte[] buffer = Service.DownloadImageSync(tip.User.ImageUrl);
+                                    if (buffer != null)
                                     {
-                                        Bitmap image =
-                                            new Bitmap(mem);
-                                        View.venueTips1.imageList[tip.User.ImageUrl] = image;
+                                        using (MemoryStream mem = new MemoryStream(buffer))
+                                        {
+                                            Bitmap image =
+                                                new Bitmap(mem);
+                                            View.venueTips1.imageList[tip.User.ImageUrl] = image;
+                                        }
+                                        View.Invoke(new ThreadStart(delegate()
+                                        {
+                                            View.venueTips1.listBox.Invalidate();
+                                        }));
                                     }
-                                    View.Invoke(new ThreadStart(delegate()
-                                    {
-                                        View.venueTips1.listBox.Invalidate();
-                                    }));
+                                    buffer = null;
                                 }
-                                buffer = null;
                             }
-                        }
                     }
                 }
                 catch (ObjectDisposedException) { }
@@ -716,9 +721,9 @@ namespace MySquare.Controller
             View.peopleHere.lblError.Visible = false;
             View.peopleHere.ImageList = new Dictionary<string, byte[]>();
 
-            if (Venue != null && Venue.CheckIns != null && Venue.CheckIns.Length > 0)
+            if (Venue != null && Venue.HereNow != null && Venue.HereNow.Count > 0)
             {
-                foreach (var chkin in Venue.CheckIns)
+                foreach (var chkin in Venue.HereNow)
                 {
                     chkin.User.CheckIn = chkin;
 
@@ -728,7 +733,7 @@ namespace MySquare.Controller
 
                 Thread t = new Thread(new ThreadStart(delegate()
                 {
-                    foreach (var chkin in Venue.CheckIns)
+                    foreach (var chkin in Venue.HereNow)
                     {
                         User u = chkin.User;
                         if (!string.IsNullOrEmpty(u.ImageUrl))

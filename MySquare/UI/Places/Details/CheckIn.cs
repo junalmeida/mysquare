@@ -58,9 +58,9 @@ namespace MySquare.UI.Places.Details
         internal string message;
         internal string mayorship;
         internal bool showCrown;
-        internal BadgeNotification[] badges;
+        internal Badge[] badges;
         internal Score[] scoring;
-        internal SpecialNotification[] specials;
+        internal Special[] specials;
         internal Dictionary<string, Bitmap> badgeImageList;
         internal Dictionary<string, Bitmap> scoreImageList;
 

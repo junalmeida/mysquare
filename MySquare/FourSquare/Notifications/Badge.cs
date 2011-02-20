@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace MySquare.FourSquare
 {
-    class BadgeNotification: INotification
+    class Badge: INotification
     {
         [JsonProperty("id")]
         public string Id

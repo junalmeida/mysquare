@@ -424,7 +424,7 @@ namespace MySquare.Service
                             if (process == null)
                             {
                                 string path = Configuration.GetAppPath();
-                                Process.Start(System.IO.Path.Combine(path, "MySquare.Pings.exe"), string.Empty);
+                                System.Diagnostics.Process.Start(System.IO.Path.Combine(path, "MySquare.Pings.exe"), string.Empty);
                             }
                         }
                         else if (!isPremium.HasValue)

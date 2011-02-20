@@ -38,17 +38,17 @@ namespace MySquare.FourSquare
             }
         }
 
-        BadgeNotification[] badges;
-        public BadgeNotification[] Badges
+        Badge[] badges;
+        public Badge[] Badges
         {
             get
             {
                 if (badges == null)
                 {
-                    List<BadgeNotification> list = new List<BadgeNotification>();
+                    List<Badge> list = new List<Badge>();
                     foreach (var notif in Notifications)
                     {
-                        var item = notif as BadgeNotification;
+                        var item = notif as Badge;
                         if (item != null)
                             list.Add(item);
                     }

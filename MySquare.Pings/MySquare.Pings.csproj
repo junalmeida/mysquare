@@ -74,9 +74,6 @@
     <Compile Include="..\MySquare\Extensions.cs">
       <Link>Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\MySquare\FourSquare\Badge.cs">
-      <Link>FourSquare\Badge.cs</Link>
-    </Compile>
     <Compile Include="..\MySquare\FourSquare\CheckIn.cs">
       <Link>FourSquare\CheckIn.cs</Link>
     </Compile>
@@ -86,8 +83,17 @@
     <Compile Include="..\MySquare\FourSquare\LeaderBoard.cs">
       <Link>FourSquare\LeaderBoard.cs</Link>
     </Compile>
-    <Compile Include="..\MySquare\FourSquare\Mayor.cs">
-      <Link>FourSquare\Mayor.cs</Link>
+    <Compile Include="..\MySquare\FourSquare\Notifications\Badge.cs">
+      <Link>FourSquare\Notifications\Badge.cs</Link>
+    </Compile>
+    <Compile Include="..\MySquare\FourSquare\Notifications\INotification.cs">
+      <Link>FourSquare\Notifications\INotification.cs</Link>
+    </Compile>
+    <Compile Include="..\MySquare\FourSquare\Notifications\Score.cs">
+      <Link>FourSquare\Notifications\Score.cs</Link>
+    </Compile>
+    <Compile Include="..\MySquare\FourSquare\Notifications\Special.cs">
+      <Link>FourSquare\Notifications\Special.cs</Link>
     </Compile>
     <Compile Include="..\MySquare\FourSquare\Tip.cs">
       <Link>FourSquare\Tip.cs</Link>

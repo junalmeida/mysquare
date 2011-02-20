@@ -262,15 +262,15 @@ namespace MySquare.Controller
         }
 
         Tip[] tips = null;
-        Group[] venues = null;
+        VenueGroup[] venues = null;
 
-        void LoadVenues(Group[] groups)
+        void LoadVenues(VenueGroup[] groups)
         {
             View.list1.ImageList = new Dictionary<string, byte[]>();
 
             View.list1.listBox.Clear();
 
-            foreach (Group g in groups)
+            foreach (var g in groups)
             {
                 if (!string.IsNullOrEmpty(g.Type))
                     View.list1.listBox.AddItem(g.Type, null, View.list1.listBox.DefaultItemHeight / 2);
@@ -284,7 +284,7 @@ namespace MySquare.Controller
 
             Thread t = new Thread(new ThreadStart(delegate()
             {
-                foreach (Group g in groups)
+                foreach (var g in groups)
                     foreach (Venue venue in g.Venues)
                     {
                         //TODO: revise the null category image.

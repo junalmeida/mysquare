@@ -42,7 +42,7 @@ namespace MySquare.Test
             {
                 var message = notif as MessageNotification;
                 var score = notif as ScoreNotification;
-                var badge = notif as BadgeNotification;
+                var badge = notif as Badge;
                 var mayorship = notif as Mayorship;
                 var special = notif as Special;
 

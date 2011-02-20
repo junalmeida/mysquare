@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace MySquare.FourSquare
 {
@@ -156,6 +157,10 @@ namespace MySquare.FourSquare
         public string[] Tags
         { get; set; }
 
+        [JsonProperty("herenow")]
+        public HereNow HereNow
+        { get; set; }
+
 
         public override string ToString()
         {
@@ -283,9 +288,9 @@ namespace MySquare.FourSquare
     class Status
     {
 
-        [JsonProperty("herenow")]
-        public int HereNow
-        { get; set; }
+        //[JsonProperty("herenow")]
+        //public int HereNow
+        //{ get; set; }
 
         [JsonProperty("checkinsCount")]
         public int CheckIns
@@ -328,5 +333,31 @@ namespace MySquare.FourSquare
         public bool Success
         { get { return Result == "ok"; } }
     }
+
+    [JsonObject]
+    class HereNow : Collection<CheckIn>
+    {
+        private class HereNowGroup
+        {
+            [JsonProperty("items")]
+            public CheckIn[] CheckIns
+            { get; set; }
+        }
+
+        [JsonProperty("groups")]
+        private HereNowGroup[] Groups
+        {
+            get { return null; }
+            set
+            {
+                this.Clear();
+                foreach (var g in value)
+                    foreach (var i in g.CheckIns)
+                        this.Add(i);
+            }
+        }
+    }
+
+
 
 }
