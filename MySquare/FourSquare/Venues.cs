@@ -119,7 +119,7 @@ namespace MySquare.FourSquare
             get
             {
                 return
-                    (from cat in Categories.AsQueryable()
+                    (from cat in Categories
                      where cat.Primary == true
                      select cat).SingleOrDefault();
             }

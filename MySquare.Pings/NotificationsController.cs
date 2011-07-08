@@ -41,7 +41,7 @@ namespace MySquare.Pings
                 {
                     if ((DateTime.Now - checkIns[i].Created).TotalHours < 10 &&
                         (checkIns[i].Shout != null || checkIns[i].Venue != null) &&
-                        checkIns[i].Ping && checkIns[i].Created > Configuration.LastCheckIn)
+                        !checkIns[i].IsPrivate && checkIns[i].Created > Configuration.LastCheckIn)
                     {
                         checkInsToAlert.Add(checkIns[i]);
                     }
@@ -61,7 +61,7 @@ namespace MySquare.Pings
                             if (chkin.Venue == null && chkin.Shout != null)
                                 message.Append(string.Format("{0}: {1}", chkin.User, chkin.Shout));
                             else
-                                message.Append(chkin.Display);
+                                message.Append(chkin.ToString());
                             message.Append(", ");
                             message.Append(chkin.Created.ToHumanTime());
                             message.Append("</li>");
