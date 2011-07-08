@@ -137,24 +137,25 @@ namespace MySquare.Service
 
 
 #if TESTING
-
             string[] parts = url.Split('/');
-            string resourceFile = parts[4] + "_" + parts[5];
-
-
-            int qs = resourceFile.IndexOf("?");
-            if (qs > -1)
-                resourceFile = resourceFile.Substring(0, qs);
-            resourceFile = "MySquare.Service." + resourceFile + "_Test.txt";
-            Stream stream = this.GetType().Assembly.GetManifestResourceStream(resourceFile);
-            if (stream != null)
+            if (parts.Length >= 6)
             {
-                Thread t = new Thread(new ThreadStart(delegate()
+                string resourceFile = parts[4] + "_" + parts[5];
+
+                int qs = resourceFile.IndexOf("?");
+                if (qs > -1)
+                    resourceFile = resourceFile.Substring(0, qs);
+                resourceFile = "MySquare.Service." + resourceFile + "_Test.txt";
+                Stream stream = this.GetType().Assembly.GetManifestResourceStream(resourceFile);
+                if (stream != null)
                 {
-                    ParseResponse((int)service, resourceFile, stream);
-                }));
-                t.StartThread();
-                return;
+                    Thread t = new Thread(new ThreadStart(delegate()
+                    {
+                        ParseResponse((int)service, resourceFile, stream);
+                    }));
+                    t.StartThread();
+                    return;
+                }
             }
 #endif
             if (isPost)
@@ -305,10 +306,13 @@ namespace MySquare.Service
                     catch (WebException ex)
                     {
                         response = (HttpWebResponse)ex.Response;
-                        StreamReader networkReader = new StreamReader(response.GetResponseStream());
-                        responseTxt = networkReader.ReadToEnd();
+                        if (response != null)
+                        {
+                            StreamReader networkReader = new StreamReader(response.GetResponseStream());
+                            responseTxt = networkReader.ReadToEnd();
 
-                        Log.RegisterLog(new Exception(responseTxt, ex));
+                            Log.RegisterLog(new Exception(responseTxt, ex));
+                        }
                         throw;
                     }
 
