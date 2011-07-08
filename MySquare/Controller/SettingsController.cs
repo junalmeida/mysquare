@@ -36,8 +36,8 @@ namespace MySquare.Controller
 
         private void Load()
         {
-            View.txtEmail.Text = MySquare.Service.Configuration.Login;
-            View.txtPassword.Text = string.Empty;
+            //View.txtEmail.Text = MySquare.Service.Configuration.Login;
+            //View.txtPassword.Text = string.Empty;
             View.pnlPremium.Enabled = MySquare.Service.Configuration.IsPremium;
             View.chkShowAds.Checked = MySquare.Service.Configuration.ShowAds;
             View.chkUseGps.Checked = MySquare.Service.Configuration.UseGps;
@@ -65,9 +65,9 @@ namespace MySquare.Controller
 
         private void Save()
         {
-            MySquare.Service.Configuration.Login = View.txtEmail.Text;
-            if (!string.IsNullOrEmpty(View.txtPassword.Text))
-                MySquare.Service.Configuration.Password = View.txtPassword.Text;
+            //MySquare.Service.Configuration.Login = View.txtEmail.Text;
+            //if (!string.IsNullOrEmpty(View.txtPassword.Text))
+                //MySquare.Service.Configuration.Password = View.txtPassword.Text;
 
             MySquare.Service.Configuration.ShowAds = View.chkShowAds.Checked;
             MySquare.Service.Configuration.UseGps = View.chkUseGps.Checked;

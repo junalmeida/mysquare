@@ -31,24 +31,22 @@
             System.Windows.Forms.Label label7;
             System.Windows.Forms.Label label8;
             System.Windows.Forms.Label label9;
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtEmail = new Tenor.Mobile.UI.TextControl();
-            this.txtPassword = new Tenor.Mobile.UI.TextControl();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pnlPremium = new System.Windows.Forms.Panel();
             this.chkShowAds = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.chkNotifications = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cboDoubleTap = new System.Windows.Forms.CheckBox();
+            this.cboAutoUpdate = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.chkUseGps = new System.Windows.Forms.CheckBox();
             this.cboMapType = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cboAutoUpdate = new System.Windows.Forms.CheckBox();
-            this.cboDoubleTap = new System.Windows.Forms.CheckBox();
+            this.lnkOAuth = new System.Windows.Forms.LinkLabel();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
             label7 = new System.Windows.Forms.Label();
             label8 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
@@ -91,72 +89,6 @@
             label9.Size = new System.Drawing.Size(215, 34);
             label9.Text = "Gps will be disabled after 5 minutes of inactivity.";
             // 
-            // label1
-            // 
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(10, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 15);
-            this.label1.Text = "E-mail:";
-            // 
-            // txtEmail
-            // 
-            this.txtEmail.AcceptsReturn = false;
-            this.txtEmail.AcceptsTab = false;
-            this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtEmail.HideSelection = true;
-            this.txtEmail.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
-            this.txtEmail.Location = new System.Drawing.Point(10, 40);
-            this.txtEmail.MaxLength = 32767;
-            this.txtEmail.Modified = false;
-            this.txtEmail.Multiline = false;
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.PasswordChar = '\0';
-            this.txtEmail.ReadOnly = false;
-            this.txtEmail.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtEmail.SelectedText = "";
-            this.txtEmail.SelectionLength = 0;
-            this.txtEmail.SelectionStart = 0;
-            this.txtEmail.Size = new System.Drawing.Size(214, 21);
-            this.txtEmail.TabIndex = 1;
-            this.txtEmail.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtEmail.WordWrap = true;
-            // 
-            // txtPassword
-            // 
-            this.txtPassword.AcceptsReturn = false;
-            this.txtPassword.AcceptsTab = false;
-            this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtPassword.HideSelection = true;
-            this.txtPassword.InputMode = Microsoft.WindowsCE.Forms.InputMode.Default;
-            this.txtPassword.Location = new System.Drawing.Point(10, 81);
-            this.txtPassword.MaxLength = 32767;
-            this.txtPassword.Modified = false;
-            this.txtPassword.Multiline = false;
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = '*';
-            this.txtPassword.ReadOnly = false;
-            this.txtPassword.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtPassword.SelectedText = "";
-            this.txtPassword.SelectionLength = 0;
-            this.txtPassword.SelectionStart = 0;
-            this.txtPassword.Size = new System.Drawing.Size(214, 21);
-            this.txtPassword.TabIndex = 3;
-            this.txtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtPassword.WordWrap = true;
-            // 
-            // label2
-            // 
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(10, 64);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 15);
-            this.label2.Text = "Password:";
-            // 
             // label3
             // 
             this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
@@ -175,7 +107,7 @@
             this.pnlPremium.Controls.Add(this.chkNotifications);
             this.pnlPremium.Controls.Add(label7);
             this.pnlPremium.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlPremium.Location = new System.Drawing.Point(0, 115);
+            this.pnlPremium.Location = new System.Drawing.Point(0, 73);
             this.pnlPremium.Name = "pnlPremium";
             this.pnlPremium.Size = new System.Drawing.Size(239, 165);
             this.pnlPremium.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
@@ -221,12 +153,39 @@
             this.panel1.Controls.Add(this.cboMapType);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 280);
+            this.panel1.Location = new System.Drawing.Point(0, 238);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(239, 205);
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
+            // 
+            // cboDoubleTap
+            // 
+            this.cboDoubleTap.ForeColor = System.Drawing.Color.White;
+            this.cboDoubleTap.Location = new System.Drawing.Point(15, 177);
+            this.cboDoubleTap.Name = "cboDoubleTap";
+            this.cboDoubleTap.Size = new System.Drawing.Size(209, 20);
+            this.cboDoubleTap.TabIndex = 17;
+            this.cboDoubleTap.Text = "Double tap on lists";
+            // 
+            // cboAutoUpdate
+            // 
+            this.cboAutoUpdate.ForeColor = System.Drawing.Color.White;
+            this.cboAutoUpdate.Location = new System.Drawing.Point(15, 151);
+            this.cboAutoUpdate.Name = "cboAutoUpdate";
+            this.cboAutoUpdate.Size = new System.Drawing.Size(212, 20);
+            this.cboAutoUpdate.TabIndex = 16;
+            this.cboAutoUpdate.Text = "Check for &updates at startup";
+            // 
+            // label10
+            // 
+            this.label10.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.label10.ForeColor = System.Drawing.Color.White;
+            this.label10.Location = new System.Drawing.Point(3, 130);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(137, 15);
+            this.label10.Text = "Other options:";
             // 
             // label6
             // 
@@ -272,44 +231,36 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Black;
+            this.panel2.Controls.Add(this.lnkOAuth);
             this.panel2.Controls.Add(this.label3);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.txtEmail);
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.txtPassword);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(239, 115);
+            this.panel2.Size = new System.Drawing.Size(239, 73);
             this.panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
             // 
-            // label10
+            // lnkOAuth
             // 
-            this.label10.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(3, 130);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(137, 15);
-            this.label10.Text = "Other options:";
+            this.lnkOAuth.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkOAuth.ForeColor = System.Drawing.Color.Cyan;
+            this.lnkOAuth.Location = new System.Drawing.Point(13, 34);
+            this.lnkOAuth.Name = "lnkOAuth";
+            this.lnkOAuth.Size = new System.Drawing.Size(211, 20);
+            this.lnkOAuth.TabIndex = 1;
+            this.lnkOAuth.Text = "Authenticate";
+            this.lnkOAuth.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lnkOAuth.Click += new System.EventHandler(this.lnkOAuth_Click);
             // 
-            // cboAutoUpdate
+            // webBrowser
             // 
-            this.cboAutoUpdate.ForeColor = System.Drawing.Color.White;
-            this.cboAutoUpdate.Location = new System.Drawing.Point(15, 151);
-            this.cboAutoUpdate.Name = "cboAutoUpdate";
-            this.cboAutoUpdate.Size = new System.Drawing.Size(212, 20);
-            this.cboAutoUpdate.TabIndex = 16;
-            this.cboAutoUpdate.Text = "Check for &updates at startup";
-            // 
-            // cboDoubleTap
-            // 
-            this.cboDoubleTap.ForeColor = System.Drawing.Color.White;
-            this.cboDoubleTap.Location = new System.Drawing.Point(15, 177);
-            this.cboDoubleTap.Name = "cboDoubleTap";
-            this.cboDoubleTap.Size = new System.Drawing.Size(209, 20);
-            this.cboDoubleTap.TabIndex = 17;
-            this.cboDoubleTap.Text = "Double tap on lists";
+            this.webBrowser.Location = new System.Drawing.Point(3, 449);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(233, 61);
+            this.webBrowser.Visible = false;
+            this.webBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.webBrowser_Navigating);
+            this.webBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser_DocumentCompleted);
             // 
             // Settings
             // 
@@ -317,12 +268,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.webBrowser);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlPremium);
             this.Controls.Add(this.panel2);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "Settings";
-            this.Size = new System.Drawing.Size(239, 488);
+            this.Size = new System.Drawing.Size(239, 534);
             this.pnlPremium.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -332,10 +284,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        internal Tenor.Mobile.UI.TextControl txtEmail;
-        internal Tenor.Mobile.UI.TextControl txtPassword;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         internal System.Windows.Forms.CheckBox chkShowAds;
@@ -350,5 +298,7 @@
         internal System.Windows.Forms.CheckBox cboDoubleTap;
         internal System.Windows.Forms.CheckBox cboAutoUpdate;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.WebBrowser webBrowser;
+        private System.Windows.Forms.LinkLabel lnkOAuth;
     }
 }

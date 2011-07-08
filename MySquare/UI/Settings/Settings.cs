@@ -22,6 +22,8 @@ namespace MySquare.UI.Settings
         }
 
 
+
+
         #region Scroll Control
         int originalMouse;
         int originalScroll;
@@ -47,5 +49,26 @@ namespace MySquare.UI.Settings
         }
         #endregion
 
+        private void lnkOAuth_Click(object sender, EventArgs e)
+        {
+            this.AutoScrollPosition = new Point(0,0);
+            this.AutoScroll = false;
+            webBrowser.Location = new Point(0, 0);
+            webBrowser.Size = new Size(this.Size.Width, this.Size.Height);
+
+            webBrowser.Url = new Uri("http://risingmobility.com/mysquare/oauth.ashx");
+            webBrowser.Show();
+        }
+
+        private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+        }
+
+        private void webBrowser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+        {
+            
+        }
+
     }
+
 }
