@@ -204,7 +204,7 @@ namespace MySquare.Controller
                 }
                 if (!found)
                 {
-                    if (u.FriendStatus == FriendStatus.pendingyou)
+                    if (u.FriendStatus == FriendStatus.pendingMe)
                         pendingUsers.Add(u);
                     else
                         otherUsers.Add(u);

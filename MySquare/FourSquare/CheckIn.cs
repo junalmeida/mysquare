@@ -128,9 +128,15 @@ namespace MySquare.FourSquare
     }
 
     delegate void CheckInsEventHandler(object serder, CheckInsEventArgs e);
-    class CheckInsEventArgs : EventArgs
+    class CheckInsEventArgs : EnvelopeEventArgs<CheckInsResult>
     {
-        [JsonProperty("checkins")]
+        internal CheckIn[] CheckIns
+        { get { return this.Response.CheckIns; } }
+    }
+
+    class CheckInsResult
+    {
+        [JsonProperty("recent")]
         internal CheckIn[] CheckIns
         {
             get;

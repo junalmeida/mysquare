@@ -46,7 +46,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lnkOAuth = new System.Windows.Forms.LinkLabel();
-            this.webBrowser = new System.Windows.Forms.WebBrowser();
             label7 = new System.Windows.Forms.Label();
             label8 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
@@ -253,28 +252,18 @@
             this.lnkOAuth.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lnkOAuth.Click += new System.EventHandler(this.lnkOAuth_Click);
             // 
-            // webBrowser
-            // 
-            this.webBrowser.Location = new System.Drawing.Point(3, 449);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(233, 61);
-            this.webBrowser.Visible = false;
-            this.webBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.webBrowser_Navigating);
-            this.webBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser_DocumentCompleted);
-            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.Black;
-            this.Controls.Add(this.webBrowser);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlPremium);
             this.Controls.Add(this.panel2);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "Settings";
-            this.Size = new System.Drawing.Size(239, 534);
+            this.Size = new System.Drawing.Size(239, 449);
             this.pnlPremium.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -298,7 +287,6 @@
         internal System.Windows.Forms.CheckBox cboDoubleTap;
         internal System.Windows.Forms.CheckBox cboAutoUpdate;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.WebBrowser webBrowser;
-        private System.Windows.Forms.LinkLabel lnkOAuth;
+        internal System.Windows.Forms.LinkLabel lnkOAuth;
     }
 }

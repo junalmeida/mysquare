@@ -97,7 +97,8 @@ namespace MySquare.UI.Friends
             {
                 User user = (User)e.Item.Value;
                 text = string.Format("{0} {1}", user.FirstName, user.LastName);
-                secondText = user.Email;
+                if (user.Contact != null)
+                    secondText = user.Contact.Email;
                 userUrl = user.ImageUrl;
             }
 

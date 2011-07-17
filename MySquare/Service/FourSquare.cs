@@ -39,7 +39,8 @@ namespace MySquare.Service
             Leaderboard,
             FlagClosed,
             FlagMislocated,
-            FlagDuplicated
+            FlagDuplicated,
+            Badges
         }
 
         protected override void SetClientId(StringBuilder queryString)
@@ -95,6 +96,15 @@ namespace MySquare.Service
                 parameters.Add("uid", uid.ToString());
 
             Post(ServiceResource.Friends, parameters);
+        }
+
+        internal void GetBadges(string uid)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            if (uid != null)
+                parameters.Add("uid", uid.ToString());
+
+            Post(ServiceResource.Badges, parameters);
         }
 
         internal void GetPendingFriends()
@@ -317,6 +327,17 @@ namespace MySquare.Service
         }
 
 
+        internal event BadgesEventHandler BadgesResult;
+        private void OnBadgesResult(BadgesEventArgs e)
+        {
+            if (BadgesResult != null)
+            {
+                BadgesResult(this, e);
+            }
+        }
+
+
+
         internal event UserEventHandler UserResult;
         private void OnUserResult(UserEventArgs e)
         {
@@ -335,6 +356,13 @@ namespace MySquare.Service
                 }
                 else
                     cacheUsers.Add(e.User);
+
+                if (e.User.FriendStatus.HasValue && e.User.FriendStatus.Value == FriendStatus.self)
+                {
+                    if (e.User.Contact != null && !string.IsNullOrEmpty(e.User.Contact.Email))
+                        Configuration.Login = e.User.Contact.Email;
+                }
+
                 UserResult(this, e);
             }
         }
@@ -512,19 +540,19 @@ namespace MySquare.Service
                     auth = true; post = true;
                     break;
                 case ServiceResource.CheckIns:
-                    url = "http://api.foursquare.com/v1/checkins.json";
+                    url = "https://api.foursquare.com/v2/checkins/recent";
                     auth = true; post = false;
                     break;
                 case ServiceResource.User:
-                    url = "http://api.foursquare.com/v1/user.json";
+                    url = "https://api.foursquare.com/v2/users/{0}";
                     auth = true; post = false;
                     break;
                 case ServiceResource.Friends:
-                    url = "http://api.foursquare.com/v1/friends.json";
+                    url = "https://api.foursquare.com/v2/users/{0}/friends";
                     auth = true; post = false;
                     break;
                 case ServiceResource.PendingFriends:
-                    url = "http://api.foursquare.com/v1/friend/requests.json";
+                    url = "https://api.foursquare.com/v2/users/requests";
                     auth = true; post = false;
                     break;
                 case ServiceResource.AcceptFriend:
@@ -555,16 +583,32 @@ namespace MySquare.Service
                     url = "http://api.foursquare.com/v1/venue/flagduplicate.json";
                     auth = true; post = true;
                     break;
+                case ServiceResource.Badges:
+                    url = "https://api.foursquare.com/v2/users/{0}/badges";
+                    auth = true; post = false;
+                    break;
                 default:
                     throw new NotImplementedException();
             }
 
-            if (parameters.ContainsKey("id") && url.Contains("{0}"))
+            if (url.Contains("{0}"))
             {
-                string id = parameters["id"];
-                parameters.Remove("id");
-                url = string.Format(url, id);
-
+                if (parameters != null && parameters.ContainsKey("id"))
+                {
+                    string id = parameters["id"];
+                    parameters.Remove("id");
+                    url = string.Format(url, id);
+                }
+                else if (parameters != null && parameters.ContainsKey("uid"))
+                {
+                    string id = parameters["uid"];
+                    parameters.Remove("uid");
+                    url = string.Format(url, id);
+                }
+                else
+                {
+                    url = string.Format(url, "self");
+                }
             }
 
 
@@ -627,6 +671,9 @@ namespace MySquare.Service
                 case ServiceResource.FlagMislocated:
                     type = typeof(FlagEventArgs);
                     break;
+                case ServiceResource.Badges:
+                    type = typeof(BadgesEventArgs);
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -671,6 +718,8 @@ namespace MySquare.Service
             {
                 ParseLeaderBoard(result as string);
             }
+            else if (result is BadgesEventArgs)
+                OnBadgesResult((BadgesEventArgs)result);
             else
                 throw new NotImplementedException();
 

@@ -30,6 +30,26 @@ namespace MySquare.FourSquare
         public string Details { get; set; }
     }
 
+    class Image
+    {
+        [JsonProperty("prefix")]
+        public string Prefix { get; set; }
+
+        [JsonProperty("sizes")]
+        public int[] Sizes { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        public override string ToString()
+        {
+            if (Sizes != null && Sizes.Length > 0)
+                return string.Format("{0}{1}{2}", Prefix, Sizes.Min(), Name);
+            else
+                return string.Empty;
+        }
+    }
+
     enum ErrorType
     {
         /// <summary>

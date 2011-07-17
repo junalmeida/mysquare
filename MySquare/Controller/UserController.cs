@@ -22,6 +22,7 @@ namespace MySquare.Controller
         {
             Service.UserResult += new UserEventHandler(Service_UserResult);
             Service.FriendsResult += new FriendsEventHandler(Service_FriendsResult);
+            Service.BadgesResult += new BadgesEventHandler(Service_BadgesResult);
             Service.Error += new MySquare.Service.ErrorEventHandler(Service_Error);
             View.picAvatar.Click += new EventHandler(picAvatar_Click);
         }
@@ -123,9 +124,9 @@ namespace MySquare.Controller
                 View.Avatar = null;
             }
 
-            if (!string.IsNullOrEmpty(user.Email))
+            if (user.Contact != null && !string.IsNullOrEmpty(user.Contact.Email))
             {
-                View.userInfo1.lblEmail.Text = user.Email;
+                View.userInfo1.lblEmail.Text = user.Contact.Email;
                 View.userInfo1.lblEmail.Enabled = true;
             }
             else
@@ -136,8 +137,8 @@ namespace MySquare.Controller
 
 
             {
-                if (!string.IsNullOrEmpty(user.Twitter))
-                    View.userInfo1.lnkFoursquare.Tag = user.Twitter;
+                if (user.Contact != null && !string.IsNullOrEmpty(user.Contact.Twitter))
+                    View.userInfo1.lnkFoursquare.Tag = user.Contact.Twitter;
                 else
                     View.userInfo1.lnkFoursquare.Tag = "user/" + user.Id.ToString();
 
@@ -147,9 +148,9 @@ namespace MySquare.Controller
 
 
 
-            if (!string.IsNullOrEmpty(user.Facebook))
+            if (user.Contact != null && !string.IsNullOrEmpty(user.Contact.Facebook))
             {
-                View.userInfo1.lblFacebook.Tag = user.Facebook;
+                View.userInfo1.lblFacebook.Tag = user.Contact.Facebook;
                 View.userInfo1.lblFacebook.Text = user.FirstName + "'s profile";
                 View.userInfo1.lblFacebook.Enabled = true;
             }
@@ -159,9 +160,9 @@ namespace MySquare.Controller
                 View.userInfo1.lblFacebook.Enabled = false;
             }
 
-            if (!string.IsNullOrEmpty(user.Twitter))
+            if (user.Contact != null && !string.IsNullOrEmpty(user.Contact.Twitter))
             {
-                View.userInfo1.lblTwitter.Text = user.Twitter;
+                View.userInfo1.lblTwitter.Text = user.Contact.Twitter;
                 View.userInfo1.lblTwitter.Enabled = true;
             }
             else
@@ -201,7 +202,7 @@ namespace MySquare.Controller
                         case FriendStatus.friend:
                             View.lblFriendStatus.Text = "is your friend";
                             break;
-                        case FriendStatus.pendingyou:
+                        case FriendStatus.pendingMe:
                             {
                                 View.lblFriendStatus.Text = "is waiting you to accept";
                                 LeftSoftButtonEnabled = true;
@@ -220,7 +221,7 @@ namespace MySquare.Controller
                                 AddLeftSubMenu(item);
                             }
                             break;
-                        case FriendStatus.pendingthem:
+                        case FriendStatus.pendingThem:
                             View.lblFriendStatus.Text = "have not answered yet";
                             break;
                         default:
@@ -248,7 +249,10 @@ namespace MySquare.Controller
             else
                 LoadFriends(user.Friends);
 
-            LoadBadges(user.Badges);
+            if (user.fullData && user.Badges == null)
+                Service.GetBadges(user.Id);
+            else
+                LoadBadges(user.Badges);
         }
 
         void picAvatar_Click(object sender, EventArgs e)
@@ -319,15 +323,15 @@ namespace MySquare.Controller
                 {
                     foreach (Badge b in badges)
                     {
-                        if (!string.IsNullOrEmpty(b.ImageUrl))
+                        if (!string.IsNullOrEmpty(b.ImageUrl.ToString()))
                         {
                             try
                             {
-                                byte[] image = Service.DownloadImageSync(b.ImageUrl);
+                                byte[] image = Service.DownloadImageSync(b.ImageUrl.ToString());
 
-                                if (!View.userBadges1.imageList.ContainsKey(b.ImageUrl))
+                                if (!View.userBadges1.imageList.ContainsKey(b.ImageUrl.ToString()))
                                 {
-                                    View.userBadges1.imageList.Add(b.ImageUrl, image);
+                                    View.userBadges1.imageList.Add(b.ImageUrl.ToString(), image);
                                     View.Invoke(new ThreadStart(delegate() { View.userBadges1.listBox.Invalidate(); }));
                                 }
                             }
@@ -345,6 +349,11 @@ namespace MySquare.Controller
         void Service_FriendsResult(object serder, FriendsEventArgs e)
         {
             LoadFriends(e.Friends);
+        }
+
+        void Service_BadgesResult(object serder, BadgesEventArgs e)
+        {
+            LoadBadges(e.Badges);
         }
 
 

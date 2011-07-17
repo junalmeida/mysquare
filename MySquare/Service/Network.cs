@@ -103,6 +103,14 @@ namespace MySquare.Service
                 queryString.Append(oAuth);
             }
 
+            if (url.Contains(".foursquare.com"))
+            {
+                DateTime date = Configuration.GetVersionDate();
+                queryString.Append("&v=");
+                queryString.Append(date.ToString("yyyyMMdd"));
+
+            }
+
             HttpWebRequest request;
             if (isPost)
             {
@@ -335,7 +343,7 @@ namespace MySquare.Service
                             }
                             else
                             {
-                                if (responseTxt.StartsWith("{ \"error\""))
+                                if (responseTxt.StartsWith("{ \"error\"") || responseTxt.Contains("\"errorType\""))
                                 {
                                     type = typeof(ErrorEventArgs);
                                 }
@@ -348,9 +356,9 @@ namespace MySquare.Service
                                 Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
                                 result = serializer.Deserialize(reader, type);
 
-                                if (responseTxt.StartsWith("{ \"error\""))
+                                if (responseTxt.StartsWith("{ \"error\"") || responseTxt.Contains("\"errorType\""))
                                 {
-                                    ((ErrorEventArgs)result).Exception = new ServerException(((ErrorEventArgs)result).Message);
+                                    ((ErrorEventArgs)result).Exception = new ServerException(((ErrorEventArgs)result).Meta.Details);
                                 }
                             }
 
@@ -622,15 +630,18 @@ namespace MySquare.Service
             set
             {
                 exception = value;
-                Message = value.Message;
+                if (Meta == null)
+                    Meta = new MySquare.FourSquare.Meta();
+                Meta.Details = value.Message;
             }
         }
 
-        [JsonProperty("error")]
-        internal string Message
-        { get; set; }
 
+        [JsonProperty("meta")]
+        internal MySquare.FourSquare.Meta Meta
+        { get; set; }
     }
+
 
     class ServerException : Exception
     {
@@ -648,13 +659,18 @@ namespace MySquare.Service
     {
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            double milliseconds = Convert.ToDouble(reader.Value);
+            if (reader.ValueType == typeof(DateTime))
+                return (DateTime)reader.Value;
+            else
+            {
+                double milliseconds = Convert.ToDouble(reader.Value);
 
-            DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-            date = date.ToLocalTime().AddSeconds(milliseconds);
+                date = date.ToLocalTime().AddSeconds(milliseconds);
 
-            return date;
+                return date;
+            }
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

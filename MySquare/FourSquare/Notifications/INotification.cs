@@ -44,6 +44,9 @@ namespace MySquare.FourSquare
                 case "score":
                     var scores = serializer.Deserialize<Score[]>(obj["item"]["scores"].CreateReader());
                     return new ScoreNotification(scores);
+                case "notificationTray":
+                    item = new NotificationTray();
+                    break;
                 default:
                     throw new NotImplementedException();
             }

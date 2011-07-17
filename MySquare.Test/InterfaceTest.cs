@@ -28,7 +28,7 @@ namespace MySquare.Test
 #if !TESTING
             Assert.Inconclusive("Not in test mode.");
 #endif
-            MySquare.Program.Main();
+            MySquare.Program.Main(null);
             //Application.Run(new Form1());
         }
     }

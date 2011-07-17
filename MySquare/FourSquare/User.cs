@@ -30,25 +30,15 @@ namespace MySquare.FourSquare
         public string Gender
         { get; set; }
 
-        [JsonProperty("email")]
-        public string Email
-        { get; set; }
-        
-        [JsonProperty("twitter")]
-        public string Twitter
+        [JsonProperty("contact")]
+        public Contact Contact
         { get; set; }
 
-        [JsonProperty("facebook")]
-        public string Facebook
-        { get; set; }
 
-        [JsonProperty("friendstatus")]
+        [JsonProperty("relationship")]
         public FriendStatus? FriendStatus
         { get; set; }
 
-        [JsonProperty("badges")]
-        public Badge[] Badges
-        { get; set; }
 
         [JsonProperty("status")]
         public Status Status
@@ -58,6 +48,11 @@ namespace MySquare.FourSquare
         public CheckIn CheckIn
         { get; set; }
 
+        [JsonIgnore]
+        public Badge[] Badges
+        { get; set; }
+
+        [JsonIgnore]
         public User[] Friends
         { get; set; }
 
@@ -75,14 +70,11 @@ namespace MySquare.FourSquare
             user.LastName = LastName;
             user.ImageUrl = ImageUrl;
             user.Gender = Gender;
-            user.Email = Email;
-            user.Twitter = Twitter;
-            user.Facebook = Facebook;
+            user.Contact = Contact;
             user.FriendStatus = FriendStatus;
-            user.Badges = Badges;
+            //user.Badges = Badges;
             user.Status = Status;
             user.CheckIn = CheckIn;
-           
         }
 
         public override bool Equals(object obj)
@@ -99,30 +91,62 @@ namespace MySquare.FourSquare
     }
 
     delegate void UserEventHandler(object serder, UserEventArgs e);
-    class UserEventArgs : EventArgs
+    class UserEventArgs :  EnvelopeEventArgs<UserResult>
     {
         public UserEventArgs()
         {
             Accepted = null;
         }
 
-        [JsonProperty("user")]
         public User User
         {
-            get;
-            set;
+            get { return this.Response.User; }
+            set
+            {
+                if (Response == null)
+                    Response = new UserResult();
+                this.Response.User = value;
+            }
         }
 
         public bool? Accepted
         { get; set; }
     }
 
+    class UserResult
+    {
+        [JsonProperty("user")]
+        public User User
+        {
+            get;
+            set;
+        }
+    }
+
 
     delegate void FriendsEventHandler(object serder, FriendsEventArgs e);
-    class FriendsEventArgs : EventArgs
+    class FriendsEventArgs : EnvelopeEventArgs<FriendsResult>
     {
-        [JsonProperty("friends")]
         public User[] Friends
+        {
+            get { return this.Response.Friends.Items; }
+        }
+    }
+
+    class FriendsResult
+    {
+        internal class FriendsItems
+        {
+
+            [JsonProperty("items")]
+            public User[] Items
+            {
+                get;
+                private set;
+            }
+        }
+        [JsonProperty("friends")]
+        public FriendsItems Friends
         {
             get;
             private set;
@@ -132,15 +156,24 @@ namespace MySquare.FourSquare
     enum FriendStatus
     {
         friend,
-        pendingyou,
-        pendingthem,
-        followingthem,
+        pendingYou,
+        pendingThem,
+        pendingMe,
+        followingThem,
         self
     }
 
 
     delegate void PendingFriendsEventHandler(object serder, PendingFriendsEventArgs e);
-    class PendingFriendsEventArgs : EventArgs
+    class PendingFriendsEventArgs : EnvelopeEventArgs<PendingFriendsResult>
+    {
+        public User[] Friends
+        {
+            get { return this.Response.Friends; }
+        }
+    }
+
+    class PendingFriendsResult
     {
         [JsonProperty("requests")]
         public User[] Friends

@@ -171,6 +171,7 @@
     <Compile Include="FourSquare\LeaderBoard.cs" />
     <Compile Include="FourSquare\MayorshipNotification.cs" />
     <Compile Include="FourSquare\Notifications\INotification.cs" />
+    <Compile Include="FourSquare\Notifications\NotificationTray.cs" />
     <Compile Include="FourSquare\Notifications\Score.cs" />
     <Compile Include="FourSquare\Notifications\Special.cs" />
     <Compile Include="Service\RisingMobility.cs" />
@@ -234,7 +235,6 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="UI\AnimatedGif.resx">

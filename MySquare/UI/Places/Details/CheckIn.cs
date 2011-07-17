@@ -241,11 +241,11 @@ namespace MySquare.UI.Places.Details
                     if (measure.Height < stampSize)
                         measure.Height = stampSize;
 
-                    if (badgeImageList != null && badgeImageList.ContainsKey(badge.ImageUrl))
+                    if (badgeImageList != null && badgeImageList.ContainsKey(badge.ImageUrl.ToString()))
                     {
                         try
                         {
-                            AlphaImage image = new AlphaImage(badgeImageList[badge.ImageUrl]);
+                            AlphaImage image = new AlphaImage(badgeImageList[badge.ImageUrl.ToString()]);
                             image.Draw(graphics, new Rectangle(
                                 lastRectangle.Right - stampSize - padding,
                                 lastRectangle.Top + ((measure.Height / 2) - (stampSize / 2)), stampSize, stampSize));

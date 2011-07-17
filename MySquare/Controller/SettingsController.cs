@@ -36,6 +36,12 @@ namespace MySquare.Controller
 
         private void Load()
         {
+
+            if (!string.IsNullOrEmpty(MySquare.Service.Configuration.Token))
+                View.lnkOAuth.Text = "Re-auth";
+            else
+                View.lnkOAuth.Text = "Authenticate";
+
             //View.txtEmail.Text = MySquare.Service.Configuration.Login;
             //View.txtPassword.Text = string.Empty;
             View.pnlPremium.Enabled = MySquare.Service.Configuration.IsPremium;

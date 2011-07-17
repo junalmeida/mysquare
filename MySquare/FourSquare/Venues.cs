@@ -218,6 +218,18 @@ namespace MySquare.FourSquare
         [JsonProperty("phone")]
         public string Phone
         { get; set; }
+
+        [JsonProperty("email")]
+        public string Email
+        { get; set; }
+
+        [JsonProperty("twitter")]
+        public string Twitter
+        { get; set; }
+
+        [JsonProperty("facebook")]
+        public string Facebook
+        { get; set; }
     }
     class AddressLocation
     {

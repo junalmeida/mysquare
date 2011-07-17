@@ -51,22 +51,14 @@ namespace MySquare.UI.Settings
 
         private void lnkOAuth_Click(object sender, EventArgs e)
         {
-            this.AutoScrollPosition = new Point(0,0);
-            this.AutoScroll = false;
-            webBrowser.Location = new Point(0, 0);
-            webBrowser.Size = new Size(this.Size.Width, this.Size.Height);
 
-            webBrowser.Url = new Uri("http://risingmobility.com/mysquare/oauth.ashx");
-            webBrowser.Show();
-        }
-
-        private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
-        }
-
-        private void webBrowser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
-        {
-            
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+            {
+                FileName = "http://risingmobility.com/mysquare/oauth.ashx",
+                UseShellExecute = true
+            });
+            (this.Parent as Form).Close();
+            Application.Exit();
         }
 
     }

@@ -12,6 +12,7 @@ using MySquare.Controller;
 using System.Drawing;
 using MySquare.Service;
 using Tenor.Mobile.Drawing;
+using System.IO;
 
 [assembly: System.Reflection.Obfuscation(Feature = "Apply to MySquare.FourSquare.*: all", Exclude = true, ApplyToMembers = true)]
 namespace MySquare
@@ -25,8 +26,31 @@ namespace MySquare
         /// The main entry point for the application.
         /// </summary>
         [MTAThread]
-        public static void Main()
+        public static void Main(string[] args)
         {
+            //if receiving a .mysquare url with token
+            //register it
+            if (args != null && args.Length == 1)
+            {
+                try
+                {
+                    string url = args[0];
+                    MessageBox.Show(url);
+                    if (url.Contains("token/?code="))
+                    {
+                        url = url.Substring(url.IndexOf("?code=") + 6);
+                        Configuration.Token = url;
+                        MessageBox.Show("Your token was registered. Enjoy foursquare.", "MySquare");
+                    }
+                    else
+                        throw new ApplicationException("Invalid token.");
+                }
+                catch (Exception ex)
+                {
+                    Log.RegisterLog(ex);
+                    MessageBox.Show("An error occured while processing your token. Try again.", "MySquare");
+                }
+            }
 
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             using (UI.Main mainForm = new UI.Main())

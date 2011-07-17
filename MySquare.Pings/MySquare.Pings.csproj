@@ -89,6 +89,9 @@
     <Compile Include="..\MySquare\FourSquare\Notifications\INotification.cs">
       <Link>FourSquare\Notifications\INotification.cs</Link>
     </Compile>
+    <Compile Include="..\MySquare\FourSquare\Notifications\NotificationTray.cs">
+      <Link>FourSquare\Notifications\NotificationTray.cs</Link>
+    </Compile>
     <Compile Include="..\MySquare\FourSquare\Notifications\Score.cs">
       <Link>FourSquare\Notifications\Score.cs</Link>
     </Compile>

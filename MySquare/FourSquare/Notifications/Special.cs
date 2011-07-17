@@ -21,7 +21,7 @@ namespace MySquare.FourSquare
     class Special : INotification
     {
         [JsonProperty("id")]
-        public int Id
+        public string Id
         { get; set; }
 
 

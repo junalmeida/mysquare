@@ -396,11 +396,11 @@ namespace MySquare.Controller
                     {
                         try
                         {
-                            if (!string.IsNullOrEmpty(badge.ImageUrl))
-                                using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(badge.ImageUrl)))
+                            if (!string.IsNullOrEmpty(badge.ImageUrl.ToString()))
+                                using (MemoryStream mem = new MemoryStream(Service.DownloadImageSync(badge.ImageUrl.ToString())))
                                 {
                                     Bitmap bmp = new Bitmap(mem);
-                                    View.checkIn1.badgeImageList.Add(badge.ImageUrl, bmp);
+                                    View.checkIn1.badgeImageList.Add(badge.ImageUrl.ToString(), bmp);
                                     View.checkIn1.pnlCheckInResult.Invoke(new ThreadStart(delegate() { View.checkIn1.pnlCheckInResult.Invalidate(); }));
                                 }
                         }

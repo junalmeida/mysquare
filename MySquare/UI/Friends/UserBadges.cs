@@ -33,13 +33,17 @@ namespace MySquare.UI.Friends
             set
             {
                 badges = value;
-                imageList = new Dictionary<string, byte[]>();
-                imageListA.ClearImageList();
-                imageListA = new Dictionary<string, AlphaImage>();
-                listBox.Clear();
-                if (badges != null)
-                    foreach (Badge badge in badges)
-                        listBox.AddItem(null, badge, MeasureHeight(badge));
+
+                this.Invoke(new System.Threading.ThreadStart(delegate()
+                {
+                    imageList = new Dictionary<string, byte[]>();
+                    imageListA.ClearImageList();
+                    imageListA = new Dictionary<string, AlphaImage>();
+                    listBox.Clear();
+                    if (badges != null)
+                        foreach (Badge badge in badges)
+                            listBox.AddItem(null, badge, MeasureHeight(badge));
+                }));
             }
         }
 
@@ -69,8 +73,8 @@ namespace MySquare.UI.Friends
                          0,
                          this.Parent.Width - listBox.DefaultItemHeight - (5 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width),
                          this.Parent.Height);
-                Size size1 = Tenor.Mobile.Drawing.Strings.Measure(g, badge.Name, fontBold, rect);
-                Size size2 = Tenor.Mobile.Drawing.Strings.Measure(g, badge.Description, font, rect);
+                Size size1 = Tenor.Mobile.Drawing.Strings.Measure(g, badge.Name ?? string.Empty, fontBold, rect);
+                Size size2 = Tenor.Mobile.Drawing.Strings.Measure(g, badge.Description ?? badge.Hint ?? string.Empty, font, rect);
 
                 int size = size1.Height * 2 + size2.Height;
                 if (size < listBox.DefaultItemHeight)
@@ -97,14 +101,14 @@ namespace MySquare.UI.Friends
                      e.Bounds.Height);
 
 
-                if (imageList != null && imageList.ContainsKey(badge.ImageUrl))
+                if (imageList != null && imageList.ContainsKey(badge.ImageUrl.ToString()))
                 {
-                    if (!imageListA.ContainsKey(badge.ImageUrl))
+                    if (!imageListA.ContainsKey(badge.ImageUrl.ToString()))
                     {
-                        imageListA.Add(badge.ImageUrl, new AlphaImage(new Bitmap(new MemoryStream(imageList[badge.ImageUrl]))));
-                        imageList[badge.ImageUrl] = null;
+                        imageListA.Add(badge.ImageUrl.ToString(), new AlphaImage(new Bitmap(new MemoryStream(imageList[badge.ImageUrl.ToString()]))));
+                        imageList[badge.ImageUrl.ToString()] = null;
                     }
-                    AlphaImage image = imageListA[badge.ImageUrl];
+                    AlphaImage image = imageListA[badge.ImageUrl.ToString()];
 
                     Rectangle imgRect =
                         new Rectangle(0 + Convert.ToInt32(padding),
@@ -121,7 +125,7 @@ namespace MySquare.UI.Friends
                 e.Graphics.DrawString(
                     badge.Name, fontBold, brush, rect);
 
-                string text = badge.Description;
+                string text = badge.Description ?? badge.Hint;
 
                 rect.Y += size.Height + (3 * factor.Height);
                 e.Graphics.DrawString(

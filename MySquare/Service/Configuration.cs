@@ -71,7 +71,7 @@ namespace MySquare.Service
             RisingMobilityService service = new RisingMobilityService();
             service.PremiumArrived += new RisingMobilityEventHandler(service_PremiumArrived);
             service.Error += new ErrorEventHandler(service_Error);
-            service.GetPremiumInfo(Login);
+            service.GetPremiumInfo(Token);
             aEvent.WaitOne(5000, false);
         }
 
@@ -463,6 +463,19 @@ namespace MySquare.Service
             }
         }
 
+        static DateTime versionDate;
+        internal static DateTime GetVersionDate()
+        {
+            if (versionDate == DateTime.MinValue)
+            {
+                var appPath = typeof(Configuration).Assembly.GetName().CodeBase;
+                if (appPath.StartsWith("file://"))
+                    appPath = appPath.Substring(8).Replace(System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar);
+                var file = new System.IO.FileInfo(appPath);
+                versionDate = file.CreationTime;
+            }
+            return versionDate;
+        }
     }
 
     [Obfuscation(Exclude = true, ApplyToMembers = true)]
