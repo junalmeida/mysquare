@@ -45,6 +45,7 @@
             this.cboMapType = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lblLogin = new System.Windows.Forms.Label();
             this.lnkOAuth = new System.Windows.Forms.LinkLabel();
             label7 = new System.Windows.Forms.Label();
             label8 = new System.Windows.Forms.Label();
@@ -230,6 +231,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Black;
+            this.panel2.Controls.Add(this.lblLogin);
             this.panel2.Controls.Add(this.lnkOAuth);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -238,6 +240,16 @@
             this.panel2.Size = new System.Drawing.Size(239, 73);
             this.panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
+            // 
+            // lblLogin
+            // 
+            this.lblLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblLogin.ForeColor = System.Drawing.Color.White;
+            this.lblLogin.Location = new System.Drawing.Point(58, 6);
+            this.lblLogin.Name = "lblLogin";
+            this.lblLogin.Size = new System.Drawing.Size(174, 20);
+            this.lblLogin.Text = "login@email.com";
             // 
             // lnkOAuth
             // 
@@ -288,5 +300,6 @@
         internal System.Windows.Forms.CheckBox cboAutoUpdate;
         private System.Windows.Forms.Label label10;
         internal System.Windows.Forms.LinkLabel lnkOAuth;
+        internal System.Windows.Forms.Label lblLogin;
     }
 }

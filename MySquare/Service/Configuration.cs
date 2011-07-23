@@ -60,19 +60,54 @@ namespace MySquare.Service
 
 
         static AutoResetEvent aEvent;
+        static DateTime lastTry = DateTime.MinValue;
+
         private static void LoadPremiumInfo()
         {
-            if (string.IsNullOrEmpty(Login))
+            if ((DateTime.Now - lastTry).TotalMinutes < 0.5)
+                return;
+            else
+                lastTry = DateTime.Now;
+
+            if (string.IsNullOrEmpty(Token))
             {
                 isPremium = false;
                 return;
             }
+
+            aEvent = new AutoResetEvent(false);
+            if (string.IsNullOrEmpty(_Login))
+            {
+                FourSquare fservice = new FourSquare();
+                fservice.Error += new ErrorEventHandler(service_Error);
+                fservice.UserResult += new MySquare.FourSquare.UserEventHandler(fservice_UserResult);
+                fservice.GetUser(null);
+                aEvent.WaitOne(5000, false);
+
+                if (string.IsNullOrEmpty(_Login))
+                {
+                    return;
+                }
+            }
+
             aEvent = new AutoResetEvent(false);
             RisingMobilityService service = new RisingMobilityService();
             service.PremiumArrived += new RisingMobilityEventHandler(service_PremiumArrived);
             service.Error += new ErrorEventHandler(service_Error);
-            service.GetPremiumInfo(Token);
+            service.GetPremiumInfo(_Login);
             aEvent.WaitOne(5000, false);
+        }
+
+        static void fservice_UserResult(object serder, MySquare.FourSquare.UserEventArgs e)
+        {
+            if (e.User.FriendStatus.HasValue && e.User.FriendStatus.Value == MySquare.FourSquare.FriendStatus.self)
+            {
+                if (e.User.Contact != null && !string.IsNullOrEmpty(e.User.Contact.Email))
+                    Configuration._Login = e.User.Contact.Email;
+                else if (e.User.Contact != null && !string.IsNullOrEmpty(e.User.Contact.Phone))
+                    Configuration._Login = e.User.Contact.Phone;
+            }
+            aEvent.Set();
         }
 
         static void service_Error(object serder, ErrorEventArgs e)
@@ -101,17 +136,15 @@ namespace MySquare.Service
         #endregion
 
         private static RegistryKey key;
+
+        private static string _Login;
         public static string Login
         {
             get
             {
-                return (string)key.GetValue("login", null);
-            }
-            set
-            {
-                isPremium = null;
-                key.SetValue("login", value);
-                LoadPremiumInfo();
+                if (string.IsNullOrEmpty(_Login))
+                    LoadPremiumInfo();
+                return _Login;
             }
         }
 

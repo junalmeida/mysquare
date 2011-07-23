@@ -357,12 +357,6 @@ namespace MySquare.Service
                 else
                     cacheUsers.Add(e.User);
 
-                if (e.User.FriendStatus.HasValue && e.User.FriendStatus.Value == FriendStatus.self)
-                {
-                    if (e.User.Contact != null && !string.IsNullOrEmpty(e.User.Contact.Email))
-                        Configuration.Login = e.User.Contact.Email;
-                }
-
                 UserResult(this, e);
             }
         }

@@ -32,7 +32,10 @@ namespace MySquare.Service
 
         internal static bool RegisterLog(Exception ex)
         {
-            return RegisterLog("general", ex);
+            string key = "general";
+            if (ex != null)
+                key = ex.GetType().Name;
+            return RegisterLog(key, ex);
         }
 
 

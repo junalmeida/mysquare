@@ -118,7 +118,7 @@ namespace MySquare.UI.Friends
                 e.Graphics.DrawString(secondText, secondFont, secondBrush, rect, format);
             }
 
-            if (userUrl != null && imageList.ContainsKey(userUrl))
+            if (userUrl != null && imageList.ContainsKey(userUrl) && imageList[userUrl] != null)
             {
                 int imageSize = e.Bounds.Height - Convert.ToInt32(itemPadding * 2);
 
