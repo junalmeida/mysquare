@@ -86,13 +86,13 @@
     <Content Include="mySquare.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\MySquare\MySquare.csproj">
       <Project>{FD4AA98B-154D-480A-901A-0B9154C8CFE9}</Project>
       <Name>MySquare</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>
