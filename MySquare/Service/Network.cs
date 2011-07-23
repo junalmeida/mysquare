@@ -319,9 +319,31 @@ namespace MySquare.Service
                             StreamReader networkReader = new StreamReader(response.GetResponseStream());
                             responseTxt = networkReader.ReadToEnd();
 
+                            ErrorEventArgs error = null;
+                            try
+                            {
+                                var type = typeof(ErrorEventArgs);
+                                Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+                                Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(responseTxt));
+                                result = serializer.Deserialize(reader, type);
+                                error = (result as ErrorEventArgs);
+                                if (error != null && error.Meta.ErrorType != MySquare.FourSquare.ErrorType.param_error)
+                                    error = null;
+                                else
+                                    error.Exception = new ServerException(error.Meta.Details);
+
+                            }
+                            catch (Exception ex2)
+                            {
+                                Log.RegisterLog(ex2);
+                            }
+
                             Log.RegisterLog(new Exception(responseTxt, ex));
+                            if (error == null)
+                                throw;
                         }
-                        throw;
+                        else
+                            throw;
                     }
 
 

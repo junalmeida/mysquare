@@ -31,13 +31,16 @@ namespace MySquare.FourSquare
     }
 
     delegate void AddTipEventHandler(object serder, TipEventArgs e);
-    class TipEventArgs : EventArgs
+    class TipEventArgs : EnvelopeEventArgs<TipResult>
     {
-        public TipEventArgs(Tip tip)
+        internal Tip Tip
         {
-            this.Tip = tip;
+            get { return Response.Tip; }
         }
+    }
 
+    class TipResult
+    {
         [JsonProperty("tip")]
         internal Tip Tip
         {

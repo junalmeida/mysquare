@@ -232,7 +232,7 @@ namespace MySquare.Service
         internal void AddTip(string vid, string text)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("vid", vid.ToString());
+            parameters.Add("venueId", vid.ToString());
             parameters.Add("text", text.ToString());
             //parameters.Add("geolat", lat.ToString(culture));
             //parameters.Add("geolong", lng.ToString(culture));
@@ -526,7 +526,7 @@ namespace MySquare.Service
                     auth = !string.IsNullOrEmpty(Configuration.Token);
                     break;
                 case ServiceResource.AddTip:
-                    url = "http://api.foursquare.com/v1/addtip.json";
+                    url = "https://api.foursquare.com/v2/tips/add";
                     auth = true; post = true;
                     break;
                 case ServiceResource.AddVenue:

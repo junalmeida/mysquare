@@ -268,7 +268,7 @@ namespace MySquare.Controller
 
         void Service_Error(object sender, ErrorEventArgs e)
         {
-            if (e.Exception is UnauthorizedAccessException || (waitingCheckIn && !(e.Exception is RequestAbortException)))
+            if (e.Exception is UnauthorizedAccessException || e.Exception is ServerException || (waitingCheckIn && !(e.Exception is RequestAbortException)))
             {
                 ShowError(e.Exception);
                 waitingCheckIn = false;
