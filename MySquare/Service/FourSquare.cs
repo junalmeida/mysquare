@@ -133,8 +133,7 @@ namespace MySquare.Service
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             if (latitude.HasValue && longitude.HasValue)
             {
-                parameters.Add("geolat", latitude.Value.ToString(culture));
-                parameters.Add("geolong", longitude.Value.ToString(culture));
+                parameters.Add("ll", string.Format("{0},{1}", latitude.Value.ToString(culture) , longitude.Value.ToString(culture)));
             }
             Post(ServiceResource.CheckIns, parameters);
         }
@@ -234,8 +233,6 @@ namespace MySquare.Service
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("venueId", vid.ToString());
             parameters.Add("text", text.ToString());
-            //parameters.Add("geolat", lat.ToString(culture));
-            //parameters.Add("geolong", lng.ToString(culture));
 
             Post(ServiceResource.AddTip, parameters);
         }
@@ -248,7 +245,7 @@ namespace MySquare.Service
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("name", name);
             parameters.Add("address", address);
-            parameters.Add("crossstreet", crossStreet);
+            parameters.Add("crossStreet", crossStreet);
             parameters.Add("city", city);
             parameters.Add("state", state);
             parameters.Add("zip", zip);
@@ -256,8 +253,7 @@ namespace MySquare.Service
             if (primaryCategoryId.HasValue)
                 parameters.Add("primarycategoryid", primaryCategoryId.Value.ToString());
 
-            parameters.Add("geolat", lat.ToString(culture));
-            parameters.Add("geolong", lng.ToString(culture));
+            parameters.Add("ll", string.Format("{0},{1}",  lat.ToString(culture), lng.ToString(culture)));
 
             Post(ServiceResource.AddVenue, parameters);
         }
@@ -266,19 +262,22 @@ namespace MySquare.Service
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("vid", vid.ToString());
+            parameters.Add("problem", "closed");
             Post(ServiceResource.FlagClosed, parameters);
         }
         internal void FlagAsDuplicated(string vid)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("vid", vid.ToString());
-            Post(ServiceResource.FlagClosed, parameters);
+            parameters.Add("problem", "duplicate");
+            Post(ServiceResource.FlagDuplicated, parameters);
         }
         internal void FlagAsMislocated(string vid)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("vid", vid.ToString());
-            Post(ServiceResource.FlagClosed, parameters);
+            parameters.Add("problem", "mislocated");
+            Post(ServiceResource.FlagMislocated, parameters);
         }
 
 
@@ -530,7 +529,7 @@ namespace MySquare.Service
                     auth = true; post = true;
                     break;
                 case ServiceResource.AddVenue:
-                    url = "http://api.foursquare.com/v1/addvenue.json";
+                    url = "https://api.foursquare.com/v2/venues/add";
                     auth = true; post = true;
                     break;
                 case ServiceResource.CheckIns:
@@ -550,15 +549,15 @@ namespace MySquare.Service
                     auth = true; post = false;
                     break;
                 case ServiceResource.AcceptFriend:
-                    url = "http://api.foursquare.com/v1/friend/approve.json";
+                    url = "https://api.foursquare.com/v2/users/{0}/approve";
                     auth = true; post = true;
                     break;
                 case ServiceResource.RejectFriend:
-                    url = "http://api.foursquare.com/v1/friend/deny.json";
+                    url = "https://api.foursquare.com/v2/users/{0}/deny";
                     auth = true; post = true;
                     break;
                 case ServiceResource.RequestFriend:
-                    url = "http://api.foursquare.com/v1/friend/sendrequest.json";
+                    url = "https://api.foursquare.com/v2/users/{0}/request";
                     auth = true; post = true;
                     break;
                 case ServiceResource.Leaderboard:
@@ -566,15 +565,15 @@ namespace MySquare.Service
                     auth = true; post = false;
                     break;
                 case ServiceResource.FlagClosed:
-                    url = "http://api.foursquare.com/v1/venue/flagclosed.json";
+                    url = "https://api.foursquare.com/v2/venues/{0}/flag";
                     auth = true; post = true;
                     break;
                 case ServiceResource.FlagMislocated:
-                    url = "http://api.foursquare.com/v1/venue/flagmislocated.json";
+                    url = "https://api.foursquare.com/v2/venues/{0}/flag";
                     auth = true; post = true;
                     break;
                 case ServiceResource.FlagDuplicated:
-                    url = "http://api.foursquare.com/v1/venue/flagduplicate.json";
+                    url = "https://api.foursquare.com/v2/venues/{0}/flag";
                     auth = true; post = true;
                     break;
                 case ServiceResource.Badges:
@@ -597,6 +596,12 @@ namespace MySquare.Service
                 {
                     string id = parameters["uid"];
                     parameters.Remove("uid");
+                    url = string.Format(url, id);
+                }
+                else if (parameters != null && parameters.ContainsKey("vid"))
+                {
+                    string id = parameters["vid"];
+                    parameters.Remove("vid");
                     url = string.Format(url, id);
                 }
                 else

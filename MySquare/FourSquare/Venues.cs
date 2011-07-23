@@ -336,14 +336,10 @@ namespace MySquare.FourSquare
 
 
     delegate void FlagEventHandler(object sender, FlagEventArgs e);
-    class FlagEventArgs : EventArgs
+    class FlagEventArgs : EnvelopeEventArgs<object>
     {
-        [JsonProperty("response")]
-        private string Result
-        { get; set; }
-
         public bool Success
-        { get { return Result == "ok"; } }
+        { get { return this.Response == null || string.Equals(this.Response.ToString(), "ok"); } }
     }
 
     [JsonObject]

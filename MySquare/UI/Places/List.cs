@@ -355,8 +355,8 @@ namespace MySquare.UI.Places
                          0,
                          listBox.Width - listBox.DefaultItemHeight,
                          listBox.Height);
-                Size size1 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.Venue.Name, Font, rect);
-                Size size2 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.Text, secondFont, rect);
+                Size size1 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.Venue.Name?? "", Font, rect);
+                Size size2 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.Text ?? "", secondFont, rect);
 
                 int size = size1.Height * 2 + size2.Height;
                 if (size < listBox.DefaultItemHeight)

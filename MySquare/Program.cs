@@ -35,7 +35,6 @@ namespace MySquare
                 try
                 {
                     string url = args[0];
-                    MessageBox.Show(url);
                     if (url.Contains("token/?code="))
                     {
                         url = url.Substring(url.IndexOf("?code=") + 6);
@@ -202,11 +201,15 @@ hdop: {10}",
         }
         static void TimerGpsOff_Tick(object state)
         {
-            if (Program.Location != null)
+            try
             {
-                Program.Location.Stop();
-                Program.Location.UseGps = false;
+                if (Program.Location != null)
+                {
+                    Program.Location.Stop();
+                    Program.Location.UseGps = false;
+                }
             }
+            catch (ObjectDisposedException) { }
         }
 
         static System.Threading.Timer timerGpsOff = null;

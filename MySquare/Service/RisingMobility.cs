@@ -54,18 +54,16 @@ namespace MySquare.Service
         }
 
 
-        internal void GetPremiumInfo(string username)
+        internal void GetPremiumInfo(string foursquareToken)
         {
-            if (username != null)
-                username = username.ToLower();
             Dictionary<string, string> param = new Dictionary<string, string>();
-            string token = DateTime.UtcNow.ToString("yyyy-MM");
-            token += "||" + username;
+            //string token = DateTime.UtcNow.ToString("yyyy-MM");
+            //token += "||" + foursquareToken;
 
-            var md5 = System.Security.Cryptography.MD5.Create();
-            byte[] crypt = md5.ComputeHash(System.Text.Encoding.ASCII.GetBytes(token));
-            token = Convert.ToBase64String(crypt, 0, crypt.Length);
-            param.Add("u", token);
+            //var md5 = System.Security.Cryptography.MD5.Create();
+            //byte[] crypt = md5.ComputeHash(System.Text.Encoding.ASCII.GetBytes(token));
+            //token = Convert.ToBase64String(crypt, 0, crypt.Length);
+            param.Add("ft", foursquareToken);
             param.Add("t", ".prm");
 
             base.Post((int)ServiceKey.Premium, rService, true, null, param);

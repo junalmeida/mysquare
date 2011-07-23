@@ -42,7 +42,7 @@ namespace MySquare.Controller
             else
                 View.lnkOAuth.Text = "Authenticate";
 
-            View.lblLogin.Text = MySquare.Service.Configuration.Login;
+            View.lblLogin.Text = string.Empty; // MySquare.Service.Configuration.Login;
             //View.txtPassword.Text = string.Empty;
             View.pnlPremium.Enabled = MySquare.Service.Configuration.IsPremium;
             View.chkShowAds.Checked = MySquare.Service.Configuration.ShowAds;

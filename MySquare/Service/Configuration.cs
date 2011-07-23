@@ -30,7 +30,7 @@ namespace MySquare.Service
         {
             get
             {
-                if (string.IsNullOrEmpty(Login))
+                if (string.IsNullOrEmpty(Token))
                     return false;
                 else
                 {
@@ -60,15 +60,8 @@ namespace MySquare.Service
 
 
         static AutoResetEvent aEvent;
-        static DateTime lastTry = DateTime.MinValue;
-
         private static void LoadPremiumInfo()
         {
-            if ((DateTime.Now - lastTry).TotalMinutes < 0.5)
-                return;
-            else
-                lastTry = DateTime.Now;
-
             if (string.IsNullOrEmpty(Token))
             {
                 isPremium = false;
@@ -76,39 +69,24 @@ namespace MySquare.Service
             }
 
             aEvent = new AutoResetEvent(false);
-            if (string.IsNullOrEmpty(_Login))
-            {
-                FourSquare fservice = new FourSquare();
-                fservice.Error += new ErrorEventHandler(service_Error);
-                fservice.UserResult += new MySquare.FourSquare.UserEventHandler(fservice_UserResult);
-                fservice.GetUser(null);
-                aEvent.WaitOne(5000, false);
-
-                if (string.IsNullOrEmpty(_Login))
-                {
-                    return;
-                }
-            }
-
-            aEvent = new AutoResetEvent(false);
             RisingMobilityService service = new RisingMobilityService();
             service.PremiumArrived += new RisingMobilityEventHandler(service_PremiumArrived);
             service.Error += new ErrorEventHandler(service_Error);
-            service.GetPremiumInfo(_Login);
+            service.GetPremiumInfo(Token);
             aEvent.WaitOne(5000, false);
         }
 
-        static void fservice_UserResult(object serder, MySquare.FourSquare.UserEventArgs e)
-        {
-            if (e.User.FriendStatus.HasValue && e.User.FriendStatus.Value == MySquare.FourSquare.FriendStatus.self)
-            {
-                if (e.User.Contact != null && !string.IsNullOrEmpty(e.User.Contact.Email))
-                    Configuration._Login = e.User.Contact.Email;
-                else if (e.User.Contact != null && !string.IsNullOrEmpty(e.User.Contact.Phone))
-                    Configuration._Login = e.User.Contact.Phone;
-            }
-            aEvent.Set();
-        }
+        //static void fservice_UserResult(object serder, MySquare.FourSquare.UserEventArgs e)
+        //{
+        //    if (e.User.FriendStatus.HasValue && e.User.FriendStatus.Value == MySquare.FourSquare.FriendStatus.self)
+        //    {
+        //        if (e.User.Contact != null && !string.IsNullOrEmpty(e.User.Contact.Email))
+        //            Configuration._Login = e.User.Contact.Email;
+        //        else if (e.User.Contact != null && !string.IsNullOrEmpty(e.User.Contact.Phone))
+        //            Configuration._Login = e.User.Contact.Phone;
+        //    }
+        //    aEvent.Set();
+        //}
 
         static void service_Error(object serder, ErrorEventArgs e)
         {
@@ -122,10 +100,7 @@ namespace MySquare.Service
                 isPremium = false;
             else
             {
-                string username = Login;
-                if (username != null)
-                    username = username.ToLower();
-
+                string username = Token;
                 string resultS = "true||" + time + "||" + username;
                 var md5 = System.Security.Cryptography.MD5.Create();
                 byte[] crypt = md5.ComputeHash(System.Text.Encoding.ASCII.GetBytes(resultS));
@@ -136,17 +111,6 @@ namespace MySquare.Service
         #endregion
 
         private static RegistryKey key;
-
-        private static string _Login;
-        public static string Login
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_Login))
-                    LoadPremiumInfo();
-                return _Login;
-            }
-        }
 
         public static string Token
         {

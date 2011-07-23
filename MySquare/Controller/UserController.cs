@@ -360,6 +360,12 @@ namespace MySquare.Controller
 
         private void LoadFriends(User[] users)
         {
+            if (users != null && users.Length > 100)
+            {
+                users = users.Take(100).ToArray();
+                MessageBox.Show("Too many friends to show. See all friends on the web.");
+            }
+
             this.user.Friends = users;
             try
             {
