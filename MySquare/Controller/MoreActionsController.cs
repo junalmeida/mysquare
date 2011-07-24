@@ -108,7 +108,23 @@ namespace MySquare.Controller
         {
             Cursor.Current = Cursors.Default;
 
-            if (Configuration.GetVersion() != version.Version)
+            string running = Configuration.GetVersion();
+            string server = version.Version;
+
+            if (!running.Contains(".alpha") && !running.Contains(".beta"))
+            {
+                if (server.Contains(".alpha") || server.Contains(".beta"))
+                    server = "0.0.0.0";
+            }
+            else
+                running = running.Replace("alpha", "1").Replace("beta", "2");
+
+            server = server.Replace("alpha", "1").Replace("beta", "2");
+            var runningVer = new Version(running);
+            var serverVer = new Version(server);
+
+
+            if (Configuration.GetVersion() != version.Version && serverVer > runningVer)
             {
                 if (MessageBox.Show("There is a new version available.\r\n\r\nDo you want to upgrade now?", "MySquare", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
                 {

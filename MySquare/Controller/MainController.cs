@@ -222,7 +222,7 @@ namespace MySquare.Controller
                 else
                     adMob.GetAd(Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude, lastTags);
             }
-            if (!updateChecked && !Configuration.IsAlpha)
+            if (!updateChecked && !Configuration.AutoUpdate)
             {
                 updateChecked = true;
                 adMob.GetVersionInfo();
