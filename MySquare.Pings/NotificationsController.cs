@@ -121,8 +121,10 @@ namespace MySquare.Pings
 
 
         CheckIn[] checkIns;
-        void Service_CheckInsResult(object serder, MySquare.FourSquare.CheckInsEventArgs e)
+        void Service_CheckInsResult(object sender, MySquare.FourSquare.CheckInsEventArgs e)
         {
+            if (e == null)
+                throw new InvalidOperationException();
             checkIns = e.CheckIns;
             waitThread.Set();
         }

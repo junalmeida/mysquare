@@ -35,14 +35,14 @@ namespace MySquare
                 try
                 {
                     string url = args[0];
-                    if (url.Contains("token/?code="))
+                    if (url.StartsWith("mysquare:"))
                     {
-                        url = url.Substring(url.IndexOf("?code=") + 6);
+                        url = url.Substring(9);
                         Configuration.Token = url;
                         MessageBox.Show("Your token was registered. Enjoy foursquare.", "MySquare");
                     }
                     else
-                        throw new ApplicationException("Invalid token.");
+                        throw new ApplicationException("Invalid token." + url);
                 }
                 catch (Exception ex)
                 {

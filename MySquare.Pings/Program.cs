@@ -48,8 +48,15 @@ namespace MySquare.Pings
                         ret = controller.GetCheckIns();
                 }
             }
-            catch (ObjectDisposedException) { Quit(); }
-            catch (Exception) { }
+            catch (ObjectDisposedException ex)
+            {
+                Log.RegisterLog(ex);
+                Quit();
+            }
+            catch (Exception ex)
+            {
+                Log.RegisterLog(ex);
+            }
             finally
             {
                 if (pings != null)
