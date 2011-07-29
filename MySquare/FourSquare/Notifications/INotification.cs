@@ -47,6 +47,9 @@ namespace MySquare.FourSquare
                 case "notificationTray":
                     item = new NotificationTray();
                     break;
+                case "leaderboard":
+                    return null;
+                    //TODO: Leaderboard notifications
                 default:
                     throw new NotImplementedException();
             }

@@ -54,7 +54,8 @@ namespace MySquare.UI.Settings
 
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
             {
-                FileName = "http://risingmobility.com/mysquare/oauth.ashx",
+                FileName = "iexplore.exe",
+                Arguments = "http://risingmobility.com/mysquare/oauth.ashx",
                 UseShellExecute = true
             });
             (this.Parent as Form).Close();

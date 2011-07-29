@@ -34,6 +34,6 @@ namespace MySquare.FourSquare
 
     enum MayorType
     {
-        @new, nochange, stolen
+        @new, nochange, stolen, none
     }
 }
