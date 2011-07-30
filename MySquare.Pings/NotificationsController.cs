@@ -30,7 +30,6 @@ namespace MySquare.Pings
 
 
         bool error;
-        [Obfuscation(Exclude=true)]
         public bool GetCheckIns()
         {
             checkIns = null;
@@ -125,7 +124,6 @@ namespace MySquare.Pings
 
 
         CheckIn[] checkIns;
-        [Obfuscation(Exclude = true)]
         void Service_CheckInsResult(object sender, MySquare.FourSquare.CheckInsEventArgs e)
         {
             checkIns = e.CheckIns;

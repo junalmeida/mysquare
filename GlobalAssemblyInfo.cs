@@ -15,3 +15,4 @@ using System.Runtime.InteropServices;
 #else
 [assembly: AssemblyConfiguration("")]
 #endif
+[assembly: System.Reflection.Obfuscation(Feature = "Apply to MySquare.FourSquare.*: all", Exclude = true, ApplyToMembers = true)]

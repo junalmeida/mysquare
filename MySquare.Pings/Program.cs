@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using MySquare.Service;
+using System.Reflection;
 
 namespace MySquare.Pings
 {

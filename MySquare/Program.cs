@@ -14,7 +14,6 @@ using MySquare.Service;
 using Tenor.Mobile.Drawing;
 using System.IO;
 
-[assembly: System.Reflection.Obfuscation(Feature = "Apply to MySquare.FourSquare.*: all", Exclude = true, ApplyToMembers = true)]
 namespace MySquare
 {
     public static class Program
