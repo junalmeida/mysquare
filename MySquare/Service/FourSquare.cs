@@ -52,7 +52,7 @@ namespace MySquare.Service
         }
 
 
-        internal void GetLeaderBoard(double lat, double lng, Scope scope)
+        internal void GetLeaderBoard()
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string uid = null;
@@ -64,16 +64,6 @@ namespace MySquare.Service
                     break;
                 }
             }
-            if (uid != null)
-                parameters.Add("uid", uid);
-            parameters.Add("geolat", lat.ToString(culture));
-            parameters.Add("geolong", lng.ToString(culture));
-            parameters.Add("view", "all");
-            if (scope == Scope.All)
-                parameters.Add("scope", "all");
-            else
-                parameters.Add("scope", "friends");
-
 
             Post(ServiceResource.Leaderboard, parameters);
         }
@@ -436,7 +426,7 @@ namespace MySquare.Service
                     else
                         cacheVenues.Add(e.Venue);
 
-                    if (e.Venue.Status != null && e.Venue.Mayor != null)
+                    if (e.Venue.Status != null && e.Venue.Mayor != null && e.Venue.Mayor.User != null)
                     {
                         index = cacheUsers.IndexOf(e.Venue.Mayor.User);
                         if (index == -1)
@@ -561,7 +551,7 @@ namespace MySquare.Service
                     auth = true; post = true;
                     break;
                 case ServiceResource.Leaderboard:
-                    url = "http://api.foursquare.com/iphone/me";
+                    url = "https://api.foursquare.com/v2/users/leaderboard";
                     auth = true; post = false;
                     break;
                 case ServiceResource.FlagClosed:
@@ -662,8 +652,7 @@ namespace MySquare.Service
                     type = typeof(UserEventArgs);
                     break;
                 case ServiceResource.Leaderboard:
-                    type = null;
-                    //will get the raw response.
+                    type = typeof(LeaderboardEventArgs);
                     break;
                 case ServiceResource.FlagDuplicated:
                 case ServiceResource.FlagClosed:
@@ -713,10 +702,8 @@ namespace MySquare.Service
                 OnError((ErrorEventArgs)result);
             else if (result is FlagEventArgs)
                 OnFlagResult((FlagEventArgs)result);
-            else if (service == ServiceResource.Leaderboard)
-            {
-                ParseLeaderBoard(result as string);
-            }
+            else if (result is LeaderboardEventArgs)
+                OnLeaderboardResult((LeaderboardEventArgs)result);
             else if (result is BadgesEventArgs)
                 OnBadgesResult((BadgesEventArgs)result);
             else
@@ -724,91 +711,5 @@ namespace MySquare.Service
 
         }
 
-        private void ParseLeaderBoard(string xml)
-        {
-            List<LeaderboardUser> list = new List<LeaderboardUser>();
-            var eargs = new LeaderboardEventArgs();
-            try
-            {
-                XmlDocument doc = new XmlDocument();
-
-                XmlReaderSettings settings = new XmlReaderSettings();
-                settings.CheckCharacters = false;
-                settings.CloseInput = true;
-                settings.ConformanceLevel = ConformanceLevel.Fragment;
-                settings.IgnoreComments = true;
-                settings.IgnoreProcessingInstructions = true;
-                settings.IgnoreWhitespace = true;
-                settings.ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.None;
-                settings.ValidationType = ValidationType.None;
-
-                int pos = xml.IndexOf("<table>");
-                if (pos > -1)
-                    xml = xml.Substring(pos);
-                else
-                    throw new InvalidOperationException();
-
-                pos = xml.IndexOf("</table>");
-
-                if (pos > -1)
-                    xml = xml.Substring(0, pos + 8);
-                else
-                    throw new InvalidOperationException();
-
-
-                using (XmlReader reader = XmlReader.Create(new StringReader(xml), settings))
-                {
-                    doc.Load(reader);
-                }
-
-                foreach (XmlNode item in doc.DocumentElement.SelectNodes("/table/tr"))
-                {
-                    if (item.ChildNodes.Count == 4)
-                    {
-                        LeaderboardUser u = new LeaderboardUser()
-                        {
-                            User = item.ChildNodes[1].InnerText,
-                            Percentage = Convert.ToInt32(Math.Round(int.Parse(item.ChildNodes[2].ChildNodes[0].Attributes["width"].Value) * 1.052)),
-                            Self = item.ChildNodes[2].ChildNodes[0].Attributes["src"].Value.IndexOf("red") > -1,
-                            Points = item.ChildNodes[3].InnerText
-                        };
-                        u.Points = u.Points.Remove(0, 1);
-                        u.Points = u.Points.Remove(u.Points.Length - 1, 1);
-                        list.Add(u);
-                    }
-                    else if (item.ChildNodes.Count == 1
-                        && item.ChildNodes[0].Attributes["class"] != null
-                        && item.ChildNodes[0].Attributes["class"].Value == "mini")
-                    {
-                        eargs.RefreshTime = item.ChildNodes[0].InnerText.Trim();
-                    }
-                    else if (item.ChildNodes.Count == 1
-                        && item.Attributes["class"] != null && item.Attributes["class"].Value == "header"
-                        && item.ChildNodes[0].InnerText.Contains("All"))
-                    {
-                        eargs.AllText = item.ChildNodes[0].InnerText;
-                        eargs.AllText = eargs.AllText.Substring(eargs.AllText.IndexOf("|") + 1).Trim();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                OnError(new ErrorEventArgs(ex));
-                return;
-            }
-            eargs.Users = list.ToArray();
-            OnLeaderboardResult(eargs);
-        }
-
     }
-
-    enum Scope
-    {
-        Friends,
-        All
-    }
-
-
-
-
 }

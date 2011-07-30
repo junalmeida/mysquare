@@ -28,30 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lstFriends = new Tenor.Mobile.UI.KListControl();
             this.lstAll = new Tenor.Mobile.UI.KListControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblRefreshTime = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.tabStrip = new MySquare.UI.TabStrip();
             this.picAvatar = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lstFriends
-            // 
-            this.lstFriends.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
-            this.lstFriends.DefaultItemHeight = 30;
-            this.lstFriends.DefaultItemWidth = 80;
-            this.lstFriends.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstFriends.Layout = Tenor.Mobile.UI.KListLayout.Vertical;
-            this.lstFriends.Location = new System.Drawing.Point(0, 71);
-            this.lstFriends.Name = "lstFriends";
-            this.lstFriends.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
-            this.lstFriends.Size = new System.Drawing.Size(350, 189);
-            this.lstFriends.Skinnable = false;
-            this.lstFriends.TabIndex = 0;
-            this.lstFriends.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.lstAll_DrawItem);
             // 
             // lstAll
             // 
@@ -60,10 +43,10 @@
             this.lstAll.DefaultItemWidth = 80;
             this.lstAll.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstAll.Layout = Tenor.Mobile.UI.KListLayout.Vertical;
-            this.lstAll.Location = new System.Drawing.Point(0, 71);
+            this.lstAll.Location = new System.Drawing.Point(0, 44);
             this.lstAll.Name = "lstAll";
             this.lstAll.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
-            this.lstAll.Size = new System.Drawing.Size(350, 189);
+            this.lstAll.Size = new System.Drawing.Size(350, 216);
             this.lstAll.Skinnable = false;
             this.lstAll.TabIndex = 0;
             this.lstAll.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.lstAll_DrawItem);
@@ -73,12 +56,11 @@
             this.panel1.BackColor = System.Drawing.Color.Black;
             this.panel1.Controls.Add(this.lblRefreshTime);
             this.panel1.Controls.Add(this.lblTitle);
-            this.panel1.Controls.Add(this.tabStrip);
             this.panel1.Controls.Add(this.picAvatar);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(350, 71);
+            this.panel1.Size = new System.Drawing.Size(350, 44);
             // 
             // lblRefreshTime
             // 
@@ -102,17 +84,6 @@
             this.lblTitle.Size = new System.Drawing.Size(311, 16);
             this.lblTitle.Text = "The Leaderboard";
             // 
-            // tabStrip
-            // 
-            this.tabStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabStrip.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
-            this.tabStrip.Location = new System.Drawing.Point(0, 46);
-            this.tabStrip.Name = "tabStrip";
-            this.tabStrip.Size = new System.Drawing.Size(350, 25);
-            this.tabStrip.TabIndex = 5;
-            this.tabStrip.Text = "tabStrip1";
-            this.tabStrip.SelectedIndexChanged += new System.EventHandler(this.tabStrip_SelectedIndexChanged);
-            // 
             // picAvatar
             // 
             this.picAvatar.Location = new System.Drawing.Point(0, 4);
@@ -125,7 +96,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(204)))), ((int)(((byte)(212)))));
-            this.Controls.Add(this.lstFriends);
             this.Controls.Add(this.lstAll);
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.Color.White;
@@ -140,10 +110,8 @@
 
         private System.Windows.Forms.Panel panel1;
         internal System.Windows.Forms.Label lblRefreshTime;
-        internal TabStrip tabStrip;
         private System.Windows.Forms.Label lblTitle;
         internal System.Windows.Forms.PictureBox picAvatar;
-        internal Tenor.Mobile.UI.KListControl lstFriends;
         internal Tenor.Mobile.UI.KListControl lstAll;
 
     }

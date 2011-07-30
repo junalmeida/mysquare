@@ -216,7 +216,7 @@ namespace MySquare.Controller
 
         private void FillAddress()
         {
-            View.lblVenueName.Text = Venue.Name;
+            View.lblVenueName.Text = (Venue.Name ?? "").Replace("&", "&&");
             List<string> address = new List<string>();
             if (Venue.Location != null)
             {
@@ -473,10 +473,9 @@ namespace MySquare.Controller
                     View.venueInfo1.lblPhone.Enabled = false;
                 }
 
-                if (Venue.Status != null && Venue.Mayor != null)
+                if (Venue.Status != null && Venue.Mayor != null && Venue.Mayor.User != null)
                 {
-                    View.venueInfo1.lblMayor.Text =
-                        string.Concat(Venue.Mayor.User.FirstName, " ", Venue.Mayor.User.LastName);
+                    View.venueInfo1.lblMayor.Text = Venue.Mayor.User.ToString();
                     View.venueInfo1.lblMayor.Enabled = true;
                     View.venueInfo1.lblMayor.Tag = Venue.Mayor.User;
                 }
@@ -522,7 +521,7 @@ namespace MySquare.Controller
                             }));
                         }
 
-                        if (Venue.Status != null && Venue.Mayor != null && !string.IsNullOrEmpty(Venue.Mayor.User.ImageUrl))
+                        if (Venue.Status != null && Venue.Mayor != null && Venue.Mayor.User != null && !string.IsNullOrEmpty(Venue.Mayor.User.ImageUrl))
                         {
                             byte[] image = Service.DownloadImageSync(Venue.Mayor.User.ImageUrl);
                             View.Invoke(new ThreadStart(delegate()

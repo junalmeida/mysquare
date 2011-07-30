@@ -9,7 +9,8 @@ namespace MySquare.FourSquare
 {
     class ScoreNotification : ReadOnlyCollection<Score>, INotification
     {
-        public ScoreNotification(Score[] scores) : base (scores)
+        public ScoreNotification(Score[] scores)
+            : base(scores)
         {
         }
     }
@@ -18,6 +19,18 @@ namespace MySquare.FourSquare
     {
         [JsonProperty("points")]
         public int Points
+        { get; set; }
+
+        [JsonProperty("recent")]
+        public int Recent
+        { get; set; }
+
+        [JsonProperty("max")]
+        public int Max
+        { get; set; }
+
+        [JsonProperty("checkinsCount")]
+        public int CheckinsCount
         { get; set; }
 
 
@@ -34,5 +47,4 @@ namespace MySquare.FourSquare
             return string.Format("{0} (+{1})", Message, Points);
         }
     }
-
 }

@@ -2,32 +2,42 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace MySquare.FourSquare
 {
     class LeaderboardUser
     {
-        public string User { get; set; }
-        public int Percentage { get; set; }
-        public string Points { get; set; }
-        public bool Self { get; set; }
+        [JsonProperty("user")]
+        public User User { get; set; }
+
+        [JsonProperty("scores")]
+        public Score Scores { get; set; }
+
+        [JsonProperty("rank")]
+        public int Rank { get; set; }
     }
 
 
     delegate void LeaderboardEventHandler(object serder, LeaderboardEventArgs e);
-    class LeaderboardEventArgs : EventArgs
+    class LeaderboardEventArgs : EnvelopeEventArgs<LeaderboardResult>
     {
         public LeaderboardEventArgs() { }
 
-        public LeaderboardUser[] Users { get; set; }
-        public string RefreshTime { get; set; }
-        public string AllText { get; set; }
+        public LeaderboardUser[] Leaderboard { get { return this.Response.Data.Leaderboard; } }
     }
 
-
-    enum View
+    class LeaderboardResult
     {
-        Friends, 
-        All
+        public class LB
+        {
+            [JsonProperty("items")]
+            public LeaderboardUser[] Leaderboard { get; set; }
+        }
+
+        [JsonProperty("leaderboard")]
+        public LB Data { get; set; }
+
     }
+
 }

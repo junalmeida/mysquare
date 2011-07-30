@@ -18,15 +18,15 @@ namespace MySquare.UI.More
         public Leaderboard()
         {
             InitializeComponent();
-            tabStrip.Tabs.Add("My Friends");
-            tabStrip.Tabs.Add("All");
-            tabStrip.SelectedIndex = 0;
-            tabStrip_SelectedIndexChanged(null, new EventArgs());
+            //tabStrip.Tabs.Add("My Friends");
+            //tabStrip.Tabs.Add("All");
+            //tabStrip.SelectedIndex = 0;
             font = new Font(Font.Name, 7, FontStyle.Regular);
+            medFont = new Font(Font.Name, 10, FontStyle.Bold);
+            bigFont = new Font(Font.Name, 12, FontStyle.Bold);
             fontBold = new Font(Font.Name, 7, FontStyle.Bold);
 
-            lstFriends.BackColor = Tenor.Mobile.Drawing.Strings.ToColor("#C5CCD4");
-            lstAll.BackColor = lstFriends.BackColor;
+            lstAll.BackColor = Tenor.Mobile.Drawing.Strings.ToColor("#C5CCD4");
         }
 
         AlphaImage img;
@@ -44,23 +44,9 @@ namespace MySquare.UI.More
             }
         }
 
-
-        void tabStrip_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-            if (tabStrip.SelectedIndex == 0)
-            {
-                lstFriends.Visible = true;
-                lstAll.Visible = false;
-            }
-            else
-            {
-                lstFriends.Visible = false;
-                lstAll.Visible = true;
-            }
-        }
-
-
         Font font;
+        Font bigFont;
+        Font medFont;
         Font fontBold;
         StringFormat format = new StringFormat()
         {
@@ -71,78 +57,123 @@ namespace MySquare.UI.More
         SolidBrush selectedBrush = new SolidBrush(Color.PaleGoldenrod);
         Pen borderPen = new Pen(Color.White);
 
-        
+        Dictionary<string, byte[]> imageList;
+        Dictionary<string, AlphaImage> imageListBuffer;
+        internal Dictionary<string, byte[]> ImageList
+        {
+            get { return imageList; }
+            set
+            {
+                lstAll.Clear();
+                imageList = value;
+                imageListBuffer.ClearImageList();
+                imageListBuffer = new Dictionary<string, AlphaImage>();
+            }
+        }
 
         void lstAll_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
         {
             var listBox = (Tenor.Mobile.UI.KListControl)sender;
-            LeaderboardUser user = (LeaderboardUser)e.Item.Value;
+            LeaderboardUser lboard = (LeaderboardUser)e.Item.Value;
+
+            User user = lboard.User;
+
+            string rankText = "#" + lboard.Rank.ToString();
+            SizeF rankSize = e.Graphics.MeasureString(rankText, medFont);
+            RectangleF rankRect = new RectangleF(
+                3 * factorF.Width,
+                e.Bounds.Y + (e.Bounds.Height / 2 - rankSize.Height / 2),
+                rankSize.Width,
+                rankSize.Height
+            );
+
+            Size factor = Tenor.Mobile.UI.Skin.Current.ScaleFactor;
+            if (!string.IsNullOrEmpty(user.ToString()))
+            {
+                int padding = 5 * factor.Width;
+                int imageSize = listBox.DefaultItemHeight - padding;
+
+                RectangleF rect = new RectangleF
+                    (imageSize + (padding * 2) + rankRect.Right,
+                     e.Bounds.Y,
+                     e.Bounds.Width - (imageSize) - (padding * 2),
+                     e.Bounds.Height);
+
+                if (user.FriendStatus != null && user.FriendStatus.Value == FriendStatus.self)
+                {
+                    Tenor.Mobile.Drawing.RoundedRectangle.Fill(e.Graphics,
+                        borderPen, selectedBrush, e.Bounds, new Size(8 * factor.Width, 8 * factor.Height));
+                }
+                e.Graphics.DrawString(rankText, medFont, brush, rankRect);
+
+                if (imageList != null && imageList.ContainsKey(user.ImageUrl))
+                {
+                    if (!imageListBuffer.ContainsKey(user.ImageUrl))
+                    {
+                        imageListBuffer.Add(user.ImageUrl, new AlphaImage(Main.CreateRoundedAvatar(imageList[user.ImageUrl], imageSize, factorF)));
+                    }
+                    AlphaImage image = imageListBuffer[user.ImageUrl];
+
+                    Rectangle imgRect =
+                        new Rectangle(Convert.ToInt32(rankRect.Right + padding),
+                           Convert.ToInt32(rect.Y + (rect.Height / 2) - (imageSize / 2)), imageSize, imageSize);
+                    try
+                    {
+                        //e.Graphics.DrawImage(image, imgRect, new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
+                        image.Draw(e.Graphics, imgRect);
+                    }
+                    catch (Exception ex) { Log.RegisterLog("gdi", ex); }
+                }
+
+                rect.Y += 2 * factor.Height;
+                SizeF size = e.Graphics.MeasureString(user.ToString(), fontBold);
+                e.Graphics.DrawString(
+                    user.ToString(), fontBold, brush, rect);
+
+                if (lboard.Scores != null)
+                {
+                    string text = "7-day high score: ";
+                    text += lboard.Scores.Max.ToString();
 
 
+                    rect.Y += size.Height + (3 * factor.Height);
+                    e.Graphics.DrawString(
+                        text, font, brush, rect, format);
 
-            int padding = 5 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width;
-            int imageSize = Convert.ToInt32(listBox.DefaultItemHeight - padding);
 
-            RectangleF rect = new RectangleF
-                (e.Bounds.X + (padding * 2),
-                 e.Bounds.Y,
-                 e.Bounds.Width - (padding * 2),
-                 e.Bounds.Height);
-            //if (user.Self)
-            //{
-            //    Tenor.Mobile.Drawing.RoundedRectangle.Fill(e.Graphics,
-            //        borderPen, selectedBrush, e.Bounds, new Size(
-            //            8 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
-            //            8 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height));
-            //}
+                    var scoreText = lboard.Scores.Recent.ToString();
+                    SizeF sizeScore = e.Graphics.MeasureString(scoreText, bigFont);
+                    rect = new RectangleF(
+                        e.Bounds.Width - sizeScore.Width - (10 * factorF.Width),
+                        e.Bounds.Y + (e.Bounds.Height /2 - sizeScore.Height/2),
+                        sizeScore.Width,sizeScore.Height
+                        );
 
-            string text = (e.Item.YIndex + 1).ToString() + ". " + user.User.ToString();
-            e.Graphics.DrawString(
-               text, fontBold, brush, rect);
+                    e.Graphics.DrawString(
+                        scoreText, bigFont, brush, rect, format);
 
-            SizeF size = e.Graphics.MeasureString(text, fontBold);
-            rect.X += size.Width + padding;
-            e.Graphics.DrawString(
-                user.Points, font, brush, rect, format);
+                }
 
-            rect = new RectangleF
-                (e.Bounds.X + (padding * 2),
-                 e.Bounds.Y + size.Height + (padding / 2),
-                 e.Bounds.Width - (padding * 4),
-                 10 * Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height);
 
-            Color color = Tenor.Mobile.Drawing.Strings.ToColor("#DCE0E4");
-
-            Size ell = new Size(
-                8*Tenor.Mobile.UI.Skin.Current.ScaleFactor.Width,
-                8*Tenor.Mobile.UI.Skin.Current.ScaleFactor.Height);
-            RoundedRectangle.Fill(e.Graphics, new Pen(color), new SolidBrush(color), Rectangle.Round(rect), ell);
-            //e.Graphics.FillRectangle(new SolidBrush(Tenor.Mobile.Drawing.Strings.ToColor("#DCE0E4")), Rectangle.Round(rect));
-
-            color = Color.Blue;
-            if (user.Self)
-                color = Color.Red;
-
-            rect.Width =
-                rect.Width * user.Percentage / 100;
-
-            RoundedRectangle.Fill(e.Graphics, new Pen(color), new SolidBrush(color), Rectangle.Round(rect), ell);
-            //e.Graphics.FillRectangle(new SolidBrush(color), Rectangle.Round(rect));
-
-            //if (!user.Self)
-            //{
-            //    Rectangle rect2 = new Rectangle(
-            //                   e.Bounds.X, e.Bounds.Bottom - 2, e.Bounds.Width / 3, 1);
-
-            //    e.Graphics.DrawSeparator(rect2, Color.Gray);
-            //    Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, this.BackColor, Color.Gray, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
-            //    rect2.X += rect2.Width;
-            //    Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.Gray, Color.Gray, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
-            //    rect2.X += rect2.Width;
-            //    Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.Gray, this.BackColor, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
-            //}
+                if (user.FriendStatus != null && user.FriendStatus.Value != FriendStatus.self)
+                {
+                    Rectangle rect2 = new Rectangle(
+                                   e.Bounds.X, e.Bounds.Bottom - 2, e.Bounds.Width / 3, 1);
+                    Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, this.BackColor, Color.Gray, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+                    rect2.X += rect2.Width;
+                    Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.Gray, Color.Gray, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+                    rect2.X += rect2.Width;
+                    Tenor.Mobile.Drawing.GradientFill.Fill(e.Graphics, rect2, Color.Gray, this.BackColor, Tenor.Mobile.Drawing.GradientFill.FillDirection.LeftToRight);
+                }
+            }
         }
 
+        SizeF factorF;
+        protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
+        {
+            factorF = factor;
+            base.ScaleControl(factor, specified);
+        }
 
     }
 }

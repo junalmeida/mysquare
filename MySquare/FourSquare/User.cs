@@ -14,11 +14,11 @@ namespace MySquare.FourSquare
         public string Id
         { get; set; }
 
-        [JsonProperty("firstname")]
+        [JsonProperty("firstName")]
         public string FirstName
         { get; set; }
 
-        [JsonProperty("lastname")]
+        [JsonProperty("lastName")]
         public string LastName
         { get; set; }
 

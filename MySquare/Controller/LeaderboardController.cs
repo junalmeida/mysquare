@@ -6,6 +6,8 @@ using MySquare.UI;
 using System.Windows.Forms;
 using MySquare.FourSquare;
 using System.Threading;
+using System.Drawing;
+using MySquare.Service;
 
 namespace MySquare.Controller
 {
@@ -16,8 +18,6 @@ namespace MySquare.Controller
         {
             Service.Error += new MySquare.Service.ErrorEventHandler(Service_Error);
             Service.LeaderboardResult += new MySquare.FourSquare.LeaderboardEventHandler(Service_LeaderboardResult);
-            View.tabStrip.SelectedIndexChanged += new EventHandler(tabStrip_SelectedIndexChanged);
-
         }
 
 
@@ -40,7 +40,7 @@ namespace MySquare.Controller
             RightSoftButtonEnabled = true;
             RightSoftButtonText = "&Back";
 
-            tabStrip_SelectedIndexChanged(null, null);
+            Refresh();
         }
 
         public override void OnLeftSoftButtonClick()
@@ -56,37 +56,19 @@ namespace MySquare.Controller
         }
 
 
-        void tabStrip_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (View.tabStrip.SelectedIndex == 0)
-                scope = MySquare.Service.Scope.Friends;
-            else
-                scope = MySquare.Service.Scope.All;
-
-
-            if (
-                (scope == MySquare.Service.Scope.Friends && View.lstFriends.Count == 0) ||
-                (scope == MySquare.Service.Scope.All && View.lstAll.Count == 0)
-               )
-                Refresh();
-        }
-        MySquare.Service.Scope scope;
-
         private void Refresh()
         {
             Cursor.Current = Cursors.WaitCursor;
 
-            Service.GetLeaderBoard(Program.Location.WorldPoint.Latitude, Program.Location.WorldPoint.Longitude, scope);
-        }
+            Service.GetLeaderBoard();
+        }        
+        
+
 
         LeaderboardUser[] users;
-        string refreshTime;
-        string allText;
         void Service_LeaderboardResult(object serder, MySquare.FourSquare.LeaderboardEventArgs e)
         {
-            users = e.Users;
-            refreshTime = e.RefreshTime;
-            allText = e.AllText;
+            users = e.Leaderboard;
             try
             {
                 if (View.InvokeRequired)
@@ -101,21 +83,45 @@ namespace MySquare.Controller
         void LoadFriends()
         {
             var listC = View.lstAll;
-            if (scope == MySquare.Service.Scope.Friends)
-                listC = View.lstFriends;
 
+            View.ImageList = new Dictionary<string, byte[]>();
             listC.Clear();
             foreach (var u in users)
             {
                 listC.AddItem(null, u);
             }
 
-            View.lblRefreshTime.Text = refreshTime;
-            if (!string.IsNullOrEmpty(allText))
+            Thread t = new Thread(new ThreadStart(delegate()
             {
-                View.tabStrip.Tabs[1] = allText;
-                View.tabStrip.Invalidate();
-            }
+                int i = 0;
+                foreach (var u in users)
+                {
+                    if (!string.IsNullOrEmpty(u.User.ImageUrl))
+                    {
+                        try
+                        {
+                            //TODO: Load friends of friends avatars on demand.
+                            //This is a workaround to not let the dataplan leak.
+                            if (i > 10)
+                                break;
+                            if (!Service.IsInCache(u.User.ImageUrl))
+                                i++;
+
+                            byte[] image = Service.DownloadImageSync(u.User.ImageUrl);
+
+                            if (!View.ImageList.ContainsKey(u.User.ImageUrl))
+                            {
+                                View.ImageList.Add(u.User.ImageUrl, image);
+                                View.Invoke(new ThreadStart(delegate() { View.lstAll.Invalidate(); }));
+                            }
+                        }
+                        catch (ObjectDisposedException) { return; }
+                        catch { }
+                    }
+                }
+            }));
+            t.StartThread();
+
             Cursor.Current = Cursors.Default;
         }
 

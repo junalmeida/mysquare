@@ -198,7 +198,9 @@ namespace MySquare.FourSquare
             venue.Categories = Categories;
             venue.Specials = Specials;
             venue.Tags = Tags;
-            venue.HereNow = HereNow;    
+            venue.HereNow = HereNow;
+            venue.Mayor = Mayor;
+            venue.Verified = Verified;
         }
 
         public override bool Equals(object obj)
