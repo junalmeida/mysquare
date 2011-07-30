@@ -15,6 +15,8 @@ namespace MySquare.Pings
         [MTAThread]
         static void Main()
         {
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
             pingsLoop = new AutoResetEvent(false);
             Pings();
             pingsLoop.WaitOne();
@@ -101,5 +103,13 @@ namespace MySquare.Pings
             }
         }
 
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e != null && e.ExceptionObject is Exception && !(e.ExceptionObject is ThreadAbortException))
+            {
+                var ex = (Exception)e.ExceptionObject;
+                Service.Log.RegisterLog(ex);
+            }
+        }
     }
 }

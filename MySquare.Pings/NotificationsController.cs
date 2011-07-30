@@ -7,6 +7,7 @@ using MySquare.Service;
 using MySquare.FourSquare;
 using System.Diagnostics;
 using MySquare.Pings.Properties;
+using System.Reflection;
 
 namespace MySquare.Pings
 {
@@ -29,9 +30,11 @@ namespace MySquare.Pings
 
 
         bool error;
+        [Obfuscation(Exclude=true)]
         public bool GetCheckIns()
         {
             checkIns = null;
+            waitThread = new AutoResetEvent(false);
             Service.GetFriendsCheckins(null, null);
             waitThread.WaitOne();
             if (!error && checkIns != null)
@@ -114,17 +117,17 @@ namespace MySquare.Pings
         void Service_Error(object serder, ErrorEventArgs e)
         {
             error = true;
-            Log.RegisterLog("notification", e.Exception);
+            if (e != null)
+                Log.RegisterLog("notification", e.Exception);
             waitThread.Set();
         }
 
 
 
         CheckIn[] checkIns;
+        [Obfuscation(Exclude = true)]
         void Service_CheckInsResult(object sender, MySquare.FourSquare.CheckInsEventArgs e)
         {
-            if (e == null)
-                throw new InvalidOperationException();
             checkIns = e.CheckIns;
             waitThread.Set();
         }

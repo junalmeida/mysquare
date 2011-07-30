@@ -269,6 +269,8 @@ namespace MySquare.Controller
             View.list1.ImageList = new Dictionary<string, byte[]>();
 
             View.list1.listBox.Clear();
+            if (groups.Length == 1 && string.IsNullOrEmpty(groups[0].Type))
+                groups[0].Type = "Nearby";
 
             foreach (var g in groups)
             {

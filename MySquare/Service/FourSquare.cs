@@ -366,8 +366,13 @@ namespace MySquare.Service
         {
             if (CheckInsResult != null)
             {
-                ManageCheckInsCache(e.CheckIns);
-                CheckInsResult(this, e);
+                if (e != null)
+                {
+                    ManageCheckInsCache(e.CheckIns);
+                    CheckInsResult(this, e);
+                }
+                else
+                    Log.RegisterLog(new Exception("CheckInsResult was null"));
             }
         }
 

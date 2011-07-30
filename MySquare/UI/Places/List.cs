@@ -356,6 +356,8 @@ namespace MySquare.UI.Places
                          listBox.Width - listBox.DefaultItemHeight,
                          listBox.Height);
                 Size size1 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.Venue.Name?? "", Font, rect);
+                if (secondFont == null)
+                    secondFont = new Font(Font.Name, Font.Size - 1, Font.Style);
                 Size size2 = Tenor.Mobile.Drawing.Strings.Measure(g, tip.Text ?? "", secondFont, rect);
 
                 int size = size1.Height * 2 + size2.Height;

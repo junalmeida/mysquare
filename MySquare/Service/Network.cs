@@ -384,12 +384,7 @@ namespace MySquare.Service
                                 }
                             }
 
-                            if (this.GetType() != typeof(RisingMobilityService))
-                            {
-                                Log.RegisterLog("data", new Exception(
-                                    "Request address: " + request.Address.ToString() + "\r\n" +
-                                    "Request output: " + responseTxt));
-                            }
+              
                         }
 
                     }
@@ -411,6 +406,14 @@ namespace MySquare.Service
                 }
                 finally
                 {
+                    if (this.GetType() != typeof(RisingMobilityService) && !string.IsNullOrEmpty(responseTxt))
+                    {
+                        Log.RegisterLog("data", new Exception(
+                            "Request address: " + request.Address.ToString() + "\r\n" +
+                            "Request output: " + responseTxt));
+                    }
+
+
                     if (response != null)
                     {
                         response.Close();

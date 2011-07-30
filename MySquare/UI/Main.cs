@@ -175,6 +175,18 @@ namespace MySquare.UI
             }
         }
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (timerGps != null)
+            {
+                timerGps.Enabled = false;
+            }
+            if (timerAds != null)
+            {
+                timerAds.Enabled = false;
+            }
+        }
+
 
         private void AdjustInputPanel()
         {

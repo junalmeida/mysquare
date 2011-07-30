@@ -48,6 +48,8 @@ namespace MySquare.FourSquare
                     item = new NotificationTray();
                     break;
                 case "leaderboard":
+                case "tip":
+                case "tipAlert":
                     return null;
                     //TODO: Leaderboard notifications
                 default:

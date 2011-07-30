@@ -83,6 +83,9 @@
     <Compile Include="..\MySquare\FourSquare\LeaderBoard.cs">
       <Link>FourSquare\LeaderBoard.cs</Link>
     </Compile>
+    <Compile Include="..\MySquare\FourSquare\MayorshipNotification.cs">
+      <Link>FourSquare\MayorshipNotification.cs</Link>
+    </Compile>
     <Compile Include="..\MySquare\FourSquare\Notifications\Badge.cs">
       <Link>FourSquare\Notifications\Badge.cs</Link>
     </Compile>
@@ -122,7 +125,6 @@
     <Compile Include="..\MySquare\Service\RisingMobility.cs">
       <Link>Service\RisingMobility.cs</Link>
     </Compile>
-    <Compile Include="FourSquare\MayorshipNotification.cs" />
     <Compile Include="NotificationsController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
