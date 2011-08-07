@@ -6,6 +6,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using Microsoft.Win32;
+using Newtonsoft.Json;
+using MySquare.FourSquare;
 
 namespace MySquare.Service
 {
@@ -21,7 +23,8 @@ namespace MySquare.Service
                 key = Registry.LocalMachine.CreateSubKey(keyPath);
             else
                 key = Registry.CurrentUser.CreateSubKey(keyPath);
-
+            LoadSiteSettings();
+            LoadPremiumInfo();
         }
 
         #region Premium Info
@@ -110,6 +113,7 @@ namespace MySquare.Service
         }
         #endregion
 
+
         private static RegistryKey key;
 
         public static string Token
@@ -123,35 +127,50 @@ namespace MySquare.Service
                 isPremium = null;
                 key.SetValue("Token", value);
                 LoadPremiumInfo();
+                LoadSiteSettings();
             }
         }
 
-        public static string Password
+        #region SiteSettings
+
+        internal static SiteSettings siteSettings = null;
+        internal static SiteSettings SiteSettings
         {
             get
             {
-                string password = (string)key.GetValue("password", null);
-                if (string.IsNullOrEmpty(password))
-                    return password;
+                if (string.IsNullOrEmpty(Token))
+                    return null;
                 else
                 {
-                    try
-                    {
-                        byte[] passB = Convert.FromBase64String(password);
-                        password = Encoding.UTF8.GetString(passB, 0, passB.Length);
-                    }
-                    catch
-                    {
-                        Password = password;
-                    }
-                    return password;
+                    if (siteSettings == null)
+                        LoadSiteSettings();
+                    return siteSettings;
                 }
             }
-            set
-            {
-                key.SetValue("password", Convert.ToBase64String(Encoding.UTF8.GetBytes(value)));
-            }
         }
+
+        private static void LoadSiteSettings()
+        {
+            if (string.IsNullOrEmpty(Token))
+            {
+                siteSettings = null;
+                return;
+            }
+
+            aEvent = new AutoResetEvent(false);
+            FourSquare service = new FourSquare();
+            service.SiteSettingsResult += new SiteSettingsEventHandler(service_SiteSettingsResult);
+            service.Error += new ErrorEventHandler(service_Error);
+            service.GetSiteSettings();
+            aEvent.WaitOne(5000, false);
+        }
+
+        private static void service_SiteSettingsResult(object sender, SiteSettingsEventArgs e)
+        {
+            siteSettings = e.SiteSettings;
+        }
+        #endregion
+
 
         public static bool ShowAds
         {
@@ -511,9 +530,5 @@ namespace MySquare.Service
                 catch { }
             }
         }
-
-
-
     }
-
 }

@@ -40,7 +40,8 @@ namespace MySquare.Service
             FlagClosed,
             FlagMislocated,
             FlagDuplicated,
-            Badges
+            Badges,
+            AllSettings
         }
 
         protected override void SetClientId(StringBuilder queryString)
@@ -66,6 +67,14 @@ namespace MySquare.Service
             }
 
             Post(ServiceResource.Leaderboard, parameters);
+        }
+
+
+        internal void GetSiteSettings()
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            Post(ServiceResource.AllSettings, parameters);
         }
 
         internal void GetUser(string uid)
@@ -327,6 +336,17 @@ namespace MySquare.Service
 
 
 
+        internal event SiteSettingsEventHandler SiteSettingsResult;
+        private void OnSiteSettingsResult(SiteSettingsEventArgs e)
+        {
+            if (SiteSettingsResult != null)
+            {
+                SiteSettingsResult(this, e);
+            }
+        }
+
+
+
         internal event UserEventHandler UserResult;
         private void OnUserResult(UserEventArgs e)
         {
@@ -570,6 +590,10 @@ namespace MySquare.Service
                     url = "https://api.foursquare.com/v2/users/{0}/badges";
                     auth = true; post = false;
                     break;
+                case ServiceResource.AllSettings:
+                    url = "https://api.foursquare.com/v2/settings/all";
+                    auth = true; post = false;
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -662,6 +686,9 @@ namespace MySquare.Service
                 case ServiceResource.Badges:
                     type = typeof(BadgesEventArgs);
                     break;
+                case ServiceResource.AllSettings:
+                    type = typeof(SiteSettingsEventArgs);
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -706,10 +733,13 @@ namespace MySquare.Service
                 OnLeaderboardResult((LeaderboardEventArgs)result);
             else if (result is BadgesEventArgs)
                 OnBadgesResult((BadgesEventArgs)result);
+            else if (result is SiteSettingsEventArgs)
+                OnSiteSettingsResult((SiteSettingsEventArgs)result);
             else
                 throw new NotImplementedException();
 
         }
+
 
     }
 }

@@ -39,7 +39,7 @@
             // 
             // chkFacebook
             // 
-            this.chkFacebook.ThreeState = true;
+            this.chkFacebook.ThreeState = false;
             this.chkFacebook.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkFacebook.Checked = true;
             this.chkFacebook.CheckState = System.Windows.Forms.CheckState.Indeterminate;
@@ -52,7 +52,7 @@
             // 
             // chkTwitter
             // 
-            this.chkTwitter.ThreeState = true;
+            this.chkTwitter.ThreeState = false;
             this.chkTwitter.Checked = true;
             this.chkTwitter.CheckState = System.Windows.Forms.CheckState.Indeterminate;
             this.chkTwitter.ForeColor = System.Drawing.Color.Black;

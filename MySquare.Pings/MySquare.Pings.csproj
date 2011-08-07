@@ -102,6 +102,9 @@
     <Compile Include="..\MySquare\FourSquare\Notifications\Special.cs">
       <Link>FourSquare\Notifications\Special.cs</Link>
     </Compile>
+    <Compile Include="..\MySquare\FourSquare\SiteSettings.cs">
+      <Link>FourSquare\SiteSettings.cs</Link>
+    </Compile>
     <Compile Include="..\MySquare\FourSquare\Tip.cs">
       <Link>FourSquare\Tip.cs</Link>
     </Compile>

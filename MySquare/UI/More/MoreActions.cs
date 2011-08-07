@@ -22,7 +22,7 @@ namespace MySquare.UI.More
             listBox.AddItem("Shout\r\nBroadcast a message to your friends.", new AlphaImage(Resources.Shout));
             listBox.AddItem("The Leaderboard\r\nSee the weekly ranking.", new AlphaImage(Resources.Leaderboard));
             listBox.AddItem("Check for updates\r\nDo you have the latest version?", new AlphaImage(Resources.Update));
-            listBox.AddItem("About\r\nCurrent version information.", new AlphaImage(Resources.Help));
+            listBox.AddItem("About and Support\r\nCurrent version information.", new AlphaImage(Resources.Help));
         }
 
         SizeF factor;

@@ -57,6 +57,10 @@ namespace MySquare.Controller
             View.checkIn1.pnlCheckInResult.Visible = false;
             View.checkIn1.pnlShout.Visible = true;
             View.venueTips1.Enabled = true;
+
+            View.checkIn1.chkTwitter.Checked = Configuration.SiteSettings != null ? Configuration.SiteSettings.SendToTwitter : false;
+            View.checkIn1.chkFacebook.Checked = Configuration.SiteSettings != null ? Configuration.SiteSettings.SendToFacebook : false;
+
             OpenSection(VenueSection.CheckIn);
 
         }
