@@ -9,7 +9,7 @@ namespace MySquare.FourSquare
 
     enum SpecialType
     {
-        mayor, count, frequency, flash, other
+        mayor, count, frequency, flash, other, offer
     }
 
     enum SpecialKind
