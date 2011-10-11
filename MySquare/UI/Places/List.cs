@@ -216,14 +216,14 @@ namespace MySquare.UI.Places
                 if (
                         (
                             (venue.PrimaryCategory == null && imageList.ContainsKey(string.Empty)) ||
-                            (venue.PrimaryCategory != null && imageList.ContainsKey(venue.PrimaryCategory.IconUrl))
+                            (venue.PrimaryCategory != null && imageList.ContainsKey(venue.PrimaryCategory.IconUrl.ToString()))
                         )
                         && tip == null
                     )
                 {
                     string iconUrl = string.Empty;
                     if (venue.PrimaryCategory != null)
-                        iconUrl = venue.PrimaryCategory.IconUrl;
+                        iconUrl = venue.PrimaryCategory.IconUrl.ToString();
 
                     int imageSize = listBox.DefaultItemHeight - Convert.ToInt32(itemPadding * 2);
 

@@ -292,7 +292,7 @@ namespace MySquare.Controller
                         //TODO: revise the null category image.
                         string url = string.Empty;
                         if (venue.PrimaryCategory != null)
-                            url = venue.PrimaryCategory.IconUrl;
+                            url = venue.PrimaryCategory.IconUrl.ToString();
                         if (!View.list1.ImageList.ContainsKey(url))
                         {
                             byte[] buffer = Service.DownloadImageSync
@@ -343,7 +343,7 @@ namespace MySquare.Controller
                     //TODO: revise the null category image.
                     string url = string.Empty;
                     if (venue.PrimaryCategory != null)
-                        url = venue.PrimaryCategory.IconUrl;
+                        url = venue.PrimaryCategory.IconUrl.ToString();
                     if (!View.list1.ImageList.ContainsKey(url))
                     {
                         byte[] buffer = Service.DownloadImageSync

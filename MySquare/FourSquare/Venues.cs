@@ -290,7 +290,7 @@ namespace MySquare.FourSquare
         { get; set; }
 
         [JsonProperty("icon")]
-        public string IconUrl
+        public Image IconUrl
         { get; set; }
 
         public override string ToString()
@@ -299,6 +299,8 @@ namespace MySquare.FourSquare
         }
 
     }
+
+
 
     class Status
     {

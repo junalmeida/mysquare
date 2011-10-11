@@ -404,7 +404,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:..\\Setup\\MySquare.2.0.2.cab"
+        "OutputFilename" = "8:..\\Setup\\MySquare.2.0.3.cab"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
         "SignOutput" = "11:FALSE"
@@ -615,7 +615,7 @@
             "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_63660F8E369FAB1763AD0DC26DFE9D29"
             {
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MySquare, Version=2.0.2.36441, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:MySquare, Version=2.0.2.18177, Culture=neutral"
                 "ScatterAssemblies"
                 {
                     "_63660F8E369FAB1763AD0DC26DFE9D29"

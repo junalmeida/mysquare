@@ -515,9 +515,9 @@ namespace MySquare.Controller
                 {
                     try
                     {
-                        if (Venue.PrimaryCategory != null && !string.IsNullOrEmpty(Venue.PrimaryCategory.IconUrl))
+                        if (Venue.PrimaryCategory != null && !string.IsNullOrEmpty(Venue.PrimaryCategory.IconUrl.ToString()))
                         {
-                            byte[] image = Service.DownloadImageSync(Venue.PrimaryCategory.IconUrl);
+                            byte[] image = Service.DownloadImageSync(Venue.PrimaryCategory.IconUrl.ToString());
                             View.Invoke(new ThreadStart(delegate()
                             {
                                 View.venueInfo1.imgCategory.Tag = image;
