@@ -47,13 +47,16 @@ namespace MySquare.FourSquare
                 case "notificationTray":
                     item = new NotificationTray();
                     break;
+                case "special":
+                    item = new Special();
+                    break;
                 case "leaderboard":
                 case "tip":
                 case "tipAlert":
                     return null;
                     //TODO: Leaderboard notifications
                 default:
-                    throw new NotImplementedException();
+                    throw new NotImplementedException(string.Format("Type {0} not yet implemented.", discriminator));
             }
 
             serializer.Populate(obj["item"].CreateReader(), item);

@@ -229,7 +229,7 @@ namespace MySquare.Service
 
                     if (responseTxt.StartsWith("{ \"error\""))
                     {
-                        ((ErrorEventArgs)result).Exception = new ServerException(((ErrorEventArgs)result).Message);
+                        ((ErrorEventArgs)result).Exception = ((ErrorEventArgs)result).Exception;
                     }
 
                 }

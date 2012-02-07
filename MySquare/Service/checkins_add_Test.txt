@@ -1,86 +1,225 @@
 ﻿{
-   "meta":{
-      "code":200
-   },
-   "notifications":[
-      {
-         "type":"message",
-         "item":{
-            "message":"OK! We've got you @ CSS Festas. You've been here times."
-         }
-      },
-      {
-         "type":"mayorship",
-         "item":{
-            "type":"nochange",
-            "checkins":1,
-            "message":"You're still the Mayor of CSS Festas! (check-in in the past two months)",
-            "image":"http://foursquare.com/img/crown.png"
-         }
-      },
-      {
-         "type":"score",
-         "item":{
-            "scores":[
-               {
-                  "points":1,
-                  "icon":"/img/scoring/2.png",
-                  "message":"First stop tonight"
-               }
-            ],
-            "total":1
-         }
-      }
-   ],
-   "response":{
-      "checkin":{
-         "id":"4d5820358147f04ddf939e54",
-         "createdAt":1297621045,
-         "type":"checkin",
-         "private":true,
-         "shout":"teste",
-         "timeZone":"America/Sao_Paulo",
-         "venue":{
-            "id":"4c1d4a0b63750f47ff08b867",
-            "name":"CSS Festas",
-            "contact":{
-
-            },
-            "location":{
-               "address":"travessa francisco freire",
-               "city":"Rio de Janeiro",
-               "state":"RJ",
-               "lat":-22.866314565233782,
-               "lng":-43.37683975696564
-            },
-            "categories":[
-               {
-                  "id":"4bf58dd8d48988d171941735",
-                  "name":"Event Space",
-                  "icon":"http://foursquare.com/img/categories/building/default.png",
-                  "parents":[
-                     "Home / Work / Other"
-                  ],
-                  "primary":true
-               },
-               {
-                  "id":"4bf58dd8d48988d1f1931735",
-                  "name":"Other - Entertainment",
-                  "icon":"http://foursquare.com/img/categories/arts_entertainment/default.png",
-                  "parents":[
-                     "Arts & Entertainment"
-                  ]
-               }
-            ],
-            "verified":false,
-            "stats":{
-               "checkinsCount":12,
-               "usersCount":1
-            },
-            "todos":{
-               "count":0
+    "meta": {
+        "code": 200
+    }, 
+    "notifications": [
+        {
+            "type": "notificationTray", 
+            "item": {
+                "unreadCount": 0
             }
-         }
-      }
-   }
+        }, 
+        {
+            "type": "message", 
+            "item": {
+                "message": "OK! We've got you @ REFiNK. You've been here 206 times."
+            }
+        }, 
+        {
+            "type": "mayorship", 
+            "item": {
+                "type": "nochange", 
+                "checkins": 0, 
+                "user": {
+                    "id": "4000904", 
+                    "firstName": "Elena", 
+                    "lastName": "K.", 
+                    "photo": "https://img-s.foursquare.com/userpix_thumbs/Z2VLG2H3AYJFZLG0.jpg", 
+                    "gender": "female", 
+                    "homeCity": "Αθήνα, Ελλάς", 
+                    "canonicalUrl": "https://foursquare.com/user/4000904"
+                }, 
+                "message": "Elena K. is the Mayor of REFiNK.", 
+                "image": "https://img-s.foursquare.com/userpix_thumbs/Z2VLG2H3AYJFZLG0.jpg"
+            }
+        }, 
+        {
+            "type": "leaderboard", 
+            "item": {
+                "leaderboard": [
+                    {
+                        "user": {
+                            "id": "7964143", 
+                            "firstName": "Irene", 
+                            "lastName": "Kyritsis", 
+                            "photo": "https://img-s.foursquare.com/userpix_thumbs/MVE21MAETEVJXJHI.jpg", 
+                            "gender": "female", 
+                            "homeCity": "New York, NY", 
+                            "canonicalUrl": "https://foursquare.com/user/7964143", 
+                            "relationship": "friend"
+                        }, 
+                        "scores": {
+                            "recent": 52, 
+                            "max": 52, 
+                            "checkinsCount": 16
+                        }, 
+                        "rank": 3
+                    }, 
+                    {
+                        "user": {
+                            "id": "6197636", 
+                            "firstName": "Thodoris", 
+                            "lastName": "Sofopoulos", 
+                            "photo": "https://img-s.foursquare.com/userpix_thumbs/HUNIABAIBXKABP4W.jpg", 
+                            "gender": "male", 
+                            "homeCity": "Αθήνα, Ελλάς", 
+                            "canonicalUrl": "https://foursquare.com/thodor1s", 
+                            "relationship": "self"
+                        }, 
+                        "scores": {
+                            "recent": 37, 
+                            "max": 257, 
+                            "checkinsCount": 19
+                        }, 
+                        "rank": 4
+                    }, 
+                    {
+                        "user": {
+                            "id": "4970788", 
+                            "firstName": "Nassos", 
+                            "lastName": "Michas", 
+                            "photo": "https://img-s.foursquare.com/userpix_thumbs/3M5F5EL2XSOYDQBW.jpg", 
+                            "gender": "male", 
+                            "homeCity": "Athens, Greece", 
+                            "canonicalUrl": "https://foursquare.com/user/4970788", 
+                            "relationship": "friend"
+                        }, 
+                        "scores": {
+                            "recent": 35, 
+                            "max": 198, 
+                            "checkinsCount": 9
+                        }, 
+                        "rank": 5
+                    }
+                ], 
+                "message": "After that last check-in, you're closing the gap with Irene!", 
+                "scores": [
+                    {
+                        "points": 1, 
+                        "icon": "https://foursquare.com/img/points/defaultpointsicon2.png", 
+                        "message": "Every check-in counts!"
+                    }
+                ], 
+                "total": 1
+            }
+        }, 
+        {
+            "type": "special", 
+            "item": {
+                "special": {
+                    "id": "4e65e6991850e238d7129392", 
+                    "type": "count", 
+                    "message": "10% off when you check in for the first time!!!", 
+                    "imageUrls": {
+                        "count": 0
+                    }, 
+                    "description": "You'll unlock this special on your 1st check-in.", 
+                    "unlocked": false, 
+                    "icon": "newbie", 
+                    "title": "Newbie Special", 
+                    "state": "locked", 
+                    "provider": "foursquare", 
+                    "redemption": "standard"
+                }
+            }
+        }, 
+        {
+            "type": "special", 
+            "item": {
+                "special": {
+                    "id": "4d62831b039188bf0f7b8e23", 
+                    "type": "frequency", 
+                    "message": "20% off for every 3rd buy/check-in to all foursquare users!!!", 
+                    "imageUrls": {
+                        "count": 0
+                    }, 
+                    "description": "You'll unlock this special with every 3rd check-in here.", 
+                    "unlocked": false, 
+                    "icon": "frequency", 
+                    "title": "Loyalty Special", 
+                    "state": "locked", 
+                    "provider": "foursquare", 
+                    "redemption": "standard"
+                }
+            }
+        }, 
+        {
+            "type": "score", 
+            "item": {
+                "scores": [
+                    {
+                        "points": 1, 
+                        "icon": "https://foursquare.com/img/points/defaultpointsicon2.png", 
+                        "message": "Every check-in counts!"
+                    }
+                ], 
+                "total": 1
+            }
+        }
+    ], 
+    "response": {
+        "checkin": {
+            "id": "4f2694e2e4b012e03134a77a", 
+            "createdAt": 1327928546, 
+            "type": "checkin", 
+            "timeZone": "Europe/Athens", 
+            "venue": {
+                "id": "4d49b147a67eba7adab272d6", 
+                "name": "REFiNK", 
+                "contact": {
+                    "phone": "2103826335", 
+                    "formattedPhone": "21 0382 6335"
+                }, 
+                "location": {
+                    "address": "Καποδιστρίου 26", 
+                    "crossStreet": "Πατησίων", 
+                    "lat": 37.986447378632086, 
+                    "lng": 23.73017907142639, 
+                    "postalCode": "10682", 
+                    "city": "Αθήνα", 
+                    "state": "Αττική", 
+                    "country": "Greece"
+                }, 
+                "categories": [
+                    {
+                        "id": "4bf58dd8d48988d121951735", 
+                        "name": "Paper or Office Supplies Store", 
+                        "pluralName": "Paper or Office Supplies Stores", 
+                        "shortName": "Paper / Office", 
+                        "icon": {
+                            "prefix": "https://foursquare.com/img/categories/shops/papergoods_", 
+                            "sizes": [
+                                32, 
+                                44, 
+                                64, 
+                                88, 
+                                256
+                            ], 
+                            "name": ".png"
+                        }, 
+                        "primary": true
+                    }
+                ], 
+                "verified": true, 
+                "stats": {
+                    "checkinsCount": 138, 
+                    "usersCount": 23, 
+                    "tipCount": 1
+                }, 
+                "url": "http://www.refink.gr"
+            }, 
+            "photos": {
+                "count": 0, 
+                "items": [ ]
+            }, 
+            "comments": {
+                "count": 0, 
+                "items": [ ]
+            }, 
+            "source": {
+                "name": "MySquare", 
+                "url": "http://risingmobility.com/mysquare"
+            }
+        }
+    }
 }
