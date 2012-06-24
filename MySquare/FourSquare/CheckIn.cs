@@ -24,7 +24,7 @@ namespace MySquare.FourSquare
             {
                 if (message == null)
                 {
-                    foreach (var notif in Notifications)
+                    foreach (var notif in Response.Notifications)
                     {
                         var msg = notif as MessageNotification;
                         if (msg != null)
@@ -46,7 +46,7 @@ namespace MySquare.FourSquare
                 if (badges == null)
                 {
                     List<Badge> list = new List<Badge>();
-                    foreach (var notif in Notifications)
+                    foreach (var notif in Response.Notifications)
                     {
                         var item = notif as Badge;
                         if (item != null)
@@ -65,7 +65,7 @@ namespace MySquare.FourSquare
             {
                 if (score == null)
                 {
-                    foreach (var notif in Notifications)
+                    foreach (var notif in Response.Notifications)
                     {
                         var item = notif as ScoreNotification;
                         if (item != null)
@@ -87,7 +87,7 @@ namespace MySquare.FourSquare
                 if (specials == null)
                 {
                     List<Special> list = new List<Special>();
-                    foreach (var notif in Notifications)
+                    foreach (var notif in Response.Notifications)
                     {
                         var item = notif as Special;
                         if (item != null)
@@ -106,8 +106,8 @@ namespace MySquare.FourSquare
             {
                 if (mayorship == null)
                 {
-                   
-                    foreach (var notif in Notifications)
+
+                    foreach (var notif in Response.Notifications)
                     {
                         mayorship = notif as Mayorship;
                         if (mayorship != null)
@@ -125,6 +125,10 @@ namespace MySquare.FourSquare
         [JsonProperty("checkin")]
         internal CheckIn CheckIn
         { get; private set; }
+
+        [JsonProperty("notifications")]
+        internal INotification[] Notifications { get; private set; }
+
     }
 
     delegate void CheckInsEventHandler(object serder, CheckInsEventArgs e);

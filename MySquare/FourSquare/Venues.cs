@@ -2,6 +2,7 @@
 using System.Linq;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace MySquare.FourSquare
 {
@@ -149,9 +150,36 @@ namespace MySquare.FourSquare
         public Category[] Categories
         { get; set; }
 
+        internal class SpecialsGroup
+        {
+            public SpecialsGroup(){}
+            [JsonProperty("items")]
+            public Special[] Specials
+            { get; set; }
+        }
+
         [JsonProperty("specials")]
+        private SpecialsGroup _SpecialsGroup  { get; set; }
+
         public Special[] Specials
-        { get; set; }
+        {
+            get
+            {
+                if (_SpecialsGroup == null)
+                    return null;
+                else
+                    return _SpecialsGroup.Specials;
+            }
+            set
+            {
+                if (_SpecialsGroup == null)
+                    _SpecialsGroup = new SpecialsGroup();
+                _SpecialsGroup.Specials = value;
+            }
+        }
+
+        
+
 
         [JsonProperty("tags")]
         public string[] Tags

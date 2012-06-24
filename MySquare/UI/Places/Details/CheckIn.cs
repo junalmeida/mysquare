@@ -98,6 +98,7 @@ namespace MySquare.UI.Places.Details
         {
             if (backBuffer == null)
                 ResetBackBuffer();
+  
 
             e.Graphics.DrawImage(backBuffer, 0, 0);
 
@@ -127,8 +128,8 @@ namespace MySquare.UI.Places.Details
             lastRectangle = new Rectangle(
                 leftWithPadding, rect.Y + padding, widthWithPadding, this.Height);
 
-            Size measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, message, Font, lastRectangle);
-            graphics.DrawString(message, Font, textBrush, new RectangleF(lastRectangle.X, lastRectangle.Y, lastRectangle.Width, lastRectangle.Height), format);
+            Size measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, message ?? "", Font, lastRectangle);
+            graphics.DrawString(message ?? "", Font, textBrush, new RectangleF(lastRectangle.X, lastRectangle.Y, lastRectangle.Width, lastRectangle.Height), format);
 
             lastRectangle.Height = measure.Height + padding;
             // --
@@ -159,8 +160,8 @@ namespace MySquare.UI.Places.Details
                             lastRectangle.Top, 
                             lastRectangle.Width - stampSize - (padding * 2), this.Height);
 
-                    measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, special.Message, Font, textRectangle);
-                    graphics.DrawString(special.Message, Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
+                    measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, special.Message ?? "", Font, textRectangle);
+                    graphics.DrawString(special.Message ?? "", Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
 
 
                     if (measure.Height < stampSize)
@@ -195,8 +196,8 @@ namespace MySquare.UI.Places.Details
                 Rectangle textRectangle = new Rectangle(
                     lastRectangle.Left, lastRectangle.Top, lastRectangle.Width - crownSize - (padding * 2), this.Height);
 
-                measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, mayorship, Font, textRectangle);
-                graphics.DrawString(mayorship, Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
+                measure = Tenor.Mobile.Drawing.Strings.Measure(graphics, mayorship ?? "", Font, textRectangle);
+                graphics.DrawString(mayorship ?? "", Font, textBrush, new RectangleF(textRectangle.X, textRectangle.Y, textRectangle.Width, textRectangle.Height), format);
 
                 if (measure.Height < crownSize)
                     measure.Height = crownSize;

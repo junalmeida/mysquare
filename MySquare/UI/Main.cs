@@ -24,6 +24,9 @@ namespace MySquare.UI
 
         public static Image CreateRoundedAvatar(byte[] original, Size imageSize, SizeF scaleFactor)
         {
+            if (original == null)
+                return null;
+
             using (MemoryStream mem = new MemoryStream(original))
             using (Bitmap bmp = new Bitmap(mem))
             {
@@ -38,6 +41,9 @@ namespace MySquare.UI
 
         public static Image CreateRoundedAvatar(Image original, Size imageSize, SizeF scaleFactor)
         {
+            if (original == null)
+                return null;
+
             using (Bitmap bmp1 = new Bitmap(imageSize.Width, imageSize.Height))
             {
                 using (Graphics g = Graphics.FromImage(bmp1))
