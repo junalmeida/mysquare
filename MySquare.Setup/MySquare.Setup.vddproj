@@ -14,6 +14,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_193A0718C8AC49F6B5B4B90CD2B19BA3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_1F1709C5216F68BC3FF6FB76C0D04AE3"
         "OwnerKey" = "8:_4C98B488594242149B2B4E14C877C924"
         "MsmSig" = "8:_UNDEFINED"
@@ -21,13 +27,7 @@
         "Entry"
         {
         "MsmKey" = "8:_1F1709C5216F68BC3FF6FB76C0D04AE3"
-        "OwnerKey" = "8:_687D872404453696FDB6C65E524D32EE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1F1709C5216F68BC3FF6FB76C0D04AE3"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
+        "OwnerKey" = "8:_5FCD0EDED1B29261A30C2054574D36FE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -39,7 +39,13 @@
         "Entry"
         {
         "MsmKey" = "8:_1F1709C5216F68BC3FF6FB76C0D04AE3"
-        "OwnerKey" = "8:_AFD3CE83DF1E86F9216BDF053C6F6C16"
+        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1F1709C5216F68BC3FF6FB76C0D04AE3"
+        "OwnerKey" = "8:_C404A31A03397138AC0045E5F5AB0BB1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -93,7 +99,7 @@
         "Entry"
         {
         "MsmKey" = "8:_218B6089A7D0CF49AD590FE5C5F63192"
-        "OwnerKey" = "8:_687D872404453696FDB6C65E524D32EE"
+        "OwnerKey" = "8:_5FCD0EDED1B29261A30C2054574D36FE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -105,7 +111,7 @@
         "Entry"
         {
         "MsmKey" = "8:_218B6089A7D0CF49AD590FE5C5F63192"
-        "OwnerKey" = "8:_AFD3CE83DF1E86F9216BDF053C6F6C16"
+        "OwnerKey" = "8:_C404A31A03397138AC0045E5F5AB0BB1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -116,6 +122,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_2F845DD7F48D4B0A83812E8E309F57EC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4985AE336F8EFEC7F0E7A8BD9394594A"
         "OwnerKey" = "8:_4C98B488594242149B2B4E14C877C924"
         "MsmSig" = "8:_UNDEFINED"
@@ -129,7 +141,7 @@
         "Entry"
         {
         "MsmKey" = "8:_4985AE336F8EFEC7F0E7A8BD9394594A"
-        "OwnerKey" = "8:_AFD3CE83DF1E86F9216BDF053C6F6C16"
+        "OwnerKey" = "8:_C404A31A03397138AC0045E5F5AB0BB1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -140,32 +152,26 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_52EFD4A4472C33A45A102C40307559E8"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_55A2F4D1A4C08D105AB8C2388FFB2B99"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_55A2F4D1A4C08D105AB8C2388FFB2B99"
-        "OwnerKey" = "8:_687D872404453696FDB6C65E524D32EE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_687D872404453696FDB6C65E524D32EE"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6BDC4DFAE5404207A3C44D74255501A0"
+        "MsmKey" = "8:_52D968EB90F44449BEC8AB97D442148B"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_55B9700EA17EEEB8DE83B0E86C209EEC"
+        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_55B9700EA17EEEB8DE83B0E86C209EEC"
+        "OwnerKey" = "8:_5FCD0EDED1B29261A30C2054574D36FE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5FCD0EDED1B29261A30C2054574D36FE"
+        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -183,7 +189,7 @@
         "Entry"
         {
         "MsmKey" = "8:_79637EE93558C7B7D12F7BD37DDF89E9"
-        "OwnerKey" = "8:_AFD3CE83DF1E86F9216BDF053C6F6C16"
+        "OwnerKey" = "8:_C404A31A03397138AC0045E5F5AB0BB1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -195,13 +201,7 @@
         "Entry"
         {
         "MsmKey" = "8:_7C352F707A9F0B808118B64EFE855BA5"
-        "OwnerKey" = "8:_687D872404453696FDB6C65E524D32EE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7C352F707A9F0B808118B64EFE855BA5"
-        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
+        "OwnerKey" = "8:_5FCD0EDED1B29261A30C2054574D36FE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -213,7 +213,13 @@
         "Entry"
         {
         "MsmKey" = "8:_7C352F707A9F0B808118B64EFE855BA5"
-        "OwnerKey" = "8:_AFD3CE83DF1E86F9216BDF053C6F6C16"
+        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7C352F707A9F0B808118B64EFE855BA5"
+        "OwnerKey" = "8:_C404A31A03397138AC0045E5F5AB0BB1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -243,7 +249,7 @@
         "Entry"
         {
         "MsmKey" = "8:_9B30FBA13743D6C184FD0EE1935B9679"
-        "OwnerKey" = "8:_687D872404453696FDB6C65E524D32EE"
+        "OwnerKey" = "8:_5FCD0EDED1B29261A30C2054574D36FE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -266,19 +272,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_AFD3CE83DF1E86F9216BDF053C6F6C16"
-        "OwnerKey" = "8:_4C98B488594242149B2B4E14C877C924"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AFD3CE83DF1E86F9216BDF053C6F6C16"
-        "OwnerKey" = "8:_687D872404453696FDB6C65E524D32EE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AFD3CE83DF1E86F9216BDF053C6F6C16"
+        "MsmKey" = "8:_A5F869A90BA4165A038A334677FE8A0E"
         "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -291,7 +285,7 @@
         "Entry"
         {
         "MsmKey" = "8:_AFD42BE0A94305763FA799CBE23E273B"
-        "OwnerKey" = "8:_687D872404453696FDB6C65E524D32EE"
+        "OwnerKey" = "8:_5FCD0EDED1B29261A30C2054574D36FE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -303,7 +297,7 @@
         "Entry"
         {
         "MsmKey" = "8:_AFD42BE0A94305763FA799CBE23E273B"
-        "OwnerKey" = "8:_AFD3CE83DF1E86F9216BDF053C6F6C16"
+        "OwnerKey" = "8:_C404A31A03397138AC0045E5F5AB0BB1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -320,20 +314,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C5A39178B9DA42E58C8F5D2ED522C5DF"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CB790D7B9976D7C8F007033D3C0067A5"
+        "MsmKey" = "8:_C404A31A03397138AC0045E5F5AB0BB1"
         "OwnerKey" = "8:_4C98B488594242149B2B4E14C877C924"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_CB790D7B9976D7C8F007033D3C0067A5"
-        "OwnerKey" = "8:_687D872404453696FDB6C65E524D32EE"
+        "MsmKey" = "8:_C404A31A03397138AC0045E5F5AB0BB1"
+        "OwnerKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C404A31A03397138AC0045E5F5AB0BB1"
+        "OwnerKey" = "8:_5FCD0EDED1B29261A30C2054574D36FE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -345,7 +339,7 @@
         "Entry"
         {
         "MsmKey" = "8:_DA5AFE924D37207A313CFAE8B401A27D"
-        "OwnerKey" = "8:_687D872404453696FDB6C65E524D32EE"
+        "OwnerKey" = "8:_5FCD0EDED1B29261A30C2054574D36FE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -362,13 +356,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_EC7CE0A239739A6C3A2785B8572BF65C"
+        "OwnerKey" = "8:_4C98B488594242149B2B4E14C877C924"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F26ACA4C7A8749A1B03E29954089E85F"
+        "MsmKey" = "8:_EC7CE0A239739A6C3A2785B8572BF65C"
+        "OwnerKey" = "8:_5FCD0EDED1B29261A30C2054574D36FE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F04309DFC0E1435EB329602E36056E6D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -381,7 +381,7 @@
         "Entry"
         {
         "MsmKey" = "8:_F69F5C2BE25401ECB4B50F765A0EB606"
-        "OwnerKey" = "8:_687D872404453696FDB6C65E524D32EE"
+        "OwnerKey" = "8:_5FCD0EDED1B29261A30C2054574D36FE"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -404,7 +404,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:\\\\vmware-host\\Shared Folders\\Documents\\Projetos\\MySquare\\Setup\\MySquare.2.0.5.cab"
+        "OutputFilename" = "8:..\\Setup\\MySquare.2.0.5.cab"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
         "SignOutput" = "11:FALSE"
@@ -416,6 +416,24 @@
     {
         "File"
         {
+            "{BA458234-9B71-4F46-8107-E91156377184}:_193A0718C8AC49F6B5B4B90CD2B19BA3"
+            {
+            "SourcePath" = "8:..\\WpsProxy.dll"
+            "TargetName" = "8:WpsProxy.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
+            "Condition" = "8:"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "Register" = "3:0"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_1F1709C5216F68BC3FF6FB76C0D04AE3"
             {
             "AssemblyIsInGAC" = "11:FALSE"
@@ -472,6 +490,24 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{BA458234-9B71-4F46-8107-E91156377184}:_2F845DD7F48D4B0A83812E8E309F57EC"
+            {
+            "SourcePath" = "8:..\\wpsapi.dll"
+            "TargetName" = "8:wpsapi.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
+            "Condition" = "8:"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "Register" = "3:0"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_4985AE336F8EFEC7F0E7A8BD9394594A"
             {
             "AssemblyIsInGAC" = "11:FALSE"
@@ -500,20 +536,10 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_52EFD4A4472C33A45A102C40307559E8"
+            "{BA458234-9B71-4F46-8107-E91156377184}:_52D968EB90F44449BEC8AB97D442148B"
             {
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Tenor.Mobile, Version=0.1.4228.3262, Culture=neutral"
-                "ScatterAssemblies"
-                {
-                    "_52EFD4A4472C33A45A102C40307559E8"
-                    {
-                    "Name" = "8:Tenor.Mobile.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Tenor.Mobile.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\Resources\\mysquare-app.png"
+            "TargetName" = "8:start_mysquare_app.png"
             "Tag" = "8:"
             "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
             "Condition" = "8:"
@@ -525,16 +551,16 @@
             "SharedLegacy" = "11:FALSE"
             "Register" = "3:0"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_55A2F4D1A4C08D105AB8C2388FFB2B99"
+            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_55B9700EA17EEEB8DE83B0E86C209EEC"
             {
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Microsoft.WindowsMobile.Telephony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
                 "ScatterAssemblies"
                 {
-                    "_55A2F4D1A4C08D105AB8C2388FFB2B99"
+                    "_55B9700EA17EEEB8DE83B0E86C209EEC"
                     {
                     "Name" = "8:Microsoft.WindowsMobile.Telephony.dll"
                     "Attributes" = "3:512"
@@ -556,13 +582,13 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_687D872404453696FDB6C65E524D32EE"
+            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_5FCD0EDED1B29261A30C2054574D36FE"
             {
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MySquare, Version=2.0.5.28734, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:MySquare, Version=2.0.5.29382, Culture=neutral"
                 "ScatterAssemblies"
                 {
-                    "_687D872404453696FDB6C65E524D32EE"
+                    "_5FCD0EDED1B29261A30C2054574D36FE"
                     {
                     "Name" = "8:MySquare.dll"
                     "Attributes" = "3:512"
@@ -582,24 +608,6 @@
             "Register" = "3:0"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{BA458234-9B71-4F46-8107-E91156377184}:_6BDC4DFAE5404207A3C44D74255501A0"
-            {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\Documents\\Projetos\\MySquare\\WpsProxy.dll"
-            "TargetName" = "8:WpsProxy.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
-            "Condition" = "8:"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "Register" = "3:0"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_79637EE93558C7B7D12F7BD37DDF89E9"
@@ -686,19 +694,19 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_AFD3CE83DF1E86F9216BDF053C6F6C16"
+            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_A5F869A90BA4165A038A334677FE8A0E"
             {
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json.Compact, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed"
+            "AssemblyAsmDisplayName" = "8:Tenor.Mobile, Version=0.1.4228.3262, Culture=neutral"
                 "ScatterAssemblies"
                 {
-                    "_AFD3CE83DF1E86F9216BDF053C6F6C16"
+                    "_A5F869A90BA4165A038A334677FE8A0E"
                     {
-                    "Name" = "8:Newtonsoft.Json.Compact.dll"
+                    "Name" = "8:Tenor.Mobile.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Newtonsoft.Json.Compact.dll"
+            "SourcePath" = "8:Tenor.Mobile.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
@@ -710,7 +718,7 @@
             "Permanent" = "11:FALSE"
             "SharedLegacy" = "11:FALSE"
             "Register" = "3:0"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -742,37 +750,19 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{BA458234-9B71-4F46-8107-E91156377184}:_C5A39178B9DA42E58C8F5D2ED522C5DF"
-            {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\Documents\\Projetos\\MySquare\\Resources\\mysquare-app.png"
-            "TargetName" = "8:start_mysquare_app.png"
-            "Tag" = "8:"
-            "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
-            "Condition" = "8:"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "Register" = "3:0"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_CB790D7B9976D7C8F007033D3C0067A5"
+            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_C404A31A03397138AC0045E5F5AB0BB1"
             {
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Tenor.Mobile, Version=0.1.4228.3262, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json.Compact, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed"
                 "ScatterAssemblies"
                 {
-                    "_CB790D7B9976D7C8F007033D3C0067A5"
+                    "_C404A31A03397138AC0045E5F5AB0BB1"
                     {
-                    "Name" = "8:Tenor.Mobile.dll"
+                    "Name" = "8:Newtonsoft.Json.Compact.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Tenor.Mobile.dll"
+            "SourcePath" = "8:Newtonsoft.Json.Compact.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
@@ -784,7 +774,7 @@
             "Permanent" = "11:FALSE"
             "SharedLegacy" = "11:FALSE"
             "Register" = "3:0"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -816,10 +806,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{BA458234-9B71-4F46-8107-E91156377184}:_F26ACA4C7A8749A1B03E29954089E85F"
+            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_EC7CE0A239739A6C3A2785B8572BF65C"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\Documents\\Projetos\\MySquare\\wpsapi.dll"
-            "TargetName" = "8:wpsapi.dll"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Tenor.Mobile, Version=0.1.4228.3262, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_EC7CE0A239739A6C3A2785B8572BF65C"
+                    {
+                    "Name" = "8:Tenor.Mobile.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Tenor.Mobile.dll"
+            "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
             "Condition" = "8:"
@@ -831,7 +831,7 @@
             "SharedLegacy" = "11:FALSE"
             "Register" = "3:0"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_F69F5C2BE25401ECB4B50F765A0EB606"
@@ -927,7 +927,7 @@
         {
             "{605BE39E-5046-48BD-AEC0-63C3A46626D5}:_4C98B488594242149B2B4E14C877C924"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\Documents\\Projetos\\MySquare\\MySquare.Pings\\obj\\Release\\MySquare.Pings.exe"
+            "SourcePath" = "8:..\\MySquare.Pings\\obj\\Release\\MySquare.Pings.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
@@ -953,7 +953,7 @@
             }
             "{605BE39E-5046-48BD-AEC0-63C3A46626D5}:_F04309DFC0E1435EB329602E36056E6D"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\Documents\\Projetos\\MySquare\\MySquare.Launcher\\obj\\Release\\MySquare.Launcher.exe"
+            "SourcePath" = "8:..\\MySquare.Launcher\\obj\\Release\\MySquare.Launcher.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FEE12AF5B63240FD94C82786F13FF358"
@@ -1079,6 +1079,13 @@
                                                         }
                                                         "Values"
                                                         {
+                                                            "{C3684F64-58E2-4092-8E3C-D7483080DE5A}:_DC6CA902E38B42B69E5FBDF802F04C44"
+                                                            {
+                                                            "Name" = "8:"
+                                                            "Condition" = "8:"
+                                                            "ValueTypes" = "3:1"
+                                                            "Value" = "8:"
+                                                            }
                                                         }
                                                     }
                                                 }
