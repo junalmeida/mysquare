@@ -321,6 +321,7 @@ namespace MySquare.FourSquare
         public Image IconUrl
         { get; set; }
 
+
         public override string ToString()
         {
             return FullName;

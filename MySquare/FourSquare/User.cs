@@ -30,31 +30,17 @@ namespace MySquare.FourSquare
                     return string.Empty;
                 else
                 {
-                    return string.Concat(_ImageUrl.Prefix, "64x64", _ImageUrl.Suffix);
+                    return _ImageUrl.ToString();
                 }
             }
             set
             {
-                if (_ImageUrl == null)
-                    _ImageUrl = new UserPhoto();
-                _ImageUrl.Prefix = value;
-                _ImageUrl.Suffix = string.Empty;
+                _ImageUrl = new Image(value);
             }
         }
 
-        internal class UserPhoto
-        {
-            public UserPhoto() { }
-            [JsonProperty("prefix")]
-            public string Prefix
-            { get; set; }
-            [JsonProperty("suffix")]
-            public string Suffix
-            { get; set; }
-        }
-
         [JsonProperty("photo")]
-        private UserPhoto _ImageUrl
+        private Image _ImageUrl
         {
             get;
             set;

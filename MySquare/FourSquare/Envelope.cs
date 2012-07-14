@@ -32,8 +32,13 @@ namespace MySquare.FourSquare
 
     class Image
     {
+        public Image() { }
+        public Image(string url) { _fixedValue = url; }
+
         [JsonProperty("prefix")]
         public string Prefix { get; set; }
+        [JsonProperty("suffix")]
+        public string Suffix { get; set; }
 
         [JsonProperty("sizes")]
         public int[] Sizes { get; set; }
@@ -41,12 +46,27 @@ namespace MySquare.FourSquare
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        private string _fixedValue;
+
         public override string ToString()
         {
-            if (Sizes != null && Sizes.Length > 0)
-                return string.Format("{0}{1}{2}", Prefix, Sizes.Min(), Name);
-            else
+            if (!string.IsNullOrEmpty(_fixedValue))
+                return _fixedValue;
+
+            if (string.IsNullOrEmpty(Prefix))
                 return string.Empty;
+
+            string name = Name;
+            if (string.IsNullOrEmpty(name))
+                name = Suffix;
+
+            string size = "bg_32";
+            if (Sizes != null && Sizes.Length > 0)
+                size = Sizes.Min().ToString();
+            else if (Prefix.Contains("/img/user"))
+                size="64x64";
+
+            return string.Format("{0}{1}{2}", Prefix, size, name);
         }
     }
 
